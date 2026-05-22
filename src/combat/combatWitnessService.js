@@ -1,4 +1,5 @@
 const { CombatRollingWindow } = require('./combatRollingWindow');
+const { defaultDiagnosticsPolicy } = require('../services/diagnosticsPolicy');
 
 const DEFAULT_WINDOW_MS = [5000, 15000, 30000];
 const DEFAULT_EVENT_STREAM_LIMIT = 30;
@@ -10,13 +11,14 @@ class CombatWitnessService {
     eventStreamLimit = DEFAULT_EVENT_STREAM_LIMIT,
     now = () => Date.now(),
     onSnapshot = () => {},
-    trace = () => {}
+    trace = () => {},
+    diagnosticsPolicy = defaultDiagnosticsPolicy
   } = {}) {
     this.windowMs = [...windowMs].sort((left, right) => left - right);
     this.eventStreamLimit = eventStreamLimit;
     this.now = now;
     this.onSnapshot = onSnapshot;
-    this.trace = trace;
+    this.trace = diagnosticsPolicy.wrapTrace(trace, 'combat.witness_service');
     this.eventListeners = new Set();
     this.snapshotListeners = new Set();
     this.eventStream = [];

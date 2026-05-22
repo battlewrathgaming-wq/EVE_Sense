@@ -53,6 +53,8 @@ Renderer requests cannot put backend services into invalid or misleading states.
 
 ## Priority 3: Diagnostics Throttling
 
+Status: Complete in `docs/gap/complete/readiness-04-diagnostics-throttling.md`.
+
 ### Actionables
 
 - Add diagnostic levels or categories.
@@ -206,12 +208,11 @@ Threat Intel avoids `Type <id>` where local metadata can provide a readable labe
 
 This overview has been split into individual task files so each line can be implemented, reviewed, and moved to `docs/gap/complete/` independently.
 
-1. `readiness-04-diagnostics-throttling.md`
-2. `readiness-10-runtime-error-handling.md`
-3. `readiness-11-combat-witness-snapshot-bridge.md`
-4. `readiness-05-zkill-ref-boundary.md`
-5. `readiness-06-threat-intel-sample-metadata.md`
-6. `readiness-09-local-type-metadata.md`
+1. `readiness-10-runtime-error-handling.md`
+2. `readiness-11-combat-witness-snapshot-bridge.md`
+3. `readiness-05-zkill-ref-boundary.md`
+4. `readiness-06-threat-intel-sample-metadata.md`
+5. `readiness-09-local-type-metadata.md`
 
 This sequence improves safety before adding heavier combat features.
 

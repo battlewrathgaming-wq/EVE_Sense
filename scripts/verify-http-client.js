@@ -1,4 +1,5 @@
 const { HttpClient } = require('../src/services/httpClient');
+const { createDiagnosticsPolicy } = require('../src/services/diagnosticsPolicy');
 const {
   TaskRunner,
   TASK_CLASSIFICATIONS,
@@ -60,12 +61,14 @@ async function verifySuccessAndLogHook() {
       status: 200,
       text: async () => '{"ok":true}'
     }),
+    diagnosticsPolicy: createDiagnosticsPolicy({ mode: 'verbose' }),
     onRequestLog: (entry) => logs.push(entry)
   });
 
   const result = await client.json('fixture', 'https://example.invalid/success');
   assert(result.ok === true, 'successful response should parse JSON');
   assert(logs[0].statusCode === 200, 'successful response should call log hook');
+  assert(logs[0].diagnostic_event === 'http_request_success', 'successful response should identify diagnostic event in verbose mode');
 }
 
 async function verifyInvalidJsonIsNonRetryable() {

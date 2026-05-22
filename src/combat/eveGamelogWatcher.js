@@ -5,6 +5,7 @@ const { collectCompleteLines } = require('./lineBuffer');
 const { parseEveLogLine } = require('./combatLogParser');
 const { RecentEventDeduper } = require('./recentEventDeduper');
 const { normalizeGamelogFolder } = require('./eveLogPaths');
+const { defaultDiagnosticsPolicy } = require('../services/diagnosticsPolicy');
 
 class EveGamelogWatcher {
   constructor({
@@ -17,14 +18,15 @@ class EveGamelogWatcher {
     watcherStrategy = 'fs-watch',
     pollIntervalMs = 1000,
     setIntervalFn = setInterval,
-    clearIntervalFn = clearInterval
+    clearIntervalFn = clearInterval,
+    diagnosticsPolicy = defaultDiagnosticsPolicy
   } = {}) {
     this.parseLine = parseLine;
     this.onEvent = onEvent || (() => {});
     this.onStatus = onStatus;
     this.onRejectedLine = onRejectedLine;
     this.deduper = deduper;
-    this.trace = trace;
+    this.trace = diagnosticsPolicy.wrapTrace(trace, 'combat.gamelog_watcher');
     this.watcherStrategy = watcherStrategy;
     this.pollIntervalMs = pollIntervalMs;
     this.setIntervalFn = setIntervalFn;

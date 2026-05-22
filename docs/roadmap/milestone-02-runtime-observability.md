@@ -50,12 +50,14 @@ Threat Intel and Passive Telemetry remain deferred until their service/client bo
 
 ### P1: Diagnostics Throttling
 
-- P1-01: Implement `docs/gap/to-do/readiness-04-diagnostics-throttling.md`.
-- P1-02: Add a small diagnostics policy/helper rather than scattering throttle logic through runtime code.
-- P1-03: Cover existing trace sources first: `src/combat/eveGamelogWatcher.js`, `src/combat/combatWitnessService.js`, and `src/services/httpClient.js`.
-- P1-04: Keep errors, degraded watcher states, parser/listener failures, blocked requests, and fallback strategy changes visible.
-- P1-05: Suppress or sample low-value normal traces such as poll ticks, cache hits, duplicate suppression, and routine tail reads by default.
-- P1-06: Add offline verification for filtering/throttling behavior and include it in `verify:all`.
+Status: Complete in `docs/gap/complete/readiness-04-diagnostics-throttling.md`.
+
+- P1-01: Implement `docs/gap/to-do/readiness-04-diagnostics-throttling.md`. Complete.
+- P1-02: Add a small diagnostics policy/helper rather than scattering throttle logic through runtime code. Complete.
+- P1-03: Cover existing trace sources first: `src/combat/eveGamelogWatcher.js`, `src/combat/combatWitnessService.js`, and `src/services/httpClient.js`. Complete.
+- P1-04: Keep errors, degraded watcher states, parser/listener failures, blocked requests, and fallback strategy changes visible. Complete.
+- P1-05: Suppress or sample low-value normal traces such as poll ticks, cache hits, duplicate suppression, and routine tail reads by default. Complete.
+- P1-06: Add offline verification for filtering/throttling behavior and include it in `verify:all`. Complete.
 
 ### P2: Runtime Error Handling
 
@@ -101,7 +103,7 @@ Milestone 02 is complete when:
 
 - `docs/audits/audit-2026-05-22-ipc-settings-validation-handover.md`
 - `docs/audits/audit-2026-05-22-combat-witness-core-handover.md`
-- `docs/gap/to-do/readiness-04-diagnostics-throttling.md`
+- `docs/gap/complete/readiness-04-diagnostics-throttling.md`
 - `docs/gap/to-do/readiness-10-runtime-error-handling.md`
 - `docs/gap/to-do/readiness-11-combat-witness-snapshot-bridge.md`
 - `docs/current-state/current-implementation.md`

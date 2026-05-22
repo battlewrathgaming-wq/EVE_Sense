@@ -1,4 +1,5 @@
 const { USER_AGENT } = require('../constants');
+const { defaultDiagnosticsPolicy } = require('./diagnosticsPolicy');
 
 const RETRY_STATUSES = new Set([420, 429, 503]);
 const DEFAULT_TIMEOUT_MS = 30000;
@@ -11,14 +12,15 @@ class HttpClient {
     signal = null,
     fetchImpl = fetch,
     maxAttempts = DEFAULT_MAX_ATTEMPTS,
-    onRequestLog = null
+    onRequestLog = null,
+    diagnosticsPolicy = defaultDiagnosticsPolicy
   } = {}) {
     this.userAgent = userAgent;
     this.timeoutMs = timeoutMs;
     this.signal = signal;
     this.fetchImpl = fetchImpl;
     this.maxAttempts = maxAttempts;
-    this.onRequestLog = onRequestLog;
+    this.onRequestLog = diagnosticsPolicy.wrapRequestLog(onRequestLog);
   }
 
   async json(provider, endpoint, options = {}) {
@@ -65,18 +67,22 @@ class HttpClient {
           rateLimited: response.status === 420 || response.status === 429,
           errorMessage: `${provider} ${response.status}`
         });
-        throw new Error(`${provider} ${response.status} for ${endpoint}`);
+        const error = new Error(`${provider} ${response.status} for ${endpoint}`);
+        error.requestLogged = true;
+        throw error;
       } catch (error) {
         const normalized = normalizeRequestError(error, requestSignal);
         if (normalized.nonRetryable) {
-          this.log({
-            provider,
-            endpoint,
-            method,
-            durationMs: Date.now() - started,
-            retryCount,
-            errorMessage: normalized.error.message
-          });
+          if (!normalized.error.requestLogged) {
+            this.log({
+              provider,
+              endpoint,
+              method,
+              durationMs: Date.now() - started,
+              retryCount,
+              errorMessage: normalized.error.message
+            });
+          }
           throw normalized.error;
         }
 
@@ -189,6 +195,12 @@ function normalizeRequestError(error, requestSignal) {
     };
   }
   if (error?.nonRetryable) {
+    return {
+      nonRetryable: true,
+      error
+    };
+  }
+  if (error?.requestLogged) {
     return {
       nonRetryable: true,
       error
