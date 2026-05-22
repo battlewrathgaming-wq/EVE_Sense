@@ -138,5 +138,8 @@ This verifies the current seed utilities, service rigging, Combat Witness parser
 - `docs/audits/audit-2026-05-22-diagnostics-throttling-handover.md`
 - `docs/audits/audit-2026-05-22-runtime-error-handling-handover.md`
 - `docs/audits/audit-2026-05-22-combat-witness-snapshot-bridge-handover.md`
+- `docs/audits/audit-2026-05-22-artifact-and-first-light-handover.md`
 - `docs/gap/to-do/aura-sense-rewrite-readiness.md`
 - `docs/roadmap/milestone-02-runtime-observability.md`
+- `docs/roadmap/milestone-03-tactical-viewport-first-light.md`
+- `docs/roadmap/development-artifact-trail.md`

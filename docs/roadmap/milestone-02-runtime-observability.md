@@ -1,6 +1,6 @@
 # Milestone 02: Runtime Observability And Snapshot Presentation Entry
 
-Status: Active
+Status: Complete
 Date: 2026-05-22
 Owner: Overseer direction, Dev execution
 
@@ -22,11 +22,24 @@ backend observation
 
 Threat Intel and Passive Telemetry remain deferred until their service/client boundaries exist. Do not use UI work as a shortcut to create those lanes.
 
+## Completion Verdict
+
+Milestone 02 is complete.
+
+Completed foundations:
+
+- shared backend diagnostics policy
+- runtime error diagnostics for process and renderer failure paths
+- Combat Witness snapshot bridge through IPC/preload
+- verification coverage included in `verify:all`
+
+Renderer presentation remains intentionally deferred to Milestone 03.
+
 ## Current Starting Truth
 
 - `npm.cmd run verify:all` is passing and remains offline.
 - Combat Witness parser, watcher, event fan-out, and 5s/15s/30s snapshots exist in backend code.
-- Combat Witness renderer subscription/presentation does not exist yet.
+- Combat Witness renderer subscription exists; renderer presentation does not exist yet.
 - IPC/service validation exists for current service boundaries.
 - Active scan and settings validators exist, but product services are not wired yet.
 - Diagnostics now have a shared backend policy for current trace producers, but no renderer diagnostics transport/UI exists yet.
@@ -115,6 +128,9 @@ That milestone should create the first honest product-facing tactical viewport. 
 
 - `docs/audits/audit-2026-05-22-ipc-settings-validation-handover.md`
 - `docs/audits/audit-2026-05-22-combat-witness-core-handover.md`
+- `docs/audits/audit-2026-05-22-diagnostics-throttling-handover.md`
+- `docs/audits/audit-2026-05-22-runtime-error-handling-handover.md`
+- `docs/audits/audit-2026-05-22-combat-witness-snapshot-bridge-handover.md`
 - `docs/gap/complete/readiness-04-diagnostics-throttling.md`
 - `docs/gap/complete/readiness-10-runtime-error-handling.md`
 - `docs/gap/complete/readiness-11-combat-witness-snapshot-bridge.md`

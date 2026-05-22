@@ -1,6 +1,6 @@
 # Milestone 03: Tactical Viewport First Light
 
-Status: Proposed
+Status: Active
 Date: 2026-05-22
 Owner: Overseer direction, Dev execution
 
@@ -35,6 +35,8 @@ This milestone should not begin until Milestone 02 has completed:
 - diagnostics throttling
 - runtime error handling
 - Combat Witness snapshot bridge
+
+Milestone 02 is complete as of the current handover. Milestone 03 is now the active product-facing direction.
 
 When it begins, AURA-Sense should already have:
 

@@ -46,4 +46,5 @@ AURA-Sense has a verified tactical viewport skeleton with separated telemetry la
 - `docs/contracts/combat-witness-contract.md`
 - `docs/roadmap/milestone-02-runtime-observability.md`
 - `docs/roadmap/milestone-03-tactical-viewport-first-light.md`
+- `docs/roadmap/development-artifact-trail.md`
 
