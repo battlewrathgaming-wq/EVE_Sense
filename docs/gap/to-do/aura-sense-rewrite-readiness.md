@@ -9,7 +9,7 @@ Track the work required before AURA-Sense can honestly claim Aura 7 tactical vie
 
 ## Actionables
 
-- Rename package metadata and user-facing seed text from Aura Core to AURA-Sense when implementation work begins.
+- Keep package metadata mirrored to AURA-Sense and replace remaining user-facing seed shell text when product shell work begins.
 - Keep `npm run verify:all` as the offline confidence command.
 - Keep renderer boundary static checks in `npm run verify:all`.
 - Add service command validation for scan, settings, network, and frame commands.

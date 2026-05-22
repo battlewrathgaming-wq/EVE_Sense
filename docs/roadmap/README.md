@@ -6,6 +6,7 @@ Roadmap docs are not commitments. They describe intended evolution, dependencies
 
 Seed candidates:
 
+- `milestone-01-startup-rigging.md`
 - Combat Witness stabilization
 - renderer/backend service boundary
 - scoped Threat Intel hardening

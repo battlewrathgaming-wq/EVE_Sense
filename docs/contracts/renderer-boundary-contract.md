@@ -42,6 +42,17 @@ Backend/main-process services own ingestion, normalization, caching, computation
 
 ## Verification
 
-To be defined during current-state audit and IPC/service review.
+Current static check:
 
+```powershell
+npm run verify:renderer-boundary
+```
+
+This check scans `src/renderer` and `src/main/preload.js` for direct network calls, filesystem/log access, main-process imports from renderer files, and combat parser ownership signals.
+
+The check is also included in:
+
+```powershell
+npm run verify:all
+```
 

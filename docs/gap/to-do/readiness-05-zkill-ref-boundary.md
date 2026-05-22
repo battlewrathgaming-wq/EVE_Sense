@@ -46,7 +46,7 @@ When complete, record:
 
 ## Related Documents
 
-- `Docs/contracts/threat-intel-contract.md`
-- `Docs/tenets/tenets.md`
+- `docs/contracts/threat-intel-contract.md`
+- `docs/tenets/tenets.md`
 
 

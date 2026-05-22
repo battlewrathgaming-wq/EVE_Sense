@@ -11,7 +11,7 @@ The aim is not to make AURA-Sense bigger. The aim is to keep the rushed prototyp
 
 Related audit:
 
-- `Docs/audits/audit-2026-05-22-current-state-alignment.md`
+- `docs/audits/audit-2026-05-22-current-state-alignment.md`
 
 ## Priority 1: UI Language And Certainty Contract
 
@@ -228,7 +228,7 @@ Settings changes cannot silently put services into an invalid or misleading stat
 
 ### Actionables
 
-- Promote implemented current-state details into `Docs/current-state/`.
+- Promote implemented current-state details into `docs/current-state/`.
 - Add failure records when gaps are fixed because of discovered drift.
 - Update contracts from `Seed` to `Active` as implementation verifies them.
 

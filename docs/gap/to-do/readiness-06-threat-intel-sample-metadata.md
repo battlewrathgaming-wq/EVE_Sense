@@ -48,8 +48,8 @@ When complete, record:
 
 ## Related Documents
 
-- `Docs/gap/to-do/implementation-alignment-gap-analysis.md`
-- `Docs/contracts/threat-intel-contract.md`
-- `Docs/terms/threat-intel.md`
+- `docs/gap/to-do/implementation-alignment-gap-analysis.md`
+- `docs/contracts/threat-intel-contract.md`
+- `docs/terms/threat-intel.md`
 
 

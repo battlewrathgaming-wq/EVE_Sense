@@ -37,6 +37,6 @@ When complete, record:
 
 ## Related Documents
 
-- `Docs/audits/audit-2026-05-22-performance-stability-readiness.md`
+- `docs/audits/audit-2026-05-22-performance-stability-readiness.md`
 
 

@@ -102,7 +102,7 @@ This verifies the current seed utilities, service rigging, renderer shell, and r
 
 ## Known Gaps
 
-- package metadata still reflects the neutral Aura Core seed
+- some seed shell UI and fallback labels still reflect Aura Core until product shell work begins
 - no AURA-Sense runtime services yet
 - no EVE fixtures wired into verification yet
 - historical Aura 7 docs remain in `docs/Concept`, `docs/research`, and historical audit files for reference

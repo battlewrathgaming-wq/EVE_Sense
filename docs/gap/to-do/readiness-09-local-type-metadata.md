@@ -39,7 +39,7 @@ When complete, record:
 
 ## Related Documents
 
-- `Docs/tenets/tenets.md`
-- `Docs/terms/metadata.md`
+- `docs/tenets/tenets.md`
+- `docs/terms/metadata.md`
 
 

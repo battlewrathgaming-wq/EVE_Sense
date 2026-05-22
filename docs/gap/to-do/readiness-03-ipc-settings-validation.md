@@ -41,7 +41,7 @@ When complete, record:
 
 ## Related Documents
 
-- `Docs/contracts/renderer-boundary-contract.md`
-- `Docs/gap/to-do/performance-stability-compute-readiness.md`
+- `docs/contracts/renderer-boundary-contract.md`
+- `docs/gap/to-do/performance-stability-compute-readiness.md`
 
 

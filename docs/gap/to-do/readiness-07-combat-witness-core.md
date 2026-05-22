@@ -55,8 +55,8 @@ When complete, record:
 
 ## Related Documents
 
-- `Docs/contracts/combat-witness-contract.md`
-- `Docs/schemas/combat-event.md`
-- `Docs/terms/combat-witness.md`
+- `docs/contracts/combat-witness-contract.md`
+- `docs/schemas/combat-event.md`
+- `docs/terms/combat-witness.md`
 
 

@@ -17,7 +17,7 @@ Keep telemetry transient.
 
 Related audit:
 
-- `Docs/audits/audit-2026-05-22-performance-stability-readiness.md`
+- `docs/audits/audit-2026-05-22-performance-stability-readiness.md`
 
 ## Priority 1: Verification Harness
 
@@ -34,20 +34,7 @@ Status: Complete in `docs/gap/complete/readiness-01-verification-harness.md`.
 
 One command proves the offline confidence set before larger refactors.
 
-## Priority 2: Diagnostics Throttling
-
-### Actionables
-
-- Add diagnostic levels or categories.
-- Disable low-value cache hit/miss trace spam by default.
-- Throttle diagnostics sent to renderer.
-- Preserve high-value errors, blocked requests, throttles, and degraded states.
-
-### Completion Signal
-
-Normal operation does not flood console or renderer diagnostics, while degraded states remain visible.
-
-## Priority 3: IPC And Settings Validation
+## Priority 2: IPC And Settings Validation
 
 ### Actionables
 
@@ -61,6 +48,19 @@ Normal operation does not flood console or renderer diagnostics, while degraded 
 ### Completion Signal
 
 Renderer requests cannot put backend services into invalid or misleading states.
+
+## Priority 3: Diagnostics Throttling
+
+### Actionables
+
+- Add diagnostic levels or categories.
+- Disable low-value cache hit/miss trace spam by default.
+- Throttle diagnostics sent to renderer.
+- Preserve high-value errors, blocked requests, throttles, and degraded states.
+
+### Completion Signal
+
+Normal operation does not flood console or renderer diagnostics, while degraded states remain visible.
 
 ## Priority 4: zKill Discovery Ref Boundary
 
@@ -174,7 +174,7 @@ Threat Intel avoids `Type <id>` where local metadata can provide a readable labe
 
 ## Recommended Order
 
-This overview has been split into individual task files so each line can be implemented, reviewed, and moved to `Docs/gap/complete/` independently.
+This overview has been split into individual task files so each line can be implemented, reviewed, and moved to `docs/gap/complete/` independently.
 
 1. `readiness-03-ipc-settings-validation.md`
 2. `readiness-04-diagnostics-throttling.md`

@@ -49,14 +49,14 @@ Then continue with:
 ## Raised Notes
 
 - `docs/contracts/renderer-boundary-contract.md` still says verification is "To be defined", but `scripts/verify-renderer-boundary.js` now exists and is included in `npm run verify:all`.
-- `docs/gap/to-do/readiness-09-local-type-metadata.md` references `Docs/terms/metadata.md`, which does not currently exist.
+- `docs/gap/to-do/readiness-09-local-type-metadata.md` referenced `Docs/terms/metadata.md`; this has since been resolved by adding `docs/terms/metadata.md`.
 - Historical audits and concept docs preserve Aura 7 wording by design; current-state docs should take precedence when implementation truth is needed.
 - Several historical references use `Docs/` casing. This is probably harmless on Windows, but future cross-platform work should prefer the repository's actual `docs/` casing.
 
 ## Recommended Follow-Up
 
 - Update the renderer boundary contract verification section to name `npm run verify:renderer-boundary`.
-- Either add `docs/terms/metadata.md` or adjust the local type metadata gap to reference an existing term.
+- Keep `docs/terms/metadata.md` available for local type metadata work.
 - Keep historical Aura 7 audit notes intact unless Overseer explicitly requests archival cleanup.
 - Continue with `readiness-03-ipc-settings-validation.md` as the next scoped Dev slice.
 
