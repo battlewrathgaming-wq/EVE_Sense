@@ -14,6 +14,7 @@ Track the work required before AURA-Sense can honestly claim Aura 7 tactical vie
 - Keep renderer boundary static checks in `npm run verify:all`.
 - Keep service command validation in place; attach prepared scan/settings validators as those runtime services are added.
 - Rebuild EVE log watcher behavior with parser fixtures.
+- Keep Combat Witness backend snapshots as the first runtime-lane foundation, but do not add presentation before diagnostics throttling.
 - Rebuild Passive Telemetry with local-first system metadata.
 - Rebuild Threat Intel with zKill discovery, ESI expansion, capped sample metadata, and freshness language.
 - Keep Combat Witness backend-owned normalized events, bounded rolling cache, and 5s/15s/30s snapshots as the foundation for future presentation.
@@ -27,6 +28,7 @@ Track the work required before AURA-Sense can honestly claim Aura 7 tactical vie
 - Do not copy Atlas persistence or watch execution into AURA-Sense core.
 - Do not imply complete combat or intelligence certainty in UI language.
 - Do not treat historical Aura 7 docs as proof of current AURA-Sense runtime behavior.
+- Do not wire renderer Combat Witness presentation until diagnostics and runtime failure handling are ready enough to make degraded states visible.
 
 ## Completion Signal
 
@@ -40,4 +42,5 @@ AURA-Sense has a verified tactical viewport skeleton with separated telemetry la
 - `docs/contracts/renderer-boundary-contract.md`
 - `docs/contracts/threat-intel-contract.md`
 - `docs/contracts/combat-witness-contract.md`
+- `docs/roadmap/milestone-02-runtime-observability.md`
 

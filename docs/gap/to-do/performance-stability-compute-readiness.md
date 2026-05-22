@@ -66,6 +66,8 @@ Normal operation does not flood console or renderer diagnostics, while degraded 
 
 ## Priority 4: zKill Discovery Ref Boundary
 
+Status: Deferred until Threat Intel client/service exists.
+
 ### Actionables
 
 - Normalize zKill output inside `ZKillClient`.
@@ -85,6 +87,8 @@ Threat Intel receives a clean ref list:
 and never treats zKill summary payloads as tactical truth.
 
 ## Priority 5: Threat Intel Sample Metadata
+
+Status: Deferred until Threat Intel runtime exists.
 
 ### Actionables
 
@@ -168,7 +172,24 @@ Log parsing changes are testable without launching Electron.
 
 Long sessions fail visibly and diagnostically rather than silently.
 
-## Priority 10: Local Type Metadata
+## Priority 10: Combat Witness Snapshot Bridge
+
+Status: Open in `docs/gap/to-do/readiness-11-combat-witness-snapshot-bridge.md`.
+
+### Actionables
+
+- Expose backend-owned Combat Witness snapshots through a service/preload boundary.
+- Keep renderer presentation-only.
+- Add subscription cleanup and update cadence control.
+- Verify renderer does not compute Combat Witness metrics.
+
+### Completion Signal
+
+The renderer can receive compact Combat Witness snapshots without owning parser, cache, or metric computation.
+
+## Priority 11: Local Type Metadata
+
+Status: Deferred until Threat Intel timelines or type-label consumers exist.
 
 ### Actionables
 
@@ -186,10 +207,11 @@ Threat Intel avoids `Type <id>` where local metadata can provide a readable labe
 This overview has been split into individual task files so each line can be implemented, reviewed, and moved to `docs/gap/complete/` independently.
 
 1. `readiness-04-diagnostics-throttling.md`
-2. `readiness-05-zkill-ref-boundary.md`
-3. `readiness-06-threat-intel-sample-metadata.md`
-4. `readiness-09-local-type-metadata.md`
-5. `readiness-10-runtime-error-handling.md`
+2. `readiness-10-runtime-error-handling.md`
+3. `readiness-11-combat-witness-snapshot-bridge.md`
+4. `readiness-05-zkill-ref-boundary.md`
+5. `readiness-06-threat-intel-sample-metadata.md`
+6. `readiness-09-local-type-metadata.md`
 
 This sequence improves safety before adding heavier combat features.
 

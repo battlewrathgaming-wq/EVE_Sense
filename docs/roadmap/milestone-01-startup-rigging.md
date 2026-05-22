@@ -1,6 +1,6 @@
 # Milestone 01: Startup Rigging And Current-State Alignment
 
-Status: Active
+Status: Complete
 Date: 2026-05-22
 Owner: Overseer direction, Dev execution
 
@@ -22,12 +22,28 @@ What verification proves it?
 What must remain deferred?
 ```
 
+## Completion Verdict
+
+Milestone 01 is complete.
+
+AURA-Sense now has a verified startup rigging baseline:
+
+- offline `verify:all` confidence command
+- renderer boundary static verification
+- service IPC payload validation
+- Combat Witness parser fixture coverage
+- backend Combat Witness event/snapshot core
+- current-state docs updated with implemented and deferred behavior
+
+The project is still not Aura 7 runtime parity. The next work should harden runtime observability and only then let renderer presentation consume backend-owned snapshots.
+
 ## Current Starting Truth
 
 - AURA-Sense is currently a rewrite seed, not Aura 7 runtime parity.
 - `npm.cmd run verify:all` is the offline confidence command.
-- Seed verification covers core utilities, services, HTTP client behavior, Frame module behavior, renderer shell behavior, and renderer boundary static checks.
-- EVE runtime lanes are not rebuilt yet.
+- Seed verification covers core utilities, services, HTTP client behavior, Frame module behavior, renderer shell behavior, renderer boundary static checks, Combat Witness parser/watcher behavior, and Combat Witness core snapshots.
+- Combat Witness backend foundations exist, but renderer presentation is not wired.
+- Passive Telemetry and Threat Intel runtime lanes are not rebuilt yet.
 - Historical Aura 7 audits and concept docs are useful context, but current-state notes and the docs context handover take precedence.
 
 ## Doctrine Guardrails
@@ -66,11 +82,11 @@ Status: Complete in `docs/gap/complete/readiness-03-ipc-settings-validation.md`.
 ### P2: Prepare Runtime-Lane Entry Without Building Ahead Of The Boundary
 
 - P2-01: Define the first AURA-Sense settings/runtime contract only when a concrete settings service is introduced.
-- P2-02: Keep diagnostics throttling next after IPC validation, but apply it only to existing diagnostics paths unless a runtime lane is being added in the same scoped slice.
+- P2-02: Keep diagnostics throttling next after IPC validation. Carry forward to Milestone 02.
 - P2-03: Defer zKill discovery-ref normalization until a Threat Intel client or adapter exists in AURA-Sense.
 - P2-04: Defer Threat Intel sample metadata until zKill discovery and ESI expansion exist in AURA-Sense.
-- P2-05: Defer Combat Witness rolling cache implementation until log observation and parser fixture boundaries are defined.
-- P2-06: When the first runtime lane begins, create fixtures before UI expansion.
+- P2-05: Combat Witness rolling cache implementation is complete as backend foundation.
+- P2-06: Continue fixture-first runtime lane development before UI expansion.
 
 ### P3: Documentation And Continuity Cleanup
 
@@ -109,19 +125,19 @@ Handover:
 
 This milestone is complete when:
 
-- renderer boundary contract reflects existing verification
-- missing documentation references are resolved or corrected
-- current seed service IPC validation is implemented and verified
-- `verify:all` remains offline and passing
-- docs clearly distinguish implemented seed behavior from inherited Aura 7 tactical scope
-- the next milestone can start one runtime lane without ambiguity about ownership or verification
+- renderer boundary contract reflects existing verification. Complete.
+- missing documentation references are resolved or corrected. Complete for startup scope.
+- current seed service IPC validation is implemented and verified. Complete.
+- `verify:all` remains offline and passing. Complete.
+- docs clearly distinguish implemented seed behavior from inherited Aura 7 tactical scope. Complete enough for next milestone.
+- the next milestone can start one runtime lane without ambiguity about ownership or verification. Complete.
 
 ## Explicit Deferrals
 
 - Aura 7 runtime parity
 - Passive Telemetry implementation
 - Threat Intel zKill/ESI implementation
-- Combat Witness parser/cache/snapshot implementation as milestone startup work; future presentation remains deferred
+- Combat Witness renderer presentation
 - Atlas persistence or handoff model
 - production HUD expansion
 - live API smoke checks inside `verify:all`
@@ -133,5 +149,8 @@ This milestone is complete when:
 - `docs/current-state/seed-current-state.md`
 - `docs/gap/to-do/performance-stability-compute-readiness.md`
 - `docs/gap/complete/readiness-03-ipc-settings-validation.md`
+- `docs/gap/complete/readiness-07-combat-witness-core.md`
+- `docs/gap/complete/readiness-08-combat-parser-fixtures.md`
+- `docs/roadmap/milestone-02-runtime-observability.md`
 - `docs/contracts/renderer-boundary-contract.md`
 - `docs/contracts/service-command-contract.md`

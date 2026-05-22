@@ -1,6 +1,6 @@
 # Contract: Combat Witness
 
-Status: Seed
+Status: Active Foundation
 Date: 2026-05-22
 
 ## Purpose
@@ -34,4 +34,23 @@ Defines the transient combat-log witness model.
 - Do not aggregate alpha spikes by ship label when labels may collide.
 - Do not infer unseen state from missing log lines.
 - Do not repeatedly re-alert from the same rolling-cache event.
+
+## Current Implemented Foundation
+
+- Parser emits normalized `navigation.jump`, `combat.damage`, and `combat.miss` events.
+- Gamelog watcher supports `fs-watch`, `polling`, and `auto` fallback strategies.
+- `CombatWitnessService` owns event fan-out, 5s/15s/30s snapshots, and bounded event stream items.
+- Listener failures are isolated.
+- Renderer presentation is not wired yet.
+
+## Verification
+
+Current checks:
+
+```powershell
+npm.cmd run verify:combat-parser
+npm.cmd run verify:gamelog-watcher
+npm.cmd run verify:combat-witness
+npm.cmd run verify:all
+```
 

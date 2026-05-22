@@ -1,7 +1,7 @@
 # Gap To-Do: Threat Intel Sample Metadata
 
 Date: 2026-05-22
-Status: Open
+Status: Open - Deferred Until Threat Intel Runtime Exists
 
 ## Actionables
 
@@ -16,6 +16,8 @@ Status: Open
 ## Task Requirements
 
 Every active scan should make its evidence basis clear without turning the HUD into an Atlas report.
+
+This packet depends on scoped zKill discovery and ESI expansion existing in AURA-Sense. Do not implement sample metadata against mock renderer-only state.
 
 The scan result should be able to answer:
 
@@ -32,6 +34,7 @@ Sample status: partial/complete
 - Do not overcrowd the tactical HUD.
 - Do not present zKill-discovered count as expanded evidence count.
 - Do not imply complete coverage when expansion was capped or failed.
+- Do not treat sample metadata as Atlas-style evidence storage.
 
 ## Completion Signal
 
@@ -48,7 +51,7 @@ When complete, record:
 
 ## Related Documents
 
-- `docs/gap/to-do/implementation-alignment-gap-analysis.md`
+- `docs/gap/complete/implementation-alignment-gap-analysis.md`
 - `docs/contracts/threat-intel-contract.md`
 - `docs/terms/threat-intel.md`
 

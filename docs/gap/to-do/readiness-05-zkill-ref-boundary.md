@@ -1,7 +1,7 @@
 # Gap To-Do: zKill Discovery Ref Boundary
 
 Date: 2026-05-22
-Status: Open
+Status: Open - Deferred Until Threat Intel Client Exists
 
 ## Actionables
 
@@ -17,6 +17,8 @@ Status: Open
 
 Threat Intel should receive clean discovery refs, not raw zKill summary payloads.
 
+This packet should not be implemented against placeholder services. Start it when an AURA-Sense zKill client or Threat Intel service boundary exists.
+
 Target shape:
 
 ```txt
@@ -30,6 +32,7 @@ Optional diagnostic fields can exist separately, but tactical summary logic shou
 - Do not derive tactical truth from zKill summaries.
 - Do not break existing ESI expansion flow.
 - Do not abort a whole scan because one ref is malformed.
+- Do not create broad background discovery while adding this boundary.
 
 ## Completion Signal
 

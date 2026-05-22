@@ -115,7 +115,7 @@ This verifies the current seed utilities, service rigging, Combat Witness parser
 ## Known Gaps
 
 - some seed shell UI and fallback labels still reflect Aura Core until product shell work begins
-- no AURA-Sense runtime services yet
+- no product-facing settings, Passive Telemetry, or Threat Intel runtime services yet
 - no renderer subscription path for Combat Witness snapshots yet
 - no active scan service wired to the prepared validator yet
 - no settings save/restart service wired to the prepared validator yet
@@ -132,3 +132,4 @@ This verifies the current seed utilities, service rigging, Combat Witness parser
 - `docs/audits/audit-2026-05-22-combat-witness-core-handover.md`
 - `docs/audits/audit-2026-05-22-ipc-settings-validation-handover.md`
 - `docs/gap/to-do/aura-sense-rewrite-readiness.md`
+- `docs/roadmap/milestone-02-runtime-observability.md`

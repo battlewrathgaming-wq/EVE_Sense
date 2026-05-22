@@ -1,6 +1,6 @@
 # Contract: Renderer Boundary
 
-Status: Seed
+Status: Active Foundation
 Date: 2026-05-22
 
 ## Purpose
