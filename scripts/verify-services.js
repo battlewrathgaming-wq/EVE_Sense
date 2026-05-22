@@ -5,8 +5,16 @@ const {
 } = require('../src/services/messageTaxonomy');
 const {
   ServiceRegistry,
-  createDefaultRegistry
+  createDefaultRegistry,
+  validationToError
 } = require('../src/services/serviceRegistry');
+const {
+  SAFE_USER_AGENT,
+  validateActiveScanPayload,
+  validateLogPathForWatcher,
+  validateServiceInvokeRequest,
+  validateSettingsPayload
+} = require('../src/services/ipcPayloadValidation');
 const {
   TaskRunner,
   TASK_CLASSIFICATIONS,
@@ -17,6 +25,7 @@ async function main() {
   verifyTaxonomy();
   await verifyTaskRunner();
   await verifyRegistry();
+  verifyIpcPayloadValidation();
   console.log('services verified');
 }
 
@@ -149,6 +158,40 @@ async function verifyRegistry() {
   });
   const echoed = await custom.invoke('fixture.echo', { ok: true });
   assert(echoed.ok === true, 'custom registry should invoke registered command');
+
+  const listed = await registry.invoke('task.list', { limit: 1 });
+  assert(Array.isArray(listed), 'task.list should accept bounded limit');
+  await assertRejects(
+    () => registry.invoke('task.list', { limit: 1000 }),
+    'TASK_LIST_INVALID_LIMIT',
+    'task.list should reject oversized limits'
+  );
+  await assertRejects(
+    () => registry.invoke('task.cancel', {}),
+    'TASK_CANCEL_INVALID_ID',
+    'task.cancel should require task_id'
+  );
+}
+
+function verifyIpcPayloadValidation() {
+  assert(validateServiceInvokeRequest({ command: 'seed.health', payload: {} }).ok === true, 'service invoke should accept command with object payload');
+  assert(validateServiceInvokeRequest({ command: 'seed.health', payload: [] }).code === 'SERVICE_INVALID_PAYLOAD', 'service invoke should reject array payload');
+  assert(validateServiceInvokeRequest({ payload: {} }).code === 'SERVICE_INVALID_COMMAND', 'service invoke should require command');
+  assert(validationToError({ code: 'FIXTURE_INVALID', message: 'fixture invalid' }).code === 'FIXTURE_INVALID', 'validation error should preserve code');
+
+  const scan = validateActiveScanPayload({ query: 'Jita', typeHint: 'System' });
+  assert(scan.ok === true && scan.value.typeHint === 'system', 'active scan validator should normalize type hint');
+  assert(validateActiveScanPayload({ query: '', typeHint: 'system' }).code === 'SCAN_EMPTY_QUERY', 'active scan validator should reject blank query');
+  assert(validateActiveScanPayload({ query: 'x'.repeat(129) }).code === 'SCAN_QUERY_TOO_LONG', 'active scan validator should reject oversized query');
+  assert(validateActiveScanPayload({ query: 'Jita', typeHint: 'ship' }).code === 'SCAN_INVALID_TYPE_HINT', 'active scan validator should reject unknown type hint');
+
+  const blankUa = validateSettingsPayload({ userAgent: '' }, { previous: {}, safeUserAgent: SAFE_USER_AGENT });
+  assert(blankUa.ok === true, 'settings validator should accept blank User-Agent by preserving fallback');
+  assert(blankUa.value.userAgent === SAFE_USER_AGENT, 'settings validator should preserve safe User-Agent fallback');
+  assert(blankUa.warnings[0].code === 'SETTINGS_USER_AGENT_FALLBACK', 'settings validator should warn on blank User-Agent');
+  assert(validateSettingsPayload({ userAgent: 'x'.repeat(181) }).code === 'SETTINGS_USER_AGENT_TOO_LONG', 'settings validator should reject oversized User-Agent');
+  assert(validateLogPathForWatcher('').code === 'SETTINGS_LOG_PATH_EMPTY', 'log path validator should reject blank path before watcher restart');
+  assert(validateLogPathForWatcher('__missing_aura_sense_path__').code === 'SETTINGS_LOG_PATH_MISSING', 'log path validator should reject missing path');
 }
 
 async function assertRejects(fn, expectedCode, message) {

@@ -14,6 +14,7 @@ The current implementation includes:
 - renderer shell verification
 - renderer boundary static verification
 - generic service command registry
+- service IPC payload validation helpers
 - generic task runner and status vocabulary
 - message taxonomy utilities
 - HTTP client wrapper utilities
@@ -25,6 +26,12 @@ The current implementation includes:
 - strict EVE timestamp validation for parsed log envelopes
 - watcher parser/listener failure isolation
 - rolling metric prune-on-add and retained-event cap
+- backend Combat Witness event and snapshot fan-out service
+- 5s/15s/30s Combat Witness rolling snapshots
+- bounded Combat Witness one-shot event stream
+- fs-watch and polling gamelog watcher strategies with diagnostics
+- reusable active scan, settings, and log path validators
+- frame always-on-top payload validation
 
 ## What Does Not Yet Exist
 
@@ -35,8 +42,6 @@ Not yet proven in this codebase:
 - Passive Telemetry lane
 - Threat Intel scan lane
 - zKill discovery to ESI expansion pipeline
-- formal normalized event bus/fan-out service
-- Combat Witness snapshot emission service
 - exact raw repair/healing parser coverage
 - local EVE system/type metadata adapters
 - network gate and live diagnostics for EVE APIs
@@ -93,9 +98,8 @@ manual scoped scan
 new combat log line
 -> parser fixture-backed normalization
 -> rolling backend cache
--> 15s computed metrics foundation
--> future 5s/15s/30s computed snapshots
--> compact renderer update
+-> 5s/15s/30s computed snapshots
+-> compact renderer-facing snapshot output
 ```
 
 ## Current Verification
@@ -106,15 +110,15 @@ Available seed command:
 npm run verify:all
 ```
 
-This verifies the current seed utilities, service rigging, Combat Witness parser/watcher foundations, renderer shell, and renderer boundary static checks. It does not verify Aura 7 feature parity.
+This verifies the current seed utilities, service rigging, Combat Witness parser/watcher/core foundations, renderer shell, and renderer boundary static checks. It does not verify Aura 7 feature parity.
 
 ## Known Gaps
 
 - some seed shell UI and fallback labels still reflect Aura Core until product shell work begins
 - no AURA-Sense runtime services yet
-- no formal Combat Witness event bus yet
-- no Combat Witness snapshot service yet
-- no chokidar-style watcher adapter or polling fallback yet; current watcher relies on `fs.watch`
+- no renderer subscription path for Combat Witness snapshots yet
+- no active scan service wired to the prepared validator yet
+- no settings save/restart service wired to the prepared validator yet
 - no exact raw repair/healing fixtures yet
 - historical Aura 7 docs remain in `docs/Concept`, `docs/research`, and historical audit files for reference
 
@@ -125,4 +129,6 @@ This verifies the current seed utilities, service rigging, Combat Witness parser
 - `docs/audits/engineering_audit_contribution.md`
 - `docs/audits/audit-2026-05-22-combat-parser-overseer-review.md`
 - `docs/audits/audit-2026-05-22-combat-parser-hardening-handover.md`
+- `docs/audits/audit-2026-05-22-combat-witness-core-handover.md`
+- `docs/audits/audit-2026-05-22-ipc-settings-validation-handover.md`
 - `docs/gap/to-do/aura-sense-rewrite-readiness.md`

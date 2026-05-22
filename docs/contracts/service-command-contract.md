@@ -25,6 +25,7 @@ A service command has:
 
 - Unknown commands fail closed.
 - Validation runs before task wrapping or handler execution.
+- Structured validation results should preserve specific error codes.
 - Command handlers receive context from the boundary layer.
 - Long-running commands can be wrapped as tasks.
 - Handler-declared task statuses such as `partial` and `capped` must survive service wrapping.

@@ -3,6 +3,11 @@ const { APP_NAME } = require('../constants');
 const { defaultTaskRunner, TASK_CLASSIFICATIONS } = require('./taskRunner');
 const { taxonomyMessage } = require('./messageTaxonomy');
 const { auraTempRoot, projectRoot } = require('../util/tempPaths');
+const {
+  validateServiceInvokeRequest,
+  validateTaskCancelPayload,
+  validateTaskListPayload
+} = require('./ipcPayloadValidation');
 
 class ServiceRegistry {
   constructor({ taskRunner = defaultTaskRunner } = {}) {
@@ -105,11 +110,13 @@ function createDefaultRegistry(options = {}) {
     .register('task.list', {
       classification: TASK_CLASSIFICATIONS.READ_ONLY,
       description: 'Return recent task history',
+      validate: validateTaskListPayload,
       handler: (payload) => registry.taskRunner.listTasks({ limit: payload?.limit || 20 })
     })
     .register('task.cancel', {
       classification: TASK_CLASSIFICATIONS.READ_ONLY,
       description: 'Request cancellation for a running task',
+      validate: validateTaskCancelPayload,
       handler: (payload) => registry.taskRunner.cancelTask(payload.task_id, payload.reason || 'User requested cancellation')
     });
 
@@ -122,7 +129,7 @@ function validatePayload(definition, payload, context, command) {
   }
 
   const result = definition.validate(payload, context);
-  if (result === true || result === undefined || result === null) {
+  if (result === true || result === undefined || result === null || result?.ok === true) {
     return { valid: true };
   }
 
@@ -192,15 +199,34 @@ function registerElectronServiceHandlers(ipcMain, registry, contextProvider = ()
   }
 
   ipcMain.handle('aura:service:list', () => registry.listCommands());
-  ipcMain.handle('aura:service:invoke', async (_event, request = {}) => registry.invoke(
-    request.command,
-    request.payload || {},
-    {
-      ...contextProvider(),
-      asTask: request.asTask === true,
-      detachedTask: request.detachedTask === true || request.background === true
+  ipcMain.handle('aura:service:invoke', async (_event, request = {}) => {
+    const validation = validateServiceInvokeRequest(request);
+    if (!validation.ok) {
+      throw validationToError(validation);
     }
-  ));
+
+    return registry.invoke(
+      request.command,
+      request.payload || {},
+      {
+        ...contextProvider(),
+        asTask: request.asTask === true,
+        detachedTask: request.detachedTask === true || request.background === true
+      }
+    );
+  });
+}
+
+function validationToError(validation) {
+  const error = new Error(validation.message);
+  error.code = validation.code || 'VALIDATION_FAILED';
+  error.taxonomy = taxonomyMessage(error.code, validation.message, {
+    source: 'service.ipc',
+    category: 'validation',
+    severity: 'warning',
+    actionable: true
+  });
+  return error;
 }
 
 module.exports = {
@@ -209,5 +235,6 @@ module.exports = {
   registerElectronServiceHandlers,
   normalizeServiceTaskResult,
   validatePayload,
-  buildSeedReadiness
+  buildSeedReadiness,
+  validationToError
 };

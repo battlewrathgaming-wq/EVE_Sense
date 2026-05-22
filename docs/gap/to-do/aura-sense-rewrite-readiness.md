@@ -12,11 +12,11 @@ Track the work required before AURA-Sense can honestly claim Aura 7 tactical vie
 - Keep package metadata mirrored to AURA-Sense and replace remaining user-facing seed shell text when product shell work begins.
 - Keep `npm run verify:all` as the offline confidence command.
 - Keep renderer boundary static checks in `npm run verify:all`.
-- Add service command validation for scan, settings, network, and frame commands.
+- Keep service command validation in place; attach prepared scan/settings validators as those runtime services are added.
 - Rebuild EVE log watcher behavior with parser fixtures.
 - Rebuild Passive Telemetry with local-first system metadata.
 - Rebuild Threat Intel with zKill discovery, ESI expansion, capped sample metadata, and freshness language.
-- Rebuild Combat Witness as backend-owned normalized events, bounded rolling cache, and 5s/15s/30s snapshots.
+- Keep Combat Witness backend-owned normalized events, bounded rolling cache, and 5s/15s/30s snapshots as the foundation for future presentation.
 - Keep live/API smoke checks separate from offline verification.
 - Record completion evidence in `docs/gap/complete/` as gaps close.
 

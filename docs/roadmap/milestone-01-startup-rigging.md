@@ -53,13 +53,15 @@ What must remain deferred?
 
 ### P1: Harden The Existing Service Boundary
 
-- P1-01: Scope `readiness-03-ipc-settings-validation.md` to the current seed boundary before implementation.
+Status: Complete in `docs/gap/complete/readiness-03-ipc-settings-validation.md`.
+
+- P1-01: Scope `readiness-03-ipc-settings-validation.md` to the current seed boundary before implementation. Complete.
 - P1-02: Validate `aura:service:invoke` request shape before dispatch: command must be a non-empty string, payload must be object-like, task flags must be boolean, and unknown fields must not silently change execution class.
 - P1-03: Validate existing command payloads first, especially `util.checksum`, `task.list`, and `task.cancel`.
 - P1-04: Add verification for accepted and rejected service payloads without launching Electron.
 - P1-05: Preserve stable service error taxonomy for validation failures.
-- P1-06: Do not implement AURA-Sense settings, active scan payloads, User-Agent rules, or log watcher restart validation until those services exist or a separate runtime-lane gap explicitly creates them.
-- P1-07: After validation lands, update the service command contract with the real enforced request and failure shapes.
+- P1-06: Do not implement AURA-Sense settings, active scan, or watcher restart services until those runtime-lane gaps exist. Complete; validators are prepared, but product services were not invented.
+- P1-07: After validation lands, update the service command contract with the real enforced request and failure shapes. Complete.
 
 ### P2: Prepare Runtime-Lane Entry Without Building Ahead Of The Boundary
 
@@ -80,32 +82,28 @@ What must remain deferred?
 
 ## Authorized First Slice
 
-The next Dev implementation slice is:
+Completed:
 
 ```txt
-docs/gap/to-do/readiness-03-ipc-settings-validation.md
+docs/gap/complete/readiness-03-ipc-settings-validation.md
 ```
 
 Overseer constraint:
 
 ```txt
-Implement validation for the current seed service boundary first.
-Do not invent settings, scans, EVE log watching, zKill, ESI, or Combat Witness runtime behavior inside this slice.
+Validation for the current seed service boundary landed first.
+Settings, scans, zKill, ESI, and renderer-facing runtime behavior were not invented inside this slice.
 ```
 
-Expected verification:
+Observed verification:
 
 ```powershell
 npm.cmd run verify:all
 ```
 
-Expected handover:
+Handover:
 
-- validators added
-- commands or IPC paths covered
-- rejected payload cases tested
-- verification output
-- any settings/runtime validation items intentionally deferred because the runtime service does not exist yet
+- `docs/audits/audit-2026-05-22-ipc-settings-validation-handover.md`
 
 ## Milestone Completion Signal
 
@@ -123,7 +121,7 @@ This milestone is complete when:
 - Aura 7 runtime parity
 - Passive Telemetry implementation
 - Threat Intel zKill/ESI implementation
-- Combat Witness parser/cache/snapshot implementation
+- Combat Witness parser/cache/snapshot implementation as milestone startup work; future presentation remains deferred
 - Atlas persistence or handoff model
 - production HUD expansion
 - live API smoke checks inside `verify:all`
@@ -134,6 +132,6 @@ This milestone is complete when:
 - `docs/current-state/current-implementation.md`
 - `docs/current-state/seed-current-state.md`
 - `docs/gap/to-do/performance-stability-compute-readiness.md`
-- `docs/gap/to-do/readiness-03-ipc-settings-validation.md`
+- `docs/gap/complete/readiness-03-ipc-settings-validation.md`
 - `docs/contracts/renderer-boundary-contract.md`
 - `docs/contracts/service-command-contract.md`

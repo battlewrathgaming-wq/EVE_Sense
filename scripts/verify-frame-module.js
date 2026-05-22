@@ -51,6 +51,7 @@ function verifySourceBoundaries() {
   assert(shellText.includes('frame: false'), 'Frame module should create frameless windows');
   assert(shellText.includes('alwaysOnTop: state.alwaysOnTop'), 'Frame module should restore always-on-top state');
   assert(shellText.includes('setAlwaysOnTop'), 'Frame module should expose always-on-top mutation');
+  assert(shellText.includes('FRAME_INVALID_ALWAYS_ON_TOP'), 'Frame module should reject invalid always-on-top payloads');
   assert(preloadText.includes('auraWindow'), 'preload should expose auraWindow bridge');
   assert(preloadText.includes('aura:window:set-always-on-top'), 'preload should expose always-on-top IPC');
   assert(htmlText.includes('frame-chrome'), 'renderer should include Frame chrome');

@@ -13,7 +13,11 @@ class EveGamelogWatcher {
     onStatus = () => {},
     onRejectedLine = () => {},
     deduper = new RecentEventDeduper(),
-    trace = () => {}
+    trace = () => {},
+    watcherStrategy = 'fs-watch',
+    pollIntervalMs = 1000,
+    setIntervalFn = setInterval,
+    clearIntervalFn = clearInterval
   } = {}) {
     this.parseLine = parseLine;
     this.onEvent = onEvent || (() => {});
@@ -21,8 +25,14 @@ class EveGamelogWatcher {
     this.onRejectedLine = onRejectedLine;
     this.deduper = deduper;
     this.trace = trace;
+    this.watcherStrategy = watcherStrategy;
+    this.pollIntervalMs = pollIntervalMs;
+    this.setIntervalFn = setIntervalFn;
+    this.clearIntervalFn = clearIntervalFn;
     this.folderPath = null;
     this.watcher = null;
+    this.poller = null;
+    this.activeStrategy = null;
     this.offsets = new Map();
     this.partials = new Map();
   }
@@ -41,28 +51,21 @@ class EveGamelogWatcher {
 
     this.folderPath = folderPath;
     this.seedOffsets(folderPath);
-    this.watcher = fs.watch(folderPath, { persistent: true }, (eventType, filename) => {
-      if (!filename || !isTextLog(filename)) {
-        return;
-      }
+    this.startStrategy(folderPath);
 
-      const filePath = path.join(folderPath, filename.toString());
-      this.handleFile(filePath);
-      this.trace('file_event', { eventType, filePath });
-    });
-
-    this.watcher.on('error', (error) => {
-      this.setStatus('error', folderPath, error.message);
-    });
-
-    return this.setStatus('watching', folderPath, 'Watching EVE gamelogs');
+    return this.setStatus('watching', folderPath, `Watching EVE gamelogs via ${this.activeStrategy}`);
   }
 
   stop() {
     if (this.watcher) {
       this.watcher.close();
     }
+    if (this.poller) {
+      this.clearIntervalFn(this.poller);
+    }
     this.watcher = null;
+    this.poller = null;
+    this.activeStrategy = null;
     this.folderPath = null;
     this.offsets.clear();
     this.partials.clear();
@@ -80,6 +83,83 @@ class EveGamelogWatcher {
     }
 
     this.trace('offsets_seeded', { folderPath, files: this.offsets.size });
+  }
+
+  startStrategy(folderPath) {
+    if (this.watcherStrategy === 'polling') {
+      this.startPolling(folderPath);
+      return;
+    }
+
+    try {
+      this.startFsWatch(folderPath);
+    } catch (error) {
+      if (this.watcherStrategy !== 'auto') {
+        throw error;
+      }
+      this.trace('watcher_strategy_fallback', {
+        from: 'fs-watch',
+        to: 'polling',
+        message: error.message
+      });
+      this.startPolling(folderPath);
+    }
+  }
+
+  startFsWatch(folderPath) {
+    this.watcher = fs.watch(folderPath, { persistent: true }, (eventType, filename) => {
+      if (!filename || !isTextLog(filename)) {
+        return;
+      }
+
+      const filePath = path.join(folderPath, filename.toString());
+      this.handleFile(filePath);
+      this.trace('file_event', { eventType, filePath, strategy: this.activeStrategy });
+    });
+
+    this.watcher.on('error', (error) => {
+      this.setStatus('error', folderPath, error.message);
+    });
+
+    this.activeStrategy = 'fs-watch';
+    this.trace('watcher_strategy', { strategy: this.activeStrategy, folderPath });
+  }
+
+  startPolling(folderPath) {
+    this.activeStrategy = 'polling';
+    this.poller = this.setIntervalFn(() => {
+      this.pollOnce();
+    }, this.pollIntervalMs);
+    this.trace('watcher_strategy', {
+      strategy: this.activeStrategy,
+      folderPath,
+      intervalMs: this.pollIntervalMs
+    });
+  }
+
+  pollOnce() {
+    if (!this.folderPath) {
+      return [];
+    }
+
+    const events = [];
+    let entries;
+    try {
+      entries = fs.readdirSync(this.folderPath, { withFileTypes: true });
+    } catch (error) {
+      this.setStatus('error', this.folderPath, error.message);
+      return events;
+    }
+
+    for (const entry of entries) {
+      if (!entry.isFile() || !isTextLog(entry.name)) {
+        continue;
+      }
+      const filePath = path.join(this.folderPath, entry.name);
+      events.push(...this.handleFile(filePath));
+    }
+    this.trace('poll_tick', { folderPath: this.folderPath, events: events.length });
+    return events;
   }
 
   handleFile(filePath) {
@@ -158,7 +238,7 @@ class EveGamelogWatcher {
   }
 
   setStatus(state, folderPath, message) {
-    const status = { state, path: folderPath, message };
+    const status = { state, path: folderPath, message, strategy: this.activeStrategy };
     this.onStatus(status);
     this.trace('status', status);
     return status;

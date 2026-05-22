@@ -36,6 +36,8 @@ One command proves the offline confidence set before larger refactors.
 
 ## Priority 2: IPC And Settings Validation
 
+Status: Complete in `docs/gap/complete/readiness-03-ipc-settings-validation.md`.
+
 ### Actionables
 
 - Validate active scan payloads.
@@ -114,7 +116,7 @@ Renderer remains presentation-only as the app grows.
 
 ## Priority 7: Combat Witness Core
 
-Status: Open - Partial. Parser, gamelog watcher, duplicate suppression, 15 second rolling metrics, prune-on-add retention, and a retained-event cap exist. Watcher strategy hardening, event fan-out, 5s/15s/30s snapshots, and compact renderer snapshot emission remain open.
+Status: Complete in `docs/gap/complete/readiness-07-combat-witness-core.md`.
 
 ### Actionables
 
@@ -183,13 +185,11 @@ Threat Intel avoids `Type <id>` where local metadata can provide a readable labe
 
 This overview has been split into individual task files so each line can be implemented, reviewed, and moved to `docs/gap/complete/` independently.
 
-1. `readiness-03-ipc-settings-validation.md`
-2. `readiness-04-diagnostics-throttling.md`
-3. `readiness-05-zkill-ref-boundary.md`
-4. `readiness-06-threat-intel-sample-metadata.md`
-5. `readiness-07-combat-witness-core.md`
-6. `readiness-09-local-type-metadata.md`
-7. `readiness-10-runtime-error-handling.md`
+1. `readiness-04-diagnostics-throttling.md`
+2. `readiness-05-zkill-ref-boundary.md`
+3. `readiness-06-threat-intel-sample-metadata.md`
+4. `readiness-09-local-type-metadata.md`
+5. `readiness-10-runtime-error-handling.md`
 
 This sequence improves safety before adding heavier combat features.
 

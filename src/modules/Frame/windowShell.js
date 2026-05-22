@@ -64,8 +64,13 @@ function registerFrameWindowHandlers(ipcMain, app, getWindow, options = {}) {
   ipcMain.handle(channels.getState, () => frameStateForWindow(getWindow()));
 
   ipcMain.handle(channels.setAlwaysOnTop, (_event, enabled) => {
+    if (typeof enabled !== 'boolean') {
+      const error = new Error('Always-on-top value must be a boolean');
+      error.code = 'FRAME_INVALID_ALWAYS_ON_TOP';
+      throw error;
+    }
     const window = getWindow();
-    const next = enabled === true;
+    const next = enabled;
     if (window && !window.isDestroyed()) {
       window.setAlwaysOnTop(next);
       window.__auraFrameState = saveFrameState(app, {
