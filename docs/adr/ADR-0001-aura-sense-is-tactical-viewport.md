@@ -24,5 +24,5 @@ Persistent historical memory should be handled by Atlas or an explicit handoff.
 ## Related Documents
 
 - `docs/tenets/tenets.md`
-- `docs/adr/ADR-0002-aura-sense-inherits-aura7-scope.md`
-- `docs/audits/audit-2026-05-22-aura7-scope-alignment.md`
+- `docs/adr/ADR-0002-aura-sense-tactical-scope.md`
+- `docs/features/vision.md`

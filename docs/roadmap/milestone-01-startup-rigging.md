@@ -8,7 +8,7 @@ Owner: Overseer direction, Dev execution
 
 This milestone got AURA-Sense safely moving from verified seed rigging into the first AURA-Sense-specific runtime work.
 
-The goal was not full tactical viewport readiness. The goal was to establish a clean starting line: current-state truth is explicit, historical Aura 7 notes are treated as lineage rather than proof, the renderer boundary remains guarded, and service/IPC validation is strong enough that future telemetry lanes cannot be driven into invalid or misleading states from the UI.
+The goal was not full tactical viewport readiness. The goal was to establish a clean starting line: current-state truth is explicit, older imported notes do not outrank current contracts, the renderer boundary remains guarded, and service/IPC validation is strong enough that future telemetry lanes cannot be driven into invalid or misleading states from the UI.
 
 AURA-Sense should start boring and observable. The first Dev slices should reduce ambiguity before adding tactical features. If a task requires Passive Telemetry, Threat Intel, zKill, ESI, settings persistence, or Combat Witness runtime behavior that does not yet exist in this seed, Dev should either create the smallest explicit contract/gap for that missing boundary or defer the task until the runtime lane exists.
 
@@ -16,7 +16,7 @@ Milestone success means a new Dev session can answer:
 
 ```txt
 What is implemented now?
-What is only inherited scope?
+What is only planned scope?
 What boundary is being hardened next?
 What verification proves it?
 What must remain deferred?
@@ -44,7 +44,7 @@ The project is still not full tactical viewport readiness. The next work should 
 - Seed verification covers core utilities, services, HTTP client behavior, Frame module behavior, renderer shell behavior, renderer boundary static checks, Combat Witness parser/watcher behavior, and Combat Witness core snapshots.
 - Combat Witness backend foundations exist, but renderer presentation is not wired.
 - Passive Telemetry and Threat Intel runtime lanes are not rebuilt yet.
-- Historical Aura 7 audits and concept docs are useful context, but current-state notes and the docs context handover take precedence.
+- Older audits and concept docs are useful context, but current-state notes and the latest Overseer handover take precedence.
 
 ## Doctrine Guardrails
 
@@ -62,7 +62,7 @@ The project is still not full tactical viewport readiness. The next work should 
 
 - P0-01: Run `npm.cmd run verify:all` before and after any milestone change; record failures with the exact failing check.
 - P0-02: Treat `docs/audits/audit-2026-05-22-docs-context-handover.md` as the active handover for this milestone.
-- P0-03: Treat older Aura 7 implementation audits as historical where they conflict with `docs/current-state/current-implementation.md`.
+- P0-03: Treat older implementation audits as superseded where they conflict with `docs/current-state/current-implementation.md`.
 - P0-04: Update `docs/contracts/renderer-boundary-contract.md` so its verification section names `npm run verify:renderer-boundary`.
 - P0-05: Keep `docs/gap/complete/readiness-01-verification-harness.md` and `docs/gap/complete/readiness-02-renderer-boundary-static-checks.md` retired as complete; do not reopen them unless verification regresses.
 - P0-06: Fix or replace references to missing docs such as `Docs/terms/metadata.md` before assigning a Dev slice that depends on them.
@@ -91,10 +91,10 @@ Status: Complete in `docs/gap/complete/readiness-03-ipc-settings-validation.md`.
 ### P3: Documentation And Continuity Cleanup
 
 - P3-01: Add or update terms for `metadata`, `AURA-Sense`, and `core seed` so gap references resolve cleanly.
-- P3-02: Mark historical audits as historical snapshots if they mention old Aura 7 files, old script names, or missing `verify:all`.
+- P3-02: Mark older audits as snapshots if they mention old files, old script names, or missing `verify:all`.
 - P3-03: Keep `docs/current-state/current-implementation.md` updated after each meaningful implementation change.
 - P3-04: Move completed gap packets to `docs/gap/complete` with verification output and deferred risks.
-- P3-05: Do not delete historical concept docs; add precedence notes where confusion is likely.
+- P3-05: Rework concept docs into AURA-Sense language where confusion is likely.
 
 ## Authorized First Slice
 
@@ -129,7 +129,7 @@ This milestone is complete when:
 - missing documentation references are resolved or corrected. Complete for startup scope.
 - current seed service IPC validation is implemented and verified. Complete.
 - `verify:all` remains offline and passing. Complete.
-- docs clearly distinguish implemented runtime behavior from historical tactical lineage. Complete enough for next milestone.
+- docs clearly distinguish implemented runtime behavior from planned tactical scope. Complete enough for next milestone.
 - the next milestone can start one runtime lane without ambiguity about ownership or verification. Complete.
 
 ## Explicit Deferrals

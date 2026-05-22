@@ -59,7 +59,7 @@ Renderer presentation remains intentionally deferred to Milestone 03.
 - P0-01: Run `npm.cmd run verify:all` before and after every milestone slice.
 - P0-02: Update `docs/current-state/current-implementation.md` after any runtime boundary changes.
 - P0-03: Move completed gap packets to `docs/gap/complete` with verification output.
-- P0-04: Do not treat historical Aura 7 audits as current implementation truth.
+- P0-04: Do not treat older audits as current implementation truth.
 
 ### P1: Diagnostics Throttling
 

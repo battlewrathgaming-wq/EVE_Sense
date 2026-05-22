@@ -1,11 +1,11 @@
 # Audit: Core Seed Build Readiness
 
 Date: 2026-05-22
-Scope: Aura Core seed readiness for future Aura projects, including code review of services, utilities, renderer shell, verification scripts, and documentation workflow.
+Scope: seed readiness for future Aura projects, including code review of services, utilities, renderer shell, verification scripts, and documentation workflow.
 
 ## Verdict
 
-Aura Core is ready to build from as a neutral seed, with caveats.
+seed rigging is ready to build from as a neutral seed, with caveats.
 
 It has the right bones:
 
@@ -307,6 +307,6 @@ all checks verified
 
 ## Final Read
 
-Aura Core is ready to build from as a seed.
+seed rigging is ready to build from as a seed.
 
 It should not receive domain-specific persistence, datasets, live integrations, or product UI yet. The next best move is a short hardening milestone that turns the seed from "usable scaffold" into "comfortable base layer" for future Aura projects.

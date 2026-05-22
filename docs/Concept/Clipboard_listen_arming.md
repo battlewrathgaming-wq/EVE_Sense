@@ -1,14 +1,14 @@
-# AURA-7 — Clipboard Tactical Acquisition Feature Brief
+# AURA-Sense — Clipboard Tactical Acquisition Feature Brief
 
 ## Purpose
 
-AURA-7 should support a temporary clipboard acquisition feature.
+AURA-Sense should support a temporary clipboard acquisition feature.
 
-This feature allows the user to quickly copy a tactical search target from EVE and have AURA-7 detect, validate, and search it with minimal interaction.
+This feature allows the user to quickly copy a tactical search target from EVE and have AURA-Sense detect, validate, and search it with minimal interaction.
 
 This is not treated as a separate companion mode.
 
-It is a general AURA-7 input module that supports different user behaviours:
+It is a general AURA-Sense input module that supports different user behaviours:
 - visible overlay use
 - low-interaction use
 - fullscreen-adjacent use
@@ -26,7 +26,7 @@ It should feel like:
 A short tactical acquisition window.
 ```
 
-The user deliberately opens the window, AURA-7 listens briefly, then the listener seals itself.
+The user deliberately opens the window, AURA-Sense listens briefly, then the listener seals itself.
 
 Core principle:
 
@@ -105,7 +105,7 @@ The acquisition window should last:
 This is long enough for the user to:
 - arm the listener
 - copy the intended target
-- allow AURA-7 to acquire it
+- allow AURA-Sense to acquire it
 
 It is short enough to:
 - reduce privacy concerns
@@ -118,7 +118,7 @@ If a valid search target is detected and processed, the listener should close im
 
 # Clipboard Behaviour
 
-During the acquisition window, AURA-7 may inspect clipboard changes.
+During the acquisition window, AURA-Sense may inspect clipboard changes.
 
 Valid clipboard content may include:
 - pilot names
@@ -153,7 +153,7 @@ Scoped search triggered
 Listener sealed
 ```
 
-The feature supports tactical inquiry without requiring persistent focus on the AURA-7 UI.
+The feature supports tactical inquiry without requiring persistent focus on the AURA-Sense UI.
 
 This preserves the value of:
 - system pulse
@@ -261,7 +261,7 @@ A sensor aperture briefly opening and closing.
 
 The clipboard system is consent-driven.
 
-AURA-7 should not behave as if it is always watching the clipboard.
+AURA-Sense should not behave as if it is always watching the clipboard.
 
 Instead:
 - the user arms the listener deliberately
@@ -280,7 +280,7 @@ This protects against accidental capture during:
 The user should never have to wonder:
 
 ```text
-Is AURA-7 currently watching my clipboard?
+Is AURA-Sense currently watching my clipboard?
 ```
 
 The UI should make the answer obvious.
@@ -305,7 +305,7 @@ It is:
 
 ---
 
-# Relationship To AURA-7 Systems
+# Relationship To AURA-Sense Systems
 
 The clipboard acquisition feature supports:
 - Threat Intel
@@ -353,5 +353,5 @@ The clipboard listener is not always listening.
 
 The user opens a short tactical acquisition window.
 
-AURA-7 acquires, acts, and seals.
+AURA-Sense acquires, acts, and seals.
 ```

@@ -1,6 +1,6 @@
 # Data Display
 
-AURA-7 senses telemetry.
+AURA-Sense senses telemetry.
 It does not replace pilot judgement, fleet cohesion, or the EVE interface.
 
 The purpose of displayed data is:
@@ -51,7 +51,7 @@ Application often reflects:
 - positioning,
 - or degrading defense.
 
-AURA-7 surfaces the state.
+AURA-Sense surfaces the state.
 The pilot interprets the cause.
 
 Example:
@@ -84,7 +84,7 @@ Mercenary Hyena
 
 Only the dominant 1–2 weapon groups should be surfaced.
 
-AURA-7 does not prescribe counterplay.
+AURA-Sense does not prescribe counterplay.
 It surfaces what is applying most often.
 
 ---
@@ -124,7 +124,7 @@ Repairs stable
 Incoming stable
 Repairs falling
 
-AURA-7 does not issue combat instructions.
+AURA-Sense does not issue combat instructions.
 It surfaces changing combat state.
 
 ---
@@ -148,7 +148,7 @@ Mercenary Hyena
 
 # Source Compression
 
-AURA-7 does not attempt to display every hostile participant.
+AURA-Sense does not attempt to display every hostile participant.
 
 Large engagements are compressed into:
 - dominant weapon groups,
@@ -169,4 +169,4 @@ Pithatis Assaulter
 Combat logs are noisy.
 Combat state is not.
 
-AURA-7 condenses high-frequency combat events into concise operational telemetry requiring pilot awareness, attention, or response.
+AURA-Sense condenses high-frequency combat events into concise operational telemetry requiring pilot awareness, attention, or response.

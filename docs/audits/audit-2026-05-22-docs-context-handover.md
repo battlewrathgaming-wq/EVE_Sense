@@ -7,13 +7,13 @@ Scope: Context review of AURA-Sense documentation spine, contracts, current-stat
 
 Ready with caveats.
 
-AURA-Sense has a coherent documentation spine for scoped Dev implementation. The current-state notes correctly describe the project as a rewrite seed, not Aura 7 runtime parity.
+AURA-Sense has a coherent documentation spine for scoped Dev implementation. Current-state notes describe the project as a verified runtime foundation, not full tactical viewport readiness.
 
 ## Operating Context
 
-- AURA-Sense is the tactical viewport rewrite.
+- AURA-Sense is the tactical viewport product.
 - AURA Atlas remains the persistent evidence map.
-- Current implementation is still an Aura Core-based Electron seed with AURA-Sense doctrine and verification rigging.
+- Current implementation is an Electron runtime foundation with AURA-Sense doctrine and verification rigging.
 - Current verification covers seed utilities, service rigging, renderer shell behavior, Frame module behavior, HTTP utilities, and renderer boundary static checks.
 - EVE runtime lanes are not rebuilt yet.
 
@@ -50,14 +50,14 @@ Then continue with:
 
 - `docs/contracts/renderer-boundary-contract.md` still says verification is "To be defined", but `scripts/verify-renderer-boundary.js` now exists and is included in `npm run verify:all`.
 - `docs/gap/to-do/readiness-09-local-type-metadata.md` referenced `Docs/terms/metadata.md`; this has since been resolved by adding `docs/terms/metadata.md`.
-- Historical audits and concept docs preserve Aura 7 wording by design; current-state docs should take precedence when implementation truth is needed.
+- Historical audits and concept docs preserve AURA-Sense wording by design; current-state docs should take precedence when implementation truth is needed.
 - Several historical references use `Docs/` casing. This is probably harmless on Windows, but future cross-platform work should prefer the repository's actual `docs/` casing.
 
 ## Recommended Follow-Up
 
 - Update the renderer boundary contract verification section to name `npm run verify:renderer-boundary`.
 - Keep `docs/terms/metadata.md` available for local type metadata work.
-- Keep historical Aura 7 audit notes intact unless Overseer explicitly requests archival cleanup.
+- Keep older audit notes below current-state, feature vision, and the latest Overseer handover.
 - Continue with `readiness-03-ipc-settings-validation.md` as the next scoped Dev slice.
 
 ## Verification

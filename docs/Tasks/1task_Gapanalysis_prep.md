@@ -1,4 +1,4 @@
-Review the current AURA-7 codebase and produce a technical brief of the implementation as it exists now.
+Review the current AURA-Sense codebase and produce a technical brief of the implementation as it exists now.
 
 Do not propose major changes yet.
 

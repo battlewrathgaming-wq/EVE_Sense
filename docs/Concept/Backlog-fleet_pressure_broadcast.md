@@ -20,7 +20,7 @@ Dependency:
 
 # Purpose
 
-Allow AURA-7 clients to broadcast lightweight tactical pressure telemetry to a centralized fleet console.
+Allow AURA-Sense clients to broadcast lightweight tactical pressure telemetry to a centralized fleet console.
 
 Primary intended consumers:
 - Fleet Commander (FC)
@@ -39,7 +39,7 @@ The goal is lightweight operational awareness only.
 
 # Core Concept
 
-AURA-7 clients may periodically broadcast:
+AURA-Sense clients may periodically broadcast:
 
 ```text
 [Name][Location][Prs-s][DPSrT]
@@ -108,7 +108,7 @@ The system should avoid:
 Preferred architecture:
 
 ```text
-AURA-7 Client
+AURA-Sense Client
     ↓ outbound only
 Relay Service
     ↓ outbound only

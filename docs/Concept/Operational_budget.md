@@ -46,15 +46,15 @@ The project should prioritize:
 
 # Project Separation
 
-## AURA-7
+## AURA-Sense
 
-AURA-7 is:
+AURA-Sense is:
 - transient
 - tactical
 - event-driven
 - low-retention
 
-AURA-7 should prioritize:
+AURA-Sense should prioritize:
 - responsiveness
 - low idle cost
 - bounded memory
@@ -120,7 +120,7 @@ Large install size alone is not considered a failure condition.
 
 # Memory Budgets
 
-# AURA-7 Runtime Memory
+# AURA-Sense Runtime Memory
 
 ## Idle Target
 
@@ -241,7 +241,7 @@ not:
 10%+ idle
 ```
 
-AURA-7 should feel:
+AURA-Sense should feel:
 - mostly dormant
 - event-driven
 - low activity while idle
@@ -326,9 +326,9 @@ The system should:
 
 # Storage Budgets
 
-# AURA-7 Storage
+# AURA-Sense Storage
 
-AURA-7 should remain lightweight and transient.
+AURA-Sense should remain lightweight and transient.
 
 ---
 
@@ -355,7 +355,7 @@ transient
 non-permanent
 ```
 
-AURA-7 should not become:
+AURA-Sense should not become:
 - a telemetry archive
 - a historical warehouse
 - a persistent evidence system
@@ -517,7 +517,7 @@ Codex should avoid:
 - duplicate ownership
 - broad polling loops
 - renderer-heavy state
-- permanent combat history in AURA-7
+- permanent combat history in AURA-Sense
 - unnecessary enrichment
 - unbounded arrays or caches
 

@@ -191,7 +191,7 @@ Do:
 
 Do not:
 
-- imply Aura 7 parity
+- imply AURA-Sense parity
 - build Threat Intel or Passive Telemetry in the same slice
 - add recommendations or inferred combat truth
 

@@ -1,8 +1,8 @@
-# AURA-7 — High Level & Technical Architecture Reference
+# AURA-Sense — High Level & Technical Architecture Reference
 
 ## Purpose
 
-AURA-7 is a real-time tactical overlay for EVE Online.
+AURA-Sense is a real-time tactical overlay for EVE Online.
 
 Its purpose is:
 - immediate operational awareness
@@ -11,14 +11,14 @@ Its purpose is:
 - combat witness telemetry
 - low cognitive load presentation
 
-AURA-7 is intentionally:
+AURA-Sense is intentionally:
 - observational
 - conservative
 - cache-aware
 - uncertainty-aware
 - evidence-driven
 
-AURA-7 answers:
+AURA-Sense answers:
 
 "What is happening around me right now?"
 "What must I do?"
@@ -35,7 +35,7 @@ Persistent intelligence belongs to AURA Atlas.
 
 # Product Separation
 
-## AURA-7
+## AURA-Sense
 
 Role:
 - tactical viewport
@@ -76,7 +76,7 @@ Answers:
 
 ## Observational Truth
 
-AURA-7 reports:
+AURA-Sense reports:
 - observed events
 - tactical telemetry
 - scoped summaries
@@ -479,7 +479,7 @@ getEventsSince(windowMs)
 
 # Event Streams vs Snapshot Metrics
 
-AURA-7 separates:
+AURA-Sense separates:
 
 ## Snapshot Metrics
 
@@ -644,7 +644,7 @@ Spikes:
 
 # Mode Architecture
 
-AURA-7 uses one shared HUD shell.
+AURA-Sense uses one shared HUD shell.
 
 Modes:
 - Intel Mode
@@ -735,7 +735,7 @@ Optimization rules:
 
 # Network Philosophy
 
-AURA-7 is intentionally conservative.
+AURA-Sense is intentionally conservative.
 
 Goals:
 - sustainable polling

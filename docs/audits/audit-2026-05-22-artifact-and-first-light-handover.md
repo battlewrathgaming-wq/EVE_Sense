@@ -54,7 +54,7 @@ This is enough for continuity. The main risk is volume: future sessions must tre
 ## Artifact Guardrails
 
 - Keep completed gaps; do not delete them.
-- Keep historical Aura 7 docs as lineage, not current implementation truth.
+- Keep older audits below current-state, feature vision, and the latest Overseer handover.
 - Keep current-state updated after meaningful runtime changes.
 - Use handover audits when a Dev slice changes milestone state or leaves residual risk.
 - Add failure records only for reusable bug classes, not every small defect.

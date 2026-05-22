@@ -45,7 +45,7 @@ all checks verified
 
 - Live API smoke checks remain excluded.
 - Electron launch smoke remains excluded.
-- Historical Aura 7 script names such as `verify:entity`, `verify:network`, `verify:rendering`, `verify:network-rendering`, `verify:passive-isolation`, and `verify:compact-hud` are not current AURA-Sense seed scripts.
+- Retired script names such as `verify:entity`, `verify:network`, `verify:rendering`, `verify:network-rendering`, `verify:passive-isolation`, and `verify:compact-hud` are not current AURA-Sense scripts.
 
 ## Related Documents
 

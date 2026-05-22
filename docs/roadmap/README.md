@@ -1,10 +1,10 @@
-﻿# Roadmap
+# Roadmap
 
 This folder stores future-facing direction.
 
 Roadmap docs are not commitments. They describe intended evolution, dependencies, and risks.
 
-Seed candidates:
+Current entries:
 
 - `milestone-01-startup-rigging.md`
 - `milestone-02-runtime-observability.md`

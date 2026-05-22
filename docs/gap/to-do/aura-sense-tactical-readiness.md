@@ -1,4 +1,4 @@
-# Gap To-Do: AURA-Sense Rewrite Readiness
+# Gap To-Do: AURA-Sense Tactical Readiness
 
 Date: 2026-05-22
 Status: Open
@@ -28,7 +28,7 @@ Track the work required before AURA-Sense can honestly claim tactical viewport r
 - Do not merge Passive Telemetry, Threat Intel, and Combat Witness into one ambiguous global threat object.
 - Do not copy Atlas persistence or watch execution into AURA-Sense core.
 - Do not imply complete combat or intelligence certainty in UI language.
-- Do not treat historical lineage docs as proof of current AURA-Sense runtime behavior.
+- Do not treat older imported docs as proof of current AURA-Sense runtime behavior.
 - Do not wire renderer Combat Witness presentation until diagnostics and runtime failure handling are ready enough to make degraded states visible.
 - Do not treat Tactical Viewport First Light as full tactical viewport readiness; it is a narrow proof of renderer-owned presentation over backend-owned snapshots.
 
@@ -38,7 +38,7 @@ AURA-Sense has a verified tactical viewport skeleton with separated telemetry la
 
 ## Related Documents
 
-- `docs/audits/audit-2026-05-22-aura7-scope-alignment.md`
+- `docs/audits/audit-2026-05-22-aura-sense-scope-alignment.md`
 - `docs/tenets/tenets.md`
 - `docs/contracts/telemetry-lane-contract.md`
 - `docs/contracts/renderer-boundary-contract.md`

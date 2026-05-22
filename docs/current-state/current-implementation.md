@@ -107,7 +107,7 @@ new combat log line
 
 ## Current Verification
 
-Available seed command:
+Available command:
 
 ```powershell
 npm run verify:all
@@ -124,12 +124,12 @@ This verifies the current utilities, service rigging, Combat Witness parser/watc
 - no active scan service wired to the prepared validator yet
 - no settings save/restart service wired to the prepared validator yet
 - no exact raw repair/healing fixtures yet
-- historical Aura 7 docs remain in `docs/Concept`, `docs/research`, and historical audit files for lineage only
+- concept and research docs are AURA-Sense product doctrine or evidence notes; older audit records may still describe past cleanup work
 
 ## Related Documents
 
 - `docs/current-state/seed-current-state.md`
-- `docs/audits/audit-2026-05-22-aura7-scope-alignment.md`
+- `docs/audits/audit-2026-05-22-aura-sense-scope-alignment.md`
 - `docs/audits/engineering_audit_contribution.md`
 - `docs/audits/audit-2026-05-22-combat-parser-overseer-review.md`
 - `docs/audits/audit-2026-05-22-combat-parser-hardening-handover.md`
@@ -140,7 +140,9 @@ This verifies the current utilities, service rigging, Combat Witness parser/watc
 - `docs/audits/audit-2026-05-22-combat-witness-snapshot-bridge-handover.md`
 - `docs/audits/audit-2026-05-22-artifact-and-first-light-handover.md`
 - `docs/audits/audit-2026-05-22-documentation-drift-overseer-review.md`
-- `docs/gap/to-do/aura-sense-rewrite-readiness.md`
+- `docs/audits/audit-2026-05-22-aura-sense-reconceptualization-handover.md`
+- `docs/gap/to-do/aura-sense-tactical-readiness.md`
+- `docs/features/vision.md`
 - `docs/roadmap/milestone-02-runtime-observability.md`
 - `docs/roadmap/milestone-03-tactical-viewport-first-light.md`
 - `docs/roadmap/development-artifact-trail.md`

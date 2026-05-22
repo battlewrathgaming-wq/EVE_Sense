@@ -1,6 +1,6 @@
 # Feature: Clipboard Acquisition
 
-Status: Seed From Existing Concept
+Status: Conceptual Goalpost
 Date: 2026-05-22
 
 ## Purpose
@@ -23,5 +23,5 @@ Presentation/input workflow. Not evidence and not persistent intelligence.
 
 ## Related Documents
 
-- `Docs/Concept/Clipboard_listen_arming.md`
+- `docs/Concept/Clipboard_listen_arming.md`
 

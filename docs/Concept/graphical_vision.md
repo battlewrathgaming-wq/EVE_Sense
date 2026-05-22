@@ -1,8 +1,8 @@
-# AURA-7 — Adaptive Rendering & Performance Degradation Brief
+# AURA-Sense — Adaptive Rendering & Performance Degradation Brief
 
 # Purpose
 
-AURA-7 is a tactical telemetry overlay.
+AURA-Sense is a tactical telemetry overlay.
 
 Telemetry clarity, responsiveness, and operational stability are more important than visual presentation.
 
@@ -35,7 +35,7 @@ Visual systems are subordinate to:
 
 # Design Philosophy
 
-AURA-7 should feel:
+AURA-Sense should feel:
 - calm
 - restrained
 - tactical
@@ -412,7 +412,7 @@ Codex should avoid:
 # Core Principle
 
 ```text
-AURA-7 is a tactical overlay first.
+AURA-Sense is a tactical overlay first.
 
 Presentation enhances telemetry.
 

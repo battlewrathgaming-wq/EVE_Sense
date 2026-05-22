@@ -1,8 +1,8 @@
 # AURA-Sense Documentation
 
-This folder preserves the rewrite memory for AURA-Sense.
+This folder preserves the operational memory for AURA-Sense.
 
-AURA-Sense owns the current tactical viewport direction. Earlier Aura 7 docs preserve lineage and tactical doctrine, but current-state records, active gap packets, contracts, and verified implementation are authoritative for this repository.
+AURA-Sense owns the tactical viewport direction. Current-state records, active gap packets, contracts, feature vision, and verified implementation are authoritative for this repository.
 
 AURA-Sense answers:
 
@@ -29,7 +29,7 @@ AURA-Sense's main risks are semantic drift and premature implementation weight:
 - UI language implying certainty beyond observation
 - external calls widening beyond scoped tactical need
 - persistent storage creeping into a transient HUD product
-- historical lineage being mistaken for settled AURA-Sense design
+- outdated or imported phrasing being mistaken for settled AURA-Sense design
 
 The documentation library preserves why the system behaves a certain way, not only how it currently works.
 
@@ -38,7 +38,7 @@ The documentation library preserves why the system behaves a certain way, not on
 | Folder | Purpose | Change Frequency |
 | --- | --- | --- |
 | `current-state/` | Grounded description of what currently exists in AURA-Sense | As implementation changes |
-| `research/` | Exploratory findings and historical lineage reference notes | As discoveries are made |
+| `research/` | Exploratory findings and tactical evidence notes | As discoveries are made |
 | `contracts/` | Stable rules, ownership boundaries, and interface expectations | Carefully and intentionally |
 | `tenets/` | Foundational truths and architectural invariants | Rare |
 | `statements/` | Operational doctrine and emerging philosophy | Occasional |
@@ -53,7 +53,7 @@ The documentation library preserves why the system behaves a certain way, not on
 | `roadmap/` | Future-facing architecture and product direction | As strategy evolves |
 | `terms/` | Plain-language explanations of project concepts | When terminology needs shared understanding |
 | `templates/` | Templates for durable documentation artifacts | Rare |
-| `Concept/` | Historical Aura 7 concept briefs for lineage only | Reference/history |
+| `Concept/` | AURA-Sense concept briefs and high-level doctrine | Reference/history |
 | `Tasks/` | Historical task briefs | Reference/history |
 
 ## Artifact Rules
@@ -89,5 +89,5 @@ The following concepts should remain preserved across implementation:
 - UI copy must not overclaim certainty.
 - Live API usage must remain scoped, gated, cached, and respectful.
 - Local static metadata should be preferred over repeated live lookup.
-- Aura 7 docs are lineage, not proof that AURA-Sense implementation already has the same behavior.
-- Aura Core seed rigging is infrastructure, not product doctrine.
+- Imported or older docs must be rewritten into AURA-Sense terms before they guide work.
+- Seed rigging is infrastructure, not product doctrine.

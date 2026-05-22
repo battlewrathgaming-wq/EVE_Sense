@@ -1,12 +1,12 @@
-# AURA-7 Telemetry Findings
+# AURA-Sense Telemetry Findings
 
 ## Purpose
 
-This document consolidates findings extracted from EVE Online gamelog analysis to inform parser, telemetry, and UI-agent development for AURA-7.
+This document consolidates findings extracted from EVE Online gamelog analysis to inform parser, telemetry, and UI-agent development for AURA-Sense.
 
-The purpose of AURA-7 is not to replace the EVE interface, FC judgement, or pilot instinct.
+The purpose of AURA-Sense is not to replace the EVE interface, FC judgement, or pilot instinct.
 
-AURA-7 senses telemetry and compresses high-frequency combat and operational events into concise battlefield state.
+AURA-Sense senses telemetry and compresses high-frequency combat and operational events into concise battlefield state.
 
 The system is:
 - observational,
@@ -19,11 +19,11 @@ The system is:
 
 # Core Truths
 
-- Outside of "You" and current ship identity, AURA-7 remains agnostic to allegiance, intent, and outcome.
+- Outside of "You" and current ship identity, AURA-Sense remains agnostic to allegiance, intent, and outcome.
 
 - Only the pilot, fleet cohesion, positioning, allied support, and hostile weakness determine survival.
 
-- AURA-7 surfaces telemetry, not instructions.
+- AURA-Sense surfaces telemetry, not instructions.
 
 - The system does not attempt to assess the battlefield.
 
@@ -107,7 +107,7 @@ The parser is not the product.
 The event bus is not the product.
 The UI is not the product.
 
-AURA-7 exists to transform:
+AURA-Sense exists to transform:
 
 ```text
 noise → concise operational awareness
@@ -148,7 +148,7 @@ Incoming:
 Outgoing:
 - pale green → strong green
 
-AURA-7 does not explain why application changed.
+AURA-Sense does not explain why application changed.
 It surfaces that it changed.
 
 ---
@@ -235,7 +235,7 @@ vs
 repair throughput
 ```
 
-AURA-7 should surface changing equilibrium, not combat recommendations.
+AURA-Sense should surface changing equilibrium, not combat recommendations.
 
 ---
 
@@ -512,7 +512,7 @@ GameEvent
 
 # Final Design Principle
 
-AURA-7 should not mirror the combat log.
+AURA-Sense should not mirror the combat log.
 
 It should surface:
 - changing combat qualities,

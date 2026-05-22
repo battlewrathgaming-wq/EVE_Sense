@@ -1,8 +1,8 @@
-# AURA-7 — General Design Scope & Development Framing
+# AURA-Sense — General Design Scope & Development Framing
 
 ## Project Identity
 
-AURA-7 is a real-time tactical telemetry overlay for EVE Online built as an Electron application.
+AURA-Sense is a real-time tactical telemetry overlay for EVE Online built as an Electron application.
 
 It is designed as:
 - a lightweight operational awareness system
@@ -24,7 +24,7 @@ AURA Atlas.
 
 ## Primary Objective
 
-AURA-7 exists to answer two questions:
+AURA-Sense exists to answer two questions:
 
 > “What is happening around me right now?”
 
@@ -52,7 +52,7 @@ The system intentionally deprioritizes:
 
 ## Observational Truth
 
-AURA-7 is an observational system.
+AURA-Sense is an observational system.
 
 It reports:
 - observed events
@@ -82,9 +82,9 @@ without overstating certainty.
 
 # Product Boundary
 
-## AURA-7 Responsibilities
+## AURA-Sense Responsibilities
 
-AURA-7 handles:
+AURA-Sense handles:
 - passive telemetry
 - tactical overlays
 - rolling combat telemetry
@@ -92,7 +92,7 @@ AURA-7 handles:
 - operational summaries
 - immediate combat awareness
 
-AURA-7 focuses on:
+AURA-Sense focuses on:
 - now
 - current pressure
 - recent events
@@ -119,7 +119,7 @@ AURA Atlas focuses on:
 
 This separation is mandatory.
 
-AURA-7 must not slowly evolve into Atlas.
+AURA-Sense must not slowly evolve into Atlas.
 
 ---
 
@@ -153,7 +153,7 @@ The renderer must never directly parse logs.
 
 ## 1. Event-Driven Architecture
 
-AURA-7 is fundamentally:
+AURA-Sense is fundamentally:
 - append-only
 - event-driven
 - rolling-window based
@@ -326,7 +326,7 @@ The UI should feel:
 
 ## Shared HUD Shell
 
-AURA-7 uses one shared HUD shell with presentation modes.
+AURA-Sense uses one shared HUD shell with presentation modes.
 
 Modes:
 - Intel Mode
@@ -378,7 +378,7 @@ because they are cheaper than:
 
 # Network Philosophy
 
-AURA-7 is intentionally conservative.
+AURA-Sense is intentionally conservative.
 
 Goals:
 - respectful API usage
@@ -418,7 +418,7 @@ Codex development should preserve:
 
 Codex should avoid introducing:
 - renderer-owned telemetry logic
-- persistent combat history in AURA-7
+- persistent combat history in AURA-Sense
 - uncontrolled state growth
 - repeated replay parsing
 - excessive animations
@@ -450,7 +450,7 @@ Heavy logic should remain:
 
 # Long-Term Vision
 
-AURA-7 should evolve toward:
+AURA-Sense should evolve toward:
 - stable tactical responsiveness
 - operational reliability
 - restrained visual design

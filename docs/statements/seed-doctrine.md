@@ -3,11 +3,11 @@
 Status: Active
 Date: 2026-05-22
 
-AURA-Sense should build the tactical viewport from current contracts, reusable seed rigging, and selected proven lineage doctrine.
+AURA-Sense should build the tactical viewport from current contracts, product feature vision, reusable seed rigging, and verified implementation.
 
 ## Rules
 
-- Carry forward tactical discipline, not an entire historical implementation body.
+- Express product doctrine directly as AURA-Sense, not as inherited history.
 - Pure compute comes before persistence.
 - Services own mutation; UI and CLI surfaces request commands.
 - Long-running work uses task lifecycle vocabulary.
@@ -21,7 +21,7 @@ AURA-Sense should build the tactical viewport from current contracts, reusable s
 
 ## Migration Rule
 
-AURA-Sense should treat Aura 7 as lineage and Atlas as a sibling system.
+AURA-Sense should treat Atlas as a sibling system.
 
-Clone doctrine and low-risk utility patterns. Adapt service/runtime boundaries. Defer persistence, retention, watch execution, and heavy domain assumptions until the rewrite proves it needs them.
+Reuse low-risk utility patterns only when they fit current AURA-Sense contracts. Adapt service/runtime boundaries deliberately. Defer persistence, retention, watch execution, and heavy domain assumptions until AURA-Sense proves it needs them.
 

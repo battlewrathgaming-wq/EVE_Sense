@@ -1,15 +1,15 @@
-# Current State: AURA-Sense Seed Lineage
+# Current State: AURA-Sense Seed Origin
 
 Status: Historical seed snapshot
 Date: 2026-05-22
 
-Current implementation truth lives in `docs/current-state/current-implementation.md`. This file records the initial seed posture and lineage boundary so future sessions do not confuse inherited rigging with current product behavior.
+Current implementation truth lives in `docs/current-state/current-implementation.md`. This file records the initial seed posture so future sessions do not confuse inherited rigging with current product behavior.
 
 ## Summary
 
-AURA-Sense began from reusable seed rigging and selected tactical viewport doctrine preserved in earlier Aura 7 documents.
+AURA-Sense began from reusable seed rigging and now owns its tactical viewport doctrine directly.
 
-The repository has reusable development rigging and imported/historical Aura 7 documentation, but it should not claim behavior from lineage documents until the corresponding services and verification exist in AURA-Sense.
+The repository has reusable development rigging and product documentation, but it should not claim behavior until the corresponding services and verification exist in AURA-Sense.
 
 ## Included From Seed Rigging
 
@@ -23,7 +23,7 @@ The repository has reusable development rigging and imported/historical Aura 7 d
 - Renderer boundary static verification for known presentation-only guardrails
 - Frame module notes for borderless and always-on-top Electron windows
 
-## Scope Carried Forward From Lineage
+## AURA-Sense Scope
 
 AURA-Sense should rebuild these product capabilities:
 
@@ -57,4 +57,4 @@ AURA-Sense should rebuild these product capabilities:
 
 ## Current Rule
 
-AURA-Sense may reuse lineage doctrine, contracts, schemas, and small utilities. It should adapt implementation details only after the AURA-Sense runtime boundary is clear and current verification supports the behavior.
+AURA-Sense may reuse small utilities from seed rigging. Product behavior must be expressed as AURA-Sense contracts, schemas, features, gaps, and verified implementation.

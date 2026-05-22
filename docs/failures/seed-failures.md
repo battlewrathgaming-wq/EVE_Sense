@@ -1,4 +1,4 @@
-﻿# Failures
+# Failures
 
 Purpose:
 Preserve lessons from bugs, regressions, or architectural drift.

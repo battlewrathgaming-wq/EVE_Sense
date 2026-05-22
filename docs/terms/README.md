@@ -7,7 +7,6 @@ Use this folder when a term becomes important enough that misunderstanding it co
 Current terms:
 
 - `aura-sense.md`
-- `aura-7.md`
 - `aura-atlas.md`
 - `core-seed.md`
 - `development-artifact.md`

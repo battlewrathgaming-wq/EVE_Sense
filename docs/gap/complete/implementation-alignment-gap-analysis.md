@@ -22,7 +22,7 @@ Several items it described as missing are now complete:
 - Combat Witness backend event/snapshot core
 - local metadata term documentation
 
-Keeping this file in `docs/gap/to-do` would risk sending Dev sessions back into completed or Aura 7-specific assumptions.
+Keeping this file in `docs/gap/to-do` would risk sending Dev sessions back into completed or AURA-Sense-specific assumptions.
 
 ## Current Replacement Sources
 

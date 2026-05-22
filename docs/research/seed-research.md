@@ -1,4 +1,4 @@
-﻿# Research
+# Research
 
 Purpose:
 Store exploratory notes, external findings, experiments, and technical discoveries.

@@ -7,7 +7,7 @@ Scope: Follow-up implementation from `audit-2026-05-22-core-seed-build-readiness
 
 Ready with fewer caveats.
 
-The P1 readiness blocker from the previous audit is resolved. The main remaining caveat is that Aura Core is still a seed, not a domain application. Future projects should add persistence, live integrations, product UI, and domain data only after writing project-specific contracts and gaps.
+The P1 readiness blocker from the previous audit is resolved. The main remaining caveat is that seed rigging is still a seed, not a domain application. Future projects should add persistence, live integrations, product UI, and domain data only after writing project-specific contracts and gaps.
 
 ## Completed Work
 

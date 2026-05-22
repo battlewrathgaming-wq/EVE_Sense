@@ -98,7 +98,7 @@ aura:window:close
 
 ## Configuration
 
-Default Aura Core posture:
+Default seed rigging posture:
 
 ```js
 {
@@ -154,6 +154,6 @@ npm run verify:renderer-shell
 
 ## Decision
 
-Aura Core now unifies Atlas and EVE window-shell behavior into the Frame module.
+seed rigging now unifies Atlas and EVE window-shell behavior into the Frame module.
 
 Atlas supplies the default reusable toggle/persistence pattern. EVE supplies optional transparent pinned HUD configuration.

@@ -1,11 +1,11 @@
 # Audit: Performance And Stability Readiness
 
 Date: 2026-05-22
-Scope: AURA-7 current codebase reviewed for performance, stability, structural boundaries, and missing compute primitives.
+Scope: AURA-Sense current codebase reviewed for performance, stability, structural boundaries, and missing compute primitives.
 
 ## Summary
 
-AURA-7 is structurally small and mostly aligned with the tactical-overlay intent, but it is not yet ready for heavier Combat Witness or richer HUD work.
+AURA-Sense is structurally small and mostly aligned with the tactical-overlay intent, but it is not yet ready for heavier Combat Witness or richer HUD work.
 
 The current app is stable enough as a thin prototype because it has:
 
@@ -163,7 +163,7 @@ Needed:
 
 ESI killmail expansion is conceptually immutable, but `TTLCache` still has `maxEntries: 800`.
 
-This is acceptable for AURA-7 as a transient tactical viewport, but the documentation and naming should be honest:
+This is acceptable for AURA-Sense as a transient tactical viewport, but the documentation and naming should be honest:
 
 ```txt
 immutable within bounded runtime cache
@@ -363,7 +363,7 @@ Needed:
 - expiredAfterMs
 - freshness label: fresh, stale, expired, unavailable
 
-This matters for AURA-7 because stale tactical information can be worse than no information.
+This matters for AURA-Sense because stale tactical information can be worse than no information.
 
 ### 5. Local Type Metadata
 
@@ -375,7 +375,7 @@ Needed:
 - ship labels in active scan timelines
 - avoid live ESI type lookups
 
-This should stay lightweight and not turn AURA-7 into Atlas.
+This should stay lightweight and not turn AURA-Sense into Atlas.
 
 ### 6. Formal Service Boundary
 
@@ -447,7 +447,7 @@ Do not build these directly in renderer.
 
 ## Readiness Verdict
 
-AURA-7 is currently ready for:
+AURA-Sense is currently ready for:
 
 - small UI wording improvements
 - verification grouping

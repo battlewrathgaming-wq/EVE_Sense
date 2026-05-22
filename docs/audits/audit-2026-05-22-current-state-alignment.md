@@ -1,11 +1,11 @@
 # Audit: Current State Alignment
 
 Date: 2026-05-22
-Scope: Current AURA-7 Electron implementation compared against seeded tenets, contracts, and existing concept docs.
+Scope: Current AURA-Sense Electron implementation compared against seeded tenets, contracts, and existing concept docs.
 
 ## Summary
 
-AURA-7 is currently a thin but coherent tactical overlay prototype.
+AURA-Sense is currently a thin but coherent tactical overlay prototype.
 
 The implementation broadly aligns with the project intent in several important ways:
 
@@ -367,7 +367,7 @@ Missing coverage:
 
 ### Strong Alignment
 
-- AURA-7 is still tactical, not persistent
+- AURA-Sense is still tactical, not persistent
 - passive telemetry and Threat Intel are separated
 - renderer does not directly parse logs or call APIs
 - zKill -> ESI expansion pipeline exists for Threat Intel

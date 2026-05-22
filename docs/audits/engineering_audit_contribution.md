@@ -55,7 +55,7 @@ The watcher accepts a user-defined folder path. The Windows default helper point
 Documents\EVE\logs\Gamelogs
 ```
 
-The watcher behavior is stricter than the old Aura 7 prototype:
+The watcher behavior is stricter than the old AURA-Sense prototype:
 
 - existing files are offset-seeded and not replayed
 - newly discovered files are seeded at current size and not tail-replayed

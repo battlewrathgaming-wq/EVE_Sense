@@ -1,4 +1,4 @@
-﻿# Schema: Name
+# Schema: Name
 
 Status: Draft | Active | Superseded
 Owner:
