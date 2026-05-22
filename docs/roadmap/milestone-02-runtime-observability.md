@@ -29,7 +29,7 @@ Threat Intel and Passive Telemetry remain deferred until their service/client bo
 - Combat Witness renderer subscription/presentation does not exist yet.
 - IPC/service validation exists for current service boundaries.
 - Active scan and settings validators exist, but product services are not wired yet.
-- Diagnostics are currently trace callbacks and request hooks, not a governed diagnostics lane.
+- Diagnostics now have a shared backend policy for current trace producers, but no renderer diagnostics transport/UI exists yet.
 
 ## Doctrine Guardrails
 
@@ -88,6 +88,14 @@ Milestone 02 is complete when:
 - Combat Witness snapshots can reach the renderer through an explicit boundary
 - renderer remains presentation-only under static verification
 - `verify:all` remains offline and passing
+
+## Next Vision Milestone
+
+After this milestone completes, continue to:
+
+- `docs/roadmap/milestone-03-tactical-viewport-first-light.md`
+
+That milestone should create the first honest product-facing tactical viewport. It must not start before runtime error handling and the Combat Witness snapshot bridge are complete.
 
 ## Explicit Deferrals
 

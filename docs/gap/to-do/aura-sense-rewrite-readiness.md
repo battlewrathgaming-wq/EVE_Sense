@@ -15,6 +15,7 @@ Track the work required before AURA-Sense can honestly claim Aura 7 tactical vie
 - Keep service command validation in place; attach prepared scan/settings validators as those runtime services are added.
 - Rebuild EVE log watcher behavior with parser fixtures.
 - Keep Combat Witness backend snapshots as the first runtime-lane foundation, but do not add presentation before diagnostics throttling.
+- Use the proposed Tactical Viewport First Light milestone to introduce the first product-facing renderer surface after runtime error handling and snapshot bridge work.
 - Rebuild Passive Telemetry with local-first system metadata.
 - Rebuild Threat Intel with zKill discovery, ESI expansion, capped sample metadata, and freshness language.
 - Keep Combat Witness backend-owned normalized events, bounded rolling cache, and 5s/15s/30s snapshots as the foundation for future presentation.
@@ -29,6 +30,7 @@ Track the work required before AURA-Sense can honestly claim Aura 7 tactical vie
 - Do not imply complete combat or intelligence certainty in UI language.
 - Do not treat historical Aura 7 docs as proof of current AURA-Sense runtime behavior.
 - Do not wire renderer Combat Witness presentation until diagnostics and runtime failure handling are ready enough to make degraded states visible.
+- Do not treat Tactical Viewport First Light as Aura 7 parity; it is a narrow proof of renderer-owned presentation over backend-owned snapshots.
 
 ## Completion Signal
 
@@ -43,4 +45,5 @@ AURA-Sense has a verified tactical viewport skeleton with separated telemetry la
 - `docs/contracts/threat-intel-contract.md`
 - `docs/contracts/combat-witness-contract.md`
 - `docs/roadmap/milestone-02-runtime-observability.md`
+- `docs/roadmap/milestone-03-tactical-viewport-first-light.md`
 

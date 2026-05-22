@@ -189,7 +189,22 @@ Status: Open in `docs/gap/to-do/readiness-11-combat-witness-snapshot-bridge.md`.
 
 The renderer can receive compact Combat Witness snapshots without owning parser, cache, or metric computation.
 
-## Priority 11: Local Type Metadata
+## Priority 11: Tactical HUD First Light
+
+Status: Proposed after `readiness-11-combat-witness-snapshot-bridge.md`.
+
+### Actionables
+
+- Present backend-owned Combat Witness snapshot state in the renderer.
+- Use observed/recent/stale/empty language.
+- Keep the viewport compact and stable.
+- Verify renderer remains presentation-only.
+
+### Completion Signal
+
+The first product-facing tactical viewport presents recent Combat Witness snapshot state without renderer-owned telemetry computation.
+
+## Priority 12: Local Type Metadata
 
 Status: Deferred until Threat Intel timelines or type-label consumers exist.
 
@@ -210,9 +225,10 @@ This overview has been split into individual task files so each line can be impl
 
 1. `readiness-10-runtime-error-handling.md`
 2. `readiness-11-combat-witness-snapshot-bridge.md`
-3. `readiness-05-zkill-ref-boundary.md`
-4. `readiness-06-threat-intel-sample-metadata.md`
-5. `readiness-09-local-type-metadata.md`
+3. `readiness-12-tactical-hud-first-light.md`
+4. `readiness-05-zkill-ref-boundary.md`
+5. `readiness-06-threat-intel-sample-metadata.md`
+6. `readiness-09-local-type-metadata.md`
 
 This sequence improves safety before adding heavier combat features.
 

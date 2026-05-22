@@ -8,7 +8,7 @@ Priority: P3
 
 Combat Witness now has backend-owned snapshots, but the renderer does not yet have a safe subscription path for them.
 
-This gap should be implemented after diagnostics throttling so snapshot delivery and degraded states are observable without noisy renderer traffic.
+This gap should be implemented after diagnostics throttling and runtime error handling so snapshot delivery and degraded states are observable without noisy renderer traffic.
 
 ## Actionables
 
@@ -20,6 +20,8 @@ This gap should be implemented after diagnostics throttling so snapshot delivery
 - Add verification that renderer does not import `src/combat` modules.
 - Add verification that renderer does not compute Combat Witness metrics.
 - Keep the initial renderer presentation minimal and observation-safe if a visual surface is added.
+- Preserve snapshot freshness fields so the renderer can show stale/empty states without inventing meaning.
+- Keep event stream items bounded in the renderer view model.
 
 ## Guardrails
 
@@ -28,6 +30,7 @@ This gap should be implemented after diagnostics throttling so snapshot delivery
 - Do not add pressure, EWAR, topology, or tactical recommendations in this slice.
 - Do not persist Combat Witness history.
 - Do not flood renderer with one IPC message per raw combat event.
+- Do not display Combat Witness as complete battlefield truth; labels must remain observed/recent/witnessed.
 
 ## Completion Signal
 
@@ -43,6 +46,7 @@ When complete, record:
 - update cadence or throttling policy
 - renderer files touched
 - verification output
+- stale/empty snapshot behavior
 
 ## Related Documents
 
