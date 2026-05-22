@@ -20,6 +20,20 @@ Passive Telemetry is contextual, not authoritative. If a partial or failed conte
 - Add a small state matrix in tests.
 - Keep copy concise and cautious.
 
+## Progress Notes
+
+2026-05-22 Dev pass:
+
+- Reviewed `PassiveTelemetryService.snapshot()` status derivation.
+- Expired zKill `fresh` and `partial` context now reports `stale`.
+- Expired partial context preserves `zkill.partial` and `zkill.failureCount`.
+- Offline verification covers unavailable, fresh, stale, partial, stale-partial, unresolved/degraded, and failed-fetch/degraded.
+
+Remaining in this packet:
+
+- `blocked` state requires the live IO gate task.
+- expired ESI activity cache state requires the ESI system activity task.
+
 ## Guardrails
 
 - Do not erase useful failure metadata when marking context stale.

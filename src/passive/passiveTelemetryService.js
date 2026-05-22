@@ -95,7 +95,7 @@ function createPassiveTelemetryService({
 
   function snapshot() {
     const cached = cachedFreshness();
-    const status = state.status === 'fresh' && !cached.fresh ? 'stale' : state.status;
+    const status = isContextExpired(state.status, cached) ? 'stale' : state.status;
     return {
       kind: 'passive.telemetry.snapshot',
       observedAt: new Date(now()).toISOString(),
@@ -114,7 +114,7 @@ function createPassiveTelemetryService({
         freshnessMs
       },
       status,
-      message: status === 'stale' ? 'Passive system context is stale' : state.message,
+      message: status === 'stale' ? staleMessage() : state.message,
       failure: state.lastError
     };
   }
@@ -153,6 +153,17 @@ function createPassiveTelemetryService({
       fresh: ageMs != null && ageMs <= freshnessMs,
       status: ageMs != null && ageMs <= freshnessMs ? 'fresh' : 'stale'
     };
+  }
+
+  function isContextExpired(status, cached) {
+    return (status === 'fresh' || status === 'partial') && !cached.fresh;
+  }
+
+  function staleMessage() {
+    if (state.context?.partial) {
+      return 'Partial passive system context is stale';
+    }
+    return 'Passive system context is stale';
   }
 
   return {

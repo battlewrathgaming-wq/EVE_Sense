@@ -266,6 +266,9 @@ function passiveMessage(snapshot) {
   if (snapshot.status === 'fresh' || snapshot.status === 'partial') {
     return snapshot.zkill?.capped ? 'Scoped zKill context is capped.' : 'Scoped zKill context refreshed.';
   }
+  if (snapshot.status === 'stale' && snapshot.zkill?.partial) {
+    return 'Partial passive context is stale.';
+  }
   return snapshot.message || 'Waiting for a future observed system change.';
 }
 

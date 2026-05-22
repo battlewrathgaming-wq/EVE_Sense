@@ -45,6 +45,7 @@ The current implementation includes:
 - backend zKill system-context normalization boundary
 - Passive Telemetry preload bridge and compact HUD panel
 - normalized gamelog event fan-out from the existing backend watcher path
+- Passive Telemetry stale-partial state honesty for expired partial zKill context
 - curated combat-log fixture ingestion with raw-line hash drift checks
 - machine-readable combat-log event coverage matrix
 - offline combat-log replay harness for parser/runtime/service semantics
@@ -164,6 +165,7 @@ It writes artifacts under `.tmp\electron-visual-smoke` and is intentionally not 
 - no Passive Telemetry ESI system activity context yet
 - no one-hour ESI activity cache record or ETag revalidation yet
 - passive zKill route still needs bounded `pastSeconds` scoping before live use
+- Passive Telemetry blocked and ESI cache freshness states still depend on the live IO gate and ESI activity tasks
 - no exact raw repair/healing fixtures yet; raw `combat.repair` parser support remains deferred
 - concept and research docs are AURA-Sense product doctrine or evidence notes; older audit records may still describe past cleanup work
 
@@ -192,6 +194,7 @@ It writes artifacts under `.tmp\electron-visual-smoke` and is intentionally not 
 - `docs/audits/audit-2026-05-22-combat-log-test-suite-handover.md`
 - `docs/audits/audit-2026-05-22-passive-telemetry-live-readiness-endpoint-io.md`
 - `docs/audits/audit-2026-05-22-next-dev-runway-handover.md`
+- `docs/audits/audit-2026-05-22-passive-telemetry-state-doc-pass.md`
 - `docs/gap/to-do/aura-sense-tactical-readiness.md`
 - `docs/gap/to-do/passive-telemetry-local-system-resolver.md`
 - `docs/gap/to-do/passive-telemetry-esi-system-activity.md`

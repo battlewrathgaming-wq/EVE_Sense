@@ -75,6 +75,57 @@ assert.strictEqual(service.snapshot().freshness.status, 'unavailable', 'initial 
   });
   assert.strictEqual(service.snapshot().status, 'degraded', 'unresolved systems should become degraded');
 
+  let partialNowMs = Date.parse('2026-05-22T02:00:00.000Z');
+  const partialService = createPassiveTelemetryService({
+    now: () => partialNowMs,
+    freshnessMs: 60000,
+    resolveSystem: () => ({ systemId: 30000142, resolved: true }),
+    zkillClient: {
+      fetchSystemContext: async (systemId, options = {}) => normalizeZKillSystemContext([
+        { killmail_id: 3001, zkb: { hash: 'partial-hash' } },
+        { killmail_id: null, zkb: {} }
+      ], {
+        systemId,
+        fetchedAt: options.fetchedAt,
+        limit: 10
+      })
+    }
+  });
+  await partialService.observeEvent({
+    id: 'jump-3',
+    kind: 'navigation.jump',
+    systemName: 'Jita',
+    eventTime: '2026-05-22T02:00:00.000Z',
+    observedAt: '2026-05-22T02:00:00.000Z'
+  });
+  assert.strictEqual(partialService.snapshot().status, 'partial', 'malformed refs should produce partial state while fresh');
+  assert.strictEqual(partialService.snapshot().zkill.partial, true, 'partial metadata should remain visible');
+  partialNowMs += 120000;
+  assert.strictEqual(partialService.snapshot().status, 'stale', 'expired partial context should become stale');
+  assert.strictEqual(partialService.snapshot().zkill.partial, true, 'expired partial context should preserve partial metadata');
+  assert.match(partialService.snapshot().message, /Partial passive system context is stale/, 'expired partial context should explain stale partial state');
+
+  const failedService = createPassiveTelemetryService({
+    now: () => Date.parse('2026-05-22T03:00:00.000Z'),
+    resolveSystem: () => ({ systemId: 30000142, resolved: true }),
+    zkillClient: {
+      fetchSystemContext: async () => {
+        const error = new Error('synthetic zKill failure');
+        error.code = 'SYNTHETIC_ZKILL_FAILURE';
+        throw error;
+      }
+    }
+  });
+  await failedService.observeEvent({
+    id: 'jump-4',
+    kind: 'navigation.jump',
+    systemName: 'Jita',
+    eventTime: '2026-05-22T03:00:00.000Z',
+    observedAt: '2026-05-22T03:00:00.000Z'
+  });
+  assert.strictEqual(failedService.snapshot().status, 'degraded', 'failed fetch should become degraded');
+  assert.strictEqual(failedService.snapshot().failure.code, 'SYNTHETIC_ZKILL_FAILURE', 'failed fetch should preserve failure code');
+
   console.log('passive telemetry verified');
 })().catch((error) => {
   console.error(error);
