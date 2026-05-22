@@ -3,6 +3,7 @@ const { spawnSync } = require('node:child_process');
 const checks = [
   ['verify:core', ['node', 'scripts/verify-core.js']],
   ['verify:combat-parser', ['node', 'scripts/verify-combat-parser.js']],
+  ['verify:gamelog-watcher', ['node', 'scripts/verify-gamelog-watcher.js']],
   ['verify:services', ['node', 'scripts/verify-services.js']],
   ['verify:http', ['node', 'scripts/verify-http-client.js']],
   ['verify:frame', ['node', 'scripts/verify-frame-module.js']],
