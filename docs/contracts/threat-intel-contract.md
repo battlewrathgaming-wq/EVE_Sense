@@ -1,6 +1,6 @@
 # Contract: Threat Intel Pipeline
 
-Status: Seed
+Status: Draft - zKill-backed first surface
 Date: 2026-05-22
 
 ## Purpose
@@ -10,19 +10,20 @@ Defines how AURA-Sense performs scoped tactical threat inspection.
 ## Flow
 
 ```txt
-user/scoped query
+typed search or armed clipboard acquisition
 -> local/static resolution where possible
--> typed ESI resolution when needed
--> zKill discovery refs
--> ESI expanded killmails
--> local tactical aggregation
--> HUD summary
+-> scoped zKillmail query
+-> sample/cap/failure/freshness metadata
+-> tactical scan snapshot
+-> HUD summary/search result
 ```
 
 ## Invariants
 
-- zKill is discovery only.
-- Expanded ESI killmails are the source of truth for scoped Threat Intel.
+- Search is operator-initiated.
+- zKillmail is the first scoped evidence source.
+- zKillmail results require visible sample, cap, failure, and freshness metadata.
+- ESI expansion is deferred until explicitly authorized by a future milestone or ADR.
 - Static metadata should be resolved locally where possible.
 - The scan must show scope, freshness, and partial status.
 - Threat Intel should remain tactical and short-window, not historical analysis.
@@ -32,5 +33,6 @@ user/scoped query
 - Do not store zKill summaries as tactical truth.
 - Do not imply complete coverage.
 - Do not run broad background discovery without user/session intent.
+- Do not add default ESI expansion inside the first search-bar scan.
 - Do not turn AURA-Sense into Atlas.
 

@@ -18,7 +18,7 @@ Track the work required before AURA-Sense can honestly claim tactical viewport r
 - Keep Combat Witness runtime path control and watcher lifecycle backend-owned.
 - Treat Tactical Viewport First Light as complete, not as full tactical viewport readiness.
 - Rebuild Passive Telemetry with local-first system metadata.
-- Rebuild Threat Intel with zKill discovery, ESI expansion, capped sample metadata, and freshness language.
+- Rebuild Threat Intel around a search-bar zKillmail probe with capped sample metadata and freshness language; keep ESI expansion deferred until explicitly authorized.
 - Keep Combat Witness backend-owned normalized events, bounded rolling cache, and 5s/15s/30s snapshots as the foundation for future presentation.
 - Keep live/API smoke checks separate from offline verification.
 - Keep Electron visual smoke separate from offline verification.

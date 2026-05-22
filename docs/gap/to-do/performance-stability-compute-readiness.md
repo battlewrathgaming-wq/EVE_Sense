@@ -73,7 +73,7 @@ Status: Deferred until Threat Intel client/service exists.
 ### Actionables
 
 - Normalize zKill output inside `ZKillClient`.
-- Return only discovery refs needed for ESI expansion.
+- Return clean bounded zKill result/ref metadata for scoped Threat Intel.
 - Guard non-array responses.
 - Guard missing `killmail_id` or missing hash.
 - Add warnings/counts for malformed refs.

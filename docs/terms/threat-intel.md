@@ -2,7 +2,7 @@
 
 ## Plain Meaning
 
-Threat Intel is a scoped tactical inspection backed by expanded ESI killmail evidence.
+Threat Intel is a deliberate scoped tactical inspection run from an operator search or acquisition workflow.
 
 It asks:
 
@@ -10,7 +10,9 @@ It asks:
 
 ## Product Rule
 
-zKill may discover refs. Expanded ESI killmails provide the tactical source of truth.
+The near-term Threat Intel surface is zKillmail-backed and must show sample, cap, failure, and freshness metadata.
+
+ESI killmail expansion is optional future enrichment, not required for the first search-bar scan.
 
 Threat Intel should remain scoped, partial-aware, and tactical.
 

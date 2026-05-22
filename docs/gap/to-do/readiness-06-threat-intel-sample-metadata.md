@@ -6,8 +6,8 @@ Status: Open - Deferred Until Threat Intel Runtime Exists
 ## Actionables
 
 - Add discovered ref count.
-- Add selected/expanded count.
-- Add failed expansion count.
+- Add selected/result count.
+- Add failed fetch count.
 - Add cap-skipped count.
 - Add partial/complete sample status.
 - Render this compactly in the HUD.
@@ -17,23 +17,23 @@ Status: Open - Deferred Until Threat Intel Runtime Exists
 
 Every active scan should make its evidence basis clear without turning the HUD into an Atlas report.
 
-This packet depends on scoped zKill discovery and ESI expansion existing in AURA-Sense. Do not implement sample metadata against mock renderer-only state.
+This packet depends on scoped zKill-backed Threat Intel search existing in AURA-Sense. Do not implement sample metadata against mock renderer-only state.
 
 The scan result should be able to answer:
 
 ```txt
 Scope: 1h
 Discovered refs: N
-Expanded evidence: M
-Failed expansions: X
+Displayed sample: M
+Failed fetches: X
 Sample status: partial/complete
 ```
 
 ## Guardrails
 
 - Do not overcrowd the tactical HUD.
-- Do not present zKill-discovered count as expanded evidence count.
-- Do not imply complete coverage when expansion was capped or failed.
+- Do not present zKill result count as complete tactical truth.
+- Do not imply complete coverage when results were capped or fetches failed.
 - Do not treat sample metadata as Atlas-style evidence storage.
 
 ## Completion Signal

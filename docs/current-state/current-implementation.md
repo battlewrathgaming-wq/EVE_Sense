@@ -50,7 +50,7 @@ Not yet proven in this codebase:
 
 - Passive Telemetry lane
 - Threat Intel scan lane
-- zKill discovery to ESI expansion pipeline
+- zKill-backed search and optional ESI expansion pipeline
 - exact raw repair/healing parser coverage
 - local EVE system/type metadata adapters
 - network gate and live diagnostics for EVE APIs
@@ -99,8 +99,8 @@ EVE location/log observation
 manual scoped scan
 -> local/static resolution where possible
 -> zKill discovery refs
--> ESI killmail expansion
--> local aggregation with sample/freshness metadata
+-> bounded zKillmail-backed sample with cap/failure/freshness metadata
+-> optional ESI killmail expansion only if a future milestone authorizes it
 -> Threat Intel snapshot
 ```
 

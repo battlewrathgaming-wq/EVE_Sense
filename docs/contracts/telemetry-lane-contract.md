@@ -11,24 +11,28 @@ Defines the separation between Passive Telemetry, Threat Intel, and Combat Witne
 
 ### Passive Telemetry
 
-Current system and low-frequency environmental awareness.
+Current system and low-frequency environmental awareness, triggered by local observation.
 
 Examples:
 
-- current system
-- system kills/jumps/pods
-- ESI timestamp/cache state
+- current system from EVE logs
+- gate-jump/current-system changes
+- scoped zKillmail system context
+- freshness/cache state
 
 ### Threat Intel
 
-Scoped tactical inspection backed by ESI-expanded killmail evidence.
+Operator-initiated tactical inspection backed by a scoped zKillmail query in the first product surface.
 
 Examples:
 
+- search-bar target scan
+- armed clipboard target scan
 - system scan
 - pilot/corp/alliance scan
 - recent aggressors
 - scoped timelines
+- optional ESI expansion only if a future milestone authorizes it
 
 ### Combat Witness
 
@@ -46,7 +50,8 @@ Examples:
 
 - Passive telemetry must not overwrite Threat Intel.
 - Combat Witness must not become persistent evidence storage.
-- Threat Intel must not derive tactical truth from zKill summaries.
+- Threat Intel must not present zKillmail results as complete tactical truth.
+- ESI expansion is deferred by default.
 - Each lane should expose its own freshness/staleness state.
 
 ## Must Not Do
