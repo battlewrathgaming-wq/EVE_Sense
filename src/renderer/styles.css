@@ -70,13 +70,14 @@ body {
 }
 
 .viewport {
-  width: min(1040px, calc(100vw - 48px));
+  width: min(1120px, calc(100vw - 48px));
   margin: 0 auto;
-  padding: 32px 0;
+  padding: 18px 0;
   display: grid;
-  gap: 14px;
+  gap: 12px;
 }
 
+.lane-overview,
 .combat-surface,
 .event-surface,
 .passive-surface,
@@ -86,12 +87,39 @@ body {
   background: var(--panel);
 }
 
+.lane-overview {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  overflow: hidden;
+}
+
+.lane-overview div {
+  min-height: 58px;
+  padding: 12px 14px;
+  background: var(--panel-strong);
+}
+
+.lane-overview span {
+  display: block;
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.lane-overview strong {
+  display: block;
+  margin-top: 5px;
+  font-size: 1.05rem;
+}
+
 .combat-surface {
-  min-height: 240px;
+  min-height: 250px;
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(320px, 420px);
-  gap: 22px;
-  padding: 24px;
+  gap: 16px;
+  padding: 20px 24px;
   align-items: end;
 }
 
@@ -115,7 +143,7 @@ p {
 
 h1 {
   max-width: 12ch;
-  font-size: 3.2rem;
+  font-size: 2.65rem;
   line-height: 1;
   letter-spacing: 0;
 }
@@ -130,6 +158,13 @@ h2 {
   max-width: 44ch;
 }
 
+.lane-detail {
+  color: var(--muted);
+  margin-top: 10px;
+  max-width: 48ch;
+  font-size: 0.84rem;
+}
+
 .status-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -138,7 +173,7 @@ h2 {
 }
 
 .status-grid div {
-  min-height: 82px;
+  min-height: 70px;
   border: 1px solid var(--line);
   border-radius: 8px;
   padding: 12px;
@@ -158,8 +193,35 @@ dd {
   font-weight: 700;
 }
 
+.combat-metric-grid {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0;
+}
+
+.combat-metric-grid div {
+  min-height: 64px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px;
+  background: var(--panel-strong);
+}
+
+.combat-metric-grid dd {
+  font-size: 1rem;
+  overflow-wrap: anywhere;
+}
+
 .event-surface {
   padding: 18px 20px;
+}
+
+.support-lanes {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 12px;
 }
 
 .passive-surface {
@@ -173,18 +235,23 @@ dd {
 .passive-grid,
 .threat-grid {
   display: grid;
-  grid-template-columns: 1.2fr 0.8fr 0.8fr 0.8fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
   margin: 0 0 12px;
 }
 
 .passive-grid div,
 .threat-grid div {
-  min-height: 72px;
+  min-height: 64px;
   border: 1px solid var(--line);
   border-radius: 8px;
   padding: 12px;
   background: var(--panel-strong);
+}
+
+.passive-grid dd,
+.threat-grid dd {
+  overflow-wrap: anywhere;
 }
 
 #passive-message {
@@ -335,6 +402,9 @@ dd {
 
   .combat-surface,
   .status-grid,
+  .combat-metric-grid,
+  .lane-overview,
+  .support-lanes,
   .passive-grid,
   .threat-grid {
     grid-template-columns: 1fr;

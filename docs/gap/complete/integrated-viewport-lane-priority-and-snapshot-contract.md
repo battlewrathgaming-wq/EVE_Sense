@@ -1,6 +1,6 @@
 # Gap To-Do: Integrated Viewport Lane Priority And Snapshot Contract
 
-Status: Open
+Status: Complete
 Priority: P0
 Milestone: 10 - Integrated Tactical Viewport
 

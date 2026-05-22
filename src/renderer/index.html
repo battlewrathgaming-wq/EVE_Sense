@@ -17,12 +17,27 @@
         <button class="frame-button danger" type="button" id="close-window" title="Close" aria-label="Close">X</button>
       </nav>
     </header>
-    <main class="viewport" aria-label="AURA-Sense tactical viewport">
-      <section class="combat-surface" aria-labelledby="combat-title">
+    <main id="integrated-viewport" class="viewport" aria-label="AURA-Sense tactical viewport">
+      <section class="lane-overview" aria-label="Lane status overview">
+        <div>
+          <span>Combat</span>
+          <strong id="overview-combat">Unavailable</strong>
+        </div>
+        <div>
+          <span>System</span>
+          <strong id="overview-passive">Unavailable</strong>
+        </div>
+        <div>
+          <span>Intel</span>
+          <strong id="overview-threat">Idle</strong>
+        </div>
+      </section>
+      <section class="combat-surface lane-surface primary-lane" aria-labelledby="combat-title">
         <div class="surface-header">
           <p class="eyebrow">Combat Witness</p>
           <h1 id="combat-title">Recent observations</h1>
           <p class="summary" id="combat-summary">Waiting for backend snapshot.</p>
+          <p class="lane-detail" id="combat-detail">Combat Witness snapshot unavailable.</p>
         </div>
         <dl class="status-grid">
           <div>
@@ -46,8 +61,98 @@
             <dd id="event-count">0</dd>
           </div>
         </dl>
+        <dl class="combat-metric-grid">
+          <div>
+            <dt>Incoming pressure</dt>
+            <dd id="incoming-pressure">0 DPS</dd>
+          </div>
+          <div>
+            <dt>Repair throughput</dt>
+            <dd id="repair-throughput">0 HPS</dd>
+          </div>
+          <div>
+            <dt>Observed repair balance</dt>
+            <dd id="repair-balance">0 /s</dd>
+          </div>
+          <div>
+            <dt>Observed source</dt>
+            <dd id="observed-source">Unobserved</dd>
+          </div>
+          <div>
+            <dt>Most observed weapon</dt>
+            <dd id="observed-weapon">Unobserved</dd>
+          </div>
+        </dl>
       </section>
-      <section class="event-surface" aria-labelledby="events-title">
+      <div class="support-lanes">
+        <section class="passive-surface lane-surface" aria-labelledby="passive-title">
+          <div class="section-title">
+            <h2 id="passive-title">Passive Telemetry</h2>
+            <span id="passive-state">Unavailable</span>
+          </div>
+          <dl class="passive-grid">
+            <div>
+              <dt>Current system</dt>
+              <dd id="passive-system">Unobserved</dd>
+            </div>
+            <div>
+              <dt>zKill sample</dt>
+              <dd id="passive-sample">0</dd>
+            </div>
+            <div>
+              <dt>Activity</dt>
+              <dd id="passive-activity">0 / 0</dd>
+            </div>
+            <div>
+              <dt>Freshness</dt>
+              <dd id="passive-freshness">Unavailable</dd>
+            </div>
+            <div>
+              <dt>Basis</dt>
+              <dd id="passive-basis">No provider</dd>
+            </div>
+          </dl>
+          <p id="passive-message">Waiting for a future observed system change.</p>
+        </section>
+        <section class="threat-surface lane-surface" aria-labelledby="threat-title">
+          <div class="section-title">
+            <h2 id="threat-title">Threat Intel</h2>
+            <span id="threat-state">Idle</span>
+          </div>
+          <form id="threat-search" class="threat-search">
+            <label for="threat-target">Target</label>
+            <div>
+              <input id="threat-target" name="threat-target" type="text" autocomplete="off" placeholder="system:Jita, pilot:Chribba">
+              <button type="submit">Scan</button>
+              <button id="clipboard-arm" type="button">Arm</button>
+            </div>
+          </form>
+          <dl class="threat-grid">
+            <div>
+              <dt>Target</dt>
+              <dd id="threat-target-label">Unselected</dd>
+            </div>
+            <div>
+              <dt>Provider</dt>
+              <dd id="threat-provider">None</dd>
+            </div>
+            <div>
+              <dt>Sample</dt>
+              <dd id="threat-sample">0 / 0</dd>
+            </div>
+            <div>
+              <dt>Clipboard</dt>
+              <dd id="clipboard-state">Idle</dd>
+            </div>
+            <div>
+              <dt>Basis</dt>
+              <dd id="threat-basis">No scan</dd>
+            </div>
+          </dl>
+          <p id="threat-message">Submit a target to run a scoped scan.</p>
+        </section>
+      </div>
+      <section class="event-surface lane-surface" aria-labelledby="events-title">
         <div class="section-title">
           <h2 id="events-title">Event stream</h2>
           <span id="runtime-health">Checking runtime</span>
@@ -62,64 +167,6 @@
           <p id="watcher-message">Configure a local EVE gamelog folder to begin watching.</p>
         </form>
         <ul id="event-list" class="event-list"></ul>
-      </section>
-      <section class="passive-surface" aria-labelledby="passive-title">
-        <div class="section-title">
-          <h2 id="passive-title">Passive Telemetry</h2>
-          <span id="passive-state">Unavailable</span>
-        </div>
-        <dl class="passive-grid">
-          <div>
-            <dt>Current system</dt>
-            <dd id="passive-system">Unobserved</dd>
-          </div>
-          <div>
-            <dt>zKill sample</dt>
-            <dd id="passive-sample">0</dd>
-          </div>
-          <div>
-            <dt>Activity</dt>
-            <dd id="passive-activity">0 / 0</dd>
-          </div>
-          <div>
-            <dt>Freshness</dt>
-            <dd id="passive-freshness">Unavailable</dd>
-          </div>
-        </dl>
-        <p id="passive-message">Waiting for a future observed system change.</p>
-      </section>
-      <section class="threat-surface" aria-labelledby="threat-title">
-        <div class="section-title">
-          <h2 id="threat-title">Threat Intel</h2>
-          <span id="threat-state">Idle</span>
-        </div>
-        <form id="threat-search" class="threat-search">
-          <label for="threat-target">Target</label>
-          <div>
-            <input id="threat-target" name="threat-target" type="text" autocomplete="off" placeholder="system:Jita, pilot:Chribba">
-            <button type="submit">Scan</button>
-            <button id="clipboard-arm" type="button">Arm</button>
-          </div>
-        </form>
-        <dl class="threat-grid">
-          <div>
-            <dt>Target</dt>
-            <dd id="threat-target-label">Unselected</dd>
-          </div>
-          <div>
-            <dt>Provider</dt>
-            <dd id="threat-provider">None</dd>
-          </div>
-          <div>
-            <dt>Sample</dt>
-            <dd id="threat-sample">0 / 0</dd>
-          </div>
-          <div>
-            <dt>Clipboard</dt>
-            <dd id="clipboard-state">Idle</dd>
-          </div>
-        </dl>
-        <p id="threat-message">Submit a target to run a scoped scan.</p>
       </section>
     </main>
     <script src="./app.js"></script>

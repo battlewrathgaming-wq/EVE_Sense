@@ -1,6 +1,6 @@
 # Milestone 10: Integrated Tactical Viewport
 
-Status: Active - Next Dev Runway
+Status: Complete - Spike calibration and live smoke deferred
 Date: 2026-05-22
 Owner: Overseer direction, Dev execution
 
@@ -36,33 +36,37 @@ Each lane remains independently truthful.
 
 ### Task 1: Lane Priority And Snapshot Contract
 
+- Status: Complete.
 - Define the integrated HUD sections and priority order before CSS/layout work.
 - Preserve Combat Witness, Passive Telemetry, and Threat Intel as separate lanes.
 - Decide which backend snapshot fields are eligible for first integrated display.
 - Keep Combat Witness weapon/spike metrics available but do not emphasize spikes until the follow-up packet calibrates them.
 
-Task packet: `docs/gap/to-do/integrated-viewport-lane-priority-and-snapshot-contract.md`.
+Task packet: `docs/gap/complete/integrated-viewport-lane-priority-and-snapshot-contract.md`.
 
 ### Task 2: Calm Multi-Lane Layout
 
+- Status: Complete.
 - Refine the renderer into a compact tactical viewport with stable lane hierarchy.
 - Avoid dashboard sprawl and decorative panels.
 - Keep operator actions clear: watcher start/stop, Threat Intel scan, Clipboard arm.
 - Preserve mobile/narrow layout readability.
 
-Task packet: `docs/gap/to-do/integrated-viewport-layout-composition.md`.
+Task packet: `docs/gap/complete/integrated-viewport-layout-composition.md`.
 
 ### Task 3: Degraded State And Request Pulse
 
+- Status: Complete using existing snapshot metadata; raw diagnostics stream deferred.
 - Surface blocked, stale, partial, unavailable, capped, and failed states without flooding the HUD.
 - Add a compact request pulse/status area for live API attempts only if it can be fed from backend diagnostics or snapshot metadata.
 - Keep live network smoke separate from offline verification.
 - Do not add renderer network calls.
 
-Task packet: `docs/gap/to-do/integrated-viewport-request-pulse-and-degraded-state.md`.
+Task packet: `docs/gap/complete/integrated-viewport-request-pulse-and-degraded-state.md`.
 
 ### Task 4: Combat Metric Copy Guardrails
 
+- Status: Complete for integrated HUD copy; calibration follow-up remains open.
 - Decide which Combat Witness metrics are product-ready for display.
 - Use observed-language for weapon counts, sources, targets, HPS/DPS, and repair balance.
 - Keep damage spike outliers low-emphasis until calibrated against real datasets.
@@ -70,20 +74,22 @@ Task packet: `docs/gap/to-do/integrated-viewport-request-pulse-and-degraded-stat
 
 Task packets:
 
-- `docs/gap/to-do/integrated-viewport-combat-metric-copy-guardrails.md`
+- `docs/gap/complete/integrated-viewport-combat-metric-copy-guardrails.md`
 - `docs/gap/to-do/combat-window-weapon-spike-followups.md`
 
 ### Task 5: Verification And Smoke Evidence
 
+- Status: Complete.
 - Extend renderer-shell checks for any new integrated HUD selectors.
 - Preserve renderer boundary checks.
 - Extend `smoke:electron` assertions and screenshots for the integrated viewport.
 - Keep `verify:all` offline and deterministic.
 
-Task packet: `docs/gap/to-do/integrated-viewport-smoke-and-boundary-verification.md`.
+Task packet: `docs/gap/complete/integrated-viewport-smoke-and-boundary-verification.md`.
 
 ### Task 6: State And Handover
 
+- Status: Complete.
 - Update current-state with actual integrated viewport behavior.
 - Move completed packets to `docs/gap/complete`.
 - Record verification and smoke artifact paths.
@@ -121,6 +127,38 @@ Milestone 10 is complete when:
 - renderer boundary verification passes
 - `npm.cmd run verify:all` passes
 - `npm.cmd run smoke:electron` passes and records integrated viewport evidence
+
+## Completion Evidence
+
+Verification completed:
+
+```txt
+renderer boundary verified (4 files scanned)
+renderer shell verified
+all checks verified
+```
+
+Electron visual smoke completed:
+
+```txt
+AURA-Sense visual smoke passed: F:\Projects\AURA-Sense\.tmp\electron-visual-smoke
+```
+
+Smoke artifact records:
+
+```txt
+hasIntegratedViewport: true
+hasLaneOverview: true
+hasCombatMetrics: true
+hasProviderBasis: true
+```
+
+Deferred by design:
+
+- damage spike HUD emphasis until real-dataset calibration completes
+- live zKill/ESI smoke evidence
+- raw diagnostics stream in the HUD
+- Atlas handoff or persistence
 
 ## Expected Handover
 

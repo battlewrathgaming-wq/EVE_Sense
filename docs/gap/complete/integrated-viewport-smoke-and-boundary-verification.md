@@ -1,6 +1,6 @@
 # Gap To-Do: Integrated Viewport Smoke And Boundary Verification
 
-Status: Open
+Status: Complete
 Priority: P1
 Milestone: 10 - Integrated Tactical Viewport
 

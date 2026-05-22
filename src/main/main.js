@@ -291,11 +291,15 @@ async function runVisualSmoke(window, outputDir) {
   assertSmoke(checks.noNodeRequire, 'renderer should not expose Node require');
   assertSmoke(checks.noElectronGlobal, 'renderer should not expose Electron globals');
   assertSmoke(checks.hasCombatSurface, 'renderer should contain Combat Witness surface');
+  assertSmoke(checks.hasIntegratedViewport, 'renderer should contain integrated viewport root');
+  assertSmoke(checks.hasLaneOverview, 'renderer should contain lane overview surface');
   assertSmoke(checks.hasFreshnessText, 'renderer should show freshness/status text');
   assertSmoke(checks.hasEventList, 'renderer should contain event list surface');
   assertSmoke(checks.hasWatcherControls, 'renderer should contain Combat Witness watcher controls');
   assertSmoke(checks.hasPassiveSurface, 'renderer should contain Passive Telemetry surface');
   assertSmoke(checks.hasThreatSurface, 'renderer should contain Threat Intel surface');
+  assertSmoke(checks.hasCombatMetrics, 'renderer should contain integrated Combat Witness metric fields');
+  assertSmoke(checks.hasProviderBasis, 'renderer should contain lane provider basis fields');
   assertSmoke(checks.noParserRuntimeExposure, 'renderer should not expose parser/runtime modules');
 
   const image = await window.webContents.capturePage();
@@ -341,12 +345,16 @@ function smokeChecks(window) {
       hasCombatWitnessBridge: Boolean(window.auraCombatWitness?.getSnapshot && window.auraCombatWitness?.subscribeSnapshots),
       noNodeRequire: typeof window.require === 'undefined',
       noElectronGlobal: typeof window.ipcRenderer === 'undefined' && typeof window.BrowserWindow === 'undefined',
+      hasIntegratedViewport: Boolean(document.querySelector('#integrated-viewport')),
+      hasLaneOverview: Boolean(document.querySelector('.lane-overview') && document.querySelector('#overview-combat') && document.querySelector('#overview-passive') && document.querySelector('#overview-threat')),
       hasCombatSurface: Boolean(document.querySelector('.combat-surface') && document.querySelector('#combat-summary')),
+      hasCombatMetrics: Boolean(document.querySelector('#incoming-pressure') && document.querySelector('#repair-throughput') && document.querySelector('#repair-balance') && document.querySelector('#observed-source') && document.querySelector('#observed-weapon')),
       hasFreshnessText: ['Recent', 'Stale', 'Empty', 'Unavailable', 'Degraded', 'Witnessed'].includes(document.querySelector('#combat-signal')?.textContent || ''),
       hasEventList: Boolean(document.querySelector('#event-list')),
       hasWatcherControls: Boolean(document.querySelector('#watcher-controls') && document.querySelector('#gamelog-folder')),
       hasPassiveSurface: Boolean(document.querySelector('.passive-surface') && document.querySelector('#passive-system')),
       hasThreatSurface: Boolean(document.querySelector('.threat-surface') && document.querySelector('#threat-search') && document.querySelector('#clipboard-arm')),
+      hasProviderBasis: Boolean(document.querySelector('#passive-basis') && document.querySelector('#threat-basis')),
       noParserRuntimeExposure: (
         typeof window.CombatWitnessService === 'undefined' &&
         typeof window.EveCombatLogParser === 'undefined' &&
@@ -356,6 +364,11 @@ function smokeChecks(window) {
       watcherText: document.querySelector('#watcher-state')?.textContent || null,
       passiveText: document.querySelector('#passive-state')?.textContent || null,
       threatText: document.querySelector('#threat-state')?.textContent || null,
+      combatDetailText: document.querySelector('#combat-detail')?.textContent || null,
+      incomingPressureText: document.querySelector('#incoming-pressure')?.textContent || null,
+      repairBalanceText: document.querySelector('#repair-balance')?.textContent || null,
+      passiveBasisText: document.querySelector('#passive-basis')?.textContent || null,
+      threatBasisText: document.querySelector('#threat-basis')?.textContent || null,
       summaryText: document.querySelector('#combat-summary')?.textContent || null,
       eventListText: document.querySelector('#event-list')?.textContent || null
     });

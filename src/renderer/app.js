@@ -109,35 +109,54 @@ function renderCombatWitness(snapshot) {
   const window5s = snapshot?.windows?.['5s'] || {};
   const window15s = snapshot?.windows?.['15s'] || {};
   const events = Array.isArray(snapshot?.eventStream) ? snapshot.eventStream.slice(0, 5) : [];
+  const incoming = window15s.damage?.incoming || {};
+  const repair = window15s.repair?.incoming || {};
+  const balance = window15s.balance || {};
 
   document.querySelector('#combat-signal').textContent = signalLabel(status);
+  document.querySelector('#overview-combat').textContent = signalLabel(status);
   document.querySelector('#combat-summary').textContent = summaryForStatus(status);
+  document.querySelector('#combat-detail').textContent = combatDetail(snapshot, status);
   document.querySelector('#watcher-state').textContent = watcherLabel(watcher.state);
   document.querySelector('#watcher-message').textContent = watcher.message || 'Combat Witness watcher unavailable.';
   document.querySelector('#incoming-5s').textContent = formatNumber(window5s.damage?.incoming?.total);
   document.querySelector('#repair-15s').textContent = formatNumber(window15s.repair?.incoming?.total);
   document.querySelector('#event-count').textContent = formatNumber(snapshot?.freshness?.eventStreamCount);
+  document.querySelector('#incoming-pressure').textContent = `${formatNumber(incoming.perSecond)} DPS`;
+  document.querySelector('#repair-throughput').textContent = `${formatNumber(repair.perSecond)} HPS`;
+  document.querySelector('#repair-balance').textContent = signedRate(balance.receivedRepairMinusDamagePerSecond);
+  document.querySelector('#observed-source').textContent = observedCountLabel(incoming.topSource, 'Unobserved');
+  document.querySelector('#observed-weapon').textContent = observedCountLabel(incoming.mostObservedWeaponType, 'Unobserved');
   renderEventList(events, status);
 }
 
 function renderUnavailableCombatWitness() {
   document.querySelector('#combat-signal').textContent = 'Unavailable';
+  document.querySelector('#overview-combat').textContent = 'Unavailable';
   document.querySelector('#combat-summary').textContent = 'Combat Witness bridge unavailable.';
+  document.querySelector('#combat-detail').textContent = 'Combat Witness bridge unavailable.';
   document.querySelector('#watcher-state').textContent = 'Unavailable';
   document.querySelector('#watcher-message').textContent = 'Combat Witness watcher unavailable.';
   document.querySelector('#incoming-5s').textContent = '0';
   document.querySelector('#repair-15s').textContent = '0';
   document.querySelector('#event-count').textContent = '0';
+  document.querySelector('#incoming-pressure').textContent = '0 DPS';
+  document.querySelector('#repair-throughput').textContent = '0 HPS';
+  document.querySelector('#repair-balance').textContent = '0 /s';
+  document.querySelector('#observed-source').textContent = 'Unobserved';
+  document.querySelector('#observed-weapon').textContent = 'Unobserved';
   renderEventList([], 'unavailable');
 }
 
 function renderPassiveTelemetry(snapshot) {
   const status = snapshot?.status || 'unavailable';
   document.querySelector('#passive-state').textContent = passiveStateLabel(status);
+  document.querySelector('#overview-passive').textContent = passiveStateLabel(status);
   document.querySelector('#passive-system').textContent = snapshot?.currentSystem?.label || 'Unobserved';
   document.querySelector('#passive-sample').textContent = formatNumber(snapshot?.zkill?.sampleCount);
   document.querySelector('#passive-activity').textContent = passiveActivity(snapshot);
   document.querySelector('#passive-freshness').textContent = passiveStateLabel(snapshot?.freshness?.status || status);
+  document.querySelector('#passive-basis').textContent = passiveBasis(snapshot);
   document.querySelector('#passive-message').textContent = passiveMessage(snapshot);
 }
 
@@ -200,6 +219,7 @@ async function refreshClipboardState() {
 function renderThreatSnapshot(snapshot) {
   const status = snapshot?.status || 'empty';
   document.querySelector('#threat-state').textContent = threatStateLabel(status);
+  document.querySelector('#overview-threat').textContent = threatStateLabel(status);
   document.querySelector('#threat-target-label').textContent = snapshot?.target?.label || 'Unselected';
   document.querySelector('#threat-provider').textContent = snapshot?.zkill
     ? `${snapshot.zkill.provider} ${formatNumber(snapshot.zkill.lookbackSeconds)}s`
@@ -207,6 +227,7 @@ function renderThreatSnapshot(snapshot) {
   document.querySelector('#threat-sample').textContent = snapshot?.zkill
     ? `${formatNumber(snapshot.zkill.selectedCount)} / ${formatNumber(snapshot.zkill.discoveredCount)}`
     : '0 / 0';
+  document.querySelector('#threat-basis').textContent = threatBasis(snapshot);
   document.querySelector('#threat-message').textContent = threatMessage(snapshot);
 }
 
@@ -362,6 +383,9 @@ function passiveStateLabel(status) {
   if (status === 'degraded') {
     return 'Degraded';
   }
+  if (status === 'blocked') {
+    return 'Blocked';
+  }
   return 'Unavailable';
 }
 
@@ -426,6 +450,56 @@ function passiveMessage(snapshot) {
   return snapshot.message || 'Waiting for a future observed system change.';
 }
 
+function combatDetail(snapshot, status) {
+  if (!snapshot) {
+    return 'No Combat Witness snapshot is available.';
+  }
+  if (status === 'unavailable') {
+    return 'Watcher state is unavailable.';
+  }
+  if (status === 'degraded') {
+    return 'Watcher state is degraded.';
+  }
+  if (status === 'stale') {
+    return 'Last observed combat event is stale.';
+  }
+  if (status === 'empty') {
+    return 'No bounded combat events have been observed.';
+  }
+  return '15s window shows observed pressure and repair only.';
+}
+
+function passiveBasis(snapshot) {
+  if (!snapshot) {
+    return 'No provider';
+  }
+  if (snapshot.status === 'blocked') {
+    return 'Live IO blocked';
+  }
+  const zkill = snapshot.zkill ? `zKill ${formatNumber(snapshot.zkill.sampleCount)}` : null;
+  const activity = snapshot.activity ? `ESI ${formatNumber(snapshot.activity.shipKills)} / ${formatNumber(snapshot.activity.jumps)}` : null;
+  return [zkill, activity].filter(Boolean).join(' + ') || 'No provider';
+}
+
+function threatBasis(snapshot) {
+  if (!snapshot) {
+    return 'No scan';
+  }
+  if (snapshot.status === 'blocked') {
+    return 'Live IO blocked';
+  }
+  if (snapshot.status === 'partial') {
+    return 'Partial sample';
+  }
+  if (snapshot.zkill?.capped) {
+    return 'Capped sample';
+  }
+  if (snapshot.zkill) {
+    return 'Scoped sample';
+  }
+  return snapshot.status === 'empty' ? 'No scan' : 'No provider';
+}
+
 function passiveActivity(snapshot) {
   if (!snapshot?.activity) {
     return '0 / 0';
@@ -457,6 +531,21 @@ function capitalize(value) {
     return 'Observed';
   }
   return `${value.slice(0, 1).toUpperCase()}${value.slice(1)}`;
+}
+
+function observedCountLabel(item, fallback) {
+  if (!item?.label) {
+    return fallback;
+  }
+  return item.count ? `${item.label} (${formatNumber(item.count)})` : item.label;
+}
+
+function signedRate(value) {
+  if (!Number.isFinite(value)) {
+    return '0 /s';
+  }
+  const rounded = Math.round(value);
+  return `${rounded > 0 ? '+' : ''}${rounded} /s`;
 }
 
 function formatNumber(value) {

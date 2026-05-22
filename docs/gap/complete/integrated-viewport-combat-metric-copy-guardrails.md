@@ -1,6 +1,6 @@
 # Gap To-Do: Integrated Viewport Combat Metric Copy Guardrails
 
-Status: Open
+Status: Complete
 Priority: P1
 Milestone: 10 - Integrated Tactical Viewport
 

@@ -273,7 +273,7 @@ AURA-Sense visual smoke passed: F:\Projects\AURA-Sense\.tmp\electron-visual-smok
 
 ### Milestone 10: Integrated Tactical Viewport
 
-Status: Active - Next Dev Runway in `docs/roadmap/milestone-10-integrated-tactical-viewport.md`.
+Status: Complete with spike calibration and live smoke deferred in `docs/roadmap/milestone-10-integrated-tactical-viewport.md`.
 
 Feature anchors:
 
@@ -286,6 +286,14 @@ Feature anchors:
 Operational outcome:
 
 The HUD composes multiple lanes into one calm tactical viewport without merging their truth models.
+
+Completion summary:
+
+- lane overview added for Combat Witness, Passive Telemetry, and Threat Intel
+- Combat Witness remains the primary lane
+- Passive Telemetry and Threat Intel are paired support lanes
+- observed Combat Witness pressure, repair throughput, repair balance, source, and weapon fields are displayed without conclusion language
+- provider/basis fields show Passive Telemetry and Threat Intel context without renderer provider calls
 
 Task chain:
 
@@ -306,6 +314,15 @@ Dev may refine HUD composition, copy, CSS/layout, smoke coverage, and lane orche
 Acceptance gate:
 
 The viewport shows Combat Witness, Passive Telemetry, and Threat Intel as separate tactical lanes with clear freshness and no false certainty.
+
+Completion signal:
+
+```txt
+renderer boundary verified (4 files scanned)
+renderer shell verified
+all checks verified
+AURA-Sense visual smoke passed: F:\Projects\AURA-Sense\.tmp\electron-visual-smoke
+```
 
 ### Milestone 11: Operational Hardening And Runtime Control
 

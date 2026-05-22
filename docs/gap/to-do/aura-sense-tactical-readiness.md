@@ -28,8 +28,8 @@ Track the work required before AURA-Sense can honestly claim tactical viewport r
 - Keep Electron visual smoke separate from offline verification.
 - Treat Combat Logging Test Suite as complete with raw repair/healing parser support explicitly deferred until exact samples exist.
 - Treat Passive Telemetry live-safe readiness as complete with live network smoke still deferred behind `AURA_SENSE_LIVE_API=1`.
-- Proceed next with Milestone 10: integrated tactical viewport composition in `docs/roadmap/milestone-10-integrated-tactical-viewport.md`.
-- After Milestone 10 acceptance, proceed to Milestone 11 operational hardening, then Milestone 12 live validation and tactical calibration.
+- Treat Milestone 10 integrated tactical viewport composition as complete with spike calibration and live smoke deferred.
+- Proceed next with Milestone 11 operational hardening, then Milestone 12 live validation and tactical calibration.
 - Use feature-aligned milestones for implementation sequencing instead of assigning one-off micro-tasks.
 - Record completion evidence in `docs/gap/complete/` as gaps close.
 
@@ -61,6 +61,7 @@ AURA-Sense has a verified tactical viewport skeleton with separated telemetry la
 - `docs/roadmap/milestone-08-passive-telemetry-live-safe-readiness.md`
 - `docs/roadmap/milestone-09-scoped-threat-intel-and-clipboard-acquisition.md`
 - `docs/roadmap/milestone-10-integrated-tactical-viewport.md`
+- `docs/audits/audit-2026-05-22-integrated-viewport-handover.md`
 - `docs/roadmap/milestone-11-operational-hardening-and-runtime-control.md`
 - `docs/roadmap/milestone-12-live-validation-and-tactical-calibration.md`
 - `docs/audits/audit-2026-05-22-threat-intel-and-clipboard-handover.md`
@@ -76,6 +77,11 @@ AURA-Sense has a verified tactical viewport skeleton with separated telemetry la
 - `docs/gap/complete/combat-log-golden-snapshot-tests.md`
 - `docs/gap/complete/combat-log-repair-healing-fixtures.md`
 - `docs/gap/complete/combat-log-replay-and-repair-balance-next-scope.md`
+- `docs/gap/complete/integrated-viewport-lane-priority-and-snapshot-contract.md`
+- `docs/gap/complete/integrated-viewport-layout-composition.md`
+- `docs/gap/complete/integrated-viewport-request-pulse-and-degraded-state.md`
+- `docs/gap/complete/integrated-viewport-combat-metric-copy-guardrails.md`
+- `docs/gap/complete/integrated-viewport-smoke-and-boundary-verification.md`
 - `docs/gap/complete/passive-telemetry-local-system-resolver.md`
 - `docs/gap/complete/passive-telemetry-esi-system-activity.md`
 - `docs/gap/complete/passive-telemetry-scoped-zkill-route.md`

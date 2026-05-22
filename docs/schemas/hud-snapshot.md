@@ -1,6 +1,6 @@
 # Schema: HUD Snapshot
 
-Status: Seed
+Status: Active - Integrated viewport display contract
 Owner: Backend/main-process presentation services
 
 ## Purpose
@@ -17,6 +17,66 @@ The renderer should consume snapshots rather than recomputing telemetry truth.
 - freshness/staleness flags
 - warnings
 - mode hints
+
+## Integrated Viewport Lane Contract
+
+Milestone 10 uses existing backend-owned lane snapshots directly. No backend presentation adapter was added because the current display can consume compact snapshot fields without merging lane truth models.
+
+Lane priority:
+
+1. Combat Witness: primary lane, because local combat observations are the most time-sensitive operator signal.
+2. Passive Telemetry and Threat Intel: paired support lanes, because they explain system context and deliberate scan context without overriding Combat Witness.
+3. Event stream and controls: operational detail and explicit operator actions.
+
+The integrated overview strip may repeat each lane's status, but it must not create a global threat score.
+
+### Combat Witness Integrated Fields
+
+Displayed fields:
+
+- `freshness.status`
+- `operational.watcher.state`
+- `windows.5s.damage.incoming.total`
+- `windows.15s.repair.incoming.total`
+- `freshness.eventStreamCount`
+- `windows.15s.damage.incoming.perSecond`
+- `windows.15s.repair.incoming.perSecond`
+- `windows.15s.balance.receivedRepairMinusDamagePerSecond`
+- `windows.15s.damage.incoming.topSource`
+- `windows.15s.damage.incoming.mostObservedWeaponType`
+
+Copy guardrails:
+
+- Use `Incoming pressure`, `Repair throughput`, `Observed repair balance`, `Observed source`, and `Most observed weapon`.
+- Do not describe repair balance as safety, stability, breaking, tank state, or survival.
+- Do not emphasize spike outliers in the integrated HUD until real-dataset calibration is complete.
+
+### Passive Telemetry Integrated Fields
+
+Displayed fields:
+
+- `status`
+- `currentSystem.label`
+- `zkill.sampleCount`
+- `activity.shipKills`
+- `activity.jumps`
+- `freshness.status`
+- `gate`/`status` blocked messaging
+- provider basis derived from `zkill` and `activity`
+
+### Threat Intel Integrated Fields
+
+Displayed fields:
+
+- `status`
+- `target.label`
+- `zkill.provider`
+- `zkill.lookbackSeconds`
+- `zkill.selectedCount`
+- `zkill.discoveredCount`
+- `zkill.capped`
+- clipboard acquisition state
+- blocked/partial/capped/provider basis
 
 ## Invariants
 

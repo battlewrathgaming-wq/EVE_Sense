@@ -1,7 +1,7 @@
 # Current State: AURA-Sense Implementation
 
 Date: 2026-05-22
-Status: Scoped Threat Intel and Clipboard Acquisition foundation complete; Milestone 10 integrated viewport runway active; Milestones 11 and 12 scoped
+Status: Integrated tactical viewport foundation complete; Milestones 11 and 12 scoped
 
 ## What Exists
 
@@ -60,6 +60,10 @@ The current implementation includes:
 - Clipboard Acquisition service with armed/listening/sealed/cooldown lifecycle
 - global clipboard arming shortcut registered as `CommandOrControl+Shift+Space`
 - Threat Intel preload bridge with no renderer-owned provider calls
+- integrated tactical viewport layout with lane overview and separate Combat Witness, Passive Telemetry, and Threat Intel surfaces
+- Combat Witness integrated display for observed incoming pressure, repair throughput, observed repair balance, observed source, and most observed weapon
+- lane-specific provider/basis display for Passive Telemetry and Threat Intel
+- Electron visual smoke assertions for integrated viewport selectors, combat metric fields, and provider basis fields
 - curated combat-log fixture ingestion with raw-line hash drift checks
 - machine-readable combat-log event coverage matrix
 - offline combat-log replay harness for parser/runtime/service semantics
@@ -76,7 +80,7 @@ Not yet proven in this codebase:
 - live zKill-backed Threat Intel search and optional ESI expansion pipeline
 - exact raw repair/healing parser coverage
 - local EVE system/type metadata adapters
-- production-grade multi-lane HUD renderer
+- production-grade multi-lane HUD renderer beyond the current integrated foundation
 - persistent product settings for gamelog folder
 - native folder picker for gamelog folder
 - live EVE gamelog operational smoke against an operator machine
@@ -177,6 +181,7 @@ It writes artifacts under `.tmp\electron-visual-smoke` and is intentionally not 
 - no exact raw repair/healing fixtures yet; raw `combat.repair` parser support remains deferred
 - Combat Witness damage spike detection is lightweight and still needs real dataset calibration before strong HUD emphasis
 - Combat Witness repair balance is observed HPS minus DPS only; it is not survival, stability, or tank-state evidence
+- integrated viewport does not display damage spike outliers yet; calibration remains open
 - persistent runtime settings and live validation/calibration are now scoped as future milestones, not yet implemented
 - concept and research docs are AURA-Sense product doctrine or evidence notes; older audit records may still describe past cleanup work
 
@@ -211,15 +216,11 @@ It writes artifacts under `.tmp\electron-visual-smoke` and is intentionally not 
 - `docs/audits/audit-2026-05-22-post-passive-live-safe-next-runway.md`
 - `docs/audits/audit-2026-05-22-threat-intel-and-clipboard-handover.md`
 - `docs/audits/audit-2026-05-22-post-threat-intel-combat-metrics-overseer-review.md`
+- `docs/audits/audit-2026-05-22-integrated-viewport-handover.md`
 - `docs/audits/audit-2026-05-22-next-two-milestones-overseer-scope.md`
 - `docs/gap/to-do/aura-sense-tactical-readiness.md`
 - `docs/gap/to-do/readiness-09-local-type-metadata.md`
 - `docs/gap/to-do/combat-window-weapon-spike-followups.md`
-- `docs/gap/to-do/integrated-viewport-lane-priority-and-snapshot-contract.md`
-- `docs/gap/to-do/integrated-viewport-layout-composition.md`
-- `docs/gap/to-do/integrated-viewport-request-pulse-and-degraded-state.md`
-- `docs/gap/to-do/integrated-viewport-combat-metric-copy-guardrails.md`
-- `docs/gap/to-do/integrated-viewport-smoke-and-boundary-verification.md`
 - `docs/gap/to-do/runtime-settings-persistence.md`
 - `docs/gap/to-do/runtime-live-io-control-policy.md`
 - `docs/gap/to-do/runtime-diagnostics-review-surface.md`
@@ -254,6 +255,11 @@ It writes artifacts under `.tmp\electron-visual-smoke` and is intentionally not 
 - `docs/gap/complete/combat-log-golden-snapshot-tests.md`
 - `docs/gap/complete/combat-log-repair-healing-fixtures.md`
 - `docs/gap/complete/combat-log-replay-and-repair-balance-next-scope.md`
+- `docs/gap/complete/integrated-viewport-lane-priority-and-snapshot-contract.md`
+- `docs/gap/complete/integrated-viewport-layout-composition.md`
+- `docs/gap/complete/integrated-viewport-request-pulse-and-degraded-state.md`
+- `docs/gap/complete/integrated-viewport-combat-metric-copy-guardrails.md`
+- `docs/gap/complete/integrated-viewport-smoke-and-boundary-verification.md`
 - `docs/gap/complete/readiness-15-passive-telemetry-foundation.md`
 - `docs/gap/complete/readiness-14-combat-witness-operational-loop.md`
 - `docs/gap/complete/readiness-13-electron-visual-smoke.md`
