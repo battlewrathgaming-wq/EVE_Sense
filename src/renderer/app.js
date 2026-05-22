@@ -11,6 +11,7 @@ const state = {
 async function boot() {
   await bootFrame();
   await bootRuntimeHealth();
+  await bootRuntimeControl();
   await bootWatcherControls();
   await bootCombatWitness();
   await bootPassiveTelemetry();
@@ -20,6 +21,11 @@ async function boot() {
 async function bootRuntimeHealth() {
   const readiness = await window.aura.invokeService('seed.readiness');
   document.querySelector('#runtime-health').textContent = readiness.ok ? 'Runtime ready' : 'Runtime blocked';
+}
+
+async function bootRuntimeControl() {
+  document.querySelector('#live-io-toggle').addEventListener('click', toggleLiveIo);
+  await refreshRuntimeControl();
 }
 
 async function bootCombatWitness() {
@@ -63,6 +69,36 @@ async function bootWatcherControls() {
   document.querySelector('#stop-watcher').addEventListener('click', stopWatcher);
   const status = await window.aura.invokeService('combat.witness.status');
   renderWatcherStatus(status);
+}
+
+async function refreshRuntimeControl() {
+  const [settings, liveIo, diagnostics] = await Promise.all([
+    window.aura.invokeService('runtime.settings.snapshot'),
+    window.aura.invokeService('runtime.live-io.snapshot'),
+    window.aura.invokeService('runtime.diagnostics.snapshot')
+  ]);
+  renderRuntimeSettings(settings);
+  renderLiveIoPolicy(liveIo);
+  renderDiagnostics(diagnostics);
+}
+
+async function toggleLiveIo() {
+  const button = document.querySelector('#live-io-toggle');
+  button.disabled = true;
+  try {
+    const current = await window.aura.invokeService('runtime.live-io.snapshot');
+    const enabled = !(current.passive?.enabled || current.threat?.enabled);
+    const snapshot = await window.aura.invokeService('runtime.live-io.set-enabled', {
+      lane: 'all',
+      enabled
+    });
+    renderLiveIoPolicy(snapshot);
+    renderPassiveTelemetry(await window.auraPassiveTelemetry.getSnapshot());
+    renderThreatSnapshot(await window.auraThreatIntel.getSnapshot());
+    renderDiagnostics(await window.aura.invokeService('runtime.diagnostics.snapshot'));
+  } finally {
+    button.disabled = false;
+  }
 }
 
 async function bootFrame() {
@@ -249,6 +285,7 @@ async function startWatcher(event) {
     const status = await window.aura.invokeService('combat.witness.start', { gamelogFolder });
     renderWatcherStatus(status);
     renderCombatWitness(await window.auraCombatWitness.getSnapshot());
+    await refreshRuntimeControl();
   } catch (error) {
     renderWatcherStatus({
       watcher: {
@@ -256,6 +293,7 @@ async function startWatcher(event) {
         message: error.message
       }
     });
+    await refreshRuntimeControl();
   } finally {
     startButton.disabled = false;
   }
@@ -280,6 +318,27 @@ function renderWatcherStatus(status = {}) {
   if (watcher.path) {
     document.querySelector('#gamelog-folder').value = watcher.path;
   }
+}
+
+function renderRuntimeSettings(snapshot = {}) {
+  document.querySelector('#settings-state').textContent = runtimeSettingsLabel(snapshot.status);
+  if (snapshot.settings?.gamelogFolder) {
+    document.querySelector('#gamelog-folder').value = snapshot.settings.gamelogFolder;
+  }
+}
+
+function renderLiveIoPolicy(snapshot = {}) {
+  const passiveEnabled = snapshot.passive?.enabled === true;
+  const threatEnabled = snapshot.threat?.enabled === true;
+  const state = passiveEnabled || threatEnabled ? 'Enabled' : 'Disabled';
+  document.querySelector('#live-io-state').textContent = state;
+  document.querySelector('#live-io-toggle').textContent = state === 'Enabled' ? 'Disable live IO' : 'Enable live IO';
+}
+
+function renderDiagnostics(snapshot = {}) {
+  document.querySelector('#diagnostics-state').textContent = snapshot.count
+    ? `${formatNumber(snapshot.count)} noted`
+    : 'Quiet';
 }
 
 function statusFromSnapshot(snapshot = {}) {
@@ -432,6 +491,19 @@ function clipboardStateLabel(status) {
     return 'Cooldown';
   }
   return 'Idle';
+}
+
+function runtimeSettingsLabel(status) {
+  if (status === 'ready') {
+    return 'Ready';
+  }
+  if (status === 'recovered') {
+    return 'Recovered';
+  }
+  if (status === 'degraded') {
+    return 'Degraded';
+  }
+  return 'Missing';
 }
 
 function passiveMessage(snapshot) {

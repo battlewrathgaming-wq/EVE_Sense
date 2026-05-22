@@ -271,6 +271,51 @@ dd {
   gap: 8px;
 }
 
+.runtime-control {
+  border-top: 1px solid var(--line);
+  padding: 12px 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) auto;
+  gap: 8px;
+  align-items: stretch;
+}
+
+.runtime-control div {
+  min-height: 54px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px;
+  background: var(--panel-strong);
+}
+
+.runtime-control span {
+  display: block;
+  color: var(--muted);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.runtime-control strong {
+  display: block;
+  margin-top: 5px;
+  overflow-wrap: anywhere;
+}
+
+.runtime-control button {
+  min-height: 54px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0 12px;
+  background: var(--panel-strong);
+  color: var(--fg);
+  cursor: pointer;
+}
+
+.runtime-control button:hover {
+  border-color: var(--accent);
+}
+
 .threat-search {
   border-top: 1px solid var(--line);
   padding: 12px 0 16px;
@@ -418,20 +463,23 @@ dd {
   .section-title,
   .watcher-controls div,
   .threat-search div,
+  .runtime-control,
   .event-list li {
     align-items: flex-start;
     flex-direction: column;
   }
 
   .watcher-controls div,
-  .threat-search div {
+  .threat-search div,
+  .runtime-control {
     display: flex;
   }
 
   .watcher-controls input,
   .watcher-controls button,
   .threat-search input,
-  .threat-search button {
+  .threat-search button,
+  .runtime-control button {
     width: 100%;
   }
 }

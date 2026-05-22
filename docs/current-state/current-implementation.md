@@ -1,7 +1,7 @@
 # Current State: AURA-Sense Implementation
 
 Date: 2026-05-22
-Status: Integrated tactical viewport foundation complete; Milestones 11 and 12 scoped
+Status: Operational hardening and runtime control complete; Milestone 12 live validation and calibration scoped
 
 ## What Exists
 
@@ -64,6 +64,12 @@ The current implementation includes:
 - Combat Witness integrated display for observed incoming pressure, repair throughput, observed repair balance, observed source, and most observed weapon
 - lane-specific provider/basis display for Passive Telemetry and Threat Intel
 - Electron visual smoke assertions for integrated viewport selectors, combat metric fields, and provider basis fields
+- backend-owned runtime settings persistence for validated gamelog folder configuration
+- startup recovery for valid persisted gamelog settings without auto-starting watchers
+- operator-visible live IO policy control for Passive Telemetry and Threat Intel gates
+- compact diagnostics review surface backed by sanitized runtime diagnostics
+- runtime smoke policy documentation and Electron capture failure record
+- ADR documenting Atlas handoff as deferred
 - curated combat-log fixture ingestion with raw-line hash drift checks
 - machine-readable combat-log event coverage matrix
 - offline combat-log replay harness for parser/runtime/service semantics
@@ -81,7 +87,6 @@ Not yet proven in this codebase:
 - exact raw repair/healing parser coverage
 - local EVE system/type metadata adapters
 - production-grade multi-lane HUD renderer beyond the current integrated foundation
-- persistent product settings for gamelog folder
 - native folder picker for gamelog folder
 - live EVE gamelog operational smoke against an operator machine
 - full provider request pulse UI
@@ -167,10 +172,7 @@ It writes artifacts under `.tmp\electron-visual-smoke` and is intentionally not 
 ## Known Gaps
 
 - some inherited seed service names remain below the visible product surface
-- no product-facing settings persistence yet
-- no renderer diagnostics transport or diagnostics UI yet
 - no active scan service wired to the prepared validator yet
-- no persistent settings save/restart service yet
 - no native folder picker yet
 - local metadata resolver is fixture/static only and intentionally small
 - no full provider request pulse UI yet
@@ -182,7 +184,7 @@ It writes artifacts under `.tmp\electron-visual-smoke` and is intentionally not 
 - Combat Witness damage spike detection is lightweight and still needs real dataset calibration before strong HUD emphasis
 - Combat Witness repair balance is observed HPS minus DPS only; it is not survival, stability, or tank-state evidence
 - integrated viewport does not display damage spike outliers yet; calibration remains open
-- persistent runtime settings and live validation/calibration are now scoped as future milestones, not yet implemented
+- live validation/calibration is now scoped as a future milestone, not yet implemented
 - concept and research docs are AURA-Sense product doctrine or evidence notes; older audit records may still describe past cleanup work
 
 ## Related Documents
@@ -217,16 +219,11 @@ It writes artifacts under `.tmp\electron-visual-smoke` and is intentionally not 
 - `docs/audits/audit-2026-05-22-threat-intel-and-clipboard-handover.md`
 - `docs/audits/audit-2026-05-22-post-threat-intel-combat-metrics-overseer-review.md`
 - `docs/audits/audit-2026-05-22-integrated-viewport-handover.md`
+- `docs/audits/audit-2026-05-22-operational-hardening-handover.md`
 - `docs/audits/audit-2026-05-22-next-two-milestones-overseer-scope.md`
 - `docs/gap/to-do/aura-sense-tactical-readiness.md`
 - `docs/gap/to-do/readiness-09-local-type-metadata.md`
 - `docs/gap/to-do/combat-window-weapon-spike-followups.md`
-- `docs/gap/to-do/runtime-settings-persistence.md`
-- `docs/gap/to-do/runtime-live-io-control-policy.md`
-- `docs/gap/to-do/runtime-diagnostics-review-surface.md`
-- `docs/gap/to-do/runtime-startup-and-session-recovery.md`
-- `docs/gap/to-do/runtime-smoke-policy-and-failure-records.md`
-- `docs/gap/to-do/atlas-handoff-decision-boundary.md`
 - `docs/gap/to-do/live-operator-smoke-playbook.md`
 - `docs/gap/to-do/live-api-smoke-evidence.md`
 - `docs/gap/to-do/combat-metric-calibration-real-datasets.md`
@@ -260,6 +257,15 @@ It writes artifacts under `.tmp\electron-visual-smoke` and is intentionally not 
 - `docs/gap/complete/integrated-viewport-request-pulse-and-degraded-state.md`
 - `docs/gap/complete/integrated-viewport-combat-metric-copy-guardrails.md`
 - `docs/gap/complete/integrated-viewport-smoke-and-boundary-verification.md`
+- `docs/gap/complete/runtime-settings-persistence.md`
+- `docs/gap/complete/runtime-live-io-control-policy.md`
+- `docs/gap/complete/runtime-diagnostics-review-surface.md`
+- `docs/gap/complete/runtime-startup-and-session-recovery.md`
+- `docs/gap/complete/runtime-smoke-policy-and-failure-records.md`
+- `docs/gap/complete/atlas-handoff-decision-boundary.md`
+- `docs/roadmap/runtime-smoke-policy.md`
+- `docs/adr/adr-2026-05-22-atlas-handoff-deferred.md`
+- `docs/failures/failure-2026-05-22-electron-capture-transient-viz.md`
 - `docs/gap/complete/readiness-15-passive-telemetry-foundation.md`
 - `docs/gap/complete/readiness-14-combat-witness-operational-loop.md`
 - `docs/gap/complete/readiness-13-electron-visual-smoke.md`

@@ -157,6 +157,21 @@
           <h2 id="events-title">Event stream</h2>
           <span id="runtime-health">Checking runtime</span>
         </div>
+        <section class="runtime-control" aria-label="Runtime control">
+          <div>
+            <span>Settings</span>
+            <strong id="settings-state">Loading</strong>
+          </div>
+          <div>
+            <span>Live IO</span>
+            <strong id="live-io-state">Disabled</strong>
+          </div>
+          <div>
+            <span>Diagnostics</span>
+            <strong id="diagnostics-state">Quiet</strong>
+          </div>
+          <button id="live-io-toggle" type="button">Enable live IO</button>
+        </section>
         <form id="watcher-controls" class="watcher-controls">
           <label for="gamelog-folder">Gamelog folder</label>
           <div>

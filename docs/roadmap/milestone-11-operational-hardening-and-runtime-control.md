@@ -1,6 +1,6 @@
 # Milestone 11: Operational Hardening And Runtime Control
 
-Status: Planned - Next After Milestone 10 Acceptance
+Status: Complete - Live operator validation deferred to Milestone 12
 Date: 2026-05-22
 Owner: Overseer direction, Dev execution
 
@@ -27,55 +27,61 @@ The operator can start AURA-Sense, recover from missing settings, understand blo
 
 ### P0 Task 1: Runtime Settings Persistence
 
+- Status: Complete.
 - Persist validated gamelog folder and operator-safe display/runtime preferences.
 - Load persisted settings at startup through backend-owned validation.
 - Recover visibly when persisted paths are missing or invalid.
 - Keep settings small, explicit, and product-facing.
 
-Task packet: `docs/gap/to-do/runtime-settings-persistence.md`.
+Task packet: `docs/gap/complete/runtime-settings-persistence.md`.
 
 ### P0 Task 2: Live IO Control Policy
 
+- Status: Complete.
 - Add an operator-visible live IO policy surface for Passive Telemetry and Threat Intel.
 - Preserve backend live IO gate ownership.
 - Show blocked state clearly when live calls are disabled.
 - Keep live API execution out of `verify:all`.
 
-Task packet: `docs/gap/to-do/runtime-live-io-control-policy.md`.
+Task packet: `docs/gap/complete/runtime-live-io-control-policy.md`.
 
 ### P1 Task 3: Diagnostics Review Surface
 
+- Status: Complete.
 - Add a compact diagnostics/degraded-state review surface.
 - Show high-value watcher, parser, runtime, and provider failures without raw-log leakage.
 - Avoid turning diagnostics into a noisy console.
 - Preserve diagnostics policy filtering.
 
-Task packet: `docs/gap/to-do/runtime-diagnostics-review-surface.md`.
+Task packet: `docs/gap/complete/runtime-diagnostics-review-surface.md`.
 
 ### P1 Task 4: Startup And Session Recovery
 
+- Status: Complete.
 - Make startup states explicit for missing gamelog folder, unavailable bridges, disabled live IO, and stale lane snapshots.
 - Ensure watcher restart/stop behavior remains validated and observable.
 - Keep renderer copy honest during partial startup.
 
-Task packet: `docs/gap/to-do/runtime-startup-and-session-recovery.md`.
+Task packet: `docs/gap/complete/runtime-startup-and-session-recovery.md`.
 
 ### P2 Task 5: Smoke Policy And Failure Records
 
+- Status: Complete.
 - Define which smoke commands are local/manual, CI-safe, or live-only.
 - Record reusable bug classes in `docs/failures` when discovered.
 - Keep Electron smoke evidence under `.tmp`.
 - Do not hardcode machine paths.
 
-Task packet: `docs/gap/to-do/runtime-smoke-policy-and-failure-records.md`.
+Task packet: `docs/gap/complete/runtime-smoke-policy-and-failure-records.md`.
 
 ### P2 Task 6: Atlas Handoff Decision Boundary
 
+- Status: Complete.
 - Write an ADR only if a concrete operator workflow requires handoff.
 - Keep Atlas persistence, evidence stores, queues, and watch execution out of AURA-Sense core.
 - Prefer "no handoff yet" if the workflow is not real.
 
-Task packet: `docs/gap/to-do/atlas-handoff-decision-boundary.md`.
+Task packet: `docs/gap/complete/atlas-handoff-decision-boundary.md`.
 
 ## Autonomy Envelope
 
@@ -109,6 +115,38 @@ Milestone 11 is complete when:
 - smoke policy is documented
 - `npm.cmd run verify:all` passes
 - `npm.cmd run smoke:electron` passes if renderer changed
+
+## Completion Evidence
+
+Verification completed:
+
+```txt
+runtime control verified
+renderer boundary verified (4 files scanned)
+renderer shell verified
+all checks verified
+```
+
+Electron visual smoke completed:
+
+```txt
+AURA-Sense visual smoke passed: F:\Projects\AURA-Sense\.tmp\electron-visual-smoke
+```
+
+Smoke artifact records:
+
+```txt
+hasRuntimeControl: true
+settingsStateText: Missing
+liveIoStateText: Disabled
+diagnosticsStateText: 1 noted
+```
+
+Policy records:
+
+- `docs/roadmap/runtime-smoke-policy.md`
+- `docs/adr/adr-2026-05-22-atlas-handoff-deferred.md`
+- `docs/failures/failure-2026-05-22-electron-capture-transient-viz.md`
 
 ## Expected Handover
 

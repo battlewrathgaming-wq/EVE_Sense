@@ -1,6 +1,6 @@
 # Gap To-Do: Runtime Diagnostics Review Surface
 
-Status: Open
+Status: Complete
 Priority: P1
 Milestone: 11 - Operational Hardening And Runtime Control
 

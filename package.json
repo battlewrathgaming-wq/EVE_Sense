@@ -28,7 +28,8 @@
     "verify:frame": "node scripts/verify-frame-module.js",
     "verify:renderer-boundary": "node scripts/verify-renderer-boundary.js",
     "verify:renderer-shell": "node scripts/verify-renderer-shell.js",
-    "verify:runtime-errors": "node scripts/verify-runtime-error-handling.js"
+    "verify:runtime-errors": "node scripts/verify-runtime-error-handling.js",
+    "verify:runtime-control": "node scripts/verify-runtime-control.js"
   },
   "devDependencies": {
     "electron": "^42.2.0"

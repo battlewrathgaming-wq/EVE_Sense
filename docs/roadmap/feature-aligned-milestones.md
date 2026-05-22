@@ -326,7 +326,7 @@ AURA-Sense visual smoke passed: F:\Projects\AURA-Sense\.tmp\electron-visual-smok
 
 ### Milestone 11: Operational Hardening And Runtime Control
 
-Status: Planned - Next After Milestone 10 Acceptance in `docs/roadmap/milestone-11-operational-hardening-and-runtime-control.md`.
+Status: Complete with live operator validation deferred to Milestone 12 in `docs/roadmap/milestone-11-operational-hardening-and-runtime-control.md`.
 
 Feature anchors:
 
@@ -338,6 +338,15 @@ Feature anchors:
 Operational outcome:
 
 AURA-Sense becomes stable enough for longer operator sessions with recoverable settings, visible live IO policy, explicit startup/degraded state, and quiet diagnostics review.
+
+Completion summary:
+
+- validated gamelog folder settings persist through a backend-owned settings file
+- valid persisted gamelog settings recover at startup without auto-starting the watcher
+- invalid persisted settings degrade visibly
+- Passive Telemetry and Threat Intel live IO gates have one visible operator control
+- sanitized diagnostics are available through a compact runtime review surface
+- smoke command policy, transient Electron capture failure record, and Atlas-deferred ADR are documented
 
 Task chain:
 
@@ -356,6 +365,16 @@ Dev may harden runtime control, diagnostics, smoke policy, and documentation. At
 Acceptance gate:
 
 AURA-Sense can run longer sessions with visible degraded states, recoverable settings, scoped network behavior, and no accidental Atlas import.
+
+Completion signal:
+
+```txt
+runtime control verified
+renderer boundary verified (4 files scanned)
+renderer shell verified
+all checks verified
+AURA-Sense visual smoke passed: F:\Projects\AURA-Sense\.tmp\electron-visual-smoke
+```
 
 ### Milestone 12: Live Validation And Tactical Calibration
 

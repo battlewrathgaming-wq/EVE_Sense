@@ -19,8 +19,11 @@ const { createThreatIntelTargetResolver } = require('../threat/threatIntelTarget
 const { ThreatIntelZkillClient } = require('../threat/threatIntelZkillClient');
 const { registerRuntimeErrorHandlers } = require('./runtimeErrorHandling');
 const { createFrameWindow, registerFrameWindowHandlers } = require('../modules/Frame');
+const { createRuntimeDiagnosticsService } = require('../runtime/runtimeDiagnosticsService');
+const { createRuntimeSettingsService } = require('../runtime/runtimeSettingsService');
 
 const registry = createDefaultRegistry();
+const runtimeDiagnosticsService = createRuntimeDiagnosticsService();
 const passiveRequestLog = (entry) => traceRuntimeDiagnostic(entry.diagnostic_event || 'passive_request_log', entry);
 const passiveLiveIoGate = createLiveIoGate();
 const threatRequestLog = (entry) => traceRuntimeDiagnostic(entry.diagnostic_event || 'threat_request_log', entry);
@@ -66,11 +69,15 @@ const combatWitnessBridge = createCombatWitnessBridge({
 const passiveTelemetryBridge = createPassiveTelemetryBridge({
   service: passiveTelemetryService
 });
+const runtimeSettingsService = createRuntimeSettingsService({
+  settingsPath: path.join(app.getPath('userData'), 'runtime-settings.json')
+});
 let mainWindow = null;
 
-registerCombatWitnessRuntimeCommands(registry, combatWitnessRuntime);
+registerCombatWitnessRuntimeCommands(registry, combatWitnessRuntime, runtimeSettingsService);
 registerPassiveTelemetryCommands(registry, passiveTelemetryService);
 registerThreatIntelCommands(registry, threatIntelService, clipboardAcquisitionService);
+registerRuntimeControlCommands(registry, runtimeSettingsService, runtimeDiagnosticsService);
 
 function createWindow() {
   const window = createFrameWindow(app, {
@@ -96,6 +103,7 @@ app.whenReady().then(() => {
   });
   registerElectronServiceHandlers(ipcMain, registry, () => ({ appName: APP_NAME }));
   registerFrameWindowHandlers(ipcMain, app, () => mainWindow);
+  recoverRuntimeSettings();
   combatWitnessBridge.register(ipcMain);
   passiveTelemetryBridge.register(ipcMain);
   createWindow();
@@ -118,7 +126,7 @@ app.on('will-quit', () => {
   globalShortcut.unregisterAll();
 });
 
-function registerCombatWitnessRuntimeCommands(serviceRegistry, runtime) {
+function registerCombatWitnessRuntimeCommands(serviceRegistry, runtime, settingsService) {
   serviceRegistry
     .register('combat.witness.status', {
       classification: TASK_CLASSIFICATIONS.READ_ONLY,
@@ -128,17 +136,66 @@ function registerCombatWitnessRuntimeCommands(serviceRegistry, runtime) {
     .register('combat.witness.configure', {
       classification: TASK_CLASSIFICATIONS.LOCAL_MUTATION,
       description: 'Validate and configure the local EVE gamelog folder for Combat Witness',
-      handler: (payload = {}) => runtime.configure(payload)
+      handler: (payload = {}) => {
+        const status = runtime.configure(payload);
+        if (status.configuredPath && settingsService) {
+          settingsService.save({ gamelogFolder: status.configuredPath });
+        } else {
+          traceRuntimeDiagnostic('runtime_settings_configure_rejected', {
+            message: status.watcher?.message || 'Combat Witness path rejected'
+          });
+        }
+        return status;
+      }
     })
     .register('combat.witness.start', {
       classification: TASK_CLASSIFICATIONS.LOCAL_MUTATION,
       description: 'Start Combat Witness watcher from the configured local EVE gamelog folder',
-      handler: (payload = {}) => runtime.start(payload)
+      handler: (payload = {}) => {
+        const status = runtime.start(payload);
+        if (status.configuredPath && settingsService) {
+          settingsService.save({ gamelogFolder: status.configuredPath });
+        } else if (!status.ok) {
+          traceRuntimeDiagnostic('combat_witness_start_rejected', {
+            message: status.watcher?.message || 'Combat Witness watcher did not start'
+          });
+        }
+        return status;
+      }
     })
     .register('combat.witness.stop', {
       classification: TASK_CLASSIFICATIONS.LOCAL_MUTATION,
       description: 'Stop Combat Witness watcher',
       handler: () => runtime.stop()
+    });
+}
+
+function registerRuntimeControlCommands(serviceRegistry, settingsService, diagnosticsService) {
+  serviceRegistry
+    .register('runtime.settings.snapshot', {
+      classification: TASK_CLASSIFICATIONS.READ_ONLY,
+      description: 'Return persisted runtime settings status',
+      handler: () => settingsService.current()
+    })
+    .register('runtime.settings.save', {
+      classification: TASK_CLASSIFICATIONS.LOCAL_MUTATION,
+      description: 'Persist validated runtime settings',
+      handler: (payload = {}) => settingsService.save(payload)
+    })
+    .register('runtime.live-io.snapshot', {
+      classification: TASK_CLASSIFICATIONS.READ_ONLY,
+      description: 'Return live IO policy state for provider lanes',
+      handler: () => liveIoPolicySnapshot()
+    })
+    .register('runtime.live-io.set-enabled', {
+      classification: TASK_CLASSIFICATIONS.LOCAL_MUTATION,
+      description: 'Enable or disable backend live IO gates for provider lanes',
+      handler: (payload = {}) => setLiveIoPolicy(payload)
+    })
+    .register('runtime.diagnostics.snapshot', {
+      classification: TASK_CLASSIFICATIONS.READ_ONLY,
+      description: 'Return high-value runtime diagnostics',
+      handler: () => diagnosticsService.snapshot()
     });
 }
 
@@ -210,6 +267,45 @@ function registerThreatIntelCommands(serviceRegistry, service, acquisition) {
     });
 }
 
+function recoverRuntimeSettings() {
+  const settings = runtimeSettingsService.load();
+  if (settings.settings.gamelogFolder && settings.status !== 'degraded') {
+    const status = combatWitnessRuntime.configure({ gamelogFolder: settings.settings.gamelogFolder });
+    traceRuntimeDiagnostic('runtime_settings_recovered', {
+      status: settings.status,
+      gamelogConfigured: Boolean(status.configuredPath),
+      watcherState: status.watcher.state
+    });
+    return;
+  }
+  if (settings.status === 'degraded') {
+    traceRuntimeDiagnostic('runtime_settings_degraded', settings.failure || { message: settings.message });
+  }
+}
+
+function liveIoPolicySnapshot() {
+  return {
+    kind: 'runtime.live-io.snapshot',
+    passive: passiveTelemetryService.liveIoStatus(),
+    threat: threatIntelService.liveIoStatus(),
+    message: 'Live IO is backend gated and disabled by default'
+  };
+}
+
+function setLiveIoPolicy(payload = {}) {
+  const lane = payload.lane === 'passive' || payload.lane === 'threat' ? payload.lane : 'all';
+  const enabled = payload.enabled === true;
+  const reason = payload.reason || (enabled ? 'Operator enabled live IO' : 'Operator disabled live IO');
+  if (lane === 'all' || lane === 'passive') {
+    passiveTelemetryService.setLiveIoEnabled(enabled, reason);
+  }
+  if (lane === 'all' || lane === 'threat') {
+    threatIntelService.setLiveIoEnabled(enabled, reason);
+  }
+  traceRuntimeDiagnostic('runtime_live_io_policy_changed', { lane, enabled });
+  return liveIoPolicySnapshot();
+}
+
 function registerClipboardGlobalShortcut() {
   try {
     const registered = globalShortcut.register('CommandOrControl+Shift+Space', () => {
@@ -227,6 +323,7 @@ function registerClipboardGlobalShortcut() {
 }
 
 function traceRuntimeDiagnostic(event, payload = {}) {
+  runtimeDiagnosticsService.record(event, payload);
   console.warn(`[aura-sense diagnostic] ${event}`, payload);
 }
 
@@ -300,6 +397,7 @@ async function runVisualSmoke(window, outputDir) {
   assertSmoke(checks.hasThreatSurface, 'renderer should contain Threat Intel surface');
   assertSmoke(checks.hasCombatMetrics, 'renderer should contain integrated Combat Witness metric fields');
   assertSmoke(checks.hasProviderBasis, 'renderer should contain lane provider basis fields');
+  assertSmoke(checks.hasRuntimeControl, 'renderer should contain runtime control surface');
   assertSmoke(checks.noParserRuntimeExposure, 'renderer should not expose parser/runtime modules');
 
   const image = await window.webContents.capturePage();
@@ -355,6 +453,7 @@ function smokeChecks(window) {
       hasPassiveSurface: Boolean(document.querySelector('.passive-surface') && document.querySelector('#passive-system')),
       hasThreatSurface: Boolean(document.querySelector('.threat-surface') && document.querySelector('#threat-search') && document.querySelector('#clipboard-arm')),
       hasProviderBasis: Boolean(document.querySelector('#passive-basis') && document.querySelector('#threat-basis')),
+      hasRuntimeControl: Boolean(document.querySelector('.runtime-control') && document.querySelector('#settings-state') && document.querySelector('#live-io-state') && document.querySelector('#diagnostics-state') && document.querySelector('#live-io-toggle')),
       noParserRuntimeExposure: (
         typeof window.CombatWitnessService === 'undefined' &&
         typeof window.EveCombatLogParser === 'undefined' &&
@@ -369,6 +468,9 @@ function smokeChecks(window) {
       repairBalanceText: document.querySelector('#repair-balance')?.textContent || null,
       passiveBasisText: document.querySelector('#passive-basis')?.textContent || null,
       threatBasisText: document.querySelector('#threat-basis')?.textContent || null,
+      settingsStateText: document.querySelector('#settings-state')?.textContent || null,
+      liveIoStateText: document.querySelector('#live-io-state')?.textContent || null,
+      diagnosticsStateText: document.querySelector('#diagnostics-state')?.textContent || null,
       summaryText: document.querySelector('#combat-summary')?.textContent || null,
       eventListText: document.querySelector('#event-list')?.textContent || null
     });

@@ -1,6 +1,6 @@
 # Gap To-Do: Runtime Live IO Control Policy
 
-Status: Open
+Status: Complete
 Priority: P0
 Milestone: 11 - Operational Hardening And Runtime Control
 

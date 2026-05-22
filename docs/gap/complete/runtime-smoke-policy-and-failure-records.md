@@ -1,6 +1,6 @@
 # Gap To-Do: Runtime Smoke Policy And Failure Records
 
-Status: Open
+Status: Complete
 Priority: P2
 Milestone: 11 - Operational Hardening And Runtime Control
 
