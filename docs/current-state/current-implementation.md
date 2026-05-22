@@ -1,7 +1,7 @@
 # Current State: AURA-Sense Implementation
 
 Date: 2026-05-22
-Status: Combat Logging Test Suite complete with repair parser deferral; Passive Telemetry live-readiness interlock active
+Status: Passive Telemetry live-safe readiness complete with live network smoke deferred
 
 ## What Exists
 
@@ -46,6 +46,12 @@ The current implementation includes:
 - Passive Telemetry preload bridge and compact HUD panel
 - normalized gamelog event fan-out from the existing backend watcher path
 - Passive Telemetry stale-partial state honesty for expired partial zKill context
+- local/static Passive Telemetry system resolver
+- backend-owned Passive Telemetry live IO gate
+- scoped Passive Telemetry zKill `pastSeconds` route
+- Passive Telemetry ESI aggregate system kills/jumps activity client
+- one-hour Passive Telemetry ESI activity cache with ETag revalidation behavior
+- explicit opt-in Passive Telemetry live API smoke command
 - curated combat-log fixture ingestion with raw-line hash drift checks
 - machine-readable combat-log event coverage matrix
 - offline combat-log replay harness for parser/runtime/service semantics
@@ -61,18 +67,12 @@ Not yet proven in this codebase:
 - zKill-backed search and optional ESI expansion pipeline
 - exact raw repair/healing parser coverage
 - local EVE system/type metadata adapters
-- network gate and live diagnostics for EVE APIs
 - production-grade multi-lane HUD renderer
 - persistent product settings for gamelog folder
 - native folder picker for gamelog folder
 - live EVE gamelog operational smoke against an operator machine
-- local metadata-backed system ID resolver
-- live zKill smoke command
-- Passive Telemetry live IO gate
-- Passive Telemetry request accounting/status pulse
-- Passive Telemetry ESI system kills/jumps activity context
-- Passive Telemetry one-hour ESI activity cache record with ETag/conditional revalidation
-- scoped passive zKill `pastSeconds` route
+- full provider request pulse UI
+- live zKill/ESI smoke execution with `AURA_SENSE_LIVE_API=1`
 
 ## Intended Runtime Flow
 
@@ -157,15 +157,9 @@ It writes artifacts under `.tmp\electron-visual-smoke` and is intentionally not 
 - no active scan service wired to the prepared validator yet
 - no persistent settings save/restart service yet
 - no native folder picker yet
-- no local metadata-backed system ID resolver yet
-- no live zKill smoke command yet
-- no Passive Telemetry live IO gate yet
-- no passive zKill request pulse/accounting yet
-- no passive ESI system kills/jumps request pulse/accounting yet
-- no Passive Telemetry ESI system activity context yet
-- no one-hour ESI activity cache record or ETag revalidation yet
-- passive zKill route still needs bounded `pastSeconds` scoping before live use
-- Passive Telemetry blocked and ESI cache freshness states still depend on the live IO gate and ESI activity tasks
+- local metadata resolver is fixture/static only and intentionally small
+- no full provider request pulse UI yet
+- live zKill/ESI smoke command exists but live network run is deferred until `AURA_SENSE_LIVE_API=1`
 - no exact raw repair/healing fixtures yet; raw `combat.repair` parser support remains deferred
 - concept and research docs are AURA-Sense product doctrine or evidence notes; older audit records may still describe past cleanup work
 
@@ -196,14 +190,15 @@ It writes artifacts under `.tmp\electron-visual-smoke` and is intentionally not 
 - `docs/audits/audit-2026-05-22-next-dev-runway-handover.md`
 - `docs/audits/audit-2026-05-22-passive-telemetry-state-doc-pass.md`
 - `docs/audits/audit-2026-05-22-api-function-runway-smoke-handover.md`
+- `docs/audits/audit-2026-05-22-passive-telemetry-live-safe-readiness-handover.md`
 - `docs/gap/to-do/aura-sense-tactical-readiness.md`
-- `docs/gap/to-do/passive-telemetry-local-system-resolver.md`
-- `docs/gap/to-do/passive-telemetry-esi-system-activity.md`
-- `docs/gap/to-do/passive-telemetry-scoped-zkill-route.md`
-- `docs/gap/to-do/passive-telemetry-live-io-gate.md`
-- `docs/gap/to-do/passive-telemetry-debugging-and-tracing.md`
-- `docs/gap/to-do/passive-telemetry-freshness-honesty.md`
-- `docs/gap/to-do/passive-telemetry-live-smoke-harness.md`
+- `docs/gap/complete/passive-telemetry-local-system-resolver.md`
+- `docs/gap/complete/passive-telemetry-esi-system-activity.md`
+- `docs/gap/complete/passive-telemetry-scoped-zkill-route.md`
+- `docs/gap/complete/passive-telemetry-live-io-gate.md`
+- `docs/gap/complete/passive-telemetry-debugging-and-tracing.md`
+- `docs/gap/complete/passive-telemetry-freshness-honesty.md`
+- `docs/gap/complete/passive-telemetry-live-smoke-harness.md`
 - `docs/gap/complete/combat-log-dataset-fixture-ingestion.md`
 - `docs/gap/complete/combat-log-event-coverage-matrix.md`
 - `docs/gap/complete/combat-log-replay-harness.md`

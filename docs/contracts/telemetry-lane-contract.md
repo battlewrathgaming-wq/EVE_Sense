@@ -21,6 +21,7 @@ Examples:
 - scoped zKillmail system context
 - freshness/cache state, including one-hour ESI activity cache record and ETag/conditional state where available
 - unavailable/degraded state when system ID resolution or fetch fails
+- blocked state when live IO is disabled
 
 ### Threat Intel
 
@@ -56,6 +57,7 @@ Examples:
 - ESI aggregate system activity is allowed in Passive Telemetry; ESI killmail expansion is deferred by default.
 - Each lane should expose its own freshness/staleness state.
 - Passive Telemetry must consume backend snapshots, not renderer log events.
+- Passive Telemetry live zKill/ESI calls must be backend-gated and scoped.
 
 ## Must Not Do
 

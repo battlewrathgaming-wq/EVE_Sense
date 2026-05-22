@@ -5,15 +5,31 @@ const { APP_NAME } = require('../constants');
 const { createCombatWitnessBridge } = require('../combat/combatWitnessBridge');
 const { createCombatWitnessRuntime, decorateSnapshot } = require('../combat/combatWitnessRuntime');
 const { createPassiveTelemetryBridge } = require('../passive/passiveTelemetryBridge');
+const { PassiveEsiSystemActivityClient } = require('../passive/esiSystemActivityClient');
+const { createLiveIoGate } = require('../passive/liveIoGate');
+const { createLocalSystemResolver } = require('../passive/localSystemResolver');
 const { createPassiveTelemetryService } = require('../passive/passiveTelemetryService');
+const { ZKillSystemContextClient } = require('../passive/zKillSystemContextClient');
+const { HttpClient } = require('../services/httpClient');
 const { createDefaultRegistry, registerElectronServiceHandlers } = require('../services/serviceRegistry');
 const { TASK_CLASSIFICATIONS } = require('../services/taskRunner');
 const { registerRuntimeErrorHandlers } = require('./runtimeErrorHandling');
 const { createFrameWindow, registerFrameWindowHandlers } = require('../modules/Frame');
 
 const registry = createDefaultRegistry();
+const passiveRequestLog = (entry) => traceRuntimeDiagnostic(entry.diagnostic_event || 'passive_request_log', entry);
+const passiveLiveIoGate = createLiveIoGate();
 const passiveTelemetryService = createPassiveTelemetryService({
-  trace: traceRuntimeDiagnostic
+  esiActivityClient: new PassiveEsiSystemActivityClient({
+    httpClient: new HttpClient({ timeoutMs: 10000, maxAttempts: 2, onRequestLog: passiveRequestLog }),
+    trace: traceRuntimeDiagnostic
+  }),
+  liveIoGate: passiveLiveIoGate,
+  resolveSystem: createLocalSystemResolver(),
+  trace: traceRuntimeDiagnostic,
+  zkillClient: new ZKillSystemContextClient({
+    httpClient: new HttpClient({ timeoutMs: 10000, maxAttempts: 2, onRequestLog: passiveRequestLog })
+  })
 });
 const combatWitnessRuntime = createCombatWitnessRuntime({
   observers: [(event) => {
@@ -112,6 +128,16 @@ function registerPassiveTelemetryCommands(serviceRegistry, service) {
       classification: TASK_CLASSIFICATIONS.EXTERNAL_IO,
       description: 'Refresh Passive Telemetry current-system context through backend clients',
       handler: (_payload = {}, context = {}) => service.refresh({ signal: context.signal })
+    })
+    .register('passive.telemetry.live-io.status', {
+      classification: TASK_CLASSIFICATIONS.READ_ONLY,
+      description: 'Return Passive Telemetry live IO gate status',
+      handler: () => service.liveIoStatus()
+    })
+    .register('passive.telemetry.live-io.set-enabled', {
+      classification: TASK_CLASSIFICATIONS.LOCAL_MUTATION,
+      description: 'Enable or disable Passive Telemetry live IO gate',
+      handler: (payload = {}) => service.setLiveIoEnabled(payload.enabled === true, payload.reason || null)
     });
 }
 

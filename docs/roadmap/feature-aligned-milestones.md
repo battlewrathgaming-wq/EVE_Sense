@@ -177,7 +177,7 @@ combat golden snapshots verified: windows=5s,15s,30s
 
 ### Milestone 08: Passive Telemetry Live-Safe Readiness
 
-Status: Active - Next Dev Runway in `docs/roadmap/milestone-08-passive-telemetry-live-safe-readiness.md`.
+Status: Complete with live network smoke deferred in `docs/roadmap/milestone-08-passive-telemetry-live-safe-readiness.md`.
 
 Feature anchors:
 
@@ -210,6 +210,14 @@ Dev may not add Threat Intel search, Clipboard Acquisition, ESI killmail expansi
 Acceptance gate:
 
 Passive Telemetry can provide current-system ESI activity and bounded zKill context only when live IO is allowed, can block external calls visibly, can read fresh cache records, can revalidate expired records, and can pass offline verification.
+
+Completion signal:
+
+```txt
+passive telemetry verified
+all checks verified
+AURA-Sense passive live API smoke refused: F:\Projects\AURA-Sense\.tmp\passive-live-api-smoke\result.json
+```
 
 ### Milestone 09: Scoped Threat Intel And Clipboard Acquisition
 

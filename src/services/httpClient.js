@@ -24,6 +24,11 @@ class HttpClient {
   }
 
   async json(provider, endpoint, options = {}) {
+    const result = await this.jsonWithMeta(provider, endpoint, options);
+    return result.data;
+  }
+
+  async jsonWithMeta(provider, endpoint, options = {}) {
     const method = options.method || 'GET';
     const started = Date.now();
     let retryCount = 0;
@@ -44,11 +49,26 @@ class HttpClient {
           }
         });
 
+        if (response.status === 304) {
+          this.log({ provider, endpoint, method, statusCode: response.status, durationMs: Date.now() - started, retryCount, cached: true });
+          return {
+            data: null,
+            statusCode: response.status,
+            etag: response.headers?.get?.('etag') || null,
+            headers: response.headers || null
+          };
+        }
+
         if (response.ok) {
           const text = await response.text();
           const data = parseJsonResponse(text, provider, endpoint);
           this.log({ provider, endpoint, method, statusCode: response.status, durationMs: Date.now() - started, retryCount });
-          return data;
+          return {
+            data,
+            statusCode: response.status,
+            etag: response.headers?.get?.('etag') || null,
+            headers: response.headers || null
+          };
         }
 
         if (RETRY_STATUSES.has(response.status) && attempt < this.maxAttempts - 1) {

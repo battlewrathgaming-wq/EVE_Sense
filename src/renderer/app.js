@@ -111,6 +111,7 @@ function renderPassiveTelemetry(snapshot) {
   document.querySelector('#passive-state').textContent = passiveStateLabel(status);
   document.querySelector('#passive-system').textContent = snapshot?.currentSystem?.label || 'Unobserved';
   document.querySelector('#passive-sample').textContent = formatNumber(snapshot?.zkill?.sampleCount);
+  document.querySelector('#passive-activity').textContent = passiveActivity(snapshot);
   document.querySelector('#passive-freshness').textContent = passiveStateLabel(snapshot?.freshness?.status || status);
   document.querySelector('#passive-message').textContent = passiveMessage(snapshot);
 }
@@ -240,6 +241,9 @@ function watcherLabel(status) {
   if (status === 'degraded') {
     return 'Degraded';
   }
+  if (status === 'blocked') {
+    return 'Blocked';
+  }
   return 'Unavailable';
 }
 
@@ -269,7 +273,17 @@ function passiveMessage(snapshot) {
   if (snapshot.status === 'stale' && snapshot.zkill?.partial) {
     return 'Partial passive context is stale.';
   }
+  if (snapshot.status === 'blocked') {
+    return snapshot.message || 'Passive live IO is blocked.';
+  }
   return snapshot.message || 'Waiting for a future observed system change.';
+}
+
+function passiveActivity(snapshot) {
+  if (!snapshot?.activity) {
+    return '0 / 0';
+  }
+  return `${formatNumber(snapshot.activity.shipKills)} / ${formatNumber(snapshot.activity.jumps)}`;
 }
 
 function eventLabel(event) {

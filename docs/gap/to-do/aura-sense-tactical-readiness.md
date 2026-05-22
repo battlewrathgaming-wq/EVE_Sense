@@ -18,7 +18,7 @@ Track the work required before AURA-Sense can honestly claim tactical viewport r
 - Keep Combat Witness runtime path control and watcher lifecycle backend-owned.
 - Treat Tactical Viewport First Light as complete, not as full tactical viewport readiness.
 - Rebuild Passive Telemetry with local-first system metadata.
-- Treat Passive Telemetry foundation as complete; live-safe readiness now requires local metadata-backed resolver, ESI aggregate system activity, bounded zKill context, live IO gate, request observability, and live smoke harness.
+- Treat Passive Telemetry foundation and live-safe readiness as complete; live network smoke remains explicitly opt-in and deferred until `AURA_SENSE_LIVE_API=1`.
 - Rebuild Threat Intel around explicit search submit or armed clipboard acquisition with capped zKill sample metadata and freshness language; keep ESI killmail expansion deferred until explicitly authorized.
 - Keep Combat Witness backend-owned normalized events, bounded rolling cache, and 5s/15s/30s snapshots as the foundation for future presentation.
 - Keep live/API smoke checks separate from offline verification.
@@ -62,6 +62,13 @@ AURA-Sense has a verified tactical viewport skeleton with separated telemetry la
 - `docs/gap/complete/combat-log-replay-harness.md`
 - `docs/gap/complete/combat-log-golden-snapshot-tests.md`
 - `docs/gap/complete/combat-log-repair-healing-fixtures.md`
+- `docs/gap/complete/passive-telemetry-local-system-resolver.md`
+- `docs/gap/complete/passive-telemetry-esi-system-activity.md`
+- `docs/gap/complete/passive-telemetry-scoped-zkill-route.md`
+- `docs/gap/complete/passive-telemetry-live-io-gate.md`
+- `docs/gap/complete/passive-telemetry-debugging-and-tracing.md`
+- `docs/gap/complete/passive-telemetry-freshness-honesty.md`
+- `docs/gap/complete/passive-telemetry-live-smoke-harness.md`
 - `docs/roadmap/milestone-06-passive-telemetry-foundation.md`
 - `docs/gap/complete/readiness-12-tactical-hud-first-light.md`
 - `docs/gap/complete/readiness-13-electron-visual-smoke.md`

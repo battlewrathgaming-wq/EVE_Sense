@@ -1,6 +1,6 @@
 # Milestone 08: Passive Telemetry Live-Safe Readiness
 
-Status: Active - Next Dev Runway
+Status: Complete With Live Network Smoke Deferred
 Date: 2026-05-22
 Owner: Overseer direction, Dev execution
 
@@ -22,6 +22,14 @@ Feature anchors:
 
 AURA-Sense can observe a current-system change, resolve the system locally, fetch one-hour ETag-aware ESI system activity and scoped bounded zKill context only when live IO is allowed, expose honest freshness/degraded state, and produce enough diagnostics for live smoke debugging.
 
+## Completion Verdict
+
+Milestone 08 is complete with live network smoke deferred.
+
+Passive Telemetry now has local/static resolution, live IO gating, scoped zKill `pastSeconds` context, ESI aggregate system activity with one-hour cache and ETag revalidation behavior, request diagnostics, freshness honesty, compact HUD activity presentation, and an explicit live smoke command.
+
+The live smoke command was verified in refusal mode only. A live network run still requires `AURA_SENSE_LIVE_API=1`.
+
 ## Task Chain
 
 ### Task 1: Local System Resolver
@@ -31,7 +39,9 @@ AURA-Sense can observe a current-system change, resolve the system locally, fetc
 - Preserve clear degraded state when unresolved.
 - Do not use live ESI as the default resolver.
 
-Task packet: `docs/gap/to-do/passive-telemetry-local-system-resolver.md`.
+Task packet: `docs/gap/complete/passive-telemetry-local-system-resolver.md`.
+
+Status: Complete in `docs/gap/complete/passive-telemetry-local-system-resolver.md`.
 
 ### Task 2: Scoped zKill Route
 
@@ -39,7 +49,9 @@ Task packet: `docs/gap/to-do/passive-telemetry-local-system-resolver.md`.
 - Make lookback seconds explicit in client options and snapshot metadata.
 - Keep cap/sample/failure language visible.
 
-Task packet: `docs/gap/to-do/passive-telemetry-scoped-zkill-route.md`.
+Task packet: `docs/gap/complete/passive-telemetry-scoped-zkill-route.md`.
+
+Status: Complete in `docs/gap/complete/passive-telemetry-scoped-zkill-route.md`.
 
 ### Task 3: ESI System Activity
 
@@ -50,7 +62,9 @@ Task packet: `docs/gap/to-do/passive-telemetry-scoped-zkill-route.md`.
 - Treat activity as a one-hour cache record with ETag/conditional revalidation where available.
 - Do not add ESI killmail expansion.
 
-Task packet: `docs/gap/to-do/passive-telemetry-esi-system-activity.md`.
+Task packet: `docs/gap/complete/passive-telemetry-esi-system-activity.md`.
+
+Status: Complete in `docs/gap/complete/passive-telemetry-esi-system-activity.md`.
 
 ### Task 4: Live IO Gate
 
@@ -58,7 +72,9 @@ Task packet: `docs/gap/to-do/passive-telemetry-esi-system-activity.md`.
 - Block zKill and ESI activity calls when disabled and return a clear blocked/degraded snapshot.
 - Keep renderer display-only.
 
-Task packet: `docs/gap/to-do/passive-telemetry-live-io-gate.md`.
+Task packet: `docs/gap/complete/passive-telemetry-live-io-gate.md`.
+
+Status: Complete in `docs/gap/complete/passive-telemetry-live-io-gate.md`.
 
 ### Task 5: Request Diagnostics And Tracing
 
@@ -66,7 +82,9 @@ Task packet: `docs/gap/to-do/passive-telemetry-live-io-gate.md`.
 - Record attempted, blocked, cached, succeeded, failed, timed out, cancelled, capped, partial, and stale paths.
 - Ensure the HUD can explain unavailable, blocked, partial, stale, and degraded states without becoming a diagnostics console.
 
-Task packet: `docs/gap/to-do/passive-telemetry-debugging-and-tracing.md`.
+Task packet: `docs/gap/complete/passive-telemetry-debugging-and-tracing.md`.
+
+Status: Complete in `docs/gap/complete/passive-telemetry-debugging-and-tracing.md`.
 
 ### Task 6: Freshness Honesty
 
@@ -74,7 +92,9 @@ Task packet: `docs/gap/to-do/passive-telemetry-debugging-and-tracing.md`.
 - Preserve failure metadata while making stale state visible.
 - Add deterministic tests for fresh, stale, partial, stale-partial, blocked, unresolved, and failed-fetch states.
 
-Task packet: `docs/gap/to-do/passive-telemetry-freshness-honesty.md`.
+Task packet: `docs/gap/complete/passive-telemetry-freshness-honesty.md`.
+
+Status: Complete in `docs/gap/complete/passive-telemetry-freshness-honesty.md`.
 
 ### Task 7: Live Smoke Harness
 
@@ -83,7 +103,9 @@ Task packet: `docs/gap/to-do/passive-telemetry-freshness-honesty.md`.
 - Use conservative defaults for ESI activity and zKill context and write artifacts under `.tmp`.
 - Do not add ESI killmail expansion.
 
-Task packet: `docs/gap/to-do/passive-telemetry-live-smoke-harness.md`.
+Task packet: `docs/gap/complete/passive-telemetry-live-smoke-harness.md`.
+
+Status: Complete in `docs/gap/complete/passive-telemetry-live-smoke-harness.md`; live network run deferred.
 
 ### Task 8: State And Handover
 

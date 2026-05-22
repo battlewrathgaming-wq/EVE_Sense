@@ -7,6 +7,7 @@
   "scripts": {
     "start": "electron .",
     "smoke:electron": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/electron-visual-smoke.ps1",
+    "smoke:passive-live-api": "node scripts/smoke-passive-live-api.js",
     "verify:all": "node scripts/verify-all.js",
     "verify:combat-parser": "node scripts/verify-combat-parser.js",
     "verify:combat-witness": "node scripts/verify-combat-witness-core.js",

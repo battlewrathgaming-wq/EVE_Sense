@@ -1,0 +1,8 @@
+{
+  "systems": [
+    { "systemName": "Jita", "systemId": 30000142 },
+    { "systemName": "Perimeter", "systemId": 30000144 },
+    { "systemName": "Faurent", "systemId": 30004972 },
+    { "systemName": "Iyen-Oursta", "systemId": 30004971 }
+  ]
+}

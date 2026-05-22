@@ -61,10 +61,28 @@ Current backend shape:
 - `currentSystem.observedAt`
 - `zkill.systemId`
 - `zkill.fetchedAt`
+- `zkill.pastSeconds`
 - `zkill.sampleCount`
 - `zkill.capped`
 - `zkill.partial`
 - `zkill.failureCount`
+- `activity.systemId`
+- `activity.fetchedAt`
+- `activity.shipKills`
+- `activity.podKills`
+- `activity.npcKills`
+- `activity.jumps`
+- `activity.partial`
+- `activity.failureCount`
+- `activity.cache.cacheMs`
+- `activity.cache.cacheAgeMs`
+- `activity.cache.state`
+- `activity.cache.etag`
+- `activity.cache.conditional`
+- `activity.cache.revalidated`
+- `gate.state`
+- `gate.enabled`
+- `gate.message`
 - `freshness.status`
 - `freshness.cacheAgeMs`
 - `freshness.freshnessMs`
@@ -79,4 +97,5 @@ Current passive statuses:
 - `stale`: current-system context exists but freshness expired
 - `partial`: context was fetched with malformed or incomplete refs
 - `degraded`: system ID resolution or context fetch failed
+- `blocked`: live IO gate blocked passive external calls
 
