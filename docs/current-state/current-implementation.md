@@ -58,6 +58,7 @@ Not yet proven in this codebase:
 - persistent product settings for gamelog folder
 - native folder picker for gamelog folder
 - live EVE gamelog operational smoke against an operator machine
+- Milestone 06 Passive Telemetry foundation
 
 ## Intended Runtime Flow
 
@@ -162,13 +163,17 @@ It writes artifacts under `.tmp\electron-visual-smoke` and is intentionally not 
 - `docs/audits/audit-2026-05-22-electron-smoke-overseer-handover.md`
 - `docs/audits/audit-2026-05-22-electron-visual-smoke-handover.md`
 - `docs/audits/audit-2026-05-22-combat-witness-operational-loop-handover.md`
+- `docs/audits/audit-2026-05-22-architecture-and-passive-telemetry-handover.md`
 - `docs/gap/to-do/aura-sense-tactical-readiness.md`
+- `docs/gap/to-do/readiness-15-passive-telemetry-foundation.md`
 - `docs/gap/complete/readiness-14-combat-witness-operational-loop.md`
 - `docs/gap/complete/readiness-13-electron-visual-smoke.md`
 - `docs/features/vision.md`
 - `docs/roadmap/feature-aligned-milestones.md`
+- `docs/roadmap/architecture-needs-review-2026-05-22.md`
 - `docs/roadmap/milestone-02-runtime-observability.md`
 - `docs/roadmap/milestone-03-tactical-viewport-first-light.md`
 - `docs/roadmap/milestone-04-runtime-smoke-readiness.md`
 - `docs/roadmap/milestone-05-combat-witness-operational-loop.md`
+- `docs/roadmap/milestone-06-passive-telemetry-foundation.md`
 - `docs/roadmap/development-artifact-trail.md`

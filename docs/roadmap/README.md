@@ -12,6 +12,8 @@ Current entries:
 - `milestone-03-tactical-viewport-first-light.md`
 - `milestone-04-runtime-smoke-readiness.md`
 - `milestone-05-combat-witness-operational-loop.md`
+- `milestone-06-passive-telemetry-foundation.md`
+- `architecture-needs-review-2026-05-22.md`
 - `development-artifact-trail.md`
 
 Milestones should be feature-aligned envelopes, not single micro-tasks. Each milestone should point to `docs/features/vision.md`, define a task chain, and give Dev enough autonomy to complete a coherent product slice without asking for approval between every implementation step.

@@ -50,9 +50,10 @@ AURA-Sense has a verified tactical viewport skeleton with separated telemetry la
 - `docs/roadmap/milestone-03-tactical-viewport-first-light.md`
 - `docs/roadmap/feature-aligned-milestones.md`
 - `docs/roadmap/milestone-05-combat-witness-operational-loop.md`
-- `docs/gap/to-do/readiness-14-combat-witness-operational-loop.md`
+- `docs/gap/complete/readiness-14-combat-witness-operational-loop.md`
+- `docs/roadmap/milestone-06-passive-telemetry-foundation.md`
+- `docs/gap/to-do/readiness-15-passive-telemetry-foundation.md`
 - `docs/gap/complete/readiness-12-tactical-hud-first-light.md`
 - `docs/gap/complete/readiness-13-electron-visual-smoke.md`
-- `docs/gap/complete/readiness-14-combat-witness-operational-loop.md`
 - `docs/roadmap/development-artifact-trail.md`
 

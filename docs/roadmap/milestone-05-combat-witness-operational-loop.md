@@ -70,7 +70,7 @@ Status: Complete.
 ### Task 5: State And Handover
 
 - Update `docs/current-state/current-implementation.md`.
-- Move `docs/gap/to-do/readiness-14-combat-witness-operational-loop.md` to complete when accepted.
+- Completion evidence lives in `docs/gap/complete/readiness-14-combat-witness-operational-loop.md`.
 - Record verification output and smoke artifacts.
 - Preserve explicit deferrals.
 
