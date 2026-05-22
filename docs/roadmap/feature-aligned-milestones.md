@@ -39,6 +39,14 @@ Task chains are intentionally multi-step. They give Dev room to implement the fe
 
 ## Active Sequence
 
+### Interlock: Passive Telemetry Live Readiness
+
+Status: Active in `docs/roadmap/passive-telemetry-live-readiness-interlock.md`.
+
+This interlock must clear before Passive Telemetry is treated as live-usable. It addresses real system resolution, bounded zKill `pastSeconds` routes, live IO gating, request observability, and freshness honesty.
+
+The interlock is intentionally narrow. It must not add Threat Intel search, Clipboard Acquisition, ESI expansion, Atlas persistence, or renderer network calls.
+
 ### Milestone 05: Combat Witness Operational Loop
 
 Status: Complete in `docs/gap/complete/readiness-14-combat-witness-operational-loop.md`.

@@ -14,6 +14,7 @@ Current entries:
 - `milestone-05-combat-witness-operational-loop.md`
 - `milestone-06-passive-telemetry-foundation.md`
 - `milestone-07-combat-logging-test-suite.md`
+- `passive-telemetry-live-readiness-interlock.md`
 - `architecture-needs-review-2026-05-22.md`
 - `development-artifact-trail.md`
 

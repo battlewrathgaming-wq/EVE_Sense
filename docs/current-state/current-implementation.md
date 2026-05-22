@@ -1,7 +1,7 @@
 # Current State: AURA-Sense Implementation
 
 Date: 2026-05-22
-Status: Passive Telemetry foundation complete; Combat Logging Test Suite milestone active
+Status: Passive Telemetry foundation complete; Passive Telemetry live-readiness interlock active; Combat Logging Test Suite milestone active
 
 ## What Exists
 
@@ -67,6 +67,9 @@ Not yet proven in this codebase:
 - machine-readable combat-log event coverage matrix
 - offline combat-log replay harness
 - golden Combat Witness snapshot tests from ordered real-data fixtures
+- Passive Telemetry live IO gate
+- Passive Telemetry request accounting/status pulse
+- scoped passive zKill `pastSeconds` route
 
 ## Intended Runtime Flow
 
@@ -152,6 +155,9 @@ It writes artifacts under `.tmp\electron-visual-smoke` and is intentionally not 
 - no native folder picker yet
 - no local metadata-backed system ID resolver yet
 - no live zKill smoke command yet
+- no Passive Telemetry live IO gate yet
+- no passive zKill request pulse/accounting yet
+- passive zKill route still needs bounded `pastSeconds` scoping before live use
 - no exact raw repair/healing fixtures yet
 - no combat-log dataset fixture ingestion or replay harness yet
 - no golden Combat Witness snapshot tests from ordered real-data datasets yet
@@ -179,6 +185,7 @@ It writes artifacts under `.tmp\electron-visual-smoke` and is intentionally not 
 - `docs/audits/audit-2026-05-22-architecture-and-passive-telemetry-handover.md`
 - `docs/audits/audit-2026-05-22-passive-telemetry-foundation-handover.md`
 - `docs/audits/audit-2026-05-22-combat-log-test-suite-milestone-handover.md`
+- `docs/audits/audit-2026-05-22-passive-telemetry-live-readiness-endpoint-io.md`
 - `docs/gap/to-do/aura-sense-tactical-readiness.md`
 - `docs/gap/to-do/combat-log-dataset-fixture-ingestion.md`
 - `docs/gap/to-do/combat-log-event-coverage-matrix.md`
@@ -198,4 +205,5 @@ It writes artifacts under `.tmp\electron-visual-smoke` and is intentionally not 
 - `docs/roadmap/milestone-05-combat-witness-operational-loop.md`
 - `docs/roadmap/milestone-06-passive-telemetry-foundation.md`
 - `docs/roadmap/milestone-07-combat-logging-test-suite.md`
+- `docs/roadmap/passive-telemetry-live-readiness-interlock.md`
 - `docs/roadmap/development-artifact-trail.md`
