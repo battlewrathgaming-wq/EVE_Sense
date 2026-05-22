@@ -1,0 +1,60 @@
+{
+  "version": 1,
+  "rejected": [
+    {
+      "name": "missing envelope open bracket",
+      "family": "unknown.malformed.envelope",
+      "raw": "2021.11.02 18:23:52 ] (combat) Mining Drone misses you completely"
+    },
+    {
+      "name": "missing timestamp",
+      "family": "unknown.timestamp.missing",
+      "raw": "[ ] (combat) Mining Drone misses you completely"
+    },
+    {
+      "name": "timezone-like timestamp suffix",
+      "family": "unknown.timestamp.timezone",
+      "raw": "[ 2021.11.02 18:23:52 UTC ] (combat) Mining Drone misses you completely"
+    },
+    {
+      "name": "impossible leap-day rollover",
+      "family": "unknown.timestamp.invalid",
+      "raw": "[ 2021.02.29 18:23:52 ] (combat) Mining Drone misses you completely"
+    },
+    {
+      "name": "near-miss color damage without hit quality",
+      "family": "combat.damage.color.near-miss",
+      "raw": "[ 2021.11.02 18:23:52 ] (combat) <color=0xffcc0000><b>3</b> <color=0x77ffffff><font size=10>from</font> <b><color=0xffffffff>Mining Drone</b><font size=10><color=0x77ffffff> - Almost Hits"
+    },
+    {
+      "name": "near-miss color damage with unsupported color",
+      "family": "combat.damage.color.near-miss",
+      "raw": "[ 2021.11.02 18:23:52 ] (combat) <color=0xffffffff><b>3</b> <color=0x77ffffff><font size=10>from</font> <b><color=0xffffffff>Mining Drone</b><font size=10><color=0x77ffffff> - Hits"
+    },
+    {
+      "name": "repair lookalike remains deferred",
+      "family": "combat.repair.raw",
+      "raw": "[ 2021.11.02 18:23:52 ] (combat) Small Remote Shield Booster repairs you for 99 shield hitpoints"
+    },
+    {
+      "name": "private chat lookalike rejected",
+      "family": "combat.private.lookalike",
+      "raw": "[ 2021.11.02 18:23:52 ] (private) PilotName > Mining Drone hits you for 3 thermal damage"
+    },
+    {
+      "name": "fleet chat tactical lookalike rejected",
+      "family": "combat.private.lookalike",
+      "raw": "[ 2021.11.02 18:23:52 ] (fleet) FC says Mining Drone misses you completely"
+    }
+  ],
+  "generated": [
+    {
+      "name": "oversized combat line",
+      "family": "unknown.oversized",
+      "prefix": "[ 2021.11.02 18:23:52 ] (combat) ",
+      "repeat": "x",
+      "count": 4100
+    }
+  ]
+}
+

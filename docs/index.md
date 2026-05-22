@@ -47,6 +47,7 @@ The documentation library preserves why the system behaves a certain way, not on
 | `adr/` | Architecture Decision Records | Major decisions |
 | `schemas/` | Canonical data structures and interface contracts | When contracts change |
 | `features/` | Product feature concepts before/during implementation | As features are shaped |
+| `testing/` | Verification matrices and command-class boundaries | As test strategy changes |
 | `gap/to-do/` | Known readiness work not yet complete | As gaps are found |
 | `gap/complete/` | Completed gaps with completion signal | As gaps close |
 | `module/` | Reusable implementation module notes | When modules are seeded |

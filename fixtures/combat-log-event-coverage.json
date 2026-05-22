@@ -36,6 +36,41 @@
       "parserKind": null,
       "notes": "Malformed line rejection fixture."
     },
+    "unknown.malformed.envelope": {
+      "status": "rejected",
+      "parserKind": null,
+      "notes": "Malformed envelope variants must reject before tactical parsing."
+    },
+    "unknown.timestamp.missing": {
+      "status": "rejected",
+      "parserKind": null,
+      "notes": "Missing source timestamps are rejected; observedAt is not a substitute for eventTime."
+    },
+    "unknown.timestamp.timezone": {
+      "status": "rejected",
+      "parserKind": null,
+      "notes": "Timezone-like timestamp suffixes are rejected until exact EVE log evidence exists."
+    },
+    "unknown.timestamp.invalid": {
+      "status": "rejected",
+      "parserKind": null,
+      "notes": "Impossible dates and rollover timestamps are rejected."
+    },
+    "unknown.oversized": {
+      "status": "rejected",
+      "parserKind": null,
+      "notes": "Oversized lines are rejected before parser matching."
+    },
+    "combat.damage.color.near-miss": {
+      "status": "rejected",
+      "parserKind": null,
+      "notes": "Color damage lookalikes with unsupported colors or hit qualities are rejected."
+    },
+    "combat.private.lookalike": {
+      "status": "rejected",
+      "parserKind": null,
+      "notes": "Private/fleet chat text that looks tactical is not combat-log evidence."
+    },
     "combat.repair.raw": {
       "status": "deferred",
       "parserKind": "combat.repair",

@@ -1,6 +1,6 @@
 # Gap To-Do: Combat Parser Hostile Fixtures
 
-Status: Open
+Status: Complete
 Priority: P0
 Milestone: 13 - Aggressive Testing And Bug Hunting
 
@@ -28,3 +28,11 @@ The parser must reject hostile and near-miss lines as safely as it accepts known
 - Hostile fixtures are covered by focused parser/coverage verification.
 - Rejections are explicit and diagnostic-safe.
 - `npm.cmd run verify:all` passes.
+
+## Completion Notes
+
+- Hostile fixtures added at `fixtures/combat-log-hostile-parser.json`.
+- Focused verifier added as `npm.cmd run verify:combat-parser-hostile`.
+- Coverage matrix now tracks hostile rejected families separately from supported exact fixtures.
+- Rejection evidence in the verifier uses exact raw-line hashes and does not retain raw line text.
+- Hostile verification exposed and fixed an unsupported-color fallback in `src/combat/combatLogParser.js`; color-tagged damage now requires a known direction color and matching relation.

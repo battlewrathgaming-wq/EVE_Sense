@@ -108,8 +108,11 @@ function parseColorDamage(message, base) {
   }
 
   const rawColor = match.groups.rawColor.toLowerCase();
-  const direction = directionFromColor(rawColor) || directionFromRelation(match.groups.relation);
+  const direction = directionFromColor(rawColor);
   if (!direction) {
+    return null;
+  }
+  if (directionFromRelation(match.groups.relation) !== direction) {
     return null;
   }
 

@@ -1,6 +1,6 @@
 # Gap To-Do: Aggressive Test Harness Matrix
 
-Status: Open
+Status: Complete
 Priority: P0
 Milestone: 13 - Aggressive Testing And Bug Hunting
 
@@ -26,3 +26,9 @@ AURA-Sense needs a clear matrix that maps core invariants to verification comman
 - A testing matrix exists and is linked from roadmap/current-state or testing docs.
 - New aggressive tests have an explicit command class.
 - `npm.cmd run verify:all` passes.
+
+## Completion Notes
+
+- Matrix added at `docs/testing/aggressive-test-harness-matrix.md`.
+- Current-state and Milestone 13 now link the matrix and command-class boundary.
+- `verify:combat-parser-hostile` is the first explicit aggressive offline command and is included in `verify:all`.

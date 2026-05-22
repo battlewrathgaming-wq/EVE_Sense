@@ -35,7 +35,9 @@ AURA-Sense has an adversarial testing layer that actively tries to break tactica
 - Add a matrix that maps each invariant to its verification command.
 - Keep `verify:all` offline and deterministic.
 
-Task packet: `docs/gap/to-do/aggressive-test-harness-matrix.md`.
+Task packet: `docs/gap/complete/aggressive-test-harness-matrix.md`.
+
+Status: Complete in `docs/gap/complete/aggressive-test-harness-matrix.md`; matrix lives in `docs/testing/aggressive-test-harness-matrix.md`.
 
 ### P0 Task 2: Combat Parser Hostile Fixtures
 
@@ -43,7 +45,9 @@ Task packet: `docs/gap/to-do/aggressive-test-harness-matrix.md`.
 - Prove rejection, hashing, and diagnostic behavior.
 - Avoid widening parser claims without exact accepted fixtures.
 
-Task packet: `docs/gap/to-do/combat-parser-hostile-fixtures.md`.
+Task packet: `docs/gap/complete/combat-parser-hostile-fixtures.md`.
+
+Status: Complete in `docs/gap/complete/combat-parser-hostile-fixtures.md`; focused command is `npm.cmd run verify:combat-parser-hostile`.
 
 ### P0 Task 3: Gamelog Watcher Chaos Tests
 
