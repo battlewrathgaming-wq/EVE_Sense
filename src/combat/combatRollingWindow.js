@@ -19,8 +19,28 @@ class CombatRollingWindow {
     this.prune(nowMs);
 
     const damage = {
-      incoming: { total: 0, perSecond: 0, hitQualityCounts: {} },
-      outgoing: { total: 0, perSecond: 0, hitQualityCounts: {} }
+      incoming: {
+        total: 0,
+        perSecond: 0,
+        hitQualityCounts: {},
+        damageTypeCounts: {},
+        sourceCounts: {},
+        uniqueSourceCount: 0,
+        mostCommonDamageType: null,
+        mostCommonHitQuality: null,
+        topSource: null
+      },
+      outgoing: {
+        total: 0,
+        perSecond: 0,
+        hitQualityCounts: {},
+        damageTypeCounts: {},
+        targetCounts: {},
+        uniqueTargetCount: 0,
+        mostCommonDamageType: null,
+        mostCommonHitQuality: null,
+        topTarget: null
+      }
     };
     const repair = {
       incoming: { total: 0, perSecond: 0 },
@@ -35,6 +55,16 @@ class CombatRollingWindow {
           damage[direction].hitQualityCounts[event.hitQuality] =
             (damage[direction].hitQualityCounts[event.hitQuality] || 0) + 1;
         }
+        if (event.damageType) {
+          damage[direction].damageTypeCounts[event.damageType] =
+            (damage[direction].damageTypeCounts[event.damageType] || 0) + 1;
+        }
+        if (direction === 'incoming' && event.sourceLabel) {
+          damage.incoming.sourceCounts[event.sourceLabel] = (damage.incoming.sourceCounts[event.sourceLabel] || 0) + 1;
+        }
+        if (direction === 'outgoing' && event.targetLabel) {
+          damage.outgoing.targetCounts[event.targetLabel] = (damage.outgoing.targetCounts[event.targetLabel] || 0) + 1;
+        }
       }
       if (event.kind === 'combat.repair') {
         repair[direction].total += event.amount || 0;
@@ -45,13 +75,29 @@ class CombatRollingWindow {
     for (const direction of ['incoming', 'outgoing']) {
       damage[direction].perSecond = roundMetric(damage[direction].total / seconds);
       repair[direction].perSecond = roundMetric(repair[direction].total / seconds);
+      damage[direction].mostCommonDamageType = mostCommon(damage[direction].damageTypeCounts);
+      damage[direction].mostCommonHitQuality = mostCommon(damage[direction].hitQualityCounts);
     }
+
+    damage.incoming.uniqueSourceCount = Object.keys(damage.incoming.sourceCounts).length;
+    damage.incoming.topSource = mostCommon(damage.incoming.sourceCounts);
+    damage.outgoing.uniqueTargetCount = Object.keys(damage.outgoing.targetCounts).length;
+    damage.outgoing.topTarget = mostCommon(damage.outgoing.targetCounts);
+
+    const balance = {
+      takenDps: damage.incoming.perSecond,
+      dealtDps: damage.outgoing.perSecond,
+      repairReceivedHps: repair.incoming.perSecond,
+      repairAppliedHps: repair.outgoing.perSecond,
+      receivedRepairMinusDamagePerSecond: roundMetric(repair.incoming.perSecond - damage.incoming.perSecond)
+    };
 
     return {
       windowMs: this.windowMs,
       eventCount: this.events.length,
       damage,
-      repair
+      repair,
+      balance
     };
   }
 
@@ -79,6 +125,16 @@ function isWindowEvent(event) {
 
 function roundMetric(value) {
   return Math.round(value * 100) / 100;
+}
+
+function mostCommon(counts) {
+  let winner = null;
+  for (const [label, count] of Object.entries(counts)) {
+    if (!winner || count > winner.count || (count === winner.count && label < winner.label)) {
+      winner = { label, count };
+    }
+  }
+  return winner;
 }
 
 module.exports = {

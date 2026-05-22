@@ -69,12 +69,63 @@ const window = new CombatRollingWindow({ windowMs: 15000 });
 window.add(incoming);
 window.add(outgoing);
 window.add(repair);
+window.add({
+  id: 'synthetic-thermal-hit',
+  kind: 'combat.damage',
+  direction: 'incoming',
+  amount: 12,
+  damageType: 'thermal',
+  hitQuality: 'Hits',
+  sourceLabel: 'Mining Drone',
+  targetLabel: 'you',
+  eventTime: '2021-11-02T18:23:54.000Z'
+});
+window.add({
+  id: 'synthetic-kinetic-hit',
+  kind: 'combat.damage',
+  direction: 'incoming',
+  amount: 15,
+  damageType: 'kinetic',
+  hitQuality: 'Penetrates',
+  sourceLabel: 'Pithi Invader',
+  targetLabel: 'you',
+  eventTime: '2021-11-02T18:23:55.000Z'
+});
+window.add({
+  id: 'synthetic-thermal-hit-2',
+  kind: 'combat.damage',
+  direction: 'incoming',
+  amount: 9,
+  damageType: 'thermal',
+  hitQuality: 'Hits',
+  sourceLabel: 'Pithi Invader',
+  targetLabel: 'you',
+  eventTime: '2021-11-02T18:23:56.000Z'
+});
+window.add({
+  id: 'synthetic-thermal-hit-3',
+  kind: 'combat.damage',
+  direction: 'incoming',
+  amount: 6,
+  damageType: 'thermal',
+  hitQuality: 'Hits',
+  sourceLabel: 'Pithi Invader',
+  targetLabel: 'you',
+  eventTime: '2021-11-02T18:23:56.000Z'
+});
 const snapshot = window.snapshot(Date.parse('2021-11-02T18:23:56.000Z'));
-assert.strictEqual(snapshot.damage.incoming.total, 3, 'incoming damage should aggregate in 15s window');
-assert.strictEqual(snapshot.damage.incoming.perSecond, 0.2, 'incoming DPS should divide by 15s');
-assert.strictEqual(snapshot.damage.incoming.hitQualityCounts.Hits, 1, 'incoming hit quality should count');
+assert.strictEqual(snapshot.damage.incoming.total, 45, 'incoming damage should aggregate in 15s window');
+assert.strictEqual(snapshot.damage.incoming.perSecond, 3, 'incoming DPS should divide by 15s');
+assert.strictEqual(snapshot.damage.incoming.hitQualityCounts.Hits, 4, 'incoming hit quality should count');
 assert.strictEqual(snapshot.damage.outgoing.total, 0, 'old outgoing damage should be outside 15s window');
 assert.strictEqual(snapshot.repair.incoming.total, 30, 'repair should aggregate in 15s window');
 assert.strictEqual(snapshot.repair.incoming.perSecond, 2, 'repair HPS should divide by 15s');
+assert.deepStrictEqual(snapshot.damage.incoming.mostCommonDamageType, { label: 'thermal', count: 3 }, 'incoming damage type should report most common known type');
+assert.deepStrictEqual(snapshot.damage.incoming.mostCommonHitQuality, { label: 'Hits', count: 4 }, 'incoming hit quality should report most common quality');
+assert.strictEqual(snapshot.damage.incoming.uniqueSourceCount, 2, 'incoming source count should count unique source labels');
+assert.deepStrictEqual(snapshot.damage.incoming.topSource, { label: 'Pithi Invader', count: 3 }, 'incoming source counts should report top source');
+assert.strictEqual(snapshot.balance.takenDps, 3, 'balance should expose damage taken DPS');
+assert.strictEqual(snapshot.balance.repairReceivedHps, 2, 'balance should expose repair received HPS');
+assert.strictEqual(snapshot.balance.receivedRepairMinusDamagePerSecond, -1, 'balance should expose received HPS minus taken DPS');
 
 console.log('combat parser verified');
