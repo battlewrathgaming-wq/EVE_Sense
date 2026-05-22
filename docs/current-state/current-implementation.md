@@ -172,7 +172,7 @@ It writes artifacts under `.tmp\electron-visual-smoke` and is intentionally not 
 ## Known Gaps
 
 - some inherited seed service names remain below the visible product surface
-- no active scan service wired to the prepared validator yet
+- inherited active scan validator language remains to be reconciled with the implemented Threat Intel scan contract
 - no native folder picker yet
 - local metadata resolver is fixture/static only and intentionally small
 - no full provider request pulse UI yet
@@ -220,15 +220,19 @@ It writes artifacts under `.tmp\electron-visual-smoke` and is intentionally not 
 - `docs/audits/audit-2026-05-22-post-threat-intel-combat-metrics-overseer-review.md`
 - `docs/audits/audit-2026-05-22-integrated-viewport-handover.md`
 - `docs/audits/audit-2026-05-22-operational-hardening-handover.md`
+- `docs/audits/audit-2026-05-22-status-end-state-gap-analysis.md`
 - `docs/audits/audit-2026-05-22-next-two-milestones-overseer-scope.md`
 - `docs/gap/to-do/aura-sense-tactical-readiness.md`
 - `docs/gap/to-do/readiness-09-local-type-metadata.md`
 - `docs/gap/to-do/combat-window-weapon-spike-followups.md`
 - `docs/gap/to-do/live-operator-smoke-playbook.md`
 - `docs/gap/to-do/live-api-smoke-evidence.md`
+- `docs/gap/to-do/provider-request-pulse-ui.md`
 - `docs/gap/to-do/combat-metric-calibration-real-datasets.md`
 - `docs/gap/to-do/repair-healing-raw-fixture-intake.md`
 - `docs/gap/to-do/local-metadata-consumer-hardening.md`
+- `docs/gap/to-do/native-gamelog-folder-picker.md`
+- `docs/gap/to-do/active-scan-validator-reconciliation.md`
 - `docs/gap/to-do/live-findings-audit-and-doctrine-update.md`
 - `docs/gap/complete/threat-intel-scan-request-contract.md`
 - `docs/gap/complete/threat-intel-target-resolution-boundary.md`

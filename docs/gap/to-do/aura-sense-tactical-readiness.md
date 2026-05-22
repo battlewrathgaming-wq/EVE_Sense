@@ -31,6 +31,7 @@ Track the work required before AURA-Sense can honestly claim tactical viewport r
 - Treat Milestone 10 integrated tactical viewport composition as complete with spike calibration and live smoke deferred.
 - Treat Milestone 11 operational hardening and runtime control as complete.
 - Proceed next with Milestone 12 live validation and tactical calibration.
+- Treat provider request pulse, native folder picker, local metadata, and active scan validator reconciliation as gap-analysis follow-ups; do not let them expand live validation scope without evidence.
 - Use feature-aligned milestones for implementation sequencing instead of assigning one-off micro-tasks.
 - Record completion evidence in `docs/gap/complete/` as gaps close.
 
@@ -65,6 +66,7 @@ AURA-Sense has a verified tactical viewport skeleton with separated telemetry la
 - `docs/roadmap/milestone-11-operational-hardening-and-runtime-control.md`
 - `docs/audits/audit-2026-05-22-integrated-viewport-handover.md`
 - `docs/audits/audit-2026-05-22-operational-hardening-handover.md`
+- `docs/audits/audit-2026-05-22-status-end-state-gap-analysis.md`
 - `docs/roadmap/milestone-11-operational-hardening-and-runtime-control.md`
 - `docs/roadmap/milestone-12-live-validation-and-tactical-calibration.md`
 - `docs/audits/audit-2026-05-22-threat-intel-and-clipboard-handover.md`
@@ -108,6 +110,9 @@ AURA-Sense has a verified tactical viewport skeleton with separated telemetry la
 - `docs/gap/complete/readiness-05-zkill-ref-boundary.md`
 - `docs/gap/complete/readiness-06-threat-intel-sample-metadata.md`
 - `docs/gap/to-do/combat-window-weapon-spike-followups.md`
+- `docs/gap/to-do/provider-request-pulse-ui.md`
+- `docs/gap/to-do/native-gamelog-folder-picker.md`
+- `docs/gap/to-do/active-scan-validator-reconciliation.md`
 - `docs/roadmap/milestone-06-passive-telemetry-foundation.md`
 - `docs/gap/complete/readiness-12-tactical-hud-first-light.md`
 - `docs/gap/complete/readiness-13-electron-visual-smoke.md`
