@@ -101,7 +101,7 @@ Avoid:
 
 Milestone 03 is complete when the first renderer viewport can present backend-owned Combat Witness snapshot state with clear freshness and no renderer-owned telemetry authority.
 
-This does not mean Aura 7 parity.
+This does not mean full tactical viewport readiness.
 
 This does mean AURA-Sense has crossed from seed rigging into the first honest tactical product surface.
 
@@ -118,7 +118,7 @@ This does mean AURA-Sense has crossed from seed rigging into the first honest ta
 ## Related Packets
 
 - `docs/gap/to-do/readiness-12-tactical-hud-first-light.md`
-- `docs/gap/to-do/readiness-11-combat-witness-snapshot-bridge.md`
+- `docs/gap/complete/readiness-11-combat-witness-snapshot-bridge.md`
 - `docs/roadmap/milestone-02-runtime-observability.md`
 - `docs/contracts/renderer-boundary-contract.md`
 - `docs/schemas/hud-snapshot.md`

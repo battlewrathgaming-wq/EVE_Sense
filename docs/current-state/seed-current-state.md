@@ -1,15 +1,17 @@
-# Current State: AURA-Sense Rewrite Seed
+# Current State: AURA-Sense Seed Lineage
 
-Status: Seeded
+Status: Historical seed snapshot
 Date: 2026-05-22
+
+Current implementation truth lives in `docs/current-state/current-implementation.md`. This file records the initial seed posture and lineage boundary so future sessions do not confuse inherited rigging with current product behavior.
 
 ## Summary
 
-AURA-Sense is currently a rewrite seed built from Aura Core and aligned to the Aura 7 tactical viewport scope.
+AURA-Sense began from reusable seed rigging and selected tactical viewport doctrine preserved in earlier Aura 7 documents.
 
-The repository has reusable development rigging and imported/historical Aura 7 documentation, but it should not claim Aura 7 runtime behavior until the corresponding services and verification are rebuilt in AURA-Sense.
+The repository has reusable development rigging and imported/historical Aura 7 documentation, but it should not claim behavior from lineage documents until the corresponding services and verification exist in AURA-Sense.
 
-## Included From Aura Core
+## Included From Seed Rigging
 
 - Fixture-first core verification
 - Generic command registry
@@ -21,7 +23,7 @@ The repository has reusable development rigging and imported/historical Aura 7 d
 - Renderer boundary static verification for known presentation-only guardrails
 - Frame module notes for borderless and always-on-top Electron windows
 
-## Scope Inherited From Aura 7
+## Scope Carried Forward From Lineage
 
 AURA-Sense should rebuild these product capabilities:
 
@@ -34,9 +36,9 @@ AURA-Sense should rebuild these product capabilities:
 - renderer snapshots and events rather than renderer-owned telemetry computation
 - uncertainty-aware HUD language
 
-## Not Yet Proven In AURA-Sense
+## Not Proven At Initial Seed Time
 
-- Aura 7's live EVE log watcher behavior
+- live EVE log watcher behavior
 - zKill discovery to ESI killmail expansion pipeline
 - local EVE system catalog integration
 - Combat Witness rolling cache and window metrics
@@ -51,8 +53,8 @@ AURA-Sense should rebuild these product capabilities:
 - full SQLite schema
 - SDE-heavy ID resolution as seed doctrine
 - historical intelligence retention model
-- full Aura 7 implementation assumptions that only matched the old runtime
+- full implementation assumptions that only matched the old runtime
 
 ## Current Rule
 
-AURA-Sense may reuse Aura 7 doctrine, contracts, schemas, and small utilities. It should adapt implementation details only after the AURA-Sense runtime boundary is clear.
+AURA-Sense may reuse lineage doctrine, contracts, schemas, and small utilities. It should adapt implementation details only after the AURA-Sense runtime boundary is clear and current verification supports the behavior.

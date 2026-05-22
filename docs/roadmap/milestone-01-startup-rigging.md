@@ -6,9 +6,9 @@ Owner: Overseer direction, Dev execution
 
 ## Milestone Overview
 
-This milestone gets AURA-Sense safely moving from a verified Aura Core seed into the first AURA-Sense-specific runtime work.
+This milestone got AURA-Sense safely moving from verified seed rigging into the first AURA-Sense-specific runtime work.
 
-The goal is not Aura 7 parity yet. The goal is to establish a clean starting line: current-state truth is explicit, historical Aura 7 notes are treated as lineage rather than proof, the renderer boundary remains guarded, and service/IPC validation is strong enough that future telemetry lanes cannot be driven into invalid or misleading states from the UI.
+The goal was not full tactical viewport readiness. The goal was to establish a clean starting line: current-state truth is explicit, historical Aura 7 notes are treated as lineage rather than proof, the renderer boundary remains guarded, and service/IPC validation is strong enough that future telemetry lanes cannot be driven into invalid or misleading states from the UI.
 
 AURA-Sense should start boring and observable. The first Dev slices should reduce ambiguity before adding tactical features. If a task requires Passive Telemetry, Threat Intel, zKill, ESI, settings persistence, or Combat Witness runtime behavior that does not yet exist in this seed, Dev should either create the smallest explicit contract/gap for that missing boundary or defer the task until the runtime lane exists.
 
@@ -35,11 +35,11 @@ AURA-Sense now has a verified startup rigging baseline:
 - backend Combat Witness event/snapshot core
 - current-state docs updated with implemented and deferred behavior
 
-The project is still not Aura 7 runtime parity. The next work should harden runtime observability and only then let renderer presentation consume backend-owned snapshots.
+The project is still not full tactical viewport readiness. The next work should harden runtime observability and only then let renderer presentation consume backend-owned snapshots.
 
 ## Current Starting Truth
 
-- AURA-Sense is currently a rewrite seed, not Aura 7 runtime parity.
+- AURA-Sense is currently a verified runtime foundation, not full tactical viewport readiness.
 - `npm.cmd run verify:all` is the offline confidence command.
 - Seed verification covers core utilities, services, HTTP client behavior, Frame module behavior, renderer shell behavior, renderer boundary static checks, Combat Witness parser/watcher behavior, and Combat Witness core snapshots.
 - Combat Witness backend foundations exist, but renderer presentation is not wired.
@@ -129,12 +129,12 @@ This milestone is complete when:
 - missing documentation references are resolved or corrected. Complete for startup scope.
 - current seed service IPC validation is implemented and verified. Complete.
 - `verify:all` remains offline and passing. Complete.
-- docs clearly distinguish implemented seed behavior from inherited Aura 7 tactical scope. Complete enough for next milestone.
+- docs clearly distinguish implemented runtime behavior from historical tactical lineage. Complete enough for next milestone.
 - the next milestone can start one runtime lane without ambiguity about ownership or verification. Complete.
 
 ## Explicit Deferrals
 
-- Aura 7 runtime parity
+- full tactical viewport readiness
 - Passive Telemetry implementation
 - Threat Intel zKill/ESI implementation
 - Combat Witness renderer presentation

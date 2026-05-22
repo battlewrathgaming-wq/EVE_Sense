@@ -193,7 +193,7 @@ The renderer can receive compact Combat Witness snapshots without owning parser,
 
 ## Priority 11: Tactical HUD First Light
 
-Status: Proposed after `readiness-11-combat-witness-snapshot-bridge.md`.
+Status: Active in `docs/gap/to-do/readiness-12-tactical-hud-first-light.md`.
 
 ### Actionables
 

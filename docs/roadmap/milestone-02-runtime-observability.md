@@ -85,7 +85,7 @@ Status: Complete in `docs/gap/complete/readiness-10-runtime-error-handling.md`.
 
 Status: Complete in `docs/gap/complete/readiness-11-combat-witness-snapshot-bridge.md`.
 
-- P3-01: Implement `docs/gap/to-do/readiness-11-combat-witness-snapshot-bridge.md` only after diagnostics throttling is complete. Complete.
+- P3-01: Implement the Combat Witness snapshot bridge packet only after diagnostics throttling is complete. Complete.
 - P3-02: Expose Combat Witness snapshots through a backend service/preload subscription boundary. Complete.
 - P3-03: Keep renderer state presentation-only and bounded. Complete.
 - P3-04: Add verification that renderer does not import combat modules or compute snapshot metrics. Complete.

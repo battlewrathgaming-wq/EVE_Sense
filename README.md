@@ -1,8 +1,8 @@
 # AURA-Sense
 
-AURA-Sense is the Aura 7 rewrite track for an EVE Online tactical viewport.
+AURA-Sense is an EVE Online tactical viewport for real-time situational awareness.
 
-It inherits Aura 7's scope and discipline:
+It is responsible for:
 
 - tactical overlay first
 - transient telemetry by default
@@ -12,7 +12,9 @@ It inherits Aura 7's scope and discipline:
 - low cognitive load HUD behavior
 - explicit uncertainty language
 
-AURA-Sense starts from the reusable Aura Core seed, but its product scope is Aura 7: observe what is happening now, present it clearly, and avoid becoming Atlas.
+AURA-Sense carries forward selected tactical doctrine from earlier Aura 7 work, but this repository's current-state docs and verified runtime are authoritative. Historical Aura 7 notes are lineage, not proof of current behavior.
+
+The implementation originated from reusable Aura Core seed rigging. That seed is infrastructure, not product identity. AURA-Sense should observe what is happening now, present it clearly, and avoid becoming Atlas.
 
 AURA Atlas remains the persistent evidence map. AURA-Sense may hand off or reference Atlas later, but should not grow Atlas-style retention, watch execution, or historical intelligence storage as core behavior.
 
@@ -30,4 +32,4 @@ npm start
 
 ## Rewrite Rule
 
-Rebuild the tactical viewport from proven rigging. Do not copy implementation weight unless the new AURA-Sense domain and runtime have earned it.
+Build the tactical viewport from current AURA-Sense contracts, verified runtime behavior, and proven lineage only where it preserves the tactical goal. Do not copy implementation weight unless the AURA-Sense domain and runtime have earned it.

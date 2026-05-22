@@ -1,6 +1,6 @@
 # Term: AURA-Sense
 
-AURA-Sense is the Aura 7 rewrite track for the EVE Online tactical viewport.
+AURA-Sense is the current EVE Online tactical viewport product direction.
 
 It is responsible for real-time, low-retention, operator-facing awareness:
 
@@ -12,6 +12,8 @@ It is responsible for real-time, low-retention, operator-facing awareness:
 - short-lived tactical event streams
 
 AURA-Sense is not the persistent evidence map. That role belongs to AURA Atlas.
+
+Earlier Aura 7 docs preserve tactical lineage. They can guide doctrine, but they do not define current implementation truth unless adapted into AURA-Sense contracts, current-state records, and verification.
 
 ## Short Form
 

@@ -30,6 +30,7 @@ Start here:
 - `docs/terms/`: shared vocabulary
 - `docs/failures/`: reusable failure classes
 - `docs/Concept/`: historical Aura 7 lineage, not proof of current implementation
+- `docs/terms/development-artifact.md`: plain-language rule for when new memory is warranted
 
 ## Rules
 

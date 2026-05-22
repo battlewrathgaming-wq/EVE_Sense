@@ -5,7 +5,7 @@ Status: Open
 
 ## Purpose
 
-Track the work required before AURA-Sense can honestly claim Aura 7 tactical viewport parity.
+Track the work required before AURA-Sense can honestly claim tactical viewport readiness.
 
 ## Actionables
 
@@ -28,9 +28,9 @@ Track the work required before AURA-Sense can honestly claim Aura 7 tactical vie
 - Do not merge Passive Telemetry, Threat Intel, and Combat Witness into one ambiguous global threat object.
 - Do not copy Atlas persistence or watch execution into AURA-Sense core.
 - Do not imply complete combat or intelligence certainty in UI language.
-- Do not treat historical Aura 7 docs as proof of current AURA-Sense runtime behavior.
+- Do not treat historical lineage docs as proof of current AURA-Sense runtime behavior.
 - Do not wire renderer Combat Witness presentation until diagnostics and runtime failure handling are ready enough to make degraded states visible.
-- Do not treat Tactical Viewport First Light as Aura 7 parity; it is a narrow proof of renderer-owned presentation over backend-owned snapshots.
+- Do not treat Tactical Viewport First Light as full tactical viewport readiness; it is a narrow proof of renderer-owned presentation over backend-owned snapshots.
 
 ## Completion Signal
 

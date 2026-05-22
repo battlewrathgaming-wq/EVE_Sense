@@ -1,11 +1,11 @@
 # Current State: AURA-Sense Implementation
 
 Date: 2026-05-22
-Status: Rewrite seed
+Status: Runtime foundation
 
 ## What Exists
 
-AURA-Sense currently exists as an Aura Core-based Electron seed with AURA-Sense tactical viewport documentation.
+AURA-Sense currently has a verified Electron runtime foundation for an EVE tactical viewport. It originated from reusable seed rigging, but current AURA-Sense docs and verification define the live project state.
 
 The current implementation includes:
 
@@ -38,7 +38,7 @@ The current implementation includes:
 
 ## What Does Not Yet Exist
 
-AURA-Sense has not yet rebuilt Aura 7 runtime parity.
+AURA-Sense has not yet completed the full tactical viewport scope.
 
 Not yet proven in this codebase:
 
@@ -113,18 +113,18 @@ Available seed command:
 npm run verify:all
 ```
 
-This verifies the current seed utilities, service rigging, Combat Witness parser/watcher/core foundations, renderer shell, and renderer boundary static checks. It does not verify Aura 7 feature parity.
+This verifies the current utilities, service rigging, Combat Witness parser/watcher/core foundations, renderer shell, and renderer boundary static checks. It does not verify full tactical viewport readiness.
 
 ## Known Gaps
 
-- some seed shell UI and fallback labels still reflect Aura Core until product shell work begins
+- some seed shell UI and fallback labels still reflect inherited rigging until product shell work begins
 - no product-facing settings, Passive Telemetry, or Threat Intel runtime services yet
 - no renderer diagnostics transport or diagnostics UI yet
 - no renderer presentation for Combat Witness snapshots yet
 - no active scan service wired to the prepared validator yet
 - no settings save/restart service wired to the prepared validator yet
 - no exact raw repair/healing fixtures yet
-- historical Aura 7 docs remain in `docs/Concept`, `docs/research`, and historical audit files for reference
+- historical Aura 7 docs remain in `docs/Concept`, `docs/research`, and historical audit files for lineage only
 
 ## Related Documents
 
@@ -139,6 +139,7 @@ This verifies the current seed utilities, service rigging, Combat Witness parser
 - `docs/audits/audit-2026-05-22-runtime-error-handling-handover.md`
 - `docs/audits/audit-2026-05-22-combat-witness-snapshot-bridge-handover.md`
 - `docs/audits/audit-2026-05-22-artifact-and-first-light-handover.md`
+- `docs/audits/audit-2026-05-22-documentation-drift-overseer-review.md`
 - `docs/gap/to-do/aura-sense-rewrite-readiness.md`
 - `docs/roadmap/milestone-02-runtime-observability.md`
 - `docs/roadmap/milestone-03-tactical-viewport-first-light.md`
