@@ -94,20 +94,23 @@ Backend can answer what was witnessed recently, with bounded retention and verif
 
 Goal:
 
-Provide low-frequency environmental awareness without turning AURA-Sense into a broad monitor.
+Read current system transitions from EVE logs and provide a low-frequency zKillmail context probe for the system the operator has just entered.
 
 User value:
 
 - current system context
+- gate-jump awareness
 - local environment cues
 - low-noise background state
 - reduced manual lookup pressure
 
 Inputs:
 
-- local observation where available
+- EVE log observation for gate jumps or current-system changes
+- current system name or ID resolution
+- scoped zKillmail fetch for the current system
 - local/static metadata where practical
-- scoped low-frequency API calls only when justified
+- freshness and last-updated metadata
 
 Must not:
 
@@ -115,16 +118,18 @@ Must not:
 - create hidden background intelligence collection
 - merge into Threat Intel
 - store long-term history
+- repeatedly fetch while the operator remains in the same system
+- imply that zKillmail activity is complete tactical truth
 
 Acceptance goalpost:
 
-Passive Telemetry can present current environment state with freshness metadata, scoped lookup behavior, and no investigative framing.
+When the operator jumps into a system, AURA-Sense can detect the current system from logs, run a scoped zKillmail context fetch, and present a compact fresh/stale/unavailable system context without turning it into an active Threat Intel scan.
 
 ## Element 4: Threat Intel
 
 Goal:
 
-Support deliberate scoped tactical inspection of a system, pilot, corporation, alliance, or copied target.
+Support deliberate scoped tactical inspection through an operator-driven search bar for a system, pilot, corporation, alliance, or copied target.
 
 User value:
 
@@ -135,11 +140,13 @@ User value:
 
 Inputs:
 
+- typed search bar target
 - user-initiated scan target
 - local/static resolution where possible
 - zKill discovery refs
-- ESI-expanded killmails
+- zKillmail query results
 - sample, cap, failure, and freshness metadata
+- optional ESI-expanded killmails only if a future milestone explicitly authorizes expansion
 
 Must not:
 
@@ -147,10 +154,12 @@ Must not:
 - run broad background scraping
 - hide sample limits
 - become Atlas reporting
+- auto-run from passive system telemetry
+- add ESI expansion by default
 
 Acceptance goalpost:
 
-Threat Intel returns a scoped tactical snapshot with explicit sample size, freshness, cap, and failure metadata.
+The operator can type or paste a target into the search bar, run a scoped zKillmail-backed probe, and receive a tactical snapshot with visible sample size, freshness, cap, and failure metadata.
 
 ## Element 5: Clipboard Acquisition
 
@@ -166,9 +175,13 @@ User value:
 
 Inputs:
 
-- brief user-armed clipboard window
+- visible acquisition indicator
+- Ctrl+Shift keyboard chord to arm acquisition
+- 3 second arming window
+- 3 second clipboard listening window
 - validation and target classification
-- explicit user action or short timeout
+- automatic transfer into the search box and scan run when a valid target is captured
+- cooldown after capture, timeout, or cancellation
 
 Must not:
 
@@ -176,10 +189,12 @@ Must not:
 - silently capture unrelated clipboard content
 - trigger broad background scans
 - blur with passive telemetry
+- remain armed without a visible indicator
+- bypass the search bar / Threat Intel scan boundary
 
 Acceptance goalpost:
 
-The operator can arm acquisition, AURA-Sense can classify a copied target, and the listener visibly seals itself.
+The operator can press Ctrl+Shift, see an armed visual indicator, copy a target within the short listening window, have AURA-Sense place the target into the search box and run the scoped scan, then see the listener seal and enter cooldown.
 
 ## Element 6: Diagnostics And Degraded State
 

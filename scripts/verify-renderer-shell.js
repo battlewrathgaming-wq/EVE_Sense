@@ -34,11 +34,17 @@ function main() {
   assert(html.includes('AURA-Sense'), 'renderer should carry AURA-Sense product label');
   assert(html.includes('combat-summary'), 'renderer should include Combat Witness summary target');
   assert(html.includes('combat-signal'), 'renderer should include Combat Witness freshness target');
+  assert(html.includes('watcher-controls'), 'renderer should include Combat Witness watcher controls');
+  assert(html.includes('watcher-state'), 'renderer should include Combat Witness watcher state target');
   assert(html.includes('event-list'), 'renderer should include bounded event stream target');
   assert(app.includes('seed.readiness'), 'renderer should request seed readiness through services');
+  assert(app.includes("window.aura.invokeService('combat.witness.status'"), 'renderer should read Combat Witness runtime status through services');
+  assert(app.includes("window.aura.invokeService('combat.witness.start'"), 'renderer should start Combat Witness watcher through services');
+  assert(app.includes("window.aura.invokeService('combat.witness.stop'"), 'renderer should stop Combat Witness watcher through services');
   assert(app.includes('window.auraCombatWitness.getSnapshot'), 'renderer should request bridge-owned Combat Witness snapshots');
   assert(app.includes('window.auraCombatWitness.subscribeSnapshots'), 'renderer should subscribe through Combat Witness bridge');
-  assert(app.includes("snapshot?.freshness?.status"), 'renderer should present backend-owned freshness status');
+  assert(app.includes('snapshot.operational?.watcher'), 'renderer should present backend-owned watcher status');
+  assert(app.includes('snapshot.freshness?.status'), 'renderer should present backend-owned freshness status');
   assert(app.includes('window.auraWindow.setAlwaysOnTop'), 'renderer should toggle always-on-top through Frame bridge');
   assert(!app.includes('innerHTML'), 'renderer should not use innerHTML in the seed shell');
   assert(app.includes('textContent'), 'renderer should render dynamic data as textContent');

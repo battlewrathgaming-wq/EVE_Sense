@@ -1,6 +1,6 @@
 # Milestone 05: Combat Witness Operational Loop
 
-Status: Active
+Status: Complete
 Date: 2026-05-22
 Owner: Overseer direction, Dev execution
 
@@ -21,6 +21,14 @@ Feature anchors:
 
 AURA-Sense can configure or reflect a gamelog path, run the Combat Witness watcher lifecycle, feed backend-owned snapshots to the first-light HUD, show fresh/stale/empty/unavailable/degraded state, and preserve verification plus Electron smoke.
 
+## Completion Verdict
+
+Milestone 05 is complete with caveats.
+
+Combat Witness now has session-scoped runtime path control, backend-owned watcher start/stop, watcher-fed snapshots, HUD watcher status, offline runtime verification, and Electron smoke coverage for the no-path unavailable state.
+
+Persistent settings, native folder selection, and live EVE gamelog operational smoke remain deferred.
+
 ## Task Chain
 
 ### Task 1: Log Path And Runtime Control
@@ -30,12 +38,16 @@ AURA-Sense can configure or reflect a gamelog path, run the Combat Witness watch
 - Keep user settings mutation explicit and recoverable.
 - Show invalid or missing path as unavailable/degraded, not as empty combat state.
 
+Status: Complete.
+
 ### Task 2: Watcher Lifecycle To Bridge
 
 - Wire the gamelog watcher into the Combat Witness bridge from main/backend ownership.
 - Preserve fs-watch and polling fallback behavior.
 - Ensure listener/parser failures become diagnostics rather than renderer crashes.
 - Keep snapshot computation in backend code.
+
+Status: Complete.
 
 ### Task 3: HUD Status Integration
 
@@ -44,6 +56,8 @@ AURA-Sense can configure or reflect a gamelog path, run the Combat Witness watch
 - Keep event list bounded.
 - Do not add pressure, topology, EWAR, or recommendations.
 
+Status: Complete.
+
 ### Task 4: Verification And Smoke
 
 - Extend static verification for any new renderer surface.
@@ -51,12 +65,16 @@ AURA-Sense can configure or reflect a gamelog path, run the Combat Witness watch
 - Keep `npm.cmd run verify:all` offline.
 - Extend `npm.cmd run smoke:electron` only for states that can be proven without live EVE logs.
 
+Status: Complete.
+
 ### Task 5: State And Handover
 
 - Update `docs/current-state/current-implementation.md`.
 - Move `docs/gap/to-do/readiness-14-combat-witness-operational-loop.md` to complete when accepted.
 - Record verification output and smoke artifacts.
 - Preserve explicit deferrals.
+
+Status: Complete.
 
 ## Autonomy Envelope
 

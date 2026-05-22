@@ -5,6 +5,7 @@ const checks = [
   ['verify:runtime-errors', ['node', 'scripts/verify-runtime-error-handling.js']],
   ['verify:combat-parser', ['node', 'scripts/verify-combat-parser.js']],
   ['verify:combat-bridge', ['node', 'scripts/verify-combat-witness-bridge.js']],
+  ['verify:combat-runtime', ['node', 'scripts/verify-combat-witness-runtime.js']],
   ['verify:combat-witness', ['node', 'scripts/verify-combat-witness-core.js']],
   ['verify:diagnostics', ['node', 'scripts/verify-diagnostics-policy.js']],
   ['verify:gamelog-watcher', ['node', 'scripts/verify-gamelog-watcher.js']],

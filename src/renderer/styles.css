@@ -160,6 +160,55 @@ dd {
   padding: 18px 20px;
 }
 
+.watcher-controls {
+  border-top: 1px solid var(--line);
+  padding: 12px 0 16px;
+  display: grid;
+  gap: 8px;
+}
+
+.watcher-controls label {
+  color: var(--muted);
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.watcher-controls div {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: 8px;
+}
+
+.watcher-controls input,
+.watcher-controls button {
+  min-height: 36px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel-strong);
+  color: var(--fg);
+  font: inherit;
+}
+
+.watcher-controls input {
+  min-width: 0;
+  padding: 0 10px;
+}
+
+.watcher-controls button {
+  padding: 0 14px;
+  cursor: pointer;
+}
+
+.watcher-controls button:hover {
+  border-color: var(--accent);
+}
+
+.watcher-controls p {
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
 .section-title {
   min-height: 28px;
   display: flex;
@@ -214,8 +263,18 @@ dd {
   }
 
   .section-title,
+  .watcher-controls div,
   .event-list li {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .watcher-controls div {
+    display: flex;
+  }
+
+  .watcher-controls input,
+  .watcher-controls button {
+    width: 100%;
   }
 }

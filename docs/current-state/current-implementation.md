@@ -1,7 +1,7 @@
 # Current State: AURA-Sense Implementation
 
 Date: 2026-05-22
-Status: First-light tactical viewport
+Status: Combat Witness operational loop
 
 ## What Exists
 
@@ -38,6 +38,9 @@ The current implementation includes:
 - first product-facing Combat Witness viewport
 - backend-owned Combat Witness freshness status
 - Electron visual smoke command with first-light screenshot/result artifacts
+- session-scoped Combat Witness gamelog path control
+- backend-owned Combat Witness watcher lifecycle
+- Combat Witness HUD watcher unavailable/degraded/watching status
 
 ## What Does Not Yet Exist
 
@@ -52,8 +55,9 @@ Not yet proven in this codebase:
 - local EVE system/type metadata adapters
 - network gate and live diagnostics for EVE APIs
 - production-grade multi-lane HUD renderer
-- live gamelog watcher lifecycle connected to the Combat Witness viewport
-- feature-aligned Milestone 05 implementation is not yet complete
+- persistent product settings for gamelog folder
+- native folder picker for gamelog folder
+- live EVE gamelog operational smoke against an operator machine
 
 ## Intended Runtime Flow
 
@@ -118,7 +122,7 @@ Available command:
 npm run verify:all
 ```
 
-This verifies the current utilities, service rigging, Combat Witness parser/watcher/core foundations, Combat Witness first-light surface, renderer shell, and renderer boundary static checks. It does not verify full tactical viewport readiness.
+This verifies the current utilities, service rigging, Combat Witness parser/watcher/runtime foundations, Combat Witness first-light surface, renderer shell, and renderer boundary static checks. It does not verify full tactical viewport readiness.
 
 Runtime visual smoke is implemented as a separate environment-sensitive command:
 
@@ -134,8 +138,8 @@ It writes artifacts under `.tmp\electron-visual-smoke` and is intentionally not 
 - no product-facing settings, Passive Telemetry, or Threat Intel runtime services yet
 - no renderer diagnostics transport or diagnostics UI yet
 - no active scan service wired to the prepared validator yet
-- no settings save/restart service wired to the prepared validator yet
-- no live watcher lifecycle wired into the Combat Witness bridge yet
+- no persistent settings save/restart service yet
+- no native folder picker yet
 - no exact raw repair/healing fixtures yet
 - concept and research docs are AURA-Sense product doctrine or evidence notes; older audit records may still describe past cleanup work
 
@@ -157,8 +161,9 @@ It writes artifacts under `.tmp\electron-visual-smoke` and is intentionally not 
 - `docs/audits/audit-2026-05-22-aura-sense-reconceptualization-handover.md`
 - `docs/audits/audit-2026-05-22-electron-smoke-overseer-handover.md`
 - `docs/audits/audit-2026-05-22-electron-visual-smoke-handover.md`
+- `docs/audits/audit-2026-05-22-combat-witness-operational-loop-handover.md`
 - `docs/gap/to-do/aura-sense-tactical-readiness.md`
-- `docs/gap/to-do/readiness-14-combat-witness-operational-loop.md`
+- `docs/gap/complete/readiness-14-combat-witness-operational-loop.md`
 - `docs/gap/complete/readiness-13-electron-visual-smoke.md`
 - `docs/features/vision.md`
 - `docs/roadmap/feature-aligned-milestones.md`

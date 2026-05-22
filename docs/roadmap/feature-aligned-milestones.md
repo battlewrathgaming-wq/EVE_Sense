@@ -41,6 +41,8 @@ Task chains are intentionally multi-step. They give Dev room to implement the fe
 
 ### Milestone 05: Combat Witness Operational Loop
 
+Status: Complete in `docs/gap/complete/readiness-14-combat-witness-operational-loop.md`.
+
 Feature anchors:
 
 - Element 1: Tactical HUD Shell

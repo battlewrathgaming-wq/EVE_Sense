@@ -9,6 +9,8 @@ const CHANNELS = Object.freeze({
 
 function createCombatWitnessBridge({
   service = new CombatWitnessService(),
+  snapshotProvider = () => service.snapshot(),
+  snapshotDecorator = (snapshot) => snapshot,
   minUpdateIntervalMs = 250,
   now = () => Date.now(),
   setTimer = (callback, delayMs) => setTimeout(callback, delayMs),
@@ -26,7 +28,7 @@ function createCombatWitnessBridge({
       return;
     }
     unsubscribeService = service.subscribeSnapshots((snapshot) => {
-      publishSnapshot(snapshot);
+      publishSnapshot(snapshotDecorator(snapshot));
     });
   }
 
@@ -99,7 +101,7 @@ function createCombatWitnessBridge({
       subscribers.delete(webContents.id);
       cleanupServiceIfIdle();
     });
-    const snapshot = service.snapshot();
+    const snapshot = snapshotProvider();
     webContents.send(CHANNELS.snapshot, snapshot);
     return { subscribed: true, subscriberCount: subscribers.size, minUpdateIntervalMs };
   }
@@ -114,7 +116,7 @@ function createCombatWitnessBridge({
   }
 
   function register(ipcMain) {
-    ipcMain.handle(CHANNELS.getSnapshot, () => service.snapshot());
+    ipcMain.handle(CHANNELS.getSnapshot, () => snapshotProvider());
     ipcMain.handle(CHANNELS.subscribe, (event) => subscribe(event));
     ipcMain.handle(CHANNELS.unsubscribe, (event) => unsubscribe(event));
     return CHANNELS;

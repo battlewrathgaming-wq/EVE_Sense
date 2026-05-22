@@ -41,7 +41,8 @@ Defines the transient combat-log witness model.
 - Gamelog watcher supports `fs-watch`, `polling`, and `auto` fallback strategies.
 - `CombatWitnessService` owns event fan-out, 5s/15s/30s snapshots, and bounded event stream items.
 - Listener failures are isolated.
-- Renderer presentation is not wired yet.
+- `combat.witness.*` service commands own runtime path/status/start/stop control.
+- Renderer presentation consumes backend-owned snapshots and watcher status.
 
 ## Verification
 
@@ -51,6 +52,7 @@ Current checks:
 npm.cmd run verify:combat-parser
 npm.cmd run verify:gamelog-watcher
 npm.cmd run verify:combat-witness
+npm.cmd run verify:combat-runtime
 npm.cmd run verify:all
 ```
 

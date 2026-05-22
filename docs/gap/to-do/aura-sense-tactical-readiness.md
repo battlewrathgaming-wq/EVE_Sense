@@ -15,6 +15,7 @@ Track the work required before AURA-Sense can honestly claim tactical viewport r
 - Keep service command validation in place; attach prepared scan/settings validators as those runtime services are added.
 - Rebuild EVE log watcher behavior with parser fixtures.
 - Keep Combat Witness backend snapshots and the first-light renderer surface as the first runtime-lane foundation.
+- Keep Combat Witness runtime path control and watcher lifecycle backend-owned.
 - Treat Tactical Viewport First Light as complete, not as full tactical viewport readiness.
 - Rebuild Passive Telemetry with local-first system metadata.
 - Rebuild Threat Intel with zKill discovery, ESI expansion, capped sample metadata, and freshness language.
@@ -52,5 +53,6 @@ AURA-Sense has a verified tactical viewport skeleton with separated telemetry la
 - `docs/gap/to-do/readiness-14-combat-witness-operational-loop.md`
 - `docs/gap/complete/readiness-12-tactical-hud-first-light.md`
 - `docs/gap/complete/readiness-13-electron-visual-smoke.md`
+- `docs/gap/complete/readiness-14-combat-witness-operational-loop.md`
 - `docs/roadmap/development-artifact-trail.md`
 

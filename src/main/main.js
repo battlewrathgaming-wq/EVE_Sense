@@ -3,13 +3,24 @@ const path = require('node:path');
 const { app, BrowserWindow, ipcMain } = require('electron');
 const { APP_NAME } = require('../constants');
 const { createCombatWitnessBridge } = require('../combat/combatWitnessBridge');
+const { createCombatWitnessRuntime, decorateSnapshot } = require('../combat/combatWitnessRuntime');
 const { createDefaultRegistry, registerElectronServiceHandlers } = require('../services/serviceRegistry');
+const { TASK_CLASSIFICATIONS } = require('../services/taskRunner');
 const { registerRuntimeErrorHandlers } = require('./runtimeErrorHandling');
 const { createFrameWindow, registerFrameWindowHandlers } = require('../modules/Frame');
 
 const registry = createDefaultRegistry();
-const combatWitnessBridge = createCombatWitnessBridge();
+const combatWitnessRuntime = createCombatWitnessRuntime({
+  trace: traceRuntimeDiagnostic
+});
+const combatWitnessBridge = createCombatWitnessBridge({
+  service: combatWitnessRuntime.service,
+  snapshotProvider: combatWitnessRuntime.snapshot,
+  snapshotDecorator: (snapshot) => decorateSnapshot(snapshot, combatWitnessRuntime.status())
+});
 let mainWindow = null;
+
+registerCombatWitnessRuntimeCommands(registry, combatWitnessRuntime);
 
 function createWindow() {
   const window = createFrameWindow(app, {
@@ -50,6 +61,34 @@ app.on('window-all-closed', () => {
     app.quit();
   }
 });
+
+function registerCombatWitnessRuntimeCommands(serviceRegistry, runtime) {
+  serviceRegistry
+    .register('combat.witness.status', {
+      classification: TASK_CLASSIFICATIONS.READ_ONLY,
+      description: 'Return Combat Witness watcher runtime status',
+      handler: () => runtime.status()
+    })
+    .register('combat.witness.configure', {
+      classification: TASK_CLASSIFICATIONS.LOCAL_MUTATION,
+      description: 'Validate and configure the local EVE gamelog folder for Combat Witness',
+      handler: (payload = {}) => runtime.configure(payload)
+    })
+    .register('combat.witness.start', {
+      classification: TASK_CLASSIFICATIONS.LOCAL_MUTATION,
+      description: 'Start Combat Witness watcher from the configured local EVE gamelog folder',
+      handler: (payload = {}) => runtime.start(payload)
+    })
+    .register('combat.witness.stop', {
+      classification: TASK_CLASSIFICATIONS.LOCAL_MUTATION,
+      description: 'Stop Combat Witness watcher',
+      handler: () => runtime.stop()
+    });
+}
+
+function traceRuntimeDiagnostic(event, payload = {}) {
+  console.warn(`[aura-sense diagnostic] ${event}`, payload);
+}
 
 function runVisualSmokeIfRequested(window, rendererLoad) {
   if (!isVisualSmokeRequested()) {
@@ -114,6 +153,7 @@ async function runVisualSmoke(window, outputDir) {
   assertSmoke(checks.hasCombatSurface, 'renderer should contain Combat Witness surface');
   assertSmoke(checks.hasFreshnessText, 'renderer should show freshness/status text');
   assertSmoke(checks.hasEventList, 'renderer should contain event list surface');
+  assertSmoke(checks.hasWatcherControls, 'renderer should contain Combat Witness watcher controls');
   assertSmoke(checks.noParserRuntimeExposure, 'renderer should not expose parser/runtime modules');
 
   const image = await window.webContents.capturePage();
@@ -160,14 +200,16 @@ function smokeChecks(window) {
       noNodeRequire: typeof window.require === 'undefined',
       noElectronGlobal: typeof window.ipcRenderer === 'undefined' && typeof window.BrowserWindow === 'undefined',
       hasCombatSurface: Boolean(document.querySelector('.combat-surface') && document.querySelector('#combat-summary')),
-      hasFreshnessText: ['Recent', 'Stale', 'Empty', 'Unavailable'].includes(document.querySelector('#combat-signal')?.textContent || ''),
+      hasFreshnessText: ['Recent', 'Stale', 'Empty', 'Unavailable', 'Degraded', 'Witnessed'].includes(document.querySelector('#combat-signal')?.textContent || ''),
       hasEventList: Boolean(document.querySelector('#event-list')),
+      hasWatcherControls: Boolean(document.querySelector('#watcher-controls') && document.querySelector('#gamelog-folder')),
       noParserRuntimeExposure: (
         typeof window.CombatWitnessService === 'undefined' &&
         typeof window.EveCombatLogParser === 'undefined' &&
         typeof window.eveGamelogWatcher === 'undefined'
       ),
       signalText: document.querySelector('#combat-signal')?.textContent || null,
+      watcherText: document.querySelector('#watcher-state')?.textContent || null,
       summaryText: document.querySelector('#combat-summary')?.textContent || null,
       eventListText: document.querySelector('#event-list')?.textContent || null
     });
