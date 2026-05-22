@@ -171,3 +171,17 @@ Final seed rule:
 
 Aura projects should inherit Atlas' anticipation discipline, not Atlas' implementation weight.
 
+## 12. Optional Chaining Is Not A Null Guard For Later Dereferences
+
+AURA-Sense exposed a reusable Frame module bug that also existed in Aura Core. The code checked `state.bounds?.x !== null`, which looks defensive but evaluates true when `state.bounds` is `null` because optional chaining returns `undefined`, and `undefined !== null` is true. The next lines then dereferenced `state.bounds.x` before `BrowserWindow` construction.
+
+Aura projects should treat optional chaining as a value access convenience, not as proof that the parent object exists for later use.
+
+Anticipation rule:
+
+- When later code dereferences the parent object, guard the parent explicitly first.
+- Prefer `state.bounds && state.bounds.x !== null && state.bounds.y !== null` for nullable object guards.
+- Add regression tests for null object state, not just valid object state.
+- Base modules should carry the regression check so downstream projects inherit the fix.
+- If smoke fails before a window is created, inspect reusable shell modules before blaming Electron installation.
+
