@@ -9,8 +9,16 @@ function main() {
   const preload = read(path.join(root, 'src', 'main', 'preload.js'));
   const html = read(path.join(root, 'src', 'renderer', 'index.html'));
   const app = read(path.join(root, 'src', 'renderer', 'app.js'));
+  const packageJson = read(path.join(root, 'package.json'));
+  const smokeScript = read(path.join(root, 'scripts', 'electron-visual-smoke.ps1'));
 
   assert(main.includes("require('../modules/Frame')"), 'main process should create windows through Frame module');
+  assert(main.includes('AURA_SENSE_ELECTRON_VISUAL_SMOKE'), 'main process should support explicit visual smoke mode');
+  assert(main.includes('AURA_SENSE_VISUAL_SMOKE_DIR'), 'main process should use explicit visual smoke output dir');
+  assert(main.includes('--aura-sense-electron-visual-smoke'), 'main process should support explicit visual smoke argv flag');
+  assert(main.includes('capturePage()'), 'visual smoke should capture Electron window screenshots');
+  assert(main.includes('visual-smoke-result.json'), 'visual smoke should write a structured result file');
+  assert(main.includes('noParserRuntimeExposure'), 'visual smoke should assert parser/runtime modules are not exposed');
   assert(frame.includes('frame: false'), 'Frame module should create frameless windows');
   assert(frame.includes('contextIsolation: true'), 'Frame module should enable context isolation');
   assert(frame.includes('nodeIntegration: false'), 'Frame module should disable node integration');
@@ -34,6 +42,12 @@ function main() {
   assert(app.includes('window.auraWindow.setAlwaysOnTop'), 'renderer should toggle always-on-top through Frame bridge');
   assert(!app.includes('innerHTML'), 'renderer should not use innerHTML in the seed shell');
   assert(app.includes('textContent'), 'renderer should render dynamic data as textContent');
+  assert(packageJson.includes('"smoke:electron"'), 'package should expose Electron visual smoke script');
+  assert(smokeScript.includes('AURA_SENSE_ELECTRON_VISUAL_SMOKE'), 'visual smoke script should set explicit smoke flag');
+  assert(smokeScript.includes('AURA_SENSE_VISUAL_SMOKE_DIR'), 'visual smoke script should set explicit smoke output dir');
+  assert(smokeScript.includes('--aura-sense-electron-visual-smoke'), 'visual smoke script should pass explicit smoke argv flag');
+  assert(smokeScript.includes('.tmp'), 'visual smoke script should keep artifacts under project .tmp');
+  assert(!smokeScript.includes('F:'), 'visual smoke script should not hardcode a drive path');
 
   console.log('renderer shell verified');
 }

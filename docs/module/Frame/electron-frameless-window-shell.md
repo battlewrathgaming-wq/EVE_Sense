@@ -151,6 +151,7 @@ npm run verify:renderer-shell
 - renderer uses `window.auraWindow.setAlwaysOnTop`
 - renderer CSS contains drag/no-drag regions
 - renderer does not import Electron or backend modules
+- null persisted bounds are not dereferenced during window creation
 
 ## Decision
 

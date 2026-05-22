@@ -37,6 +37,7 @@ The current implementation includes:
 - Combat Witness snapshot IPC/preload bridge
 - first product-facing Combat Witness viewport
 - backend-owned Combat Witness freshness status
+- Electron visual smoke command with first-light screenshot/result artifacts
 
 ## What Does Not Yet Exist
 
@@ -118,7 +119,13 @@ npm run verify:all
 
 This verifies the current utilities, service rigging, Combat Witness parser/watcher/core foundations, Combat Witness first-light surface, renderer shell, and renderer boundary static checks. It does not verify full tactical viewport readiness.
 
-Runtime visual smoke is not yet implemented in AURA-Sense. Atlas provides the reference pattern through `npm.cmd run smoke:electron`, and AURA-Sense should add an equivalent runtime smoke in `docs/gap/to-do/readiness-13-electron-visual-smoke.md`.
+Runtime visual smoke is implemented as a separate environment-sensitive command:
+
+```powershell
+npm.cmd run smoke:electron
+```
+
+It writes artifacts under `.tmp\electron-visual-smoke` and is intentionally not included in `verify:all`.
 
 ## Known Gaps
 
@@ -128,7 +135,6 @@ Runtime visual smoke is not yet implemented in AURA-Sense. Atlas provides the re
 - no active scan service wired to the prepared validator yet
 - no settings save/restart service wired to the prepared validator yet
 - no live watcher lifecycle wired into the Combat Witness bridge yet
-- no Electron visual smoke command or `.tmp\electron-visual-smoke` artifact yet
 - no exact raw repair/healing fixtures yet
 - concept and research docs are AURA-Sense product doctrine or evidence notes; older audit records may still describe past cleanup work
 
@@ -149,8 +155,9 @@ Runtime visual smoke is not yet implemented in AURA-Sense. Atlas provides the re
 - `docs/audits/audit-2026-05-22-documentation-drift-overseer-review.md`
 - `docs/audits/audit-2026-05-22-aura-sense-reconceptualization-handover.md`
 - `docs/audits/audit-2026-05-22-electron-smoke-overseer-handover.md`
+- `docs/audits/audit-2026-05-22-electron-visual-smoke-handover.md`
 - `docs/gap/to-do/aura-sense-tactical-readiness.md`
-- `docs/gap/to-do/readiness-13-electron-visual-smoke.md`
+- `docs/gap/complete/readiness-13-electron-visual-smoke.md`
 - `docs/features/vision.md`
 - `docs/roadmap/milestone-02-runtime-observability.md`
 - `docs/roadmap/milestone-03-tactical-viewport-first-light.md`

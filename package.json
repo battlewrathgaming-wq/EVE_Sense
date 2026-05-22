@@ -6,11 +6,13 @@
   "type": "commonjs",
   "scripts": {
     "start": "electron .",
+    "smoke:electron": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/electron-visual-smoke.ps1",
     "verify:all": "node scripts/verify-all.js",
     "verify:combat-parser": "node scripts/verify-combat-parser.js",
     "verify:combat-witness": "node scripts/verify-combat-witness-core.js",
     "verify:combat-bridge": "node scripts/verify-combat-witness-bridge.js",
     "verify:diagnostics": "node scripts/verify-diagnostics-policy.js",
+    "verify:electron-runtime": "electron scripts/verify-electron-runtime.js",
     "verify:gamelog-watcher": "node scripts/verify-gamelog-watcher.js",
     "verify:core": "node scripts/verify-core.js",
     "verify:services": "node scripts/verify-services.js",

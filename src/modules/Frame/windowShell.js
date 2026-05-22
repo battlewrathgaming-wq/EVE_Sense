@@ -37,7 +37,7 @@ function createFrameWindow(app, options = {}) {
     }
   };
 
-  if (state.bounds?.x !== null && state.bounds?.y !== null) {
+  if (state.bounds && state.bounds.x !== null && state.bounds.y !== null) {
     windowOptions.x = state.bounds.x;
     windowOptions.y = state.bounds.y;
   }

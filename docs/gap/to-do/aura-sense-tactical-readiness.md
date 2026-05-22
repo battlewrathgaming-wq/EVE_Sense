@@ -20,6 +20,7 @@ Track the work required before AURA-Sense can honestly claim tactical viewport r
 - Rebuild Threat Intel with zKill discovery, ESI expansion, capped sample metadata, and freshness language.
 - Keep Combat Witness backend-owned normalized events, bounded rolling cache, and 5s/15s/30s snapshots as the foundation for future presentation.
 - Keep live/API smoke checks separate from offline verification.
+- Keep Electron visual smoke separate from offline verification.
 - Record completion evidence in `docs/gap/complete/` as gaps close.
 
 ## Guardrails
@@ -46,5 +47,6 @@ AURA-Sense has a verified tactical viewport skeleton with separated telemetry la
 - `docs/roadmap/milestone-02-runtime-observability.md`
 - `docs/roadmap/milestone-03-tactical-viewport-first-light.md`
 - `docs/gap/complete/readiness-12-tactical-hud-first-light.md`
+- `docs/gap/complete/readiness-13-electron-visual-smoke.md`
 - `docs/roadmap/development-artifact-trail.md`
 

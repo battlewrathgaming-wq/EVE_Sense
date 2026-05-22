@@ -50,6 +50,7 @@ function verifySourceBoundaries() {
   assert(mainText.includes("require('../modules/Frame')"), 'main should create windows through Frame module');
   assert(mainText.includes('BrowserWindow'), 'main should import BrowserWindow for runtime activation handling');
   assert(shellText.includes('frame: false'), 'Frame module should create frameless windows');
+  assert(shellText.includes('state.bounds && state.bounds.x !== null && state.bounds.y !== null'), 'Frame module should not dereference null bounds');
   assert(shellText.includes('alwaysOnTop: state.alwaysOnTop'), 'Frame module should restore always-on-top state');
   assert(shellText.includes('setAlwaysOnTop'), 'Frame module should expose always-on-top mutation');
   assert(shellText.includes('FRAME_INVALID_ALWAYS_ON_TOP'), 'Frame module should reject invalid always-on-top payloads');
