@@ -12,7 +12,7 @@ The product vision is not "more panels" and not "more intelligence." It is a tru
 
 ```txt
 What is happening around me right now?
-What must I do?
+What must I notice?
 ```
 
 The first light milestone should prove that vision in the smallest honest way: a renderer surface that consumes backend-owned Combat Witness snapshots and presents recent observation state without overclaiming, persisting, or calculating tactical truth in the renderer.

@@ -68,7 +68,7 @@ Normal operation does not flood console or renderer diagnostics, while degraded 
 
 ## Priority 4: zKill Discovery Ref Boundary
 
-Status: Deferred until Threat Intel client/service exists.
+Status: Complete in `docs/gap/complete/readiness-05-zkill-ref-boundary.md`.
 
 ### Actionables
 
@@ -90,7 +90,7 @@ and never treats zKill summary payloads as tactical truth.
 
 ## Priority 5: Threat Intel Sample Metadata
 
-Status: Deferred until Threat Intel runtime exists.
+Status: Complete in `docs/gap/complete/readiness-06-threat-intel-sample-metadata.md`.
 
 ### Actionables
 
@@ -225,9 +225,9 @@ Threat Intel avoids `Type <id>` where local metadata can provide a readable labe
 
 This overview has been split into individual task files so each line can be implemented, reviewed, and moved to `docs/gap/complete/` independently.
 
-1. `readiness-05-zkill-ref-boundary.md`
-2. `readiness-06-threat-intel-sample-metadata.md`
-3. `readiness-09-local-type-metadata.md`
+`readiness-05-zkill-ref-boundary.md` and `readiness-06-threat-intel-sample-metadata.md` are complete through Milestone 09.
 
-This sequence improves safety before adding heavier combat features.
+`readiness-09-local-type-metadata.md` remains conditional. Do not begin local type metadata work until an integrated viewport or Threat Intel timeline clearly consumes type labels.
+
+Proceed next through `docs/roadmap/milestone-10-integrated-tactical-viewport.md`.
 

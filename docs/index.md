@@ -8,7 +8,7 @@ AURA-Sense answers:
 
 ```txt
 What is happening around me right now?
-What must I do?
+What must I notice?
 ```
 
 AURA Atlas answers:
@@ -84,7 +84,7 @@ The following concepts should remain preserved across implementation:
 - The renderer presents snapshots; it is not telemetry authority.
 - Passive Telemetry, Threat Intel, and Combat Witness are separate lanes.
 - zKill is discovery only.
-- Expanded ESI killmails are the source of truth for scoped Threat Intel.
+- Scoped zKill-backed samples are the first Threat Intel surface; expanded ESI killmails remain deferred until explicitly authorized.
 - Combat Witness is observed telemetry, not evidence-grade history.
 - UI copy must not overclaim certainty.
 - Live API usage must remain scoped, gated, cached, and respectful.

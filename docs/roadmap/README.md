@@ -16,6 +16,7 @@ Current entries:
 - `milestone-07-combat-logging-test-suite.md`
 - `milestone-08-passive-telemetry-live-safe-readiness.md`
 - `milestone-09-scoped-threat-intel-and-clipboard-acquisition.md`
+- `milestone-10-integrated-tactical-viewport.md`
 - `passive-telemetry-live-readiness-interlock.md`
 - `architecture-needs-review-2026-05-22.md`
 - `development-artifact-trail.md`

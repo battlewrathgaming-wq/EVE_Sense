@@ -1,7 +1,7 @@
 # Gap To-Do: Local Type Metadata
 
 Date: 2026-05-22
-Status: Open - Conditional Under Milestone 09
+Status: Open - Conditional / Deferred
 
 ## Actionables
 
@@ -17,7 +17,7 @@ Threat Intel currently renders victim ship output as `Type <id>`.
 
 AURA-Sense should use local static metadata for ship/type names where available, while staying lightweight and not becoming Atlas.
 
-This packet may begin during Milestone 09 only if Threat Intel snapshot output needs type labels. It should not introduce a large static-data system before a consumer exists.
+This packet may begin only if an integrated viewport or Threat Intel timeline clearly needs local type labels. It should not introduce a large static-data system before a consumer exists.
 
 ## Guardrails
 

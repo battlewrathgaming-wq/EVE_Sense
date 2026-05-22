@@ -273,6 +273,8 @@ AURA-Sense visual smoke passed: F:\Projects\AURA-Sense\.tmp\electron-visual-smok
 
 ### Milestone 10: Integrated Tactical Viewport
 
+Status: Active - Next Dev Runway in `docs/roadmap/milestone-10-integrated-tactical-viewport.md`.
+
 Feature anchors:
 
 - Element 1: Tactical HUD Shell
@@ -294,6 +296,8 @@ Task chain:
 5. Extend visual smoke across the integrated viewport.
 6. Run an Overseer language pass for overclaiming.
 7. Update current-state and milestone evidence.
+
+Use the active milestone file for task packets, Dev autonomy, acceptance gates, and expected handover details.
 
 Autonomy envelope:
 

@@ -3,7 +3,7 @@
 Status: Active
 Date: 2026-05-22
 
-AURA-Sense is a real-time tactical overlay, not a historical intelligence platform.
+AURA-Sense is a real-time tactical cognition and situational awareness system, not a historical intelligence platform.
 
 It exists to present recent, scoped, operationally useful observations with low cognitive load. It must not become the place where persistent intelligence, historical memory, or authoritative facts are invented.
 
@@ -13,7 +13,7 @@ AURA-Sense answers:
 
 ```txt
 What is happening around me right now?
-What must I do?
+What must I notice?
 ```
 
 AURA Atlas answers:
@@ -73,17 +73,17 @@ It should process newly appended log lines, normalize events, compute short-wind
 
 ## 7. Threat Intel Remains Evidence-Backed
 
-Scoped Threat Intel may use zKill discovery and ESI killmail expansion.
+Scoped Threat Intel starts from deliberate zKill-backed tactical samples.
 
 The rule remains:
 
 ```txt
-zKill discovery
--> ESI expanded killmail
--> local tactical summary
+operator target
+-> scoped zKill-backed sample
+-> local tactical summary with sample/freshness/failure basis
 ```
 
-zKill is discovery only. Expanded ESI killmails are the source of truth for scoped Threat Intel.
+zKill samples are not complete truth. ESI killmail expansion remains deferred until a future milestone or ADR authorizes a narrow path.
 
 ## 8. Low Cognitive Load Wins
 
@@ -114,7 +114,7 @@ Static metadata should come from local/cached data where possible:
 - group/category metadata
 - topology/reference data
 
-Live APIs should primarily provide dynamic activity, scoped discovery, and killmail expansion.
+Live APIs should primarily provide dynamic activity and scoped discovery. Killmail expansion remains explicitly deferred unless authorized by future doctrine.
 
 ## 11. AI Is Commentary, Not Telemetry
 
