@@ -83,18 +83,19 @@ Feature anchors:
 
 Operational outcome:
 
-Passive Telemetry provides current environment awareness with freshness language and strict separation from Threat Intel.
+Passive Telemetry detects current-system changes from EVE logs and provides a low-frequency zKillmail context probe for the system the operator has just entered, with freshness language and strict separation from Threat Intel.
 
 Task chain:
 
 1. Define Passive Telemetry snapshot schema before renderer work.
-2. Add local-first metadata adapter only for the first required environment labels.
-3. Add backend Passive Telemetry service with freshness and degraded states.
-4. Keep live/API calls scoped, optional, cached, and observable.
-5. Present a compact passive panel in the HUD.
-6. Extend verification for lane separation and renderer boundaries.
-7. Extend smoke evidence for passive empty/ready/degraded states.
-8. Update current-state and handover.
+2. Detect gate jumps or current-system changes from EVE logs.
+3. Resolve current system identity with local/static metadata where practical.
+4. Add a scoped zKillmail system-context fetch that runs on system change, not aggressive polling.
+5. Add freshness, unavailable, capped, and failed-fetch metadata.
+6. Present a compact passive system-context panel in the HUD.
+7. Extend verification for lane separation, fetch throttling, and renderer boundaries.
+8. Extend smoke evidence for passive empty/ready/degraded states.
+9. Update current-state and handover.
 
 Autonomy envelope:
 
@@ -102,7 +103,7 @@ Dev may add backend passive telemetry service code, compact metadata adapter cod
 
 Acceptance gate:
 
-Passive Telemetry can present current environment state without calling Threat Intel paths, without broad polling, and without historical storage.
+Passive Telemetry can present current-system zKillmail context after a gate jump without calling Threat Intel paths, without broad polling, and without historical storage.
 
 ### Milestone 07: Scoped Threat Intel Foundation
 
@@ -115,19 +116,20 @@ Feature anchors:
 
 Operational outcome:
 
-Threat Intel supports deliberate scoped scans with explicit evidence basis, sample limits, freshness, and failure language.
+Threat Intel supports deliberate scoped scans from a search bar or armed clipboard capture, with explicit evidence basis, sample limits, freshness, and failure language.
 
 Task chain:
 
-1. Define target acquisition and scan request contract.
-2. Implement or adapt clipboard acquisition only as an armed, temporary input workflow.
-3. Add zKill discovery-ref normalization.
-4. Add ESI killmail expansion with timeout/cancel/retry and explicit User-Agent.
-5. Add sample, cap, failed-expansion, and freshness metadata.
-6. Add local type metadata only where the Threat Intel output consumes it.
-7. Present a compact scan result surface that avoids certainty language.
-8. Verify renderer isolation, API boundary behavior, and sample metadata.
-9. Record live smoke separately if any live API checks are run.
+1. Define search bar target acquisition and scan request contract.
+2. Implement or adapt clipboard acquisition as a Ctrl+Shift armed, visible, temporary input workflow with timeout and cooldown.
+3. Insert valid clipboard captures into the search box and auto-run the scoped scan.
+4. Add zKillmail query/ref normalization for the requested target.
+5. Add sample, cap, failed-fetch, and freshness metadata.
+6. Keep ESI killmail expansion deferred unless this milestone is explicitly expanded by Overseer.
+7. Add local type metadata only where the Threat Intel output consumes it.
+8. Present a compact scan result surface that avoids certainty language.
+9. Verify renderer isolation, API boundary behavior, keyboard/listening lifecycle, and sample metadata.
+10. Record live smoke separately if any live API checks are run.
 
 Autonomy envelope:
 
@@ -135,7 +137,7 @@ Dev may implement backend clients/services, acquisition workflow, scoped rendere
 
 Acceptance gate:
 
-A scoped scan returns a tactical snapshot with visible evidence basis and no broad background scraping, no Atlas persistence, and no renderer API calls.
+A search bar or armed clipboard scan returns a tactical zKillmail-backed snapshot with visible evidence basis and no broad background scraping, no Atlas persistence, no default ESI expansion, and no renderer API calls.
 
 ### Milestone 08: Integrated Tactical Viewport
 
