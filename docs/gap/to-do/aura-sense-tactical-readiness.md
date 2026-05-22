@@ -29,6 +29,7 @@ Track the work required before AURA-Sense can honestly claim tactical viewport r
 - Treat Combat Logging Test Suite as complete with raw repair/healing parser support explicitly deferred until exact samples exist.
 - Treat Passive Telemetry live-safe readiness as complete with live network smoke still deferred behind `AURA_SENSE_LIVE_API=1`.
 - Proceed next with Milestone 10: integrated tactical viewport composition in `docs/roadmap/milestone-10-integrated-tactical-viewport.md`.
+- After Milestone 10 acceptance, proceed to Milestone 11 operational hardening, then Milestone 12 live validation and tactical calibration.
 - Use feature-aligned milestones for implementation sequencing instead of assigning one-off micro-tasks.
 - Record completion evidence in `docs/gap/complete/` as gaps close.
 
@@ -60,8 +61,11 @@ AURA-Sense has a verified tactical viewport skeleton with separated telemetry la
 - `docs/roadmap/milestone-08-passive-telemetry-live-safe-readiness.md`
 - `docs/roadmap/milestone-09-scoped-threat-intel-and-clipboard-acquisition.md`
 - `docs/roadmap/milestone-10-integrated-tactical-viewport.md`
+- `docs/roadmap/milestone-11-operational-hardening-and-runtime-control.md`
+- `docs/roadmap/milestone-12-live-validation-and-tactical-calibration.md`
 - `docs/audits/audit-2026-05-22-threat-intel-and-clipboard-handover.md`
 - `docs/audits/audit-2026-05-22-post-threat-intel-combat-metrics-overseer-review.md`
+- `docs/audits/audit-2026-05-22-next-two-milestones-overseer-scope.md`
 - `docs/audits/audit-2026-05-22-post-passive-live-safe-next-runway.md`
 - `docs/audits/audit-2026-05-22-next-dev-runway-handover.md`
 - `docs/gap/complete/readiness-14-combat-witness-operational-loop.md`

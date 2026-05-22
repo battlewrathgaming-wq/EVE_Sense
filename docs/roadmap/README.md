@@ -17,6 +17,8 @@ Current entries:
 - `milestone-08-passive-telemetry-live-safe-readiness.md`
 - `milestone-09-scoped-threat-intel-and-clipboard-acquisition.md`
 - `milestone-10-integrated-tactical-viewport.md`
+- `milestone-11-operational-hardening-and-runtime-control.md`
+- `milestone-12-live-validation-and-tactical-calibration.md`
 - `passive-telemetry-live-readiness-interlock.md`
 - `architecture-needs-review-2026-05-22.md`
 - `development-artifact-trail.md`

@@ -1,7 +1,7 @@
 # Current State: AURA-Sense Implementation
 
 Date: 2026-05-22
-Status: Scoped Threat Intel and Clipboard Acquisition foundation complete; Milestone 10 integrated viewport runway active
+Status: Scoped Threat Intel and Clipboard Acquisition foundation complete; Milestone 10 integrated viewport runway active; Milestones 11 and 12 scoped
 
 ## What Exists
 
@@ -177,6 +177,7 @@ It writes artifacts under `.tmp\electron-visual-smoke` and is intentionally not 
 - no exact raw repair/healing fixtures yet; raw `combat.repair` parser support remains deferred
 - Combat Witness damage spike detection is lightweight and still needs real dataset calibration before strong HUD emphasis
 - Combat Witness repair balance is observed HPS minus DPS only; it is not survival, stability, or tank-state evidence
+- persistent runtime settings and live validation/calibration are now scoped as future milestones, not yet implemented
 - concept and research docs are AURA-Sense product doctrine or evidence notes; older audit records may still describe past cleanup work
 
 ## Related Documents
@@ -210,6 +211,7 @@ It writes artifacts under `.tmp\electron-visual-smoke` and is intentionally not 
 - `docs/audits/audit-2026-05-22-post-passive-live-safe-next-runway.md`
 - `docs/audits/audit-2026-05-22-threat-intel-and-clipboard-handover.md`
 - `docs/audits/audit-2026-05-22-post-threat-intel-combat-metrics-overseer-review.md`
+- `docs/audits/audit-2026-05-22-next-two-milestones-overseer-scope.md`
 - `docs/gap/to-do/aura-sense-tactical-readiness.md`
 - `docs/gap/to-do/readiness-09-local-type-metadata.md`
 - `docs/gap/to-do/combat-window-weapon-spike-followups.md`
@@ -218,6 +220,18 @@ It writes artifacts under `.tmp\electron-visual-smoke` and is intentionally not 
 - `docs/gap/to-do/integrated-viewport-request-pulse-and-degraded-state.md`
 - `docs/gap/to-do/integrated-viewport-combat-metric-copy-guardrails.md`
 - `docs/gap/to-do/integrated-viewport-smoke-and-boundary-verification.md`
+- `docs/gap/to-do/runtime-settings-persistence.md`
+- `docs/gap/to-do/runtime-live-io-control-policy.md`
+- `docs/gap/to-do/runtime-diagnostics-review-surface.md`
+- `docs/gap/to-do/runtime-startup-and-session-recovery.md`
+- `docs/gap/to-do/runtime-smoke-policy-and-failure-records.md`
+- `docs/gap/to-do/atlas-handoff-decision-boundary.md`
+- `docs/gap/to-do/live-operator-smoke-playbook.md`
+- `docs/gap/to-do/live-api-smoke-evidence.md`
+- `docs/gap/to-do/combat-metric-calibration-real-datasets.md`
+- `docs/gap/to-do/repair-healing-raw-fixture-intake.md`
+- `docs/gap/to-do/local-metadata-consumer-hardening.md`
+- `docs/gap/to-do/live-findings-audit-and-doctrine-update.md`
 - `docs/gap/complete/threat-intel-scan-request-contract.md`
 - `docs/gap/complete/threat-intel-target-resolution-boundary.md`
 - `docs/gap/complete/threat-intel-zkill-scoped-probe.md`
@@ -256,5 +270,7 @@ It writes artifacts under `.tmp\electron-visual-smoke` and is intentionally not 
 - `docs/roadmap/milestone-08-passive-telemetry-live-safe-readiness.md`
 - `docs/roadmap/milestone-09-scoped-threat-intel-and-clipboard-acquisition.md`
 - `docs/roadmap/milestone-10-integrated-tactical-viewport.md`
+- `docs/roadmap/milestone-11-operational-hardening-and-runtime-control.md`
+- `docs/roadmap/milestone-12-live-validation-and-tactical-calibration.md`
 - `docs/roadmap/passive-telemetry-live-readiness-interlock.md`
 - `docs/roadmap/development-artifact-trail.md`

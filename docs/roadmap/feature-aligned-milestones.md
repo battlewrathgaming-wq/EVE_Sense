@@ -307,7 +307,9 @@ Acceptance gate:
 
 The viewport shows Combat Witness, Passive Telemetry, and Threat Intel as separate tactical lanes with clear freshness and no false certainty.
 
-### Milestone 11: Operational Hardening And Handoff Boundaries
+### Milestone 11: Operational Hardening And Runtime Control
+
+Status: Planned - Next After Milestone 10 Acceptance in `docs/roadmap/milestone-11-operational-hardening-and-runtime-control.md`.
 
 Feature anchors:
 
@@ -318,16 +320,16 @@ Feature anchors:
 
 Operational outcome:
 
-AURA-Sense becomes stable enough for longer operator sessions while keeping Atlas handoff explicit and deferred unless justified.
+AURA-Sense becomes stable enough for longer operator sessions with recoverable settings, visible live IO policy, explicit startup/degraded state, and quiet diagnostics review.
 
 Task chain:
 
-1. Harden settings persistence and recovery.
-2. Add operator-facing degraded-state review.
-3. Decide CI policy for smoke commands.
-4. Audit API/network behavior under failure.
-5. Define Atlas handoff ADR only if a concrete user workflow exists.
-6. Add failure records for reusable bug classes.
+1. Persist and validate runtime settings.
+2. Add operator-visible live IO control policy.
+3. Add a compact diagnostics review surface.
+4. Harden startup and session recovery states.
+5. Define smoke command policy and failure records.
+6. Decide Atlas handoff boundary by ADR only if a concrete workflow exists.
 7. Update current-state and handover.
 
 Autonomy envelope:
@@ -337,6 +339,43 @@ Dev may harden runtime control, diagnostics, smoke policy, and documentation. At
 Acceptance gate:
 
 AURA-Sense can run longer sessions with visible degraded states, recoverable settings, scoped network behavior, and no accidental Atlas import.
+
+### Milestone 12: Live Validation And Tactical Calibration
+
+Status: Planned - After Milestone 11 in `docs/roadmap/milestone-12-live-validation-and-tactical-calibration.md`.
+
+Feature anchors:
+
+- Element 2: Combat Witness
+- Element 3: Passive Telemetry
+- Element 4: Threat Intel
+- Element 6: Diagnostics And Degraded State
+- Element 8: Local Metadata
+- Element 9: External API Boundary
+- Support Feature: Combat Logging Test Suite
+
+Operational outcome:
+
+AURA-Sense has recorded live/manual smoke evidence, calibrated Combat Witness metric language, and promoted only proven real-data behavior into product claims.
+
+Task chain:
+
+1. Define and run a live operator smoke playbook.
+2. Record explicit live API smoke evidence through opt-in gates.
+3. Calibrate Combat Witness weapon/spike/repair metrics against real datasets.
+4. Intake exact raw repair/healing fixtures before parser expansion.
+5. Harden local metadata only for active consumers.
+6. Record live findings, update doctrine, and retire stale gaps.
+
+Autonomy envelope:
+
+Dev may add live smoke playbooks, explicit opt-in smoke harnesses, curated fixtures, calibration tests, compact metadata adapters for active consumers, audits, failures, and state records.
+
+Dev may not broaden collection, run live APIs in `verify:all`, add ESI killmail expansion by default, persist history, or import Atlas behavior.
+
+Acceptance gate:
+
+AURA-Sense has live/manual evidence and calibration decisions recorded without weakening offline verification or expanding product scope.
 
 ## Dev Instruction Rule
 
