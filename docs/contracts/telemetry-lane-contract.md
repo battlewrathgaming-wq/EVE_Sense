@@ -19,6 +19,7 @@ Examples:
 - gate-jump/current-system changes
 - scoped zKillmail system context
 - freshness/cache state
+- unavailable/degraded state when system ID resolution or fetch fails
 
 ### Threat Intel
 
@@ -53,6 +54,7 @@ Examples:
 - Threat Intel must not present zKillmail results as complete tactical truth.
 - ESI expansion is deferred by default.
 - Each lane should expose its own freshness/staleness state.
+- Passive Telemetry must consume backend snapshots, not renderer log events.
 
 ## Must Not Do
 

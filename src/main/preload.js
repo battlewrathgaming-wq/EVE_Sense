@@ -31,3 +31,19 @@ contextBridge.exposeInMainWorld('auraCombatWitness', {
     };
   }
 });
+
+contextBridge.exposeInMainWorld('auraPassiveTelemetry', {
+  getSnapshot: () => ipcRenderer.invoke('aura:passive-telemetry:get-snapshot'),
+  subscribeSnapshots: (callback) => {
+    if (typeof callback !== 'function') {
+      throw new Error('Passive Telemetry snapshot callback must be a function');
+    }
+    const listener = (_event, snapshot) => callback(snapshot);
+    ipcRenderer.on('aura:passive-telemetry:snapshot', listener);
+    ipcRenderer.invoke('aura:passive-telemetry:subscribe');
+    return () => {
+      ipcRenderer.removeListener('aura:passive-telemetry:snapshot', listener);
+      ipcRenderer.invoke('aura:passive-telemetry:unsubscribe');
+    };
+  }
+});

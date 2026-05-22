@@ -4,13 +4,23 @@ const { app, BrowserWindow, ipcMain } = require('electron');
 const { APP_NAME } = require('../constants');
 const { createCombatWitnessBridge } = require('../combat/combatWitnessBridge');
 const { createCombatWitnessRuntime, decorateSnapshot } = require('../combat/combatWitnessRuntime');
+const { createPassiveTelemetryBridge } = require('../passive/passiveTelemetryBridge');
+const { createPassiveTelemetryService } = require('../passive/passiveTelemetryService');
 const { createDefaultRegistry, registerElectronServiceHandlers } = require('../services/serviceRegistry');
 const { TASK_CLASSIFICATIONS } = require('../services/taskRunner');
 const { registerRuntimeErrorHandlers } = require('./runtimeErrorHandling');
 const { createFrameWindow, registerFrameWindowHandlers } = require('../modules/Frame');
 
 const registry = createDefaultRegistry();
+const passiveTelemetryService = createPassiveTelemetryService({
+  trace: traceRuntimeDiagnostic
+});
 const combatWitnessRuntime = createCombatWitnessRuntime({
+  observers: [(event) => {
+    passiveTelemetryService.observeEvent(event).catch((error) => {
+      traceRuntimeDiagnostic('passive_observer_error', { message: error.message });
+    });
+  }],
   trace: traceRuntimeDiagnostic
 });
 const combatWitnessBridge = createCombatWitnessBridge({
@@ -18,9 +28,13 @@ const combatWitnessBridge = createCombatWitnessBridge({
   snapshotProvider: combatWitnessRuntime.snapshot,
   snapshotDecorator: (snapshot) => decorateSnapshot(snapshot, combatWitnessRuntime.status())
 });
+const passiveTelemetryBridge = createPassiveTelemetryBridge({
+  service: passiveTelemetryService
+});
 let mainWindow = null;
 
 registerCombatWitnessRuntimeCommands(registry, combatWitnessRuntime);
+registerPassiveTelemetryCommands(registry, passiveTelemetryService);
 
 function createWindow() {
   const window = createFrameWindow(app, {
@@ -47,6 +61,7 @@ app.whenReady().then(() => {
   registerElectronServiceHandlers(ipcMain, registry, () => ({ appName: APP_NAME }));
   registerFrameWindowHandlers(ipcMain, app, () => mainWindow);
   combatWitnessBridge.register(ipcMain);
+  passiveTelemetryBridge.register(ipcMain);
   createWindow();
 
   app.on('activate', () => {
@@ -83,6 +98,20 @@ function registerCombatWitnessRuntimeCommands(serviceRegistry, runtime) {
       classification: TASK_CLASSIFICATIONS.LOCAL_MUTATION,
       description: 'Stop Combat Witness watcher',
       handler: () => runtime.stop()
+    });
+}
+
+function registerPassiveTelemetryCommands(serviceRegistry, service) {
+  serviceRegistry
+    .register('passive.telemetry.snapshot', {
+      classification: TASK_CLASSIFICATIONS.READ_ONLY,
+      description: 'Return Passive Telemetry current-system context snapshot',
+      handler: () => service.snapshot()
+    })
+    .register('passive.telemetry.refresh', {
+      classification: TASK_CLASSIFICATIONS.EXTERNAL_IO,
+      description: 'Refresh Passive Telemetry current-system context through backend clients',
+      handler: (_payload = {}, context = {}) => service.refresh({ signal: context.signal })
     });
 }
 
@@ -154,6 +183,7 @@ async function runVisualSmoke(window, outputDir) {
   assertSmoke(checks.hasFreshnessText, 'renderer should show freshness/status text');
   assertSmoke(checks.hasEventList, 'renderer should contain event list surface');
   assertSmoke(checks.hasWatcherControls, 'renderer should contain Combat Witness watcher controls');
+  assertSmoke(checks.hasPassiveSurface, 'renderer should contain Passive Telemetry surface');
   assertSmoke(checks.noParserRuntimeExposure, 'renderer should not expose parser/runtime modules');
 
   const image = await window.webContents.capturePage();
@@ -203,6 +233,7 @@ function smokeChecks(window) {
       hasFreshnessText: ['Recent', 'Stale', 'Empty', 'Unavailable', 'Degraded', 'Witnessed'].includes(document.querySelector('#combat-signal')?.textContent || ''),
       hasEventList: Boolean(document.querySelector('#event-list')),
       hasWatcherControls: Boolean(document.querySelector('#watcher-controls') && document.querySelector('#gamelog-folder')),
+      hasPassiveSurface: Boolean(document.querySelector('.passive-surface') && document.querySelector('#passive-system')),
       noParserRuntimeExposure: (
         typeof window.CombatWitnessService === 'undefined' &&
         typeof window.EveCombatLogParser === 'undefined' &&
@@ -210,6 +241,7 @@ function smokeChecks(window) {
       ),
       signalText: document.querySelector('#combat-signal')?.textContent || null,
       watcherText: document.querySelector('#watcher-state')?.textContent || null,
+      passiveText: document.querySelector('#passive-state')?.textContent || null,
       summaryText: document.querySelector('#combat-summary')?.textContent || null,
       eventListText: document.querySelector('#event-list')?.textContent || null
     });

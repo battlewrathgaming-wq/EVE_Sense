@@ -63,6 +63,27 @@
         </form>
         <ul id="event-list" class="event-list"></ul>
       </section>
+      <section class="passive-surface" aria-labelledby="passive-title">
+        <div class="section-title">
+          <h2 id="passive-title">Passive Telemetry</h2>
+          <span id="passive-state">Unavailable</span>
+        </div>
+        <dl class="passive-grid">
+          <div>
+            <dt>Current system</dt>
+            <dd id="passive-system">Unobserved</dd>
+          </div>
+          <div>
+            <dt>zKill sample</dt>
+            <dd id="passive-sample">0</dd>
+          </div>
+          <div>
+            <dt>Freshness</dt>
+            <dd id="passive-freshness">Unavailable</dd>
+          </div>
+        </dl>
+        <p id="passive-message">Waiting for a future observed system change.</p>
+      </section>
     </main>
     <script src="./app.js"></script>
   </body>

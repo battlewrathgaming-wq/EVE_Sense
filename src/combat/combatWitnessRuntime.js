@@ -5,6 +5,7 @@ const { validateLogPathForWatcher } = require('../services/ipcPayloadValidation'
 function createCombatWitnessRuntime({
   service = new CombatWitnessService(),
   watcher = null,
+  observers = [],
   now = () => new Date().toISOString(),
   trace = () => {}
 } = {}) {
@@ -14,6 +15,7 @@ function createCombatWitnessRuntime({
 
   const runtime = {
     configuredPath: null,
+    observers: new Set(observers.filter((observer) => typeof observer === 'function')),
     watcherStatus: {
       state: 'unavailable',
       path: null,
@@ -27,6 +29,7 @@ function createCombatWitnessRuntime({
     watcherStrategy: 'auto',
     onEvent: (event) => {
       service.addEvent(event);
+      notifyObservers(event);
     },
     onStatus: (status) => {
       runtime.watcherStatus = normalizeWatcherStatus(status, now());
@@ -113,6 +116,28 @@ function createCombatWitnessRuntime({
     return decorateSnapshot(service.snapshot(), status());
   }
 
+  function subscribeEvents(observer) {
+    if (typeof observer !== 'function') {
+      throw new Error('Combat Witness runtime observer must be a function');
+    }
+    runtime.observers.add(observer);
+    return () => runtime.observers.delete(observer);
+  }
+
+  function notifyObservers(event) {
+    for (const observer of runtime.observers) {
+      try {
+        observer(event);
+      } catch (error) {
+        trace('combat_runtime_observer_error', {
+          eventId: event?.id || null,
+          kind: event?.kind || null,
+          message: error.message
+        });
+      }
+    }
+  }
+
   return {
     configure,
     service,
@@ -120,6 +145,7 @@ function createCombatWitnessRuntime({
     start,
     status,
     stop,
+    subscribeEvents,
     watcher: activeWatcher
   };
 }

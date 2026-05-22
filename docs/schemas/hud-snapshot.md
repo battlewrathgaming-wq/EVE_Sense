@@ -49,3 +49,34 @@ Current freshness statuses:
 - `recent`: latest backend reference time is within 15 seconds
 - `stale`: latest backend reference time is older than 15 seconds
 
+## Passive Telemetry Section
+
+Current backend shape:
+
+- `kind: passive.telemetry.snapshot`
+- `observedAt`
+- `currentSystem.label`
+- `currentSystem.systemId`
+- `currentSystem.eventTime`
+- `currentSystem.observedAt`
+- `zkill.systemId`
+- `zkill.fetchedAt`
+- `zkill.sampleCount`
+- `zkill.capped`
+- `zkill.partial`
+- `zkill.failureCount`
+- `freshness.status`
+- `freshness.cacheAgeMs`
+- `freshness.freshnessMs`
+- `status`
+- `message`
+- `failure`
+
+Current passive statuses:
+
+- `unavailable`: no current system has been observed
+- `fresh`: current-system context is within freshness window
+- `stale`: current-system context exists but freshness expired
+- `partial`: context was fetched with malformed or incomplete refs
+- `degraded`: system ID resolution or context fetch failed
+

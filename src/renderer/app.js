@@ -2,7 +2,8 @@ const state = {
   frame: {
     alwaysOnTop: false
   },
-  unsubscribeCombatWitness: null
+  unsubscribeCombatWitness: null,
+  unsubscribePassiveTelemetry: null
 };
 
 async function boot() {
@@ -10,6 +11,7 @@ async function boot() {
   await bootRuntimeHealth();
   await bootWatcherControls();
   await bootCombatWitness();
+  await bootPassiveTelemetry();
 }
 
 async function bootRuntimeHealth() {
@@ -26,6 +28,15 @@ async function bootCombatWitness() {
   const snapshot = await window.auraCombatWitness.getSnapshot();
   renderCombatWitness(snapshot);
   state.unsubscribeCombatWitness = window.auraCombatWitness.subscribeSnapshots(renderCombatWitness);
+}
+
+async function bootPassiveTelemetry() {
+  if (!window.auraPassiveTelemetry) {
+    renderPassiveTelemetry(null);
+    return;
+  }
+  renderPassiveTelemetry(await window.auraPassiveTelemetry.getSnapshot());
+  state.unsubscribePassiveTelemetry = window.auraPassiveTelemetry.subscribeSnapshots(renderPassiveTelemetry);
 }
 
 async function bootWatcherControls() {
@@ -45,6 +56,7 @@ async function bootFrame() {
   document.querySelector('#minimize-window').addEventListener('click', () => window.auraWindow.minimize());
   document.querySelector('#close-window').addEventListener('click', () => {
     state.unsubscribeCombatWitness?.();
+    state.unsubscribePassiveTelemetry?.();
     window.auraWindow.close();
   });
 }
@@ -92,6 +104,15 @@ function renderUnavailableCombatWitness() {
   document.querySelector('#repair-15s').textContent = '0';
   document.querySelector('#event-count').textContent = '0';
   renderEventList([], 'unavailable');
+}
+
+function renderPassiveTelemetry(snapshot) {
+  const status = snapshot?.status || 'unavailable';
+  document.querySelector('#passive-state').textContent = passiveStateLabel(status);
+  document.querySelector('#passive-system').textContent = snapshot?.currentSystem?.label || 'Unobserved';
+  document.querySelector('#passive-sample').textContent = formatNumber(snapshot?.zkill?.sampleCount);
+  document.querySelector('#passive-freshness').textContent = passiveStateLabel(snapshot?.freshness?.status || status);
+  document.querySelector('#passive-message').textContent = passiveMessage(snapshot);
 }
 
 async function startWatcher(event) {
@@ -220,6 +241,32 @@ function watcherLabel(status) {
     return 'Degraded';
   }
   return 'Unavailable';
+}
+
+function passiveStateLabel(status) {
+  if (status === 'fresh') {
+    return 'Fresh';
+  }
+  if (status === 'partial') {
+    return 'Partial';
+  }
+  if (status === 'stale') {
+    return 'Stale';
+  }
+  if (status === 'degraded') {
+    return 'Degraded';
+  }
+  return 'Unavailable';
+}
+
+function passiveMessage(snapshot) {
+  if (!snapshot) {
+    return 'Passive Telemetry bridge unavailable.';
+  }
+  if (snapshot.status === 'fresh' || snapshot.status === 'partial') {
+    return snapshot.zkill?.capped ? 'Scoped zKill context is capped.' : 'Scoped zKill context refreshed.';
+  }
+  return snapshot.message || 'Waiting for a future observed system change.';
 }
 
 function eventLabel(event) {

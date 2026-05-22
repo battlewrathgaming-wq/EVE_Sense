@@ -74,7 +74,7 @@ AURA-Sense can point at a valid gamelog folder, start or reflect watcher status,
 
 ### Milestone 06: Passive Telemetry Foundation
 
-Status: Active in `docs/gap/to-do/readiness-15-passive-telemetry-foundation.md`.
+Status: Complete in `docs/gap/complete/readiness-15-passive-telemetry-foundation.md`.
 
 Feature anchors:
 

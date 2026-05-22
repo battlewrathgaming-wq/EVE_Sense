@@ -1,7 +1,7 @@
 # Current State: AURA-Sense Implementation
 
 Date: 2026-05-22
-Status: Combat Witness operational loop
+Status: Passive Telemetry foundation
 
 ## What Exists
 
@@ -41,6 +41,10 @@ The current implementation includes:
 - session-scoped Combat Witness gamelog path control
 - backend-owned Combat Witness watcher lifecycle
 - Combat Witness HUD watcher unavailable/degraded/watching status
+- Passive Telemetry backend snapshot lane
+- backend zKill system-context normalization boundary
+- Passive Telemetry preload bridge and compact HUD panel
+- normalized gamelog event fan-out from the existing backend watcher path
 
 ## What Does Not Yet Exist
 
@@ -48,7 +52,6 @@ AURA-Sense has not yet completed the full tactical viewport scope.
 
 Not yet proven in this codebase:
 
-- Passive Telemetry lane
 - Threat Intel scan lane
 - zKill-backed search and optional ESI expansion pipeline
 - exact raw repair/healing parser coverage
@@ -58,7 +61,8 @@ Not yet proven in this codebase:
 - persistent product settings for gamelog folder
 - native folder picker for gamelog folder
 - live EVE gamelog operational smoke against an operator machine
-- Milestone 06 Passive Telemetry foundation
+- local metadata-backed system ID resolver
+- live zKill smoke command
 
 ## Intended Runtime Flow
 
@@ -89,7 +93,8 @@ renderer UI
 ```txt
 EVE location/log observation
 -> backend normalization
--> low-frequency system stats lookup
+-> current-system Passive Telemetry snapshot
+-> scoped zKillmail system context where system ID is resolved
 -> passive snapshot
 -> renderer panel
 ```
@@ -123,7 +128,7 @@ Available command:
 npm run verify:all
 ```
 
-This verifies the current utilities, service rigging, Combat Witness parser/watcher/runtime foundations, Combat Witness first-light surface, renderer shell, and renderer boundary static checks. It does not verify full tactical viewport readiness.
+This verifies the current utilities, service rigging, Combat Witness parser/watcher/runtime foundations, Passive Telemetry foundation, renderer shell, and renderer boundary static checks. It does not verify full tactical viewport readiness.
 
 Runtime visual smoke is implemented as a separate environment-sensitive command:
 
@@ -136,11 +141,13 @@ It writes artifacts under `.tmp\electron-visual-smoke` and is intentionally not 
 ## Known Gaps
 
 - some inherited seed service names remain below the visible product surface
-- no product-facing settings, Passive Telemetry, or Threat Intel runtime services yet
+- no product-facing settings or Threat Intel runtime services yet
 - no renderer diagnostics transport or diagnostics UI yet
 - no active scan service wired to the prepared validator yet
 - no persistent settings save/restart service yet
 - no native folder picker yet
+- no local metadata-backed system ID resolver yet
+- no live zKill smoke command yet
 - no exact raw repair/healing fixtures yet
 - concept and research docs are AURA-Sense product doctrine or evidence notes; older audit records may still describe past cleanup work
 
@@ -164,8 +171,9 @@ It writes artifacts under `.tmp\electron-visual-smoke` and is intentionally not 
 - `docs/audits/audit-2026-05-22-electron-visual-smoke-handover.md`
 - `docs/audits/audit-2026-05-22-combat-witness-operational-loop-handover.md`
 - `docs/audits/audit-2026-05-22-architecture-and-passive-telemetry-handover.md`
+- `docs/audits/audit-2026-05-22-passive-telemetry-foundation-handover.md`
 - `docs/gap/to-do/aura-sense-tactical-readiness.md`
-- `docs/gap/to-do/readiness-15-passive-telemetry-foundation.md`
+- `docs/gap/complete/readiness-15-passive-telemetry-foundation.md`
 - `docs/gap/complete/readiness-14-combat-witness-operational-loop.md`
 - `docs/gap/complete/readiness-13-electron-visual-smoke.md`
 - `docs/features/vision.md`

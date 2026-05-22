@@ -11,6 +11,7 @@ const checks = [
   ['verify:gamelog-watcher', ['node', 'scripts/verify-gamelog-watcher.js']],
   ['verify:services', ['node', 'scripts/verify-services.js']],
   ['verify:http', ['node', 'scripts/verify-http-client.js']],
+  ['verify:passive-telemetry', ['node', 'scripts/verify-passive-telemetry.js']],
   ['verify:frame', ['node', 'scripts/verify-frame-module.js']],
   ['verify:renderer-boundary', ['node', 'scripts/verify-renderer-boundary.js']],
   ['verify:renderer-shell', ['node', 'scripts/verify-renderer-shell.js']]

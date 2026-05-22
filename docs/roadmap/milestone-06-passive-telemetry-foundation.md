@@ -1,6 +1,6 @@
 # Milestone 06: Passive Telemetry Foundation
 
-Status: Active
+Status: Complete
 Date: 2026-05-22
 Owner: Overseer direction, Dev execution
 
@@ -20,6 +20,14 @@ Feature anchors:
 ## Operational Outcome
 
 AURA-Sense can detect current-system changes from backend-owned log observation, produce a Passive Telemetry snapshot with zKillmail-backed system context, and present it in the HUD with freshness and uncertainty language.
+
+## Completion Verdict
+
+Milestone 06 is complete with caveats.
+
+Passive Telemetry now consumes navigation events from the existing backend gamelog observation path, normalizes bounded zKill system-context metadata behind a backend boundary, exposes a passive snapshot bridge, and presents a separate HUD panel with unavailable/fresh/stale/partial/degraded language.
+
+Live zKill smoke, local metadata-backed system ID resolution, Threat Intel search, Clipboard Acquisition, and ESI expansion remain deferred.
 
 ## Task Chain
 
@@ -51,11 +59,15 @@ EVE gamelog watcher
 - Preserve Combat Witness behavior and verification.
 - Keep renderer consumption snapshot-only.
 
+Status: Complete.
+
 ### Task 2: Passive Snapshot Contract
 
 - Define the Passive Telemetry snapshot shape before renderer implementation.
 - Include current system, source event time, fetched time, freshness, sample count, capped/partial/failure metadata, and unavailable/degraded message.
 - Add or update schema/contract docs if the shape becomes stable.
+
+Status: Complete.
 
 ### Task 3: zKill System Context Boundary
 
@@ -65,6 +77,8 @@ EVE gamelog watcher
 - Normalize responses into bounded context metadata.
 - Do not add ESI expansion.
 
+Status: Complete.
+
 ### Task 4: Freshness And Cache Policy
 
 - Trigger fetches on current-system change or explicit freshness expiry.
@@ -72,12 +86,16 @@ EVE gamelog watcher
 - Expose cache/freshness state in the snapshot.
 - Treat fetch errors as unavailable/degraded, not empty truth.
 
+Status: Complete.
+
 ### Task 5: HUD Integration
 
 - Add a compact Passive Telemetry panel.
 - Keep it visually secondary to Combat Witness.
 - Use context language, not threat certainty.
 - Keep Passive Telemetry separate from Threat Intel search state.
+
+Status: Complete.
 
 ### Task 6: Verification And Smoke
 
@@ -87,11 +105,15 @@ EVE gamelog watcher
 - Extend `npm.cmd run smoke:electron` for passive unavailable/ready states where possible.
 - Keep live zKill smoke separate if performed.
 
+Status: Complete.
+
 ### Task 7: State And Handover
 
 - Update current-state.
 - Move `docs/gap/to-do/readiness-15-passive-telemetry-foundation.md` to complete when accepted.
 - Record verification output, smoke evidence, and explicit deferrals.
+
+Status: Complete.
 
 ## Autonomy Envelope
 
