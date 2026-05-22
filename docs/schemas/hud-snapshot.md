@@ -34,6 +34,20 @@ Current backend shape:
 - `windows.5s`
 - `windows.15s`
 - `windows.30s`
+- window `damage.incoming/outgoing.total`
+- window `damage.incoming/outgoing.perSecond`
+- window `damage.incoming/outgoing.hitQualityCounts`
+- window `damage.incoming/outgoing.damageTypeCounts`
+- window `damage.incoming.sourceCounts`
+- window `damage.outgoing.targetCounts`
+- window `repair.incoming/outgoing.total`
+- window `repair.incoming/outgoing.perSecond`
+- window `repair.incoming.sourceCounts`
+- window `balance.takenDps`
+- window `balance.dealtDps`
+- window `balance.repairReceivedHps`
+- window `balance.repairAppliedHps`
+- window `balance.receivedRepairMinusDamagePerSecond`
 - bounded `eventStream`
 - `freshness.latestEventTime`
 - `freshness.latestObservedAt`
@@ -42,6 +56,8 @@ Current backend shape:
 - `freshness.eventStreamCount`
 
 Renderer code should present this snapshot shape rather than recomputing rolling combat metrics.
+
+Repair balance is observed incoming repair throughput minus observed incoming damage throughput. It is not a HP, survival, or tank-state verdict.
 
 Current freshness statuses:
 

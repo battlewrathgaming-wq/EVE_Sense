@@ -43,7 +43,7 @@ function normalizeRow(row, rowNumber) {
   }
 
   const raw = String(row.raw);
-  const actualHash = sha256(raw.trim());
+  const actualHash = sha256(raw);
   if (actualHash !== row.rawLineHash) {
     throw new Error(`Curated row ${rowNumber} hash drift for ${row.name}: expected ${row.rawLineHash}, got ${actualHash}`);
   }
@@ -110,11 +110,26 @@ function sha256(value) {
 function main(argv = process.argv.slice(2)) {
   const source = option(argv, '--source') || path.join(__dirname, '..', 'fixtures', 'combat-log-curated-source.jsonl');
   const out = option(argv, '--out');
+  verifyExactRawHashing();
   const rows = buildFixtureRows(readCuratedRows(source));
   if (out) {
     fs.writeFileSync(out, `${JSON.stringify({ rows }, null, 2)}\n`);
   }
   console.log(`combat fixture ingestion verified: ${rows.length} curated rows`);
+}
+
+function verifyExactRawHashing() {
+  const raw = '  [ 2026.05.22 01:01:01 ] (combat) Boundary whitespace matters  ';
+  const row = normalizeRow({
+    name: 'exact raw hashing self-test',
+    raw,
+    rawLineHash: sha256(raw),
+    proposedFamily: 'self-test.exact-raw',
+    expectedDisposition: 'rejected'
+  }, 0);
+  if (row.raw !== raw) {
+    throw new Error('Exact raw hashing self-test lost boundary whitespace');
+  }
 }
 
 function option(argv, name) {

@@ -11,27 +11,58 @@ const dataset = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'fixtures'
 const service = new CombatWitnessService({ now: () => Date.parse(dataset.golden.snapshotAt) });
 
 for (const item of dataset.events) {
-  const row = byHash.get(item.rawLineHash);
-  const event = parseEveLogLine(row.raw, {
-    observedAt: new Date(Date.parse('2026-05-22T00:00:00.000Z') + item.at).toISOString()
-  });
-  service.addEvent(event);
+  const event = materializeDatasetEvent(item);
+  if (event) {
+    service.addEvent(event);
+  }
 }
 
 const snapshot = service.snapshot(Date.parse(dataset.golden.snapshotAt));
 for (const [windowName, expected] of Object.entries(dataset.golden.windows)) {
   const actual = snapshot.windows[windowName];
   assert.ok(actual, `${windowName} snapshot should exist`);
-  assert.strictEqual(actual.eventCount, expected.eventCount, `${windowName} event count should match golden`);
-  assert.strictEqual(actual.damage.incoming.total, expected.damage.incoming.total, `${windowName} incoming total should match golden`);
-  assert.strictEqual(actual.damage.incoming.perSecond, expected.damage.incoming.perSecond, `${windowName} incoming DPS should match golden`);
-  assert.deepStrictEqual(actual.damage.incoming.topSource, expected.damage.incoming.topSource, `${windowName} top source should match golden`);
-  assert.strictEqual(actual.damage.outgoing.total, expected.damage.outgoing.total, `${windowName} outgoing total should match golden`);
-  assert.strictEqual(actual.damage.outgoing.perSecond, expected.damage.outgoing.perSecond, `${windowName} outgoing DPS should match golden`);
-  assert.strictEqual(actual.balance.takenDps, expected.balance.takenDps, `${windowName} taken DPS should match golden`);
-  assert.strictEqual(actual.balance.dealtDps, expected.balance.dealtDps, `${windowName} dealt DPS should match golden`);
+  assertExpectedSubset(actual, expected, windowName);
 }
 assert.strictEqual(snapshot.eventStream.length, dataset.golden.eventStreamCount, 'golden event stream count should match');
 assert.strictEqual(snapshot.freshness.eventStreamCount, dataset.golden.eventStreamCount, 'golden freshness stream count should match');
 
 console.log(`combat golden snapshots verified: windows=${Object.keys(dataset.golden.windows).join(',')}`);
+
+function materializeDatasetEvent(item) {
+  if (item.kind === 'normalized') {
+    return {
+      observedAt: observedAtFor(item),
+      ...item.event
+    };
+  }
+
+  const row = byHash.get(item.rawLineHash);
+  assert.ok(row, `golden dataset row ${item.rawLineHash} should resolve to curated fixture`);
+  const event = parseEveLogLine(row.raw, { observedAt: observedAtFor(item) });
+  if (!event) {
+    return null;
+  }
+  return {
+    ...event,
+    id: item.id || event.id,
+    eventTime: item.eventTime || event.eventTime,
+    observedAt: observedAtFor(item)
+  };
+}
+
+function observedAtFor(item) {
+  const baseMs = Date.parse(dataset.baseObservedAt || '2026-05-22T00:00:00.000Z');
+  return new Date(baseMs + (item.at || 0)).toISOString();
+}
+
+function assertExpectedSubset(actual, expected, label) {
+  if (expected === null || typeof expected !== 'object' || Array.isArray(expected)) {
+    assert.deepStrictEqual(actual, expected, `${label} should match golden`);
+    return;
+  }
+
+  for (const [key, expectedValue] of Object.entries(expected)) {
+    assert.ok(Object.prototype.hasOwnProperty.call(actual, key), `${label}.${key} should exist`);
+    assertExpectedSubset(actual[key], expectedValue, `${label}.${key}`);
+  }
+}

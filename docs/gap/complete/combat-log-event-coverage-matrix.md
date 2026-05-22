@@ -7,6 +7,8 @@ Date: 2026-05-22
 
 A machine-readable event-family coverage matrix now separates supported, rejected, deferred, and unknown families.
 
+Verification now fails if a family is marked `supported` without at least one accepted exact raw fixture row backing that family.
+
 ## Evidence
 
 - `fixtures/combat-log-event-coverage.json`

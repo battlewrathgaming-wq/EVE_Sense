@@ -121,7 +121,10 @@ function compactWindowSnapshot(snapshot) {
       incoming: compactDamageSide(snapshot.damage.incoming),
       outgoing: compactDamageSide(snapshot.damage.outgoing)
     },
-    repair: snapshot.repair,
+    repair: {
+      incoming: compactRepairSide(snapshot.repair.incoming),
+      outgoing: compactRepairSide(snapshot.repair.outgoing)
+    },
     balance: snapshot.balance
   };
 }
@@ -130,12 +133,30 @@ function compactDamageSide(side) {
   return {
     total: side.total,
     perSecond: side.perSecond,
+    hitQualityCounts: side.hitQualityCounts || {},
+    damageTypeCounts: side.damageTypeCounts || {},
+    sourceCounts: side.sourceCounts || {},
+    targetCounts: side.targetCounts || {},
     uniqueSourceCount: side.uniqueSourceCount,
     uniqueTargetCount: side.uniqueTargetCount,
     topSource: side.topSource,
     topTarget: side.topTarget,
     mostCommonDamageType: side.mostCommonDamageType,
     mostCommonHitQuality: side.mostCommonHitQuality
+  };
+}
+
+function compactRepairSide(side) {
+  return {
+    total: side.total,
+    perSecond: side.perSecond,
+    eventCount: side.eventCount,
+    sourceCounts: side.sourceCounts || {},
+    targetCounts: side.targetCounts || {},
+    uniqueSourceCount: side.uniqueSourceCount,
+    uniqueTargetCount: side.uniqueTargetCount,
+    topSource: side.topSource,
+    topTarget: side.topTarget
   };
 }
 

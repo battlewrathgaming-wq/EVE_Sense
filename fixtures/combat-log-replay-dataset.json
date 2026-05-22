@@ -1,56 +1,273 @@
 {
   "name": "curated-combat-replay-basic",
-  "description": "Ordered offline replay dataset for Combat Witness parser/runtime semantics.",
+  "description": "Ordered offline replay dataset for Combat Witness parser/runtime semantics, rolling damage, repair balance, and watcher-path smoke coverage.",
+  "baseObservedAt": "2026-05-22T00:00:00.000Z",
   "events": [
     {
+      "kind": "raw",
+      "id": "replay-30s-incoming-damage",
       "at": 0,
+      "eventTime": "2021-11-02T18:23:35.000Z",
       "rawLineHash": "e373ae04d834bc363c8b8d7de82c38361fdeb2e45ec2441bd0208cc7b3535d99"
     },
     {
+      "kind": "raw",
+      "id": "replay-30s-outgoing-damage",
       "at": 1000,
+      "eventTime": "2021-11-02T18:23:40.000Z",
       "rawLineHash": "918d66d05af1a66670b2a8246985a2a3aa177a7e0e1e8e9da4c47fad644b4e81"
     },
     {
+      "kind": "raw",
+      "id": "replay-15s-incoming-damage",
       "at": 2000,
+      "eventTime": "2021-11-02T18:23:46.000Z",
+      "rawLineHash": "e373ae04d834bc363c8b8d7de82c38361fdeb2e45ec2441bd0208cc7b3535d99"
+    },
+    {
+      "kind": "raw",
+      "id": "replay-15s-outgoing-damage",
+      "at": 3000,
+      "eventTime": "2021-11-02T18:23:47.000Z",
+      "rawLineHash": "918d66d05af1a66670b2a8246985a2a3aa177a7e0e1e8e9da4c47fad644b4e81"
+    },
+    {
+      "kind": "normalized",
+      "at": 4000,
+      "event": {
+        "id": "replay-pirate-frigate-penetrates",
+        "kind": "combat.damage",
+        "eventTime": "2021-11-02T18:23:50.000Z",
+        "observedAt": "2026-05-22T00:00:04.000Z",
+        "channel": "combat",
+        "direction": "incoming",
+        "amount": 12,
+        "sourceLabel": "Pirate Frigate",
+        "targetLabel": "you",
+        "weaponLabel": "Light Missile",
+        "hitQuality": "Penetrates",
+        "damageType": "thermal",
+        "rawColor": "0xffcc0000",
+        "rawLineHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+    },
+    {
+      "kind": "normalized",
+      "at": 5000,
+      "event": {
+        "id": "replay-mining-drone-second-hit",
+        "kind": "combat.damage",
+        "eventTime": "2021-11-02T18:23:55.000Z",
+        "observedAt": "2026-05-22T00:00:05.000Z",
+        "channel": "combat",
+        "direction": "incoming",
+        "amount": 6,
+        "sourceLabel": "Mining Drone",
+        "targetLabel": "you",
+        "weaponLabel": null,
+        "hitQuality": "Hits",
+        "damageType": "thermal",
+        "rawColor": "0xffcc0000",
+        "rawLineHash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+      }
+    },
+    {
+      "kind": "normalized",
+      "at": 6000,
+      "event": {
+        "id": "replay-incoming-repair-1",
+        "kind": "combat.repair",
+        "eventTime": "2021-11-02T18:23:56.000Z",
+        "observedAt": "2026-05-22T00:00:06.000Z",
+        "channel": "combat",
+        "direction": "incoming",
+        "amount": 20,
+        "sourceLabel": "Logistics Wingmate",
+        "targetLabel": "you",
+        "repairType": "shield",
+        "rawLineHash": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+      }
+    },
+    {
+      "kind": "raw",
+      "id": "replay-incoming-miss",
+      "at": 7000,
+      "eventTime": "2021-11-02T18:23:57.000Z",
       "rawLineHash": "d24de854b837fa91abc34ebbdfa08ddc24f86f2d742e40e4d65ff83437d55bf8"
     },
     {
-      "at": 3000,
+      "kind": "normalized",
+      "at": 8000,
+      "event": {
+        "id": "replay-incoming-repair-2",
+        "kind": "combat.repair",
+        "eventTime": "2021-11-02T18:23:58.000Z",
+        "observedAt": "2026-05-22T00:00:08.000Z",
+        "channel": "combat",
+        "direction": "incoming",
+        "amount": 10,
+        "sourceLabel": "Logistics Wingmate",
+        "targetLabel": "you",
+        "repairType": "shield",
+        "rawLineHash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+      }
+    },
+    {
+      "kind": "raw",
+      "id": "replay-outgoing-miss",
+      "at": 9000,
+      "eventTime": "2021-11-02T18:23:59.000Z",
       "rawLineHash": "3305c323656b8b8b4c2df0b15bdc4275095933ce5cf1010cd6419836c79fa6f9"
     },
     {
-      "at": 4000,
+      "kind": "raw",
+      "id": "replay-navigation-jump",
+      "at": 10000,
+      "eventTime": "2021-11-02T18:24:00.000Z",
       "rawLineHash": "8ce0788db26e9bca06b355e5731ae7e6a4af6439ea8a49144bd5b9ed1f54c20f"
     }
   ],
+  "watcherReplay": {
+    "seedRawLineHash": "8ce0788db26e9bca06b355e5731ae7e6a4af6439ea8a49144bd5b9ed1f54c20f",
+    "appendRawLineHashes": [
+      "e373ae04d834bc363c8b8d7de82c38361fdeb2e45ec2441bd0208cc7b3535d99",
+      "918d66d05af1a66670b2a8246985a2a3aa177a7e0e1e8e9da4c47fad644b4e81",
+      "fcbdead63b5965daa77a99e94fd899b55e67f138cd174ce85c0704aeafae0d0e",
+      "d24de854b837fa91abc34ebbdfa08ddc24f86f2d742e40e4d65ff83437d55bf8"
+    ],
+    "parserErrorLine": "[ 2021.11.02 18:24:01 ] (combat) throw-parser"
+  },
   "golden": {
-    "snapshotAt": "2021-11-02T18:23:54.000Z",
+    "snapshotAt": "2021-11-02T18:24:00.000Z",
     "windows": {
       "5s": {
-        "eventCount": 1,
+        "eventCount": 3,
         "damage": {
-          "incoming": { "total": 3, "perSecond": 0.6, "topSource": { "label": "Mining Drone", "count": 1 } },
-          "outgoing": { "total": 0, "perSecond": 0 }
+          "incoming": {
+            "total": 6,
+            "perSecond": 1.2,
+            "hitQualityCounts": { "Hits": 1 },
+            "damageTypeCounts": { "thermal": 1 },
+            "sourceCounts": { "Mining Drone": 1 },
+            "uniqueSourceCount": 1,
+            "topSource": { "label": "Mining Drone", "count": 1 },
+            "mostCommonDamageType": { "label": "thermal", "count": 1 },
+            "mostCommonHitQuality": { "label": "Hits", "count": 1 }
+          },
+          "outgoing": {
+            "total": 0,
+            "perSecond": 0,
+            "targetCounts": {},
+            "uniqueTargetCount": 0,
+            "topTarget": null
+          }
         },
-        "balance": { "takenDps": 0.6, "dealtDps": 0 }
+        "repair": {
+          "incoming": {
+            "total": 30,
+            "perSecond": 6,
+            "eventCount": 2,
+            "sourceCounts": { "Logistics Wingmate": 2 },
+            "uniqueSourceCount": 1,
+            "topSource": { "label": "Logistics Wingmate", "count": 2 }
+          },
+          "outgoing": { "total": 0, "perSecond": 0, "eventCount": 0 }
+        },
+        "balance": {
+          "takenDps": 1.2,
+          "dealtDps": 0,
+          "repairReceivedHps": 6,
+          "repairAppliedHps": 0,
+          "receivedRepairMinusDamagePerSecond": 4.8
+        }
       },
       "15s": {
-        "eventCount": 1,
+        "eventCount": 6,
         "damage": {
-          "incoming": { "total": 3, "perSecond": 0.2, "topSource": { "label": "Mining Drone", "count": 1 } },
-          "outgoing": { "total": 0, "perSecond": 0 }
+          "incoming": {
+            "total": 21,
+            "perSecond": 1.4,
+            "hitQualityCounts": { "Hits": 2, "Penetrates": 1 },
+            "damageTypeCounts": { "thermal": 2 },
+            "sourceCounts": { "Mining Drone": 2, "Pirate Frigate": 1 },
+            "uniqueSourceCount": 2,
+            "topSource": { "label": "Mining Drone", "count": 2 },
+            "mostCommonDamageType": { "label": "thermal", "count": 2 },
+            "mostCommonHitQuality": { "label": "Hits", "count": 2 }
+          },
+          "outgoing": {
+            "total": 53,
+            "perSecond": 3.53,
+            "hitQualityCounts": { "Grazes": 1 },
+            "targetCounts": { "Locced": 1 },
+            "uniqueTargetCount": 1,
+            "topTarget": { "label": "Locced", "count": 1 },
+            "mostCommonHitQuality": { "label": "Grazes", "count": 1 }
+          }
         },
-        "balance": { "takenDps": 0.2, "dealtDps": 0 }
+        "repair": {
+          "incoming": {
+            "total": 30,
+            "perSecond": 2,
+            "eventCount": 2,
+            "sourceCounts": { "Logistics Wingmate": 2 },
+            "uniqueSourceCount": 1,
+            "topSource": { "label": "Logistics Wingmate", "count": 2 }
+          },
+          "outgoing": { "total": 0, "perSecond": 0, "eventCount": 0 }
+        },
+        "balance": {
+          "takenDps": 1.4,
+          "dealtDps": 3.53,
+          "repairReceivedHps": 2,
+          "repairAppliedHps": 0,
+          "receivedRepairMinusDamagePerSecond": 0.6
+        }
       },
       "30s": {
-        "eventCount": 1,
+        "eventCount": 8,
         "damage": {
-          "incoming": { "total": 3, "perSecond": 0.1, "topSource": { "label": "Mining Drone", "count": 1 } },
-          "outgoing": { "total": 0, "perSecond": 0 }
+          "incoming": {
+            "total": 24,
+            "perSecond": 0.8,
+            "hitQualityCounts": { "Hits": 3, "Penetrates": 1 },
+            "damageTypeCounts": { "thermal": 2 },
+            "sourceCounts": { "Mining Drone": 3, "Pirate Frigate": 1 },
+            "uniqueSourceCount": 2,
+            "topSource": { "label": "Mining Drone", "count": 3 },
+            "mostCommonDamageType": { "label": "thermal", "count": 2 },
+            "mostCommonHitQuality": { "label": "Hits", "count": 3 }
+          },
+          "outgoing": {
+            "total": 106,
+            "perSecond": 3.53,
+            "hitQualityCounts": { "Grazes": 2 },
+            "targetCounts": { "Locced": 2 },
+            "uniqueTargetCount": 1,
+            "topTarget": { "label": "Locced", "count": 2 },
+            "mostCommonHitQuality": { "label": "Grazes", "count": 2 }
+          }
         },
-        "balance": { "takenDps": 0.1, "dealtDps": 0 }
+        "repair": {
+          "incoming": {
+            "total": 30,
+            "perSecond": 1,
+            "eventCount": 2,
+            "sourceCounts": { "Logistics Wingmate": 2 },
+            "uniqueSourceCount": 1,
+            "topSource": { "label": "Logistics Wingmate", "count": 2 }
+          },
+          "outgoing": { "total": 0, "perSecond": 0, "eventCount": 0 }
+        },
+        "balance": {
+          "takenDps": 0.8,
+          "dealtDps": 3.53,
+          "repairReceivedHps": 1,
+          "repairAppliedHps": 0,
+          "receivedRepairMinusDamagePerSecond": 0.2
+        }
       }
     },
-    "eventStreamCount": 4
+    "eventStreamCount": 10
   }
 }

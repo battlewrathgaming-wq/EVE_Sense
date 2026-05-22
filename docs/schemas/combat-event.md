@@ -12,7 +12,7 @@ Represents one normalized combat-log observation.
 | Field | Meaning |
 | --- | --- |
 | `id` | Stable event identity |
-| `kind` | Event family such as `navigation.jump`, `combat.damage`, or `combat.miss` |
+| `kind` | Event family such as `navigation.jump`, `combat.damage`, `combat.miss`, or `combat.repair` |
 | `observedAt` | Time AURA-Sense observed or parsed the line |
 | `eventTime` | Timestamp from the EVE log envelope after strict validation |
 | `channel` | EVE log channel from the envelope |
@@ -47,6 +47,18 @@ Represents one normalized combat-log observation.
 | `targetLabel` | Observed target label; `you` for incoming misses |
 | `weaponLabel` | Observed weapon label when present |
 
+## Combat Repair Fields
+
+`combat.repair` is currently supported as a normalized backend event for rolling-window compute and golden replay. Raw repair/healing parser support remains deferred until exact EVE repair fixtures exist.
+
+| Field | Meaning |
+| --- | --- |
+| `direction` | `incoming` or `outgoing` from explicit normalized evidence |
+| `amount` | Numeric repair amount |
+| `sourceLabel` | Observed repair source label when present |
+| `targetLabel` | Observed repair target label; `you` for incoming repairs |
+| `repairType` | Observed repair type such as `shield`, `armor`, or `hull` when explicitly known |
+
 ## Invariants
 
 - This is observed telemetry, not authoritative combat truth.
@@ -54,6 +66,7 @@ Represents one normalized combat-log observation.
 - Events should expire from rolling windows.
 - Invalid or rolled-over EVE timestamps must be rejected.
 - `rawLineHash` is a diagnostic reference, not durable combat history.
+- Repair events are observed throughput only; they do not imply current HP, survival, or future repair cycles.
 
 ## Must Not Contain
 

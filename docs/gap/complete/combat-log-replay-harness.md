@@ -7,6 +7,11 @@ Date: 2026-05-22
 
 An offline replay harness can feed ordered curated lines through parser, partial-line assembly, duplicate suppression checks, Combat Witness runtime fan-out, and Combat Witness service snapshots.
 
+The harness now has two replay layers:
+
+- semantic replay for deterministic parser/runtime/service golden checks
+- watcher-path replay through `EveGamelogWatcher.handleFile` for temp-file append, offset seeding, partial-line buffering, rejection diagnostics, parser-error diagnostics, and duplicate suppression
+
 ## Evidence
 
 - `fixtures/combat-log-replay-dataset.json`
@@ -16,7 +21,7 @@ An offline replay harness can feed ordered curated lines through parser, partial
 ## Verification Signal
 
 ```txt
-combat log replay verified: events=5 stream=4
+combat log replay verified: events=11 stream=10 watcher=3
 ```
 
 ## Guardrails Preserved

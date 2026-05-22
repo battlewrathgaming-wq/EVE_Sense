@@ -1,6 +1,6 @@
 # Gap: Combat Log Replay And Repair Balance Next Scope
 
-Status: Open
+Status: Complete
 Priority: P1
 
 ## Need
@@ -171,6 +171,18 @@ Requirements:
 - Diagnostics verification covers the logger/debug behavior needed to inspect watcher replay without enabling noisy normal logs.
 - Documentation or fixture notes clearly state that raw repair parsing remains deferred until exact samples exist.
 - `npm.cmd run verify:all` passes.
+
+## Completion Notes
+
+Implemented in this slice:
+
+- replay dataset expanded beyond single-event pruning
+- semantic replay supports exact raw fixture rows plus explicit normalized repair events
+- watcher-path replay smoke uses temp-file append through `EveGamelogWatcher.handleFile`
+- golden snapshots assert 5s/15s/30s DPS, HPS, repair balance, source counts, and hit-quality counts
+- fixture ingestion hashes exact raw values without `trim()`
+- coverage verification fails supported families without accepted exact raw fixtures
+- Combat Witness snapshots expose bounded source/target counts and hit-quality/damage-type counts
 
 ## Related Files
 

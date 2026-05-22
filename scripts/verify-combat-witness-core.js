@@ -25,6 +25,7 @@ service.subscribeSnapshots(() => {
 service.addEvent(combatDamage('old-hit', '2026-05-22T00:59:50.000Z', 100));
 service.addEvent(combatDamage('hit-30s', '2026-05-22T01:00:11.000Z', 30));
 service.addEvent(combatDamage('hit-15s', '2026-05-22T01:00:21.000Z', 15));
+service.addEvent(combatRepair('repair-15s', '2026-05-22T01:00:24.000Z', 9));
 service.addEvent(combatDamage('hit-5s', '2026-05-22T01:00:26.000Z', 5));
 service.addEvent({
   id: 'miss-1',
@@ -42,6 +43,19 @@ assert.strictEqual(snapshot.freshness.eventStreamCount, 2, 'snapshot freshness s
 assert.strictEqual(snapshot.windows['5s'].damage.incoming.total, 5, '5s window should include only recent damage');
 assert.strictEqual(snapshot.windows['15s'].damage.incoming.total, 20, '15s window should include 15s and 5s damage');
 assert.strictEqual(snapshot.windows['30s'].damage.incoming.total, 50, '30s window should include 30s, 15s, and 5s damage');
+assert.strictEqual(snapshot.windows['15s'].repair.incoming.total, 9, '15s window should aggregate incoming repairs');
+assert.strictEqual(snapshot.windows['15s'].repair.incoming.perSecond, 0.6, '15s window should compute incoming HPS');
+assert.strictEqual(snapshot.windows['15s'].balance.receivedRepairMinusDamagePerSecond, -0.73, '15s repair balance should remain observed HPS minus DPS');
+assert.deepStrictEqual(
+  snapshot.windows['15s'].damage.incoming.sourceCounts,
+  { 'Mining Drone': 2 },
+  '15s window should expose incoming attacker counts'
+);
+assert.deepStrictEqual(
+  snapshot.windows['15s'].damage.incoming.hitQualityCounts,
+  { Hits: 2 },
+  '15s window should expose hit quality counts'
+);
 assert.strictEqual(snapshot.eventStream.length, 2, 'event stream should stay bounded separately from metrics');
 assert.deepStrictEqual(
   snapshot.eventStream.map((event) => event.id),
@@ -130,6 +144,18 @@ function combatDamage(id, eventTime, amount) {
     sourceLabel: 'Mining Drone',
     targetLabel: 'you',
     hitQuality: 'Hits',
+    eventTime
+  };
+}
+
+function combatRepair(id, eventTime, amount) {
+  return {
+    id,
+    kind: 'combat.repair',
+    direction: 'incoming',
+    amount,
+    sourceLabel: 'Logistics Wingmate',
+    targetLabel: 'you',
     eventTime
   };
 }

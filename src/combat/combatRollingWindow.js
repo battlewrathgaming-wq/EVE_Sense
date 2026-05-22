@@ -50,8 +50,22 @@ class CombatRollingWindow {
       }
     };
     const repair = {
-      incoming: { total: 0, perSecond: 0 },
-      outgoing: { total: 0, perSecond: 0 }
+      incoming: {
+        total: 0,
+        perSecond: 0,
+        eventCount: 0,
+        sourceCounts: {},
+        uniqueSourceCount: 0,
+        topSource: null
+      },
+      outgoing: {
+        total: 0,
+        perSecond: 0,
+        eventCount: 0,
+        targetCounts: {},
+        uniqueTargetCount: 0,
+        topTarget: null
+      }
     };
 
     for (const event of this.events) {
@@ -75,6 +89,13 @@ class CombatRollingWindow {
       }
       if (event.kind === 'combat.repair') {
         repair[direction].total += event.amount || 0;
+        repair[direction].eventCount += 1;
+        if (direction === 'incoming' && event.sourceLabel) {
+          repair.incoming.sourceCounts[event.sourceLabel] = (repair.incoming.sourceCounts[event.sourceLabel] || 0) + 1;
+        }
+        if (direction === 'outgoing' && event.targetLabel) {
+          repair.outgoing.targetCounts[event.targetLabel] = (repair.outgoing.targetCounts[event.targetLabel] || 0) + 1;
+        }
       }
     }
 
@@ -90,6 +111,10 @@ class CombatRollingWindow {
     damage.incoming.topSource = mostCommon(damage.incoming.sourceCounts);
     damage.outgoing.uniqueTargetCount = Object.keys(damage.outgoing.targetCounts).length;
     damage.outgoing.topTarget = mostCommon(damage.outgoing.targetCounts);
+    repair.incoming.uniqueSourceCount = Object.keys(repair.incoming.sourceCounts).length;
+    repair.incoming.topSource = mostCommon(repair.incoming.sourceCounts);
+    repair.outgoing.uniqueTargetCount = Object.keys(repair.outgoing.targetCounts).length;
+    repair.outgoing.topTarget = mostCommon(repair.outgoing.targetCounts);
 
     const balance = {
       takenDps: damage.incoming.perSecond,
