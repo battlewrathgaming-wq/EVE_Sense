@@ -114,6 +114,8 @@ Renderer remains presentation-only as the app grows.
 
 ## Priority 7: Combat Witness Core
 
+Status: Open - Partial. Parser, gamelog watcher, duplicate suppression, and a 15 second rolling metric primitive exist. Event fan-out, bounded runtime retention policy, 5s/15s/30s snapshots, and compact renderer snapshot emission remain open.
+
 ### Actionables
 
 - Add normalized combat event shape.
@@ -133,6 +135,8 @@ What has been observed in the last 5/15/30 seconds?
 without renderer owning the computation.
 
 ## Priority 8: Combat Parser Fixture Tests
+
+Status: Open - Partial. Deterministic parser and watcher verification exists, but malformed timestamp rollover, listener failure behavior, and broader raw sample coverage still need acceptance hardening.
 
 ### Actionables
 

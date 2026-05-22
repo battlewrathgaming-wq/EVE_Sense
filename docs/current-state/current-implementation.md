@@ -112,6 +112,8 @@ This verifies the current seed utilities, service rigging, Combat Witness parser
 - no formal Combat Witness event bus yet
 - no Combat Witness snapshot service yet
 - no exact raw repair/healing fixtures yet
+- combat parser timestamp validation still needs rollover hardening
+- rolling Combat Witness retention is currently enforced by snapshot/prune behavior, not by a runtime service cap
 - historical Aura 7 docs remain in `docs/Concept`, `docs/research`, and historical audit files for reference
 
 ## Related Documents
@@ -119,4 +121,5 @@ This verifies the current seed utilities, service rigging, Combat Witness parser
 - `docs/current-state/seed-current-state.md`
 - `docs/audits/audit-2026-05-22-aura7-scope-alignment.md`
 - `docs/audits/engineering_audit_contribution.md`
+- `docs/audits/audit-2026-05-22-combat-parser-overseer-review.md`
 - `docs/gap/to-do/aura-sense-rewrite-readiness.md`
