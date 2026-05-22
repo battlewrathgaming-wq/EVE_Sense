@@ -212,6 +212,10 @@ Acceptance goalpost:
 
 Important degraded states are surfaced through shared diagnostics policy while routine noise is throttled or suppressed.
 
+Runtime confidence goalpost:
+
+AURA-Sense can launch the real Electron shell in explicit smoke mode, capture first-light visual evidence, write a structured result file, and exit cleanly without live logs or network calls.
+
 ## Element 7: Settings And Runtime Control
 
 Goal:

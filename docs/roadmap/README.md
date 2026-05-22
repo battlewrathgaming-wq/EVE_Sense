@@ -9,6 +9,7 @@ Current entries:
 - `milestone-01-startup-rigging.md`
 - `milestone-02-runtime-observability.md`
 - `milestone-03-tactical-viewport-first-light.md`
+- `milestone-04-runtime-smoke-readiness.md`
 - `development-artifact-trail.md`
 - Combat Witness stabilization
 - renderer/backend service boundary
