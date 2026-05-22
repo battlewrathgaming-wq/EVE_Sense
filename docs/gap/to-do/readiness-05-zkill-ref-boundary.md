@@ -1,7 +1,7 @@
 # Gap To-Do: zKill Discovery Ref Boundary
 
 Date: 2026-05-22
-Status: Open - Deferred Until zKill Client Or Threat Intel Search Exists
+Status: Open - Active Under Milestone 09
 
 ## Actionables
 
@@ -17,7 +17,7 @@ Status: Open - Deferred Until zKill Client Or Threat Intel Search Exists
 
 Threat Intel should receive clean zKill-backed result metadata, not raw unbounded zKill summary payloads.
 
-This packet should not be implemented against placeholder services. Start it when an AURA-Sense zKill client or Threat Intel search service boundary exists.
+This packet is now active under Milestone 09. Implement it against the real Threat Intel zKill service boundary, not renderer-only placeholder state.
 
 Target shape:
 

@@ -221,7 +221,7 @@ AURA-Sense passive live API smoke refused: F:\Projects\AURA-Sense\.tmp\passive-l
 
 ### Milestone 09: Scoped Threat Intel And Clipboard Acquisition
 
-Status: Queued in `docs/roadmap/milestone-09-scoped-threat-intel-and-clipboard-acquisition.md`.
+Status: Active - Next Dev Runway in `docs/roadmap/milestone-09-scoped-threat-intel-and-clipboard-acquisition.md`.
 
 Feature anchors:
 

@@ -1,6 +1,6 @@
 # Milestone 09: Scoped Threat Intel And Clipboard Acquisition
 
-Status: Queued After Milestone 08
+Status: Active - Next Dev Runway
 Date: 2026-05-22
 Owner: Overseer direction, Dev execution
 
@@ -34,12 +34,16 @@ The operator can run a scoped zKill-backed tactical probe by submitting a search
 - Keep typed input, pasted input, and clipboard-acquired input on the same request contract.
 - Return explicit validation errors for empty, ambiguous, unsupported, or unresolved targets.
 
+Task packet: `docs/gap/to-do/threat-intel-scan-request-contract.md`.
+
 ### Task 2: Target Resolution Boundary
 
 - Add local/static resolution where practical before live lookup.
 - Support system, pilot, corporation, alliance, and copied target text as accepted target categories.
 - Preserve unresolved/ambiguous states instead of guessing.
 - Do not introduce large metadata imports before a consumer needs them.
+
+Task packet: `docs/gap/to-do/threat-intel-target-resolution-boundary.md`.
 
 ### Task 3: zKill Scoped Probe
 
@@ -48,12 +52,20 @@ The operator can run a scoped zKill-backed tactical probe by submitting a search
 - Normalize malformed/non-array responses into partial/degraded metadata.
 - Include sample count, cap, freshness, provider, endpoint family, and failure metadata.
 
+Task packets:
+
+- `docs/gap/to-do/threat-intel-zkill-scoped-probe.md`
+- `docs/gap/to-do/readiness-05-zkill-ref-boundary.md`
+- `docs/gap/to-do/readiness-06-threat-intel-sample-metadata.md`
+
 ### Task 4: Search UI Surface
 
 - Add a compact search box and result surface.
 - Search submits only from explicit user action.
 - Search focus alone must not call APIs.
 - Optional typed-input debounce remains deferred unless explicitly requested; if later added, it must be visible, cancellable, and live-gated.
+
+Task packet: `docs/gap/to-do/threat-intel-search-ui-surface.md`.
 
 ### Task 5: Clipboard Acquisition
 
@@ -64,12 +76,16 @@ The operator can run a scoped zKill-backed tactical probe by submitting a search
 - Seal after capture, timeout, cancellation, or rejected content.
 - Enforce a 5 second cooldown after seal before re-arming.
 
+Task packet: `docs/gap/to-do/clipboard-acquisition-workflow.md`.
+
 ### Task 6: Live IO Gate And Observability
 
 - Use the live IO gate discipline established by Milestone 08.
 - Block live zKill calls when live IO is disabled and surface the blocked state.
 - Log request attempts and outcomes through backend diagnostics.
 - Keep `verify:all` offline.
+
+Task packet: `docs/gap/to-do/threat-intel-live-gate-and-observability.md`.
 
 ### Task 7: Renderer Boundary Verification
 
@@ -78,6 +94,8 @@ The operator can run a scoped zKill-backed tactical probe by submitting a search
 - Verify cooldown behavior.
 - Verify no scan runs from focus alone.
 - Verify live disabled state blocks request execution.
+
+Task packet: `docs/gap/to-do/threat-intel-renderer-boundary-verification.md`.
 
 ### Task 8: State And Handover
 
@@ -134,4 +152,3 @@ Dev handover should include:
 - live gate and blocked response examples
 - verification output
 - explicit deferrals
-

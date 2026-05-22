@@ -1,7 +1,7 @@
 # Gap To-Do: Threat Intel Sample Metadata
 
 Date: 2026-05-22
-Status: Open - Deferred Until Threat Intel Runtime Exists
+Status: Open - Active Under Milestone 09
 
 ## Actionables
 
@@ -17,7 +17,7 @@ Status: Open - Deferred Until Threat Intel Runtime Exists
 
 Every active scan should make its evidence basis clear without turning the HUD into an Atlas report.
 
-This packet depends on scoped zKill-backed Threat Intel search existing in AURA-Sense. Do not implement sample metadata against mock renderer-only state.
+This packet is active under Milestone 09 once scoped zKill-backed Threat Intel search exists. Do not implement sample metadata against mock renderer-only state.
 
 The scan result should be able to answer:
 
