@@ -91,6 +91,10 @@ function verifySemanticReplay() {
     '15s repair balance should match golden'
   );
   assert.deepStrictEqual(snapshot.windows['15s'].damage.incoming.sourceCounts, dataset.golden.windows['15s'].damage.incoming.sourceCounts, '15s incoming source counts should match golden');
+  assert.deepStrictEqual(snapshot.windows['15s'].damage.incoming.weaponCounts, dataset.golden.windows['15s'].damage.incoming.weaponCounts, '15s incoming weapon counts should match golden');
+  assert.deepStrictEqual(snapshot.windows['15s'].damage.incoming.mostObservedWeaponType, dataset.golden.windows['15s'].damage.incoming.mostObservedWeaponType, '15s incoming most observed weapon should match golden');
+  assert.deepStrictEqual(snapshot.windows['15s'].damage.incoming.spikeOutliers, dataset.golden.windows['15s'].damage.incoming.spikeOutliers, '15s incoming spike outliers should match golden');
+  assert.deepStrictEqual(snapshot.windows['15s'].damage.outgoing.mostObservedWeaponType, dataset.golden.windows['15s'].damage.outgoing.mostObservedWeaponType, '15s outgoing most observed weapon should match golden');
   assert.strictEqual(snapshot.windows['30s'].balance.takenDps, dataset.golden.windows['30s'].balance.takenDps, '30s balance should match golden');
   assert.strictEqual(snapshot.eventStream.length, dataset.golden.eventStreamCount, 'event stream retention should match golden');
 

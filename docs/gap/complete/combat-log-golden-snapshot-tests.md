@@ -7,7 +7,7 @@ Date: 2026-05-22
 
 The curated replay dataset now has deterministic 5s, 15s, and 30s Combat Witness golden snapshot assertions.
 
-The 15 second golden window now proves mixed incoming damage, outgoing damage, hit-quality aggregation, damage-type aggregation where present, incoming source counts, normalized repair/HPS, and observed repair balance.
+The 15 second golden window now proves mixed incoming damage, outgoing damage, hit-quality aggregation, damage-type aggregation where present, observed weapon aggregation, incoming source counts, damage spike outliers with observed ship labels, normalized repair/HPS, and observed repair balance.
 
 ## Evidence
 

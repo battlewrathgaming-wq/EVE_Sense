@@ -25,6 +25,12 @@ service.subscribeSnapshots(() => {
 service.addEvent(combatDamage('old-hit', '2026-05-22T00:59:50.000Z', 100));
 service.addEvent(combatDamage('hit-30s', '2026-05-22T01:00:11.000Z', 30));
 service.addEvent(combatDamage('hit-15s', '2026-05-22T01:00:21.000Z', 15));
+service.addEvent(combatDamage('spike-15s', '2026-05-22T01:00:22.000Z', 60, {
+  sourceLabel: 'Pirate Frigate',
+  weaponLabel: 'Light Missile',
+  hitQuality: 'Penetrates',
+  damageType: 'thermal'
+}));
 service.addEvent(combatRepair('repair-15s', '2026-05-22T01:00:24.000Z', 9));
 service.addEvent(combatDamage('hit-5s', '2026-05-22T01:00:26.000Z', 5));
 service.addEvent({
@@ -41,20 +47,35 @@ assert.strictEqual(snapshot.kind, 'combat.witness.snapshot', 'snapshot should id
 assert.strictEqual(snapshot.freshness.status, 'recent', 'snapshot should expose backend-owned recent freshness');
 assert.strictEqual(snapshot.freshness.eventStreamCount, 2, 'snapshot freshness should expose bounded event count');
 assert.strictEqual(snapshot.windows['5s'].damage.incoming.total, 5, '5s window should include only recent damage');
-assert.strictEqual(snapshot.windows['15s'].damage.incoming.total, 20, '15s window should include 15s and 5s damage');
-assert.strictEqual(snapshot.windows['30s'].damage.incoming.total, 50, '30s window should include 30s, 15s, and 5s damage');
+assert.strictEqual(snapshot.windows['15s'].damage.incoming.total, 80, '15s window should include 15s, spike, and 5s damage');
+assert.strictEqual(snapshot.windows['30s'].damage.incoming.total, 110, '30s window should include 30s, 15s, spike, and 5s damage');
 assert.strictEqual(snapshot.windows['15s'].repair.incoming.total, 9, '15s window should aggregate incoming repairs');
 assert.strictEqual(snapshot.windows['15s'].repair.incoming.perSecond, 0.6, '15s window should compute incoming HPS');
-assert.strictEqual(snapshot.windows['15s'].balance.receivedRepairMinusDamagePerSecond, -0.73, '15s repair balance should remain observed HPS minus DPS');
+assert.strictEqual(snapshot.windows['15s'].balance.receivedRepairMinusDamagePerSecond, -4.73, '15s repair balance should remain observed HPS minus DPS');
 assert.deepStrictEqual(
   snapshot.windows['15s'].damage.incoming.sourceCounts,
-  { 'Mining Drone': 2 },
+  { 'Mining Drone': 2, 'Pirate Frigate': 1 },
   '15s window should expose incoming attacker counts'
 );
 assert.deepStrictEqual(
   snapshot.windows['15s'].damage.incoming.hitQualityCounts,
-  { Hits: 2 },
+  { Hits: 2, Penetrates: 1 },
   '15s window should expose hit quality counts'
+);
+assert.deepStrictEqual(
+  snapshot.windows['15s'].damage.incoming.mostObservedWeaponType,
+  { label: 'Light Missile', count: 1 },
+  '15s window should expose most observed weapon type'
+);
+assert.deepStrictEqual(
+  snapshot.windows['15s'].damage.incoming.spikeOutliers.map((event) => ({
+    id: event.id,
+    amount: event.amount,
+    shipLabel: event.shipLabel,
+    weaponLabel: event.weaponLabel
+  })),
+  [{ id: 'spike-15s', amount: 60, shipLabel: 'Pirate Frigate', weaponLabel: 'Light Missile' }],
+  '15s window should expose damage spike outliers with observed ship label'
 );
 assert.strictEqual(snapshot.eventStream.length, 2, 'event stream should stay bounded separately from metrics');
 assert.deepStrictEqual(
@@ -135,7 +156,7 @@ try {
 
 console.log('combat witness core verified');
 
-function combatDamage(id, eventTime, amount) {
+function combatDamage(id, eventTime, amount, overrides = {}) {
   return {
     id,
     kind: 'combat.damage',
@@ -144,7 +165,8 @@ function combatDamage(id, eventTime, amount) {
     sourceLabel: 'Mining Drone',
     targetLabel: 'you',
     hitQuality: 'Hits',
-    eventTime
+    eventTime,
+    ...overrides
   };
 }
 

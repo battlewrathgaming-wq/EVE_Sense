@@ -189,20 +189,40 @@
             "perSecond": 1.4,
             "hitQualityCounts": { "Hits": 2, "Penetrates": 1 },
             "damageTypeCounts": { "thermal": 2 },
+            "weaponCounts": { "Light Missile": 1 },
             "sourceCounts": { "Mining Drone": 2, "Pirate Frigate": 1 },
             "uniqueSourceCount": 2,
             "topSource": { "label": "Mining Drone", "count": 2 },
             "mostCommonDamageType": { "label": "thermal", "count": 2 },
-            "mostCommonHitQuality": { "label": "Hits", "count": 2 }
+            "mostCommonHitQuality": { "label": "Hits", "count": 2 },
+            "mostObservedWeaponType": { "label": "Light Missile", "count": 1 },
+            "spikeThreshold": 10.74,
+            "spikeOutliers": [
+              {
+                "id": "replay-pirate-frigate-penetrates",
+                "eventTime": "2021-11-02T18:23:50.000Z",
+                "amount": 12,
+                "shipLabel": "Pirate Frigate",
+                "sourceLabel": "Pirate Frigate",
+                "targetLabel": "you",
+                "weaponLabel": "Light Missile",
+                "hitQuality": "Penetrates",
+                "damageType": "thermal"
+              }
+            ]
           },
           "outgoing": {
             "total": 53,
             "perSecond": 3.53,
             "hitQualityCounts": { "Grazes": 1 },
+            "weaponCounts": { "250mm Light 'Scout' Artillery I": 1 },
             "targetCounts": { "Locced": 1 },
             "uniqueTargetCount": 1,
             "topTarget": { "label": "Locced", "count": 1 },
-            "mostCommonHitQuality": { "label": "Grazes", "count": 1 }
+            "mostCommonHitQuality": { "label": "Grazes", "count": 1 },
+            "mostObservedWeaponType": { "label": "250mm Light 'Scout' Artillery I", "count": 1 },
+            "spikeThreshold": null,
+            "spikeOutliers": []
           }
         },
         "repair": {
@@ -232,20 +252,40 @@
             "perSecond": 0.8,
             "hitQualityCounts": { "Hits": 3, "Penetrates": 1 },
             "damageTypeCounts": { "thermal": 2 },
+            "weaponCounts": { "Light Missile": 1 },
             "sourceCounts": { "Mining Drone": 3, "Pirate Frigate": 1 },
             "uniqueSourceCount": 2,
             "topSource": { "label": "Mining Drone", "count": 3 },
             "mostCommonDamageType": { "label": "thermal", "count": 2 },
-            "mostCommonHitQuality": { "label": "Hits", "count": 3 }
+            "mostCommonHitQuality": { "label": "Hits", "count": 3 },
+            "mostObservedWeaponType": { "label": "Light Missile", "count": 1 },
+            "spikeThreshold": 9.67,
+            "spikeOutliers": [
+              {
+                "id": "replay-pirate-frigate-penetrates",
+                "eventTime": "2021-11-02T18:23:50.000Z",
+                "amount": 12,
+                "shipLabel": "Pirate Frigate",
+                "sourceLabel": "Pirate Frigate",
+                "targetLabel": "you",
+                "weaponLabel": "Light Missile",
+                "hitQuality": "Penetrates",
+                "damageType": "thermal"
+              }
+            ]
           },
           "outgoing": {
             "total": 106,
             "perSecond": 3.53,
             "hitQualityCounts": { "Grazes": 2 },
+            "weaponCounts": { "250mm Light 'Scout' Artillery I": 2 },
             "targetCounts": { "Locced": 2 },
             "uniqueTargetCount": 1,
             "topTarget": { "label": "Locced", "count": 2 },
-            "mostCommonHitQuality": { "label": "Grazes", "count": 2 }
+            "mostCommonHitQuality": { "label": "Grazes", "count": 2 },
+            "mostObservedWeaponType": { "label": "250mm Light 'Scout' Artillery I", "count": 2 },
+            "spikeThreshold": null,
+            "spikeOutliers": []
           }
         },
         "repair": {

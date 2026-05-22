@@ -135,6 +135,7 @@ function compactDamageSide(side) {
     perSecond: side.perSecond,
     hitQualityCounts: side.hitQualityCounts || {},
     damageTypeCounts: side.damageTypeCounts || {},
+    weaponCounts: side.weaponCounts || {},
     sourceCounts: side.sourceCounts || {},
     targetCounts: side.targetCounts || {},
     uniqueSourceCount: side.uniqueSourceCount,
@@ -142,7 +143,10 @@ function compactDamageSide(side) {
     topSource: side.topSource,
     topTarget: side.topTarget,
     mostCommonDamageType: side.mostCommonDamageType,
-    mostCommonHitQuality: side.mostCommonHitQuality
+    mostCommonHitQuality: side.mostCommonHitQuality,
+    mostObservedWeaponType: side.mostObservedWeaponType,
+    spikeThreshold: side.spikeThreshold,
+    spikeOutliers: side.spikeOutliers || []
   };
 }
 

@@ -179,10 +179,10 @@ Implemented in this slice:
 - replay dataset expanded beyond single-event pruning
 - semantic replay supports exact raw fixture rows plus explicit normalized repair events
 - watcher-path replay smoke uses temp-file append through `EveGamelogWatcher.handleFile`
-- golden snapshots assert 5s/15s/30s DPS, HPS, repair balance, source counts, and hit-quality counts
+- golden snapshots assert 5s/15s/30s DPS, HPS, repair balance, source counts, hit-quality counts, observed weapon counts, and damage spike outliers
 - fixture ingestion hashes exact raw values without `trim()`
 - coverage verification fails supported families without accepted exact raw fixtures
-- Combat Witness snapshots expose bounded source/target counts and hit-quality/damage-type counts
+- Combat Witness snapshots expose bounded source/target counts, hit-quality/damage-type counts, weapon counts, and spike outlier evidence
 
 ## Related Files
 

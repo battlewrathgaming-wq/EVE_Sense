@@ -31,10 +31,14 @@ class CombatRollingWindow {
         perSecond: 0,
         hitQualityCounts: {},
         damageTypeCounts: {},
+        weaponCounts: {},
         sourceCounts: {},
         uniqueSourceCount: 0,
         mostCommonDamageType: null,
         mostCommonHitQuality: null,
+        mostObservedWeaponType: null,
+        spikeThreshold: null,
+        spikeOutliers: [],
         topSource: null
       },
       outgoing: {
@@ -42,10 +46,14 @@ class CombatRollingWindow {
         perSecond: 0,
         hitQualityCounts: {},
         damageTypeCounts: {},
+        weaponCounts: {},
         targetCounts: {},
         uniqueTargetCount: 0,
         mostCommonDamageType: null,
         mostCommonHitQuality: null,
+        mostObservedWeaponType: null,
+        spikeThreshold: null,
+        spikeOutliers: [],
         topTarget: null
       }
     };
@@ -80,6 +88,10 @@ class CombatRollingWindow {
           damage[direction].damageTypeCounts[event.damageType] =
             (damage[direction].damageTypeCounts[event.damageType] || 0) + 1;
         }
+        if (event.weaponLabel) {
+          damage[direction].weaponCounts[event.weaponLabel] =
+            (damage[direction].weaponCounts[event.weaponLabel] || 0) + 1;
+        }
         if (direction === 'incoming' && event.sourceLabel) {
           damage.incoming.sourceCounts[event.sourceLabel] = (damage.incoming.sourceCounts[event.sourceLabel] || 0) + 1;
         }
@@ -105,6 +117,10 @@ class CombatRollingWindow {
       repair[direction].perSecond = roundMetric(repair[direction].total / seconds);
       damage[direction].mostCommonDamageType = mostCommon(damage[direction].damageTypeCounts);
       damage[direction].mostCommonHitQuality = mostCommon(damage[direction].hitQualityCounts);
+      damage[direction].mostObservedWeaponType = mostCommon(damage[direction].weaponCounts);
+      const spikeSummary = damageSpikeSummary(this.events, direction);
+      damage[direction].spikeThreshold = spikeSummary.threshold;
+      damage[direction].spikeOutliers = spikeSummary.outliers;
     }
 
     damage.incoming.uniqueSourceCount = Object.keys(damage.incoming.sourceCounts).length;
@@ -175,6 +191,47 @@ function mostCommon(counts) {
     }
   }
   return winner;
+}
+
+function damageSpikeSummary(events, direction) {
+  const samples = events
+    .filter((event) => event.kind === 'combat.damage' && event.direction === direction && Number.isFinite(event.amount))
+    .map((event) => ({ event, amount: event.amount }));
+
+  if (samples.length < 3) {
+    return { threshold: null, outliers: [] };
+  }
+
+  const average = samples.reduce((sum, sample) => sum + sample.amount, 0) / samples.length;
+  const variance = samples.reduce((sum, sample) => sum + ((sample.amount - average) ** 2), 0) / samples.length;
+  const threshold = average + Math.sqrt(variance);
+  const roundedThreshold = roundMetric(threshold);
+  const outliers = samples
+    .filter((sample) => sample.amount >= threshold)
+    .sort((left, right) => {
+      if (right.amount !== left.amount) {
+        return right.amount - left.amount;
+      }
+      return Date.parse(right.event.eventTime) - Date.parse(left.event.eventTime);
+    })
+    .slice(0, 3)
+    .map((sample) => compactSpikeOutlier(sample.event, direction));
+
+  return { threshold: roundedThreshold, outliers };
+}
+
+function compactSpikeOutlier(event, direction) {
+  return {
+    id: event.id,
+    eventTime: event.eventTime,
+    amount: event.amount,
+    shipLabel: direction === 'incoming' ? event.sourceLabel || null : event.targetLabel || null,
+    sourceLabel: event.sourceLabel || null,
+    targetLabel: event.targetLabel || null,
+    weaponLabel: event.weaponLabel || null,
+    hitQuality: event.hitQuality || null,
+    damageType: event.damageType || null
+  };
 }
 
 module.exports = {

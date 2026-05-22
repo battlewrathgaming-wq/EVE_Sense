@@ -40,7 +40,7 @@ Defines the transient combat-log witness model.
 - Parser emits normalized `navigation.jump`, `combat.damage`, and `combat.miss` events.
 - Combat Witness compute accepts normalized `combat.repair` events for rolling HPS and repair-balance tests, but raw repair log parsing remains gated behind exact fixtures.
 - Gamelog watcher supports `fs-watch`, `polling`, and `auto` fallback strategies.
-- `CombatWitnessService` owns event fan-out, 5s/15s/30s snapshots, bounded event stream items, source/target counts, hit-quality counts, and observed HPS-DPS balance.
+- `CombatWitnessService` owns event fan-out, 5s/15s/30s snapshots, bounded event stream items, source/target counts, hit-quality counts, observed weapon counts, damage spike outliers, and observed HPS-DPS balance.
 - Listener failures are isolated.
 - `combat.witness.*` service commands own runtime path/status/start/stop control.
 - Renderer presentation consumes backend-owned snapshots and watcher status.

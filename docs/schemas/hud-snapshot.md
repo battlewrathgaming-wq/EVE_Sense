@@ -38,6 +38,10 @@ Current backend shape:
 - window `damage.incoming/outgoing.perSecond`
 - window `damage.incoming/outgoing.hitQualityCounts`
 - window `damage.incoming/outgoing.damageTypeCounts`
+- window `damage.incoming/outgoing.weaponCounts`
+- window `damage.incoming/outgoing.mostObservedWeaponType`
+- window `damage.incoming/outgoing.spikeThreshold`
+- window `damage.incoming/outgoing.spikeOutliers`
 - window `damage.incoming.sourceCounts`
 - window `damage.outgoing.targetCounts`
 - window `repair.incoming/outgoing.total`
@@ -58,6 +62,8 @@ Current backend shape:
 Renderer code should present this snapshot shape rather than recomputing rolling combat metrics.
 
 Repair balance is observed incoming repair throughput minus observed incoming damage throughput. It is not a HP, survival, or tank-state verdict.
+
+Damage spike outliers are bounded rolling-window observations. `shipLabel` is the observed source label for incoming damage and the observed target label for outgoing damage; it must not be treated as durable identity when labels collide.
 
 Current freshness statuses:
 
