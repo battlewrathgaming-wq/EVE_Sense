@@ -37,6 +37,20 @@ Outcome:
 
 Passive Telemetry can resolve the observed current system, fetch ESI activity and zKill context through gated backend clients, expose cache/freshness/degraded state, and remain separate from Threat Intel.
 
+Current smoke baseline before API-function work:
+
+```txt
+F:\Projects\AURA-Sense\.tmp\electron-visual-smoke\visual-smoke-result.json
+status: passed
+checked_at: 2026-05-22T20:34:29.699Z
+passiveText: Unavailable
+hasPassiveSurface: true
+noNodeRequire: true
+noElectronGlobal: true
+```
+
+This is an Electron renderer/runtime baseline only. It is not a live zKill/ESI smoke result.
+
 ### Second: Milestone 09 Scoped Threat Intel And Clipboard Acquisition
 
 Use:
@@ -86,7 +100,7 @@ Each Dev handover should state:
 - tasks left incomplete
 - verification run
 - live smoke status
+- smoke artifact path/result when renderer or live API smoke is relevant
 - files touched
 - current-state updates
 - explicit deferrals preserved
-

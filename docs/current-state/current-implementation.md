@@ -195,6 +195,7 @@ It writes artifacts under `.tmp\electron-visual-smoke` and is intentionally not 
 - `docs/audits/audit-2026-05-22-passive-telemetry-live-readiness-endpoint-io.md`
 - `docs/audits/audit-2026-05-22-next-dev-runway-handover.md`
 - `docs/audits/audit-2026-05-22-passive-telemetry-state-doc-pass.md`
+- `docs/audits/audit-2026-05-22-api-function-runway-smoke-handover.md`
 - `docs/gap/to-do/aura-sense-tactical-readiness.md`
 - `docs/gap/to-do/passive-telemetry-local-system-resolver.md`
 - `docs/gap/to-do/passive-telemetry-esi-system-activity.md`

@@ -20,6 +20,25 @@ Offline verification proves structure. A gated live smoke proves the real API bo
 - Write a structured result artifact under `F:\Projects\AURA-Sense\.tmp`.
 - Include request outcome, activity kills/jumps, cache/ETag state, zKill sample count, cap/partial/failure metadata, and refusal behavior.
 
+## Current Baseline Artifact
+
+The existing Electron visual smoke artifact is available as the pre-API UI/runtime baseline:
+
+```txt
+F:\Projects\AURA-Sense\.tmp\electron-visual-smoke\visual-smoke-result.json
+```
+
+Latest recorded result:
+
+```txt
+status: passed
+checked_at: 2026-05-22T20:34:29.699Z
+passiveText: Unavailable
+hasPassiveSurface: true
+```
+
+This artifact proves the shell and Passive Telemetry surface load. It does not satisfy the live smoke harness completion signal because it does not run live zKill or ESI calls.
+
 ## Guardrails
 
 - Do not add ESI killmail expansion.
