@@ -17,8 +17,9 @@ Examples:
 
 - current system from EVE logs
 - gate-jump/current-system changes
+- scoped ESI system activity for ship kills, pod kills, NPC kills, and jumps
 - scoped zKillmail system context
-- freshness/cache state
+- freshness/cache state, including one-hour ESI activity cache record and ETag/conditional state where available
 - unavailable/degraded state when system ID resolution or fetch fails
 
 ### Threat Intel
@@ -52,7 +53,7 @@ Examples:
 - Passive telemetry must not overwrite Threat Intel.
 - Combat Witness must not become persistent evidence storage.
 - Threat Intel must not present zKillmail results as complete tactical truth.
-- ESI expansion is deferred by default.
+- ESI aggregate system activity is allowed in Passive Telemetry; ESI killmail expansion is deferred by default.
 - Each lane should expose its own freshness/staleness state.
 - Passive Telemetry must consume backend snapshots, not renderer log events.
 

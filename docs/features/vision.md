@@ -94,7 +94,7 @@ Backend can answer what was witnessed recently, with bounded retention and verif
 
 Goal:
 
-Read current system transitions from EVE logs and provide a low-frequency zKillmail context probe for the system the operator has just entered.
+Read current system transitions from EVE logs and provide low-frequency system activity context for the system the operator has just entered.
 
 User value:
 
@@ -108,9 +108,10 @@ Inputs:
 
 - EVE log observation for gate jumps or current-system changes
 - current system name or ID resolution
+- scoped ESI system activity pulls for current system kills and jumps
 - scoped zKillmail fetch for the current system
 - local/static metadata where practical
-- freshness and last-updated metadata
+- freshness, cache lifetime, ETag, and last-updated metadata where available
 
 Must not:
 
@@ -120,10 +121,13 @@ Must not:
 - store long-term history
 - repeatedly fetch while the operator remains in the same system
 - imply that zKillmail activity is complete tactical truth
+- treat ESI aggregate kills/jumps as complete tactical truth
+- retain ESI system activity as long-term history
+- expand ESI killmails inside Passive Telemetry
 
 Acceptance goalpost:
 
-When the operator jumps into a system, AURA-Sense can detect the current system from logs, run a scoped zKillmail context fetch, and present a compact fresh/stale/unavailable system context without turning it into an active Threat Intel scan.
+When the operator jumps into a system, AURA-Sense can detect the current system from logs, resolve the system ID, run scoped ESI system activity pulls and a scoped zKillmail context fetch, and present compact fresh/stale/unavailable system context without turning it into an active Threat Intel scan.
 
 ## Element 4: Threat Intel
 

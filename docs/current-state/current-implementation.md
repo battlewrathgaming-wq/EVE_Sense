@@ -69,6 +69,8 @@ Not yet proven in this codebase:
 - live zKill smoke command
 - Passive Telemetry live IO gate
 - Passive Telemetry request accounting/status pulse
+- Passive Telemetry ESI system kills/jumps activity context
+- Passive Telemetry one-hour ESI activity cache record with ETag/conditional revalidation
 - scoped passive zKill `pastSeconds` route
 
 ## Intended Runtime Flow
@@ -101,6 +103,7 @@ renderer UI
 EVE location/log observation
 -> backend normalization
 -> current-system Passive Telemetry snapshot
+-> scoped ESI system kills/jumps activity where system ID is resolved
 -> scoped zKillmail system context where system ID is resolved
 -> passive snapshot
 -> renderer panel
@@ -157,6 +160,9 @@ It writes artifacts under `.tmp\electron-visual-smoke` and is intentionally not 
 - no live zKill smoke command yet
 - no Passive Telemetry live IO gate yet
 - no passive zKill request pulse/accounting yet
+- no passive ESI system kills/jumps request pulse/accounting yet
+- no Passive Telemetry ESI system activity context yet
+- no one-hour ESI activity cache record or ETag revalidation yet
 - passive zKill route still needs bounded `pastSeconds` scoping before live use
 - no exact raw repair/healing fixtures yet; raw `combat.repair` parser support remains deferred
 - concept and research docs are AURA-Sense product doctrine or evidence notes; older audit records may still describe past cleanup work

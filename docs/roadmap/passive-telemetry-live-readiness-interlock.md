@@ -6,7 +6,7 @@ Owner: Overseer direction, Dev execution
 
 ## Vision Setting
 
-Passive Telemetry is structurally wired, but it is not ready for live operator use while real systems remain unresolved, zKill requests are broad, and live external IO is not visibly gated.
+Passive Telemetry is structurally wired, but it is not ready for live operator use while real systems remain unresolved, system activity pulls are missing, zKill requests are broad, and live external IO is not visibly gated.
 
 This interlock sits ahead of further operator-facing live work. It is intentionally smaller than a product milestone and larger than a bug ticket: Dev should clear the live-use boundary in one coherent slice, then return to the Combat Logging Test Suite or Threat Intel sequence.
 
@@ -35,13 +35,14 @@ Aura 7 lineage:
 - Atlas-style HTTP discipline: timeout, cancellation, retry bounds, provider/endpoint/status/duration/retry/rate-limit/error logging.
 - Aura 7-style request pulse: pending, success, failed, blocked, cached, throttled, in-flight count, recent events, requests per minute.
 - Aura 7 zKill route shape: `/systemID/{id}/pastSeconds/{seconds}/`.
+- Aura 7-style ESI system activity lookup: fetch system kills and system jumps, filter to the resolved current system, and expose ship kills, pod kills, NPC kills, jumps, source timestamp/freshness, cache record age, and ETag state.
 - Local/static system resolution before live lookup.
 
 ## Reject
 
 - Do not import Atlas persistence, evidence stores, queueing, reports, or watch execution into AURA-Sense.
 - Do not copy Aura 7's default-live network posture; AURA-Sense live API use must be explicitly visible and blockable.
-- Do not add ESI expansion to Passive Telemetry.
+- Do not add ESI killmail expansion to Passive Telemetry.
 - Do not use live gating as permission for broad polling.
 - Do not make renderer code call zKill, ESI, or fetch directly.
 - Do not make search focus the only path to operator-initiated live context; fullscreen EVE use needs hands-free acquisition.
@@ -74,30 +75,42 @@ Clipboard acquisition is the preferred hands-free path for fullscreen play. It m
 - Make `pastSeconds` a named option in the client and snapshot metadata.
 - Keep sample cap and partial/failure metadata visible.
 
-### Task 3: Live IO Gate
+### Task 3: ESI System Activity Context
+
+- Add a backend-only Passive Telemetry ESI system activity client.
+- Fetch ESI aggregate system kills and system jumps through the live IO gate.
+- Filter the aggregate responses to the resolved current system ID.
+- Snapshot fields should include ship kills, pod kills, NPC kills, jumps, fetched/updated timestamp where available, cache age, ETag/conditional state, and failure/degraded metadata.
+- Treat ESI system activity responses as one-hour cache records with ETag/conditional revalidation where available.
+- Read from the cached activity record while it is fresh.
+- After expiry, revalidate rather than blindly refetching.
+- Do not call repeatedly while the operator remains in the same system.
+- Do not expand killmails or infer tactical certainty from aggregate activity.
+
+### Task 4: Live IO Gate
 
 - Add a small AURA-Sense live IO gate for Passive Telemetry.
 - Gate state must distinguish local-only, live-disabled, live-enabled, blocked, and degraded.
 - `passive.telemetry.refresh` must return a blocked/degraded result when live IO is disabled, not silently call zKill.
 - Keep `verify:all` offline.
 
-### Task 4: Request Observability
+### Task 5: Request Observability
 
-- Wire passive zKill through the existing `HttpClient` request-log hook.
+- Wire passive zKill and ESI system activity through the existing `HttpClient` request-log hook.
 - Emit diagnostics for attempted, blocked, cached, succeeded, failed, timed out, cancelled, capped, partial, and stale paths.
 - Keep diagnostic output throttled through the existing diagnostics policy.
 - Surface enough snapshot metadata for the HUD to explain unavailable, blocked, partial, stale, and degraded states.
 
-### Task 5: Freshness Honesty
+### Task 6: Freshness Honesty
 
 - Ensure expired partial context cannot remain simply `partial` forever.
 - Represent expired partial context as stale plus partial/failure metadata, or an equivalent explicit status.
 - Add tests for fresh, stale, partial, stale-partial, blocked, unresolved, and failed-fetch states.
 
-### Task 6: Verification And Handover
+### Task 7: Verification And Handover
 
-- Add deterministic unit verification for resolver, scoped route construction, gate blocking, request log hook, and freshness states.
-- Add a separate explicit live zKill smoke command only if Dev can keep it opt-in and outside `verify:all`.
+- Add deterministic unit verification for resolver, scoped route construction, ESI activity normalization/filtering, one-hour cache record behavior, ETag/conditional revalidation, gate blocking, request log hook, and freshness states.
+- Add a separate explicit live zKill/ESI smoke command only if Dev can keep it opt-in and outside `verify:all`.
 - Update current-state and hand over with commands run, live behavior still deferred, and remaining caveats.
 
 ## Acceptance Gate
@@ -105,9 +118,11 @@ Clipboard acquisition is the preferred hands-free path for fullscreen play. It m
 The interlock is complete when:
 
 - observed real system names can resolve to IDs through a local/static resolver or degrade explicitly
+- passive ESI system activity reports current-system kills and jumps from a fresh one-hour cache record or degrades explicitly
+- expired ESI system activity revalidates with ETag/conditional state where available
 - passive zKill uses a bounded `pastSeconds` route
 - live passive zKill calls are visibly gated and blockable
 - request attempts and outcomes are observable
 - partial context expires honestly
 - offline verification passes
-- no renderer network calls, Threat Intel search, ESI expansion, Atlas persistence, or broad polling were added
+- no renderer network calls, Threat Intel search, ESI killmail expansion, Atlas persistence, or broad polling were added
