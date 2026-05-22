@@ -36,6 +36,8 @@ function verifyPureHelpers() {
   assert(normalized.alwaysOnTop === false, 'Frame state should preserve explicit false always-on-top');
   assert(normalized.bounds.x === 10, 'Frame state should normalize bound x');
   assert(normalized.bounds.y === 21, 'Frame state should normalize bound y');
+  const nullBoundsState = normalizeFrameState({ bounds: null });
+  assert(nullBoundsState.bounds === null, 'Frame state should preserve null bounds safely');
 }
 
 function verifySourceBoundaries() {
