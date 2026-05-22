@@ -48,6 +48,7 @@ function verifySourceBoundaries() {
   const shellText = read(path.join(root, 'src', 'modules', 'Frame', 'windowShell.js'));
 
   assert(mainText.includes("require('../modules/Frame')"), 'main should create windows through Frame module');
+  assert(mainText.includes('BrowserWindow'), 'main should import BrowserWindow for runtime activation handling');
   assert(shellText.includes('frame: false'), 'Frame module should create frameless windows');
   assert(shellText.includes('alwaysOnTop: state.alwaysOnTop'), 'Frame module should restore always-on-top state');
   assert(shellText.includes('setAlwaysOnTop'), 'Frame module should expose always-on-top mutation');

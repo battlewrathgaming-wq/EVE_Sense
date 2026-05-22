@@ -24,6 +24,9 @@ const HIGH_VALUE_EVENTS = new Set([
   'line_rejected',
   'listener_error',
   'partial_line_dropped',
+  'renderer_process_gone',
+  'runtime_uncaught_exception',
+  'runtime_unhandled_rejection',
   'watcher_strategy_fallback'
 ]);
 

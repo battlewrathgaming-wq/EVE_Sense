@@ -15,3 +15,19 @@ contextBridge.exposeInMainWorld('auraWindow', {
   minimize: () => ipcRenderer.invoke('aura:window:minimize'),
   close: () => ipcRenderer.invoke('aura:window:close')
 });
+
+contextBridge.exposeInMainWorld('auraCombatWitness', {
+  getSnapshot: () => ipcRenderer.invoke('aura:combat-witness:get-snapshot'),
+  subscribeSnapshots: (callback) => {
+    if (typeof callback !== 'function') {
+      throw new Error('Combat Witness snapshot callback must be a function');
+    }
+    const listener = (_event, snapshot) => callback(snapshot);
+    ipcRenderer.on('aura:combat-witness:snapshot', listener);
+    ipcRenderer.invoke('aura:combat-witness:subscribe');
+    return () => {
+      ipcRenderer.removeListener('aura:combat-witness:snapshot', listener);
+      ipcRenderer.invoke('aura:combat-witness:unsubscribe');
+    };
+  }
+});

@@ -61,17 +61,21 @@ Status: Complete in `docs/gap/complete/readiness-04-diagnostics-throttling.md`.
 
 ### P2: Runtime Error Handling
 
-- P2-01: Implement `docs/gap/to-do/readiness-10-runtime-error-handling.md` after diagnostics policy exists.
-- P2-02: Add process-level unhandled rejection and uncaught exception logging.
-- P2-03: Add Electron render-process-gone handling.
-- P2-04: Route degraded state through the diagnostics policy rather than direct renderer spam.
+Status: Complete in `docs/gap/complete/readiness-10-runtime-error-handling.md`.
+
+- P2-01: Implement `docs/gap/to-do/readiness-10-runtime-error-handling.md` after diagnostics policy exists. Complete.
+- P2-02: Add process-level unhandled rejection and uncaught exception logging. Complete.
+- P2-03: Add Electron render-process-gone handling. Complete.
+- P2-04: Route degraded state through the diagnostics policy rather than direct renderer spam. Complete.
 
 ### P3: Combat Witness Snapshot Bridge
 
-- P3-01: Implement `docs/gap/to-do/readiness-11-combat-witness-snapshot-bridge.md` only after diagnostics throttling is complete.
-- P3-02: Expose Combat Witness snapshots through a backend service/preload subscription boundary.
-- P3-03: Keep renderer state presentation-only and bounded.
-- P3-04: Add verification that renderer does not import combat modules or compute snapshot metrics.
+Status: Complete in `docs/gap/complete/readiness-11-combat-witness-snapshot-bridge.md`.
+
+- P3-01: Implement `docs/gap/to-do/readiness-11-combat-witness-snapshot-bridge.md` only after diagnostics throttling is complete. Complete.
+- P3-02: Expose Combat Witness snapshots through a backend service/preload subscription boundary. Complete.
+- P3-03: Keep renderer state presentation-only and bounded. Complete.
+- P3-04: Add verification that renderer does not import combat modules or compute snapshot metrics. Complete.
 
 ### P4: Deferred Threat Intel And Metadata Work
 
@@ -112,6 +116,6 @@ That milestone should create the first honest product-facing tactical viewport. 
 - `docs/audits/audit-2026-05-22-ipc-settings-validation-handover.md`
 - `docs/audits/audit-2026-05-22-combat-witness-core-handover.md`
 - `docs/gap/complete/readiness-04-diagnostics-throttling.md`
-- `docs/gap/to-do/readiness-10-runtime-error-handling.md`
-- `docs/gap/to-do/readiness-11-combat-witness-snapshot-bridge.md`
+- `docs/gap/complete/readiness-10-runtime-error-handling.md`
+- `docs/gap/complete/readiness-11-combat-witness-snapshot-bridge.md`
 - `docs/current-state/current-implementation.md`

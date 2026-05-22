@@ -17,6 +17,9 @@ function main() {
   assert(preload.includes('contextBridge.exposeInMainWorld'), 'preload should expose a narrow bridge');
   assert(preload.includes('aura:service:invoke'), 'preload should invoke service channel');
   assert(preload.includes('auraWindow'), 'preload should expose Frame window bridge');
+  assert(preload.includes('auraCombatWitness'), 'preload should expose Combat Witness snapshot bridge');
+  assert(preload.includes('aura:combat-witness:get-snapshot'), 'preload should expose Combat Witness snapshot request');
+  assert(preload.includes('aura:combat-witness:subscribe'), 'preload should expose Combat Witness subscription request');
   assert(preload.includes('aura:window:set-always-on-top'), 'preload should expose always-on-top IPC');
   assert(html.includes('frame-chrome'), 'renderer should include Frame chrome');
   assert(html.includes('pin-window'), 'renderer should include always-on-top control');

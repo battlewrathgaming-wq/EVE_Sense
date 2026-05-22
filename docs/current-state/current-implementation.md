@@ -31,8 +31,10 @@ The current implementation includes:
 - bounded Combat Witness one-shot event stream
 - fs-watch and polling gamelog watcher strategies with diagnostics
 - shared diagnostics policy for watcher, Combat Witness, and HTTP request logs
+- runtime error handling diagnostics for unhandled rejections, uncaught exceptions, and renderer process exits
 - reusable active scan, settings, and log path validators
 - frame always-on-top payload validation
+- Combat Witness snapshot IPC/preload bridge
 
 ## What Does Not Yet Exist
 
@@ -118,7 +120,7 @@ This verifies the current seed utilities, service rigging, Combat Witness parser
 - some seed shell UI and fallback labels still reflect Aura Core until product shell work begins
 - no product-facing settings, Passive Telemetry, or Threat Intel runtime services yet
 - no renderer diagnostics transport or diagnostics UI yet
-- no renderer subscription path for Combat Witness snapshots yet
+- no renderer presentation for Combat Witness snapshots yet
 - no active scan service wired to the prepared validator yet
 - no settings save/restart service wired to the prepared validator yet
 - no exact raw repair/healing fixtures yet
@@ -134,5 +136,7 @@ This verifies the current seed utilities, service rigging, Combat Witness parser
 - `docs/audits/audit-2026-05-22-combat-witness-core-handover.md`
 - `docs/audits/audit-2026-05-22-ipc-settings-validation-handover.md`
 - `docs/audits/audit-2026-05-22-diagnostics-throttling-handover.md`
+- `docs/audits/audit-2026-05-22-runtime-error-handling-handover.md`
+- `docs/audits/audit-2026-05-22-combat-witness-snapshot-bridge-handover.md`
 - `docs/gap/to-do/aura-sense-rewrite-readiness.md`
 - `docs/roadmap/milestone-02-runtime-observability.md`

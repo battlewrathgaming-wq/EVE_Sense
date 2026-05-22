@@ -1,10 +1,13 @@
 const path = require('node:path');
-const { app, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
 const { APP_NAME } = require('../constants');
+const { createCombatWitnessBridge } = require('../combat/combatWitnessBridge');
 const { createDefaultRegistry, registerElectronServiceHandlers } = require('../services/serviceRegistry');
+const { registerRuntimeErrorHandlers } = require('./runtimeErrorHandling');
 const { createFrameWindow, registerFrameWindowHandlers } = require('../modules/Frame');
 
 const registry = createDefaultRegistry();
+const combatWitnessBridge = createCombatWitnessBridge();
 let mainWindow = null;
 
 function createWindow() {
@@ -24,8 +27,13 @@ function createWindow() {
 }
 
 app.whenReady().then(() => {
+  registerRuntimeErrorHandlers({
+    app,
+    getWindows: () => BrowserWindow.getAllWindows()
+  });
   registerElectronServiceHandlers(ipcMain, registry, () => ({ appName: APP_NAME }));
   registerFrameWindowHandlers(ipcMain, app, () => mainWindow);
+  combatWitnessBridge.register(ipcMain);
   createWindow();
 
   app.on('activate', () => {

@@ -163,6 +163,8 @@ Log parsing changes are testable without launching Electron.
 
 ## Priority 9: Runtime Error Handling
 
+Status: Complete in `docs/gap/complete/readiness-10-runtime-error-handling.md`.
+
 ### Actionables
 
 - Add unhandled rejection logging.
@@ -176,7 +178,7 @@ Long sessions fail visibly and diagnostically rather than silently.
 
 ## Priority 10: Combat Witness Snapshot Bridge
 
-Status: Open in `docs/gap/to-do/readiness-11-combat-witness-snapshot-bridge.md`.
+Status: Complete in `docs/gap/complete/readiness-11-combat-witness-snapshot-bridge.md`.
 
 ### Actionables
 
@@ -223,12 +225,10 @@ Threat Intel avoids `Type <id>` where local metadata can provide a readable labe
 
 This overview has been split into individual task files so each line can be implemented, reviewed, and moved to `docs/gap/complete/` independently.
 
-1. `readiness-10-runtime-error-handling.md`
-2. `readiness-11-combat-witness-snapshot-bridge.md`
-3. `readiness-12-tactical-hud-first-light.md`
-4. `readiness-05-zkill-ref-boundary.md`
-5. `readiness-06-threat-intel-sample-metadata.md`
-6. `readiness-09-local-type-metadata.md`
+1. `readiness-12-tactical-hud-first-light.md`
+2. `readiness-05-zkill-ref-boundary.md`
+3. `readiness-06-threat-intel-sample-metadata.md`
+4. `readiness-09-local-type-metadata.md`
 
 This sequence improves safety before adding heavier combat features.
 

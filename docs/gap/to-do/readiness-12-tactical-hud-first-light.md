@@ -1,7 +1,7 @@
 # Gap To-Do: Tactical HUD First Light
 
 Date: 2026-05-22
-Status: Proposed - After Snapshot Bridge
+Status: Open
 Priority: P4
 
 ## Need
@@ -55,6 +55,6 @@ When complete, record:
 
 - `docs/roadmap/milestone-03-tactical-viewport-first-light.md`
 - `docs/roadmap/milestone-02-runtime-observability.md`
-- `docs/gap/to-do/readiness-11-combat-witness-snapshot-bridge.md`
+- `docs/gap/complete/readiness-11-combat-witness-snapshot-bridge.md`
 - `docs/contracts/renderer-boundary-contract.md`
 - `docs/schemas/hud-snapshot.md`
