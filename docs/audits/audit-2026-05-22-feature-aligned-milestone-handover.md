@@ -54,15 +54,20 @@ Updated:
 
 ## Milestone Direction
 
+Supersession note:
+
+This sequence was later refined by `docs/audits/audit-2026-05-22-combat-log-test-suite-milestone-handover.md`. Milestone 07 is now Combat Logging Test Suite, and the former Threat Intel and hardening milestones moved back one number.
+
 Future milestones now align to fixed feature elements from `docs/features/vision.md`.
 
 The sequence is:
 
 1. Milestone 05: Combat Witness Operational Loop
 2. Milestone 06: Passive Telemetry Foundation
-3. Milestone 07: Scoped Threat Intel Foundation
-4. Milestone 08: Integrated Tactical Viewport
-5. Milestone 09: Operational Hardening And Handoff Boundaries
+3. Milestone 07: Combat Logging Test Suite
+4. Milestone 08: Scoped Threat Intel Foundation
+5. Milestone 09: Integrated Tactical Viewport
+6. Milestone 10: Operational Hardening And Handoff Boundaries
 
 Each milestone contains a task chain. Dev should work the chain, preserve guardrails, update state, and hand over the milestone slice without asking for user direction between every task.
 

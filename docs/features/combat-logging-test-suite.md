@@ -1,6 +1,6 @@
 # Feature: Combat Logging Test Suite
 
-Status: Requested
+Status: Active - Milestone 07
 Date: 2026-05-22
 
 ## User Value
@@ -51,6 +51,11 @@ Output data:
 
 This feature supports Combat Witness and future Passive Telemetry by proving local observed telemetry. It does not create Threat Intel, evidence history, recommendations, topology claims, or Atlas-style persistence.
 
+## Active Milestone
+
+- `docs/roadmap/milestone-07-combat-logging-test-suite.md`
+- `docs/roadmap/feature-aligned-milestones.md` Milestone 07
+
 ## Requested Implementation Slices
 
 - `docs/gap/to-do/combat-log-dataset-fixture-ingestion.md`
@@ -58,4 +63,3 @@ This feature supports Combat Witness and future Passive Telemetry by proving loc
 - `docs/gap/to-do/combat-log-replay-harness.md`
 - `docs/gap/to-do/combat-log-golden-snapshot-tests.md`
 - `docs/gap/to-do/combat-log-repair-healing-fixtures.md`
-

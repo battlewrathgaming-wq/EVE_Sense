@@ -107,7 +107,57 @@ Acceptance gate:
 
 Passive Telemetry can present current-system zKillmail context after a gate jump without calling Threat Intel paths, without broad polling, and without historical storage.
 
-### Milestone 07: Scoped Threat Intel Foundation
+### Milestone 07: Combat Logging Test Suite
+
+Status: Active in:
+
+- `docs/features/combat-logging-test-suite.md`
+- `docs/audits/audit-2026-05-22-combat-log-test-suite-milestone-handover.md`
+- `docs/gap/to-do/combat-log-dataset-fixture-ingestion.md`
+- `docs/gap/to-do/combat-log-event-coverage-matrix.md`
+- `docs/gap/to-do/combat-log-replay-harness.md`
+- `docs/gap/to-do/combat-log-golden-snapshot-tests.md`
+- `docs/gap/to-do/combat-log-repair-healing-fixtures.md`
+
+Feature anchors:
+
+- Element 2: Combat Witness
+- Element 3: Passive Telemetry
+- Element 6: Diagnostics And Degraded State
+- Support Feature: Combat Logging Test Suite
+
+Operational outcome:
+
+AURA-Sense can test curated real EVE gamelog datasets as fixtures, map event coverage, replay ordered datasets through watcher/runtime/service semantics, and compare golden Combat Witness snapshots without using replay behavior in normal runtime.
+
+Task chain:
+
+1. Add deterministic dataset fixture ingestion for curated rows, hashes, expected parser disposition, and source metadata.
+2. Add a machine-readable combat-log event coverage matrix that separates supported, rejected, deferred, and unknown families.
+3. Add an offline replay harness for ordered fixture datasets through parser/watcher/runtime/service semantics.
+4. Add golden snapshot tests for 5s/15s/30s Combat Witness output from known datasets.
+5. Add exact raw repair/healing fixtures and rejected lookalikes before parser expansion claims HPS from raw logs.
+6. Wire the new verification commands into `verify:all` only when they are offline and deterministic.
+7. Update current-state, feature docs, and completion evidence.
+
+Autonomy envelope:
+
+Dev may add fixture formats, importer scripts, coverage matrix files, replay harness scripts, golden snapshot fixtures, parser fixtures, verification scripts, and related docs.
+
+Dev may not:
+
+- ingest private log directories by default
+- add runtime replay scanning
+- require Electron for parser/replay verification
+- widen parser claims without exact raw fixtures
+- add renderer behavior as part of this milestone
+- infer tactical recommendations or complete combat truth from fixture coverage
+
+Acceptance gate:
+
+The test suite can ingest curated real-data rows, verify raw line hashes, summarize event-family coverage, replay datasets deterministically, compare golden snapshots, and keep repair/healing claims gated behind exact raw fixtures.
+
+### Milestone 08: Scoped Threat Intel Foundation
 
 Feature anchors:
 
@@ -141,7 +191,7 @@ Acceptance gate:
 
 A search bar or armed clipboard scan returns a tactical zKillmail-backed snapshot with visible evidence basis and no broad background scraping, no Atlas persistence, no default ESI expansion, and no renderer API calls.
 
-### Milestone 08: Integrated Tactical Viewport
+### Milestone 09: Integrated Tactical Viewport
 
 Feature anchors:
 
@@ -173,7 +223,7 @@ Acceptance gate:
 
 The viewport shows Combat Witness, Passive Telemetry, and Threat Intel as separate tactical lanes with clear freshness and no false certainty.
 
-### Milestone 09: Operational Hardening And Handoff Boundaries
+### Milestone 10: Operational Hardening And Handoff Boundaries
 
 Feature anchors:
 

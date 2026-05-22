@@ -2,6 +2,7 @@
 
 Status: Open
 Priority: P1
+Milestone: 07 - Combat Logging Test Suite
 
 ## Need
 
@@ -23,12 +24,13 @@ This is required to test datasets as streams, including ordering, duplicate supp
 - Replay emits normalized events and snapshots deterministically.
 - Replay can simulate chunking and partial lines.
 - Replay can assert duplicate suppression and listener isolation.
+- Replay proves event fan-out without creating a second runtime watcher doctrine.
 
 ## Related Files
 
 - `docs/features/combat-logging-test-suite.md`
+- `docs/roadmap/milestone-07-combat-logging-test-suite.md`
 - `src/combat/eveGamelogWatcher.js`
 - `src/combat/combatWitnessRuntime.js`
 - `src/combat/combatWitnessService.js`
 - `scripts/verify-gamelog-watcher.js`
-

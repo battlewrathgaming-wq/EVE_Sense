@@ -2,6 +2,7 @@
 
 Status: Open
 Priority: P1
+Milestone: 07 - Combat Logging Test Suite
 
 ## Need
 
@@ -22,11 +23,12 @@ Parser fixtures prove individual lines. Golden snapshot tests prove predictable 
 - A fixture dataset produces expected 5s, 15s, and 30s snapshots.
 - Tests verify damage taken DPS, damage dealt DPS, HPS when supported, HPS-DPS balance, most common hit quality, top source labels, and event stream retention.
 - Snapshot tests run under `npm.cmd run verify:all`.
+- Golden outputs include freshness/window metadata so failures explain whether math, ordering, or parser classification changed.
 
 ## Related Files
 
 - `docs/features/combat-logging-test-suite.md`
+- `docs/roadmap/milestone-07-combat-logging-test-suite.md`
 - `src/combat/combatRollingWindow.js`
 - `src/combat/combatWitnessService.js`
 - `scripts/verify-combat-witness-core.js`
-

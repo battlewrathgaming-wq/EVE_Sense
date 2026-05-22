@@ -13,6 +13,7 @@ Current entries:
 - `milestone-04-runtime-smoke-readiness.md`
 - `milestone-05-combat-witness-operational-loop.md`
 - `milestone-06-passive-telemetry-foundation.md`
+- `milestone-07-combat-logging-test-suite.md`
 - `architecture-needs-review-2026-05-22.md`
 - `development-artifact-trail.md`
 

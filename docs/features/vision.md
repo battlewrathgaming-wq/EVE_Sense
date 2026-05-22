@@ -349,6 +349,40 @@ Acceptance goalpost:
 
 No Atlas behavior exists in AURA-Sense core unless a future ADR defines an explicit handoff boundary.
 
+## Support Feature: Combat Logging Test Suite
+
+Goal:
+
+Let engineers test real EVE gamelog datasets safely and deterministically without turning runtime behavior into replay scanning.
+
+User value:
+
+- parser changes become safer
+- real-data edge cases are preserved as explicit fixtures
+- Combat Witness snapshots become reproducible
+- repair/healing support can be added only after exact raw samples prove it
+
+Inputs:
+
+- curated raw EVE gamelog lines
+- source file and line metadata where useful
+- raw line hash
+- proposed event family
+- expected parser outcome or expected rejection
+- ordered fixture datasets for replay/golden snapshot checks
+
+Must not:
+
+- ingest entire private log directories by default
+- store private raw logs outside explicit fixtures
+- require Electron for parser/replay verification
+- use replay harness behavior in normal runtime operation
+- infer tactical truth from coverage percentages
+
+Acceptance goalpost:
+
+AURA-Sense can ingest curated real-data fixture rows, track parser event-family coverage, replay ordered datasets through watcher/runtime/service semantics, compare golden Combat Witness snapshots, and add repair/healing support only from exact raw fixtures.
+
 ## Implementation Refinement Rule
 
 Before implementing a feature element, Dev should identify:

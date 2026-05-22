@@ -2,6 +2,7 @@
 
 Status: Open
 Priority: P1
+Milestone: 07 - Combat Logging Test Suite
 
 ## Need
 
@@ -22,11 +23,12 @@ This lets dataset testing refine predictable events without silently widening pa
 - Verification checks that every accepted parser fixture maps to a supported event family.
 - Verification checks that every deferred fixture remains rejected until explicitly promoted.
 - Coverage status can be summarized in one command.
+- Unknown observed rows remain visible instead of silently disappearing from the matrix.
 
 ## Related Files
 
 - `docs/features/combat-logging-test-suite.md`
+- `docs/roadmap/milestone-07-combat-logging-test-suite.md`
 - `docs/gap/complete/readiness-08-combat-parser-fixtures.md`
 - `fixtures/combat-log-parser.json`
 - `scripts/verify-combat-parser.js`
-

@@ -1,7 +1,7 @@
 # Current State: AURA-Sense Implementation
 
 Date: 2026-05-22
-Status: Passive Telemetry foundation
+Status: Passive Telemetry foundation complete; Combat Logging Test Suite milestone active
 
 ## What Exists
 
@@ -63,6 +63,10 @@ Not yet proven in this codebase:
 - live EVE gamelog operational smoke against an operator machine
 - local metadata-backed system ID resolver
 - live zKill smoke command
+- deterministic combat-log dataset fixture ingestion
+- machine-readable combat-log event coverage matrix
+- offline combat-log replay harness
+- golden Combat Witness snapshot tests from ordered real-data fixtures
 
 ## Intended Runtime Flow
 
@@ -128,7 +132,7 @@ Available command:
 npm run verify:all
 ```
 
-This verifies the current utilities, service rigging, Combat Witness parser/watcher/runtime foundations, Passive Telemetry foundation, renderer shell, and renderer boundary static checks. It does not verify full tactical viewport readiness.
+This verifies the current utilities, service rigging, Combat Witness parser/watcher/runtime foundations, Passive Telemetry foundation, renderer shell, and renderer boundary static checks. It does not yet verify the full Combat Logging Test Suite or full tactical viewport readiness.
 
 Runtime visual smoke is implemented as a separate environment-sensitive command:
 
@@ -149,6 +153,8 @@ It writes artifacts under `.tmp\electron-visual-smoke` and is intentionally not 
 - no local metadata-backed system ID resolver yet
 - no live zKill smoke command yet
 - no exact raw repair/healing fixtures yet
+- no combat-log dataset fixture ingestion or replay harness yet
+- no golden Combat Witness snapshot tests from ordered real-data datasets yet
 - concept and research docs are AURA-Sense product doctrine or evidence notes; older audit records may still describe past cleanup work
 
 ## Related Documents
@@ -172,11 +178,18 @@ It writes artifacts under `.tmp\electron-visual-smoke` and is intentionally not 
 - `docs/audits/audit-2026-05-22-combat-witness-operational-loop-handover.md`
 - `docs/audits/audit-2026-05-22-architecture-and-passive-telemetry-handover.md`
 - `docs/audits/audit-2026-05-22-passive-telemetry-foundation-handover.md`
+- `docs/audits/audit-2026-05-22-combat-log-test-suite-milestone-handover.md`
 - `docs/gap/to-do/aura-sense-tactical-readiness.md`
+- `docs/gap/to-do/combat-log-dataset-fixture-ingestion.md`
+- `docs/gap/to-do/combat-log-event-coverage-matrix.md`
+- `docs/gap/to-do/combat-log-replay-harness.md`
+- `docs/gap/to-do/combat-log-golden-snapshot-tests.md`
+- `docs/gap/to-do/combat-log-repair-healing-fixtures.md`
 - `docs/gap/complete/readiness-15-passive-telemetry-foundation.md`
 - `docs/gap/complete/readiness-14-combat-witness-operational-loop.md`
 - `docs/gap/complete/readiness-13-electron-visual-smoke.md`
 - `docs/features/vision.md`
+- `docs/features/combat-logging-test-suite.md`
 - `docs/roadmap/feature-aligned-milestones.md`
 - `docs/roadmap/architecture-needs-review-2026-05-22.md`
 - `docs/roadmap/milestone-02-runtime-observability.md`
@@ -184,4 +197,5 @@ It writes artifacts under `.tmp\electron-visual-smoke` and is intentionally not 
 - `docs/roadmap/milestone-04-runtime-smoke-readiness.md`
 - `docs/roadmap/milestone-05-combat-witness-operational-loop.md`
 - `docs/roadmap/milestone-06-passive-telemetry-foundation.md`
+- `docs/roadmap/milestone-07-combat-logging-test-suite.md`
 - `docs/roadmap/development-artifact-trail.md`

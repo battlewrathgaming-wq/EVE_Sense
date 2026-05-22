@@ -2,6 +2,7 @@
 
 Status: Open
 Priority: P1
+Milestone: 07 - Combat Logging Test Suite
 
 ## Need
 
@@ -22,12 +23,14 @@ The ingestion path should preserve exact raw line text, hashes, proposed event f
 - A script can read a small fixture source file or spreadsheet export and produce repository fixture JSON/JSONL.
 - Each fixture row includes raw line hash and expected parser disposition.
 - Verification fails if raw line text no longer matches the stored hash.
+- The importer documents accepted source format and refusal behavior for malformed rows.
+- The resulting fixtures are safe to commit because they contain only explicitly curated rows.
 
 ## Related Files
 
 - `docs/features/combat-logging-test-suite.md`
-- `docs/research/aura7_exact_raw_event_samples.xlsx`
+- `docs/roadmap/milestone-07-combat-logging-test-suite.md`
+- `docs/research/aura-sense-exact-raw-event-samples.xlsx`
 - `fixtures/combat-log-parser.json`
 - `scripts/verify-combat-parser.js`
 - `src/combat/combatLogParser.js`
-

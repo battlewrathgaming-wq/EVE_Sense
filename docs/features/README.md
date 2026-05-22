@@ -5,6 +5,7 @@ This folder captures product feature concepts before or during implementation.
 Start with:
 
 - `vision.md`
+- `combat-logging-test-suite.md`
 
 Feature documents should explain:
 
