@@ -37,6 +37,8 @@ service.addEvent({
 
 const snapshot = service.snapshot(Date.parse('2026-05-22T01:00:28.000Z'));
 assert.strictEqual(snapshot.kind, 'combat.witness.snapshot', 'snapshot should identify its kind');
+assert.strictEqual(snapshot.freshness.status, 'recent', 'snapshot should expose backend-owned recent freshness');
+assert.strictEqual(snapshot.freshness.eventStreamCount, 2, 'snapshot freshness should expose bounded event count');
 assert.strictEqual(snapshot.windows['5s'].damage.incoming.total, 5, '5s window should include only recent damage');
 assert.strictEqual(snapshot.windows['15s'].damage.incoming.total, 20, '15s window should include 15s and 5s damage');
 assert.strictEqual(snapshot.windows['30s'].damage.incoming.total, 50, '30s window should include 30s, 15s, and 5s damage');

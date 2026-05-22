@@ -1,6 +1,6 @@
 # Milestone 03: Tactical Viewport First Light
 
-Status: Active
+Status: Complete
 Date: 2026-05-22
 Owner: Overseer direction, Dev execution
 
@@ -36,9 +36,17 @@ This milestone should not begin until Milestone 02 has completed:
 - runtime error handling
 - Combat Witness snapshot bridge
 
-Milestone 02 is complete as of the current handover. Milestone 03 is now the active product-facing direction.
+Milestone 02 is complete as of the current handover.
 
-When it begins, AURA-Sense should already have:
+## Completion Verdict
+
+Milestone 03 first light is complete with caveats.
+
+The renderer now presents a compact Combat Witness surface through the preload snapshot bridge. It consumes backend-owned freshness status and rolling metrics, keeps the event stream bounded, and preserves renderer boundary verification.
+
+This is not full tactical viewport readiness. Threat Intel, Passive Telemetry, pressure, EWAR, topology, recommendations, and production watcher lifecycle wiring remain deferred.
+
+The milestone began with:
 
 - backend Combat Witness snapshots
 - a safe preload/service subscription path
@@ -75,6 +83,8 @@ Avoid:
 - Define fresh/stale/empty wording before UI work.
 - Add fixture or static verification for the expected snapshot shape.
 
+Status: Complete.
+
 ### Slice 2: Minimal Renderer Consumption
 
 - Render Combat Witness snapshot state only.
@@ -83,6 +93,8 @@ Avoid:
 - Show empty state honestly when no recent events exist.
 - Show stale state from freshness metadata rather than renderer guesses.
 
+Status: Complete.
+
 ### Slice 3: Presentation Boundary Verification
 
 - Extend renderer boundary checks if needed to reject Combat Witness metric computation in renderer.
@@ -90,12 +102,16 @@ Avoid:
 - Verify renderer does not contain parser regexes or raw log parsing signals.
 - Keep `npm.cmd run verify:all` offline and passing.
 
+Status: Complete.
+
 ### Slice 4: Product Language Pass
 
 - Replace any seed-shell labels visible in the first operational viewport.
 - Use observed, recent, witnessed, stale, expired, and unavailable language.
 - Avoid hostile, primary, confirmed, or complete unless the backend can prove it.
 - Record the approved copy in the completion handover.
+
+Status: Complete.
 
 ## Completion Signal
 
@@ -117,7 +133,8 @@ This does mean AURA-Sense has crossed from seed rigging into the first honest ta
 
 ## Related Packets
 
-- `docs/gap/to-do/readiness-12-tactical-hud-first-light.md`
+- `docs/gap/complete/readiness-12-tactical-hud-first-light.md`
+- `docs/audits/audit-2026-05-22-tactical-hud-first-light-handover.md`
 - `docs/gap/complete/readiness-11-combat-witness-snapshot-bridge.md`
 - `docs/roadmap/milestone-02-runtime-observability.md`
 - `docs/contracts/renderer-boundary-contract.md`

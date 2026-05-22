@@ -37,6 +37,15 @@ Current backend shape:
 - bounded `eventStream`
 - `freshness.latestEventTime`
 - `freshness.latestObservedAt`
+- `freshness.status`
+- `freshness.latestEventAgeMs`
+- `freshness.eventStreamCount`
 
 Renderer code should present this snapshot shape rather than recomputing rolling combat metrics.
+
+Current freshness statuses:
+
+- `empty`: no bounded Combat Witness event stream item exists
+- `recent`: latest backend reference time is within 15 seconds
+- `stale`: latest backend reference time is older than 15 seconds
 

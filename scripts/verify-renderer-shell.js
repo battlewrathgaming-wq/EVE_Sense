@@ -23,11 +23,17 @@ function main() {
   assert(preload.includes('aura:window:set-always-on-top'), 'preload should expose always-on-top IPC');
   assert(html.includes('frame-chrome'), 'renderer should include Frame chrome');
   assert(html.includes('pin-window'), 'renderer should include always-on-top control');
-  assert(html.includes('service-list'), 'renderer should include service list target');
+  assert(html.includes('AURA-Sense'), 'renderer should carry AURA-Sense product label');
+  assert(html.includes('combat-summary'), 'renderer should include Combat Witness summary target');
+  assert(html.includes('combat-signal'), 'renderer should include Combat Witness freshness target');
+  assert(html.includes('event-list'), 'renderer should include bounded event stream target');
   assert(app.includes('seed.readiness'), 'renderer should request seed readiness through services');
+  assert(app.includes('window.auraCombatWitness.getSnapshot'), 'renderer should request bridge-owned Combat Witness snapshots');
+  assert(app.includes('window.auraCombatWitness.subscribeSnapshots'), 'renderer should subscribe through Combat Witness bridge');
+  assert(app.includes("snapshot?.freshness?.status"), 'renderer should present backend-owned freshness status');
   assert(app.includes('window.auraWindow.setAlwaysOnTop'), 'renderer should toggle always-on-top through Frame bridge');
   assert(!app.includes('innerHTML'), 'renderer should not use innerHTML in the seed shell');
-  assert(app.includes('textContent'), 'renderer should render dynamic service data as textContent');
+  assert(app.includes('textContent'), 'renderer should render dynamic data as textContent');
 
   console.log('renderer shell verified');
 }

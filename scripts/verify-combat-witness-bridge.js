@@ -43,6 +43,7 @@ const subResult = handlers.get(COMBAT_WITNESS_CHANNELS.subscribe)(event);
 assert.strictEqual(subResult.subscribed, true, 'bridge should subscribe sender');
 assert.strictEqual(sent[0].channel, COMBAT_WITNESS_CHANNELS.snapshot, 'bridge should send initial compact snapshot on subscribe');
 assert.strictEqual(sent[0].payload.kind, 'combat.witness.snapshot', 'initial bridge payload should be snapshot');
+assert.strictEqual(sent[0].payload.freshness.status, 'empty', 'initial bridge payload should expose backend freshness status');
 
 service.addEvent(combatDamage('hit-1', '2026-05-22T01:00:00.000Z', 10));
 assert.strictEqual(sent.length, 2, 'bridge should publish first emitted snapshot');

@@ -3,13 +3,13 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Aura Core</title>
+    <title>AURA-Sense</title>
     <link rel="stylesheet" href="./styles.css">
   </head>
   <body>
     <header class="frame-chrome">
       <div class="frame-drag-region">
-        <span>Aura Core</span>
+        <span>AURA-Sense</span>
       </div>
       <nav class="frame-controls" aria-label="Window controls">
         <button class="frame-button" type="button" id="pin-window" title="Toggle always on top" aria-label="Toggle always on top">Pin</button>
@@ -17,27 +17,38 @@
         <button class="frame-button danger" type="button" id="close-window" title="Close" aria-label="Close">X</button>
       </nav>
     </header>
-    <main class="shell">
-      <section class="panel">
-        <div>
-          <p class="eyebrow">Aura Core</p>
-          <h1>Seed shell ready</h1>
-          <p class="summary">A neutral command surface for future Aura projects.</p>
+    <main class="viewport" aria-label="AURA-Sense tactical viewport">
+      <section class="combat-surface" aria-labelledby="combat-title">
+        <div class="surface-header">
+          <p class="eyebrow">Combat Witness</p>
+          <h1 id="combat-title">Recent observations</h1>
+          <p class="summary" id="combat-summary">Waiting for backend snapshot.</p>
         </div>
         <dl class="status-grid">
           <div>
-            <dt>Runtime</dt>
-            <dd id="health">Checking</dd>
+            <dt>Signal</dt>
+            <dd id="combat-signal">Unavailable</dd>
           </div>
           <div>
-            <dt>Commands</dt>
-            <dd id="commands">0</dd>
+            <dt>5s incoming</dt>
+            <dd id="incoming-5s">0</dd>
+          </div>
+          <div>
+            <dt>15s repair</dt>
+            <dd id="repair-15s">0</dd>
+          </div>
+          <div>
+            <dt>Witnessed</dt>
+            <dd id="event-count">0</dd>
           </div>
         </dl>
       </section>
-      <section class="panel compact">
-        <h2>Registered Services</h2>
-        <ul id="service-list" class="service-list"></ul>
+      <section class="event-surface" aria-labelledby="events-title">
+        <div class="section-title">
+          <h2 id="events-title">Event stream</h2>
+          <span id="runtime-health">Checking runtime</span>
+        </div>
+        <ul id="event-list" class="event-list"></ul>
       </section>
     </main>
     <script src="./app.js"></script>

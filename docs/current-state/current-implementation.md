@@ -1,7 +1,7 @@
 # Current State: AURA-Sense Implementation
 
 Date: 2026-05-22
-Status: Runtime foundation
+Status: First-light tactical viewport
 
 ## What Exists
 
@@ -35,6 +35,8 @@ The current implementation includes:
 - reusable active scan, settings, and log path validators
 - frame always-on-top payload validation
 - Combat Witness snapshot IPC/preload bridge
+- first product-facing Combat Witness viewport
+- backend-owned Combat Witness freshness status
 
 ## What Does Not Yet Exist
 
@@ -48,7 +50,8 @@ Not yet proven in this codebase:
 - exact raw repair/healing parser coverage
 - local EVE system/type metadata adapters
 - network gate and live diagnostics for EVE APIs
-- AURA-Sense production HUD renderer
+- production-grade multi-lane HUD renderer
+- live gamelog watcher lifecycle connected to the Combat Witness viewport
 
 ## Intended Runtime Flow
 
@@ -113,16 +116,16 @@ Available command:
 npm run verify:all
 ```
 
-This verifies the current utilities, service rigging, Combat Witness parser/watcher/core foundations, renderer shell, and renderer boundary static checks. It does not verify full tactical viewport readiness.
+This verifies the current utilities, service rigging, Combat Witness parser/watcher/core foundations, Combat Witness first-light surface, renderer shell, and renderer boundary static checks. It does not verify full tactical viewport readiness.
 
 ## Known Gaps
 
-- some seed shell UI and fallback labels still reflect inherited rigging until product shell work begins
+- some inherited seed service names remain below the visible product surface
 - no product-facing settings, Passive Telemetry, or Threat Intel runtime services yet
 - no renderer diagnostics transport or diagnostics UI yet
-- no renderer presentation for Combat Witness snapshots yet
 - no active scan service wired to the prepared validator yet
 - no settings save/restart service wired to the prepared validator yet
+- no live watcher lifecycle wired into the Combat Witness bridge yet
 - no exact raw repair/healing fixtures yet
 - concept and research docs are AURA-Sense product doctrine or evidence notes; older audit records may still describe past cleanup work
 
@@ -138,6 +141,7 @@ This verifies the current utilities, service rigging, Combat Witness parser/watc
 - `docs/audits/audit-2026-05-22-diagnostics-throttling-handover.md`
 - `docs/audits/audit-2026-05-22-runtime-error-handling-handover.md`
 - `docs/audits/audit-2026-05-22-combat-witness-snapshot-bridge-handover.md`
+- `docs/audits/audit-2026-05-22-tactical-hud-first-light-handover.md`
 - `docs/audits/audit-2026-05-22-artifact-and-first-light-handover.md`
 - `docs/audits/audit-2026-05-22-documentation-drift-overseer-review.md`
 - `docs/audits/audit-2026-05-22-aura-sense-reconceptualization-handover.md`

@@ -193,7 +193,7 @@ The renderer can receive compact Combat Witness snapshots without owning parser,
 
 ## Priority 11: Tactical HUD First Light
 
-Status: Active in `docs/gap/to-do/readiness-12-tactical-hud-first-light.md`.
+Status: Complete in `docs/gap/complete/readiness-12-tactical-hud-first-light.md`.
 
 ### Actionables
 
@@ -225,10 +225,9 @@ Threat Intel avoids `Type <id>` where local metadata can provide a readable labe
 
 This overview has been split into individual task files so each line can be implemented, reviewed, and moved to `docs/gap/complete/` independently.
 
-1. `readiness-12-tactical-hud-first-light.md`
-2. `readiness-05-zkill-ref-boundary.md`
-3. `readiness-06-threat-intel-sample-metadata.md`
-4. `readiness-09-local-type-metadata.md`
+1. `readiness-05-zkill-ref-boundary.md`
+2. `readiness-06-threat-intel-sample-metadata.md`
+3. `readiness-09-local-type-metadata.md`
 
 This sequence improves safety before adding heavier combat features.
 

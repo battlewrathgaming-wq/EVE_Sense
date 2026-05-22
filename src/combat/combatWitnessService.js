@@ -46,6 +46,7 @@ class CombatWitnessService {
   }
 
   snapshot(nowMs = this.now()) {
+    const freshness = computeFreshness(this.eventStream[0], nowMs, this.eventStream.length);
     return {
       kind: 'combat.witness.snapshot',
       observedAt: new Date(nowMs).toISOString(),
@@ -56,11 +57,7 @@ class CombatWitnessService {
         ])
       ),
       eventStream: [...this.eventStream],
-      freshness: {
-        latestEventTime: this.eventStream[0]?.eventTime || null,
-        latestObservedAt: this.eventStream[0]?.observedAt || null,
-        eventStreamCount: this.eventStream.length
-      }
+      freshness
     };
   }
 
@@ -149,6 +146,27 @@ function compactEvent(event) {
   };
 }
 
+function computeFreshness(latestEvent, nowMs, eventStreamCount = 0) {
+  const latestEventTime = latestEvent?.eventTime || null;
+  const latestObservedAt = latestEvent?.observedAt || null;
+  const referenceTime = latestObservedAt || latestEventTime;
+  const referenceMs = Date.parse(referenceTime);
+  const ageMs = Number.isFinite(referenceMs) ? Math.max(0, nowMs - referenceMs) : null;
+  let status = 'empty';
+
+  if (ageMs != null) {
+    status = ageMs <= 15000 ? 'recent' : 'stale';
+  }
+
+  return {
+    status,
+    latestEventTime,
+    latestObservedAt,
+    latestEventAgeMs: ageMs,
+    eventStreamCount
+  };
+}
+
 function isStreamEvent(event) {
   return event.kind === 'combat.damage' || event.kind === 'combat.miss' || event.kind === 'combat.repair';
 }
@@ -173,6 +191,7 @@ function emitToListeners(listeners, payload, trace, traceEvent) {
 
 module.exports = {
   CombatWitnessService,
+  computeFreshness,
   DEFAULT_EVENT_STREAM_LIMIT,
   DEFAULT_WINDOW_MS
 };
