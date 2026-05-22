@@ -28,8 +28,7 @@ function createCombatWitnessRuntime({
   const activeWatcher = watcher || new EveGamelogWatcher({
     watcherStrategy: 'auto',
     onEvent: (event) => {
-      service.addEvent(event);
-      notifyObservers(event);
+      observeEvent(event);
     },
     onStatus: (status) => {
       runtime.watcherStatus = normalizeWatcherStatus(status, now());
@@ -116,6 +115,12 @@ function createCombatWitnessRuntime({
     return decorateSnapshot(service.snapshot(), status());
   }
 
+  function observeEvent(event) {
+    const snapshot = service.addEvent(event);
+    notifyObservers(event);
+    return snapshot;
+  }
+
   function subscribeEvents(observer) {
     if (typeof observer !== 'function') {
       throw new Error('Combat Witness runtime observer must be a function');
@@ -145,6 +150,7 @@ function createCombatWitnessRuntime({
     start,
     status,
     stop,
+    observeEvent,
     subscribeEvents,
     watcher: activeWatcher
   };

@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "families": {
+    "combat.damage.color.incoming": {
+      "status": "supported",
+      "parserKind": "combat.damage",
+      "notes": "Incoming color-tagged damage with exact raw fixture coverage."
+    },
+    "combat.damage.color.outgoing": {
+      "status": "supported",
+      "parserKind": "combat.damage",
+      "notes": "Outgoing color-tagged damage with weapon and hit quality fixture coverage."
+    },
+    "combat.miss.incoming": {
+      "status": "supported",
+      "parserKind": "combat.miss",
+      "notes": "Incoming miss fixture coverage."
+    },
+    "combat.miss.outgoing": {
+      "status": "supported",
+      "parserKind": "combat.miss",
+      "notes": "Outgoing miss fixture coverage."
+    },
+    "navigation.jump": {
+      "status": "supported",
+      "parserKind": "navigation.jump",
+      "notes": "Navigation jump fixture coverage for Passive Telemetry routing."
+    },
+    "notify.capacitor.insufficient": {
+      "status": "rejected",
+      "parserKind": null,
+      "notes": "Rejected lookalike for repair/healing; not combat repair evidence."
+    },
+    "unknown.malformed": {
+      "status": "rejected",
+      "parserKind": null,
+      "notes": "Malformed line rejection fixture."
+    },
+    "combat.repair.raw": {
+      "status": "deferred",
+      "parserKind": "combat.repair",
+      "notes": "Rolling service supports normalized repair events, but raw parser support requires exact healing samples."
+    }
+  }
+}

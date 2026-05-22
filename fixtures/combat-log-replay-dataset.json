@@ -1,0 +1,56 @@
+{
+  "name": "curated-combat-replay-basic",
+  "description": "Ordered offline replay dataset for Combat Witness parser/runtime semantics.",
+  "events": [
+    {
+      "at": 0,
+      "rawLineHash": "e373ae04d834bc363c8b8d7de82c38361fdeb2e45ec2441bd0208cc7b3535d99"
+    },
+    {
+      "at": 1000,
+      "rawLineHash": "918d66d05af1a66670b2a8246985a2a3aa177a7e0e1e8e9da4c47fad644b4e81"
+    },
+    {
+      "at": 2000,
+      "rawLineHash": "d24de854b837fa91abc34ebbdfa08ddc24f86f2d742e40e4d65ff83437d55bf8"
+    },
+    {
+      "at": 3000,
+      "rawLineHash": "3305c323656b8b8b4c2df0b15bdc4275095933ce5cf1010cd6419836c79fa6f9"
+    },
+    {
+      "at": 4000,
+      "rawLineHash": "8ce0788db26e9bca06b355e5731ae7e6a4af6439ea8a49144bd5b9ed1f54c20f"
+    }
+  ],
+  "golden": {
+    "snapshotAt": "2021-11-02T18:23:54.000Z",
+    "windows": {
+      "5s": {
+        "eventCount": 1,
+        "damage": {
+          "incoming": { "total": 3, "perSecond": 0.6, "topSource": { "label": "Mining Drone", "count": 1 } },
+          "outgoing": { "total": 0, "perSecond": 0 }
+        },
+        "balance": { "takenDps": 0.6, "dealtDps": 0 }
+      },
+      "15s": {
+        "eventCount": 1,
+        "damage": {
+          "incoming": { "total": 3, "perSecond": 0.2, "topSource": { "label": "Mining Drone", "count": 1 } },
+          "outgoing": { "total": 0, "perSecond": 0 }
+        },
+        "balance": { "takenDps": 0.2, "dealtDps": 0 }
+      },
+      "30s": {
+        "eventCount": 1,
+        "damage": {
+          "incoming": { "total": 3, "perSecond": 0.1, "topSource": { "label": "Mining Drone", "count": 1 } },
+          "outgoing": { "total": 0, "perSecond": 0 }
+        },
+        "balance": { "takenDps": 0.1, "dealtDps": 0 }
+      }
+    },
+    "eventStreamCount": 4
+  }
+}

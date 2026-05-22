@@ -1,6 +1,6 @@
 # Milestone 07: Combat Logging Test Suite
 
-Status: Active
+Status: Complete With Repair Parser Deferral
 Date: 2026-05-22
 Owner: Overseer direction, Dev execution
 
@@ -24,43 +24,61 @@ Feature anchors:
 
 AURA-Sense can ingest curated real-data fixture rows, maintain an event coverage matrix, replay ordered fixture datasets offline, compare golden Combat Witness snapshots, and add repair/healing parser coverage only from exact raw samples.
 
+## Completion Verdict
+
+Milestone 07 is complete with caveats.
+
+The project now has curated fixture ingestion, a coverage matrix, an offline replay harness, and deterministic Combat Witness golden snapshot checks wired into `npm.cmd run verify:all`.
+
+Raw repair/healing parser expansion remains deferred because this slice did not add exact raw healing samples.
+
 ## Task Chain
 
 ### Task 1: Dataset Fixture Ingestion
 
-- Implement `docs/gap/to-do/combat-log-dataset-fixture-ingestion.md`.
+- Completion record: `docs/gap/complete/combat-log-dataset-fixture-ingestion.md`.
 - Accept curated source files or spreadsheet exports.
 - Preserve exact raw line text and raw line hash.
 - Store proposed event family separately from parser truth.
 - Reject hash drift.
 
+Status: Complete.
+
 ### Task 2: Event Coverage Matrix
 
-- Implement `docs/gap/to-do/combat-log-event-coverage-matrix.md`.
+- Completion record: `docs/gap/complete/combat-log-event-coverage-matrix.md`.
 - Track supported, rejected, deferred, and unknown event families.
 - Require exact raw fixtures before marking a family supported.
 - Verify accepted parser fixtures map to supported families.
 
+Status: Complete.
+
 ### Task 3: Replay Harness
 
-- Implement `docs/gap/to-do/combat-log-replay-harness.md`.
+- Completion record: `docs/gap/complete/combat-log-replay-harness.md`.
 - Replay ordered fixture datasets through the same parser/watcher/runtime/service semantics used by the app.
 - Simulate ordering, chunking, partial lines, duplicate suppression, listener isolation, and event fan-out.
 - Keep replay strictly offline and outside runtime behavior.
 
+Status: Complete.
+
 ### Task 4: Golden Snapshot Tests
 
-- Implement `docs/gap/to-do/combat-log-golden-snapshot-tests.md`.
+- Completion record: `docs/gap/complete/combat-log-golden-snapshot-tests.md`.
 - Compare deterministic 5s/15s/30s Combat Witness snapshots from known datasets.
 - Avoid wall-clock dependence.
 - Keep renderer layout and styling out of the tests.
 
+Status: Complete.
+
 ### Task 5: Repair And Healing Fixtures
 
-- Implement `docs/gap/to-do/combat-log-repair-healing-fixtures.md`.
+- Completion record: `docs/gap/complete/combat-log-repair-healing-fixtures.md`.
 - Add exact raw repair/healing samples with hashes.
 - Add rejected lookalikes such as repair cost questions, capacitor failure, and module denial.
 - Only then expand parser claims for `combat.repair`.
+
+Status: Complete with parser expansion deferred.
 
 ### Task 6: Verification Integration
 
@@ -68,11 +86,15 @@ AURA-Sense can ingest curated real-data fixture rows, maintain an event coverage
 - Include them in `npm.cmd run verify:all` after they are stable.
 - Keep Electron smoke out of this milestone unless a visible UI state changes.
 
+Status: Complete.
+
 ### Task 7: State And Handover
 
 - Move completed packets to `docs/gap/complete`.
 - Update `docs/current-state/current-implementation.md`.
 - Record fixture formats, coverage summary, replay behavior, golden snapshot outputs, and parser claim changes.
+
+Status: Complete.
 
 ## Autonomy Envelope
 

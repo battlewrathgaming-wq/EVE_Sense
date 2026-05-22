@@ -1,7 +1,7 @@
 # Current State: AURA-Sense Implementation
 
 Date: 2026-05-22
-Status: Passive Telemetry foundation complete; Passive Telemetry live-readiness interlock active; Combat Logging Test Suite milestone active
+Status: Combat Logging Test Suite complete with repair parser deferral; Passive Telemetry live-readiness interlock active
 
 ## What Exists
 
@@ -45,6 +45,10 @@ The current implementation includes:
 - backend zKill system-context normalization boundary
 - Passive Telemetry preload bridge and compact HUD panel
 - normalized gamelog event fan-out from the existing backend watcher path
+- curated combat-log fixture ingestion with raw-line hash drift checks
+- machine-readable combat-log event coverage matrix
+- offline combat-log replay harness for parser/runtime/service semantics
+- deterministic Combat Witness golden snapshot verification
 
 ## What Does Not Yet Exist
 
@@ -63,10 +67,6 @@ Not yet proven in this codebase:
 - live EVE gamelog operational smoke against an operator machine
 - local metadata-backed system ID resolver
 - live zKill smoke command
-- deterministic combat-log dataset fixture ingestion
-- machine-readable combat-log event coverage matrix
-- offline combat-log replay harness
-- golden Combat Witness snapshot tests from ordered real-data fixtures
 - Passive Telemetry live IO gate
 - Passive Telemetry request accounting/status pulse
 - scoped passive zKill `pastSeconds` route
@@ -135,7 +135,7 @@ Available command:
 npm run verify:all
 ```
 
-This verifies the current utilities, service rigging, Combat Witness parser/watcher/runtime foundations, Passive Telemetry foundation, renderer shell, and renderer boundary static checks. It does not yet verify the full Combat Logging Test Suite or full tactical viewport readiness.
+This verifies the current utilities, service rigging, Combat Witness parser/watcher/runtime foundations, Combat Logging Test Suite offline checks, Passive Telemetry foundation, renderer shell, and renderer boundary static checks. It does not verify full tactical viewport readiness.
 
 Runtime visual smoke is implemented as a separate environment-sensitive command:
 
@@ -158,9 +158,7 @@ It writes artifacts under `.tmp\electron-visual-smoke` and is intentionally not 
 - no Passive Telemetry live IO gate yet
 - no passive zKill request pulse/accounting yet
 - passive zKill route still needs bounded `pastSeconds` scoping before live use
-- no exact raw repair/healing fixtures yet
-- no combat-log dataset fixture ingestion or replay harness yet
-- no golden Combat Witness snapshot tests from ordered real-data datasets yet
+- no exact raw repair/healing fixtures yet; raw `combat.repair` parser support remains deferred
 - concept and research docs are AURA-Sense product doctrine or evidence notes; older audit records may still describe past cleanup work
 
 ## Related Documents
@@ -185,13 +183,14 @@ It writes artifacts under `.tmp\electron-visual-smoke` and is intentionally not 
 - `docs/audits/audit-2026-05-22-architecture-and-passive-telemetry-handover.md`
 - `docs/audits/audit-2026-05-22-passive-telemetry-foundation-handover.md`
 - `docs/audits/audit-2026-05-22-combat-log-test-suite-milestone-handover.md`
+- `docs/audits/audit-2026-05-22-combat-log-test-suite-handover.md`
 - `docs/audits/audit-2026-05-22-passive-telemetry-live-readiness-endpoint-io.md`
 - `docs/gap/to-do/aura-sense-tactical-readiness.md`
-- `docs/gap/to-do/combat-log-dataset-fixture-ingestion.md`
-- `docs/gap/to-do/combat-log-event-coverage-matrix.md`
-- `docs/gap/to-do/combat-log-replay-harness.md`
-- `docs/gap/to-do/combat-log-golden-snapshot-tests.md`
-- `docs/gap/to-do/combat-log-repair-healing-fixtures.md`
+- `docs/gap/complete/combat-log-dataset-fixture-ingestion.md`
+- `docs/gap/complete/combat-log-event-coverage-matrix.md`
+- `docs/gap/complete/combat-log-replay-harness.md`
+- `docs/gap/complete/combat-log-golden-snapshot-tests.md`
+- `docs/gap/complete/combat-log-repair-healing-fixtures.md`
 - `docs/gap/complete/readiness-15-passive-telemetry-foundation.md`
 - `docs/gap/complete/readiness-14-combat-witness-operational-loop.md`
 - `docs/gap/complete/readiness-13-electron-visual-smoke.md`

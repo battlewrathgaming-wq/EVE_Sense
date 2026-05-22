@@ -28,9 +28,9 @@ class CombatWitnessService {
     ]));
   }
 
-  addEvent(event, nowMs = this.eventNow(event)) {
-    if (!event || typeof event !== 'object') {
-      return this.snapshot(nowMs);
+  addEvent(event, nowMs = null) {
+    if (!event || typeof event !== 'object' || !isCombatWitnessEvent(event)) {
+      return this.snapshot(nowMs ?? this.now());
     }
 
     this.addEventStreamItem(event);
@@ -40,7 +40,8 @@ class CombatWitnessService {
       window.add(event);
     }
 
-    const snapshot = this.snapshot(nowMs);
+    const referenceNowMs = nowMs ?? Math.max(this.eventNow(event), this.latestWindowEventMs());
+    const snapshot = this.snapshot(referenceNowMs);
     this.emitSnapshot(snapshot);
     return snapshot;
   }
@@ -102,6 +103,13 @@ class CombatWitnessService {
   eventNow(event) {
     const eventMs = Date.parse(event?.eventTime);
     return Number.isFinite(eventMs) ? eventMs : this.now();
+  }
+
+  latestWindowEventMs() {
+    const latest = Array.from(this.windows.values())
+      .map((window) => window.latestEventMs)
+      .filter((value) => Number.isFinite(value));
+    return latest.length ? Math.max(...latest) : this.now();
   }
 }
 
@@ -169,6 +177,10 @@ function computeFreshness(latestEvent, nowMs, eventStreamCount = 0) {
 
 function isStreamEvent(event) {
   return event.kind === 'combat.damage' || event.kind === 'combat.miss' || event.kind === 'combat.repair';
+}
+
+function isCombatWitnessEvent(event) {
+  return isStreamEvent(event);
 }
 
 function subscribe(listeners, listener) {

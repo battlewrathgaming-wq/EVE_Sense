@@ -1,0 +1,28 @@
+# Complete: Combat Log Dataset Fixture Ingestion
+
+Status: Complete
+Date: 2026-05-22
+
+## Outcome
+
+Curated combat-log rows can be verified as commit-safe fixtures with exact raw line text, raw line hash, expected disposition, source metadata, and proposed family.
+
+## Evidence
+
+- `fixtures/combat-log-curated-source.jsonl`
+- `scripts/import-combat-log-fixtures.js`
+- `npm.cmd run verify:combat-fixtures`
+
+## Verification Signal
+
+```txt
+combat fixture ingestion verified: 7 curated rows
+```
+
+## Guardrails Preserved
+
+- No private log directory ingestion.
+- No source dataset mutation.
+- Raw line hash drift is rejected.
+- Proposed family remains annotation, not parser truth.
+- Electron is not required.

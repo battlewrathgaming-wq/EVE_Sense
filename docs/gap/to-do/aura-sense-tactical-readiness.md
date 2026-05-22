@@ -23,6 +23,7 @@ Track the work required before AURA-Sense can honestly claim tactical viewport r
 - Keep Combat Witness backend-owned normalized events, bounded rolling cache, and 5s/15s/30s snapshots as the foundation for future presentation.
 - Keep live/API smoke checks separate from offline verification.
 - Keep Electron visual smoke separate from offline verification.
+- Treat Combat Logging Test Suite as complete with raw repair/healing parser support explicitly deferred until exact samples exist.
 - Use feature-aligned milestones for implementation sequencing instead of assigning one-off micro-tasks.
 - Record completion evidence in `docs/gap/complete/` as gaps close.
 
@@ -53,6 +54,11 @@ AURA-Sense has a verified tactical viewport skeleton with separated telemetry la
 - `docs/roadmap/milestone-05-combat-witness-operational-loop.md`
 - `docs/gap/complete/readiness-14-combat-witness-operational-loop.md`
 - `docs/gap/complete/readiness-15-passive-telemetry-foundation.md`
+- `docs/gap/complete/combat-log-dataset-fixture-ingestion.md`
+- `docs/gap/complete/combat-log-event-coverage-matrix.md`
+- `docs/gap/complete/combat-log-replay-harness.md`
+- `docs/gap/complete/combat-log-golden-snapshot-tests.md`
+- `docs/gap/complete/combat-log-repair-healing-fixtures.md`
 - `docs/roadmap/milestone-06-passive-telemetry-foundation.md`
 - `docs/gap/complete/readiness-12-tactical-hud-first-light.md`
 - `docs/gap/complete/readiness-13-electron-visual-smoke.md`

@@ -117,15 +117,16 @@ Passive Telemetry can present current-system zKillmail context after a gate jump
 
 ### Milestone 07: Combat Logging Test Suite
 
-Status: Active in:
+Status: Complete in:
 
 - `docs/features/combat-logging-test-suite.md`
 - `docs/audits/audit-2026-05-22-combat-log-test-suite-milestone-handover.md`
-- `docs/gap/to-do/combat-log-dataset-fixture-ingestion.md`
-- `docs/gap/to-do/combat-log-event-coverage-matrix.md`
-- `docs/gap/to-do/combat-log-replay-harness.md`
-- `docs/gap/to-do/combat-log-golden-snapshot-tests.md`
-- `docs/gap/to-do/combat-log-repair-healing-fixtures.md`
+- `docs/audits/audit-2026-05-22-combat-log-test-suite-handover.md`
+- `docs/gap/complete/combat-log-dataset-fixture-ingestion.md`
+- `docs/gap/complete/combat-log-event-coverage-matrix.md`
+- `docs/gap/complete/combat-log-replay-harness.md`
+- `docs/gap/complete/combat-log-golden-snapshot-tests.md`
+- `docs/gap/complete/combat-log-repair-healing-fixtures.md`
 
 Feature anchors:
 
@@ -164,6 +165,15 @@ Dev may not:
 Acceptance gate:
 
 The test suite can ingest curated real-data rows, verify raw line hashes, summarize event-family coverage, replay datasets deterministically, compare golden snapshots, and keep repair/healing claims gated behind exact raw fixtures.
+
+Completion signal:
+
+```txt
+combat fixture ingestion verified: 7 curated rows
+combat log coverage verified: supported=5 rejected=2 deferred=1 unknown=0
+combat log replay verified: events=5 stream=4
+combat golden snapshots verified: windows=5s,15s,30s
+```
 
 ### Milestone 08: Scoped Threat Intel Foundation
 
