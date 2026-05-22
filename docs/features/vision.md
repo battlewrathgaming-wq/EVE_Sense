@@ -181,7 +181,8 @@ Inputs:
 - 3 second clipboard listening window
 - validation and target classification
 - automatic transfer into the search box and scan run when a valid target is captured
-- cooldown after capture, timeout, or cancellation
+- 5 second cooldown after capture, timeout, cancellation, or rejected clipboard content
+- global/hands-free arming path that does not require focusing the AURA-Sense window during fullscreen play
 
 Must not:
 
@@ -191,10 +192,12 @@ Must not:
 - blur with passive telemetry
 - remain armed without a visible indicator
 - bypass the search bar / Threat Intel scan boundary
+- require window focus for the primary arming workflow
+- re-arm during cooldown
 
 Acceptance goalpost:
 
-The operator can press Ctrl+Shift, see an armed visual indicator, copy a target within the short listening window, have AURA-Sense place the target into the search box and run the scoped scan, then see the listener seal and enter cooldown.
+The operator can press Ctrl+Shift without focusing the AURA-Sense window, see an armed visual indicator, copy a target within the short listening window, have AURA-Sense place the target into the search box and run the scoped scan, then see the listener seal and enter a 5 second cooldown.
 
 ## Element 6: Diagnostics And Degraded State
 

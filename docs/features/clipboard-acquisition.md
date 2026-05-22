@@ -11,14 +11,18 @@ Provide a brief, deliberate tactical acquisition window for copied EVE names or 
 
 Supports low-interaction tactical inquiry without keeping a passive clipboard listener active.
 
+The operator should not need to focus the AURA-Sense window during fullscreen EVE use. Clipboard acquisition exists specifically to avoid breaking tactical flow with window focus changes.
+
 ## Intended Interaction
 
 - The operator sees an acquisition indicator in the UI.
 - The operator presses Ctrl+Shift to arm clipboard acquisition.
 - AURA-Sense opens a 3 second listening window.
 - If a valid target is copied during that window, AURA-Sense inserts it into the search box and runs the scoped scan.
-- The listener then seals and enters cooldown.
-- If nothing valid is captured, the listener times out and seals.
+- The listener then seals and enters a 5 second cooldown.
+- If nothing valid is captured, the listener times out, seals, and enters a 5 second cooldown.
+- The cooldown applies after capture, timeout, cancellation, or rejected clipboard content.
+- The scan remains a Threat Intel search-box workflow even when the search box is populated hands-free.
 
 ## Data Classification
 
@@ -31,6 +35,8 @@ Presentation/input workflow. Not evidence and not persistent intelligence.
 - Do not trigger broad background scans.
 - Do not bypass the search bar or Threat Intel boundary.
 - Do not remain armed without a visible indicator.
+- Do not require AURA-Sense window focus for the keyboard arming path.
+- Do not re-arm immediately after capture or timeout.
 
 ## Related Documents
 

@@ -44,6 +44,19 @@ Aura 7 lineage:
 - Do not add ESI expansion to Passive Telemetry.
 - Do not use live gating as permission for broad polling.
 - Do not make renderer code call zKill, ESI, or fetch directly.
+- Do not make search focus the only path to operator-initiated live context; fullscreen EVE use needs hands-free acquisition.
+
+## Operator Intent Rule
+
+Search focus alone is not enough to justify a live request.
+
+Allowed live request triggers:
+
+- explicit search submit from the AURA-Sense UI
+- valid clipboard acquisition through the visible Ctrl+Shift armed listener
+- optional stable typed input debounce in a future Threat Intel milestone, if it remains visible and cancellable
+
+Clipboard acquisition is the preferred hands-free path for fullscreen play. It may populate the search box and trigger the scoped scan after a valid captured target, then must seal and enter a 5 second cooldown.
 
 ## Ordered Dev Slices
 
@@ -98,4 +111,3 @@ The interlock is complete when:
 - partial context expires honestly
 - offline verification passes
 - no renderer network calls, Threat Intel search, ESI expansion, Atlas persistence, or broad polling were added
-
