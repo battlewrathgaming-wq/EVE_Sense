@@ -1,6 +1,6 @@
 # Milestone 09: Scoped Threat Intel And Clipboard Acquisition
 
-Status: Active - Next Dev Runway
+Status: Complete - Live network smoke deferred
 Date: 2026-05-22
 Owner: Overseer direction, Dev execution
 
@@ -23,30 +23,35 @@ Do not start this milestone until Passive Telemetry live-safe readiness has clea
 
 ## Operational Outcome
 
-The operator can run a scoped zKill-backed tactical probe by submitting a search target or by using Ctrl+Shift clipboard acquisition. The result shows target, scope, provider, lookback, sample cap, freshness, failure/cap/partial state, and no false certainty.
+The operator can run a scoped zKill-backed tactical probe by submitting a search target or by using armed clipboard acquisition. The result shows target, scope, provider, lookback, sample cap, freshness, failure/cap/partial state, and no false certainty.
+
+Implementation note: Electron global shortcut registration uses `CommandOrControl+Shift+Space` rather than a bare Ctrl+Shift chord. The HUD Arm control remains available for focused operation, and the smoke artifact records the global shortcut as registered.
 
 ## Task Chain
 
 ### Task 1: Search Request Contract
 
+- Status: Complete.
 - Define backend Threat Intel scan request and snapshot shape.
 - Support target text, target kind when known, input source, lookback seconds, sample limit, and live gate state.
 - Keep typed input, pasted input, and clipboard-acquired input on the same request contract.
 - Return explicit validation errors for empty, ambiguous, unsupported, or unresolved targets.
 
-Task packet: `docs/gap/to-do/threat-intel-scan-request-contract.md`.
+Task packet: `docs/gap/complete/threat-intel-scan-request-contract.md`.
 
 ### Task 2: Target Resolution Boundary
 
+- Status: Complete.
 - Add local/static resolution where practical before live lookup.
 - Support system, pilot, corporation, alliance, and copied target text as accepted target categories.
 - Preserve unresolved/ambiguous states instead of guessing.
 - Do not introduce large metadata imports before a consumer needs them.
 
-Task packet: `docs/gap/to-do/threat-intel-target-resolution-boundary.md`.
+Task packet: `docs/gap/complete/threat-intel-target-resolution-boundary.md`.
 
 ### Task 3: zKill Scoped Probe
 
+- Status: Complete.
 - Add backend-only zKill query/ref normalization for the requested target.
 - Use bounded routes with explicit lookback where available.
 - Normalize malformed/non-array responses into partial/degraded metadata.
@@ -54,21 +59,23 @@ Task packet: `docs/gap/to-do/threat-intel-target-resolution-boundary.md`.
 
 Task packets:
 
-- `docs/gap/to-do/threat-intel-zkill-scoped-probe.md`
-- `docs/gap/to-do/readiness-05-zkill-ref-boundary.md`
-- `docs/gap/to-do/readiness-06-threat-intel-sample-metadata.md`
+- `docs/gap/complete/threat-intel-zkill-scoped-probe.md`
+- `docs/gap/complete/readiness-05-zkill-ref-boundary.md`
+- `docs/gap/complete/readiness-06-threat-intel-sample-metadata.md`
 
 ### Task 4: Search UI Surface
 
+- Status: Complete.
 - Add a compact search box and result surface.
 - Search submits only from explicit user action.
 - Search focus alone must not call APIs.
 - Optional typed-input debounce remains deferred unless explicitly requested; if later added, it must be visible, cancellable, and live-gated.
 
-Task packet: `docs/gap/to-do/threat-intel-search-ui-surface.md`.
+Task packet: `docs/gap/complete/threat-intel-search-ui-surface.md`.
 
 ### Task 5: Clipboard Acquisition
 
+- Status: Complete with shortcut caveat above.
 - Implement Ctrl+Shift hands-free acquisition without requiring AURA-Sense window focus.
 - Show visible armed, listening, sealed, and cooldown state.
 - Open a 3 second clipboard listening window.
@@ -76,29 +83,32 @@ Task packet: `docs/gap/to-do/threat-intel-search-ui-surface.md`.
 - Seal after capture, timeout, cancellation, or rejected content.
 - Enforce a 5 second cooldown after seal before re-arming.
 
-Task packet: `docs/gap/to-do/clipboard-acquisition-workflow.md`.
+Task packet: `docs/gap/complete/clipboard-acquisition-workflow.md`.
 
 ### Task 6: Live IO Gate And Observability
 
+- Status: Complete for gated/offline behavior; live network smoke deferred.
 - Use the live IO gate discipline established by Milestone 08.
 - Block live zKill calls when live IO is disabled and surface the blocked state.
 - Log request attempts and outcomes through backend diagnostics.
 - Keep `verify:all` offline.
 
-Task packet: `docs/gap/to-do/threat-intel-live-gate-and-observability.md`.
+Task packet: `docs/gap/complete/threat-intel-live-gate-and-observability.md`.
 
 ### Task 7: Renderer Boundary Verification
 
+- Status: Complete.
 - Verify renderer does not call zKill, ESI, fetch, filesystem, parser, or backend runtime modules directly.
 - Verify clipboard listener lifecycle states.
 - Verify cooldown behavior.
 - Verify no scan runs from focus alone.
 - Verify live disabled state blocks request execution.
 
-Task packet: `docs/gap/to-do/threat-intel-renderer-boundary-verification.md`.
+Task packet: `docs/gap/complete/threat-intel-renderer-boundary-verification.md`.
 
 ### Task 8: State And Handover
 
+- Status: Complete.
 - Update current-state with implemented scan/acquisition behavior.
 - Record explicit deferrals.
 - Hand over target categories, request contract, live gate behavior, clipboard lifecycle, verification, and any live smoke evidence.
@@ -138,6 +148,31 @@ Milestone 09 is complete when:
 - renderer boundary verification passes
 - `npm.cmd run verify:all` passes
 - live smoke, if run, is explicit and recorded outside `verify:all`
+
+## Completion Evidence
+
+Verification completed:
+
+```txt
+threat intel verified
+renderer boundary verified (4 files scanned)
+renderer shell verified
+all checks verified
+```
+
+Electron visual smoke completed:
+
+```txt
+AURA-Sense visual smoke passed: F:\Projects\AURA-Sense\.tmp\electron-visual-smoke
+clipboard_acquisition_global_shortcut { accelerator: 'CommandOrControl+Shift+Space', registered: true }
+```
+
+Deferred by design:
+
+- live Threat Intel zKill network smoke behind explicit live API enablement
+- ESI killmail expansion
+- Atlas persistence, evidence queues, reports, and watch execution
+- local type metadata until a concrete type-label consumer exists
 
 ## Expected Handover
 

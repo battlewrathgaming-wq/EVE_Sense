@@ -1,6 +1,6 @@
 # Gap To-Do: Threat Intel Search UI Surface
 
-Status: Open
+Status: Complete
 Priority: P1
 Milestone: 09 - Scoped Threat Intel And Clipboard Acquisition
 

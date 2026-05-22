@@ -1,7 +1,7 @@
 # Gap To-Do: zKill Discovery Ref Boundary
 
 Date: 2026-05-22
-Status: Open - Active Under Milestone 09
+Status: Complete
 
 ## Actionables
 
@@ -17,7 +17,7 @@ Status: Open - Active Under Milestone 09
 
 Threat Intel should receive clean zKill-backed result metadata, not raw unbounded zKill summary payloads.
 
-This packet is now active under Milestone 09. Implement it against the real Threat Intel zKill service boundary, not renderer-only placeholder state.
+This packet was completed under Milestone 09 against the real Threat Intel zKill service boundary, not renderer-only placeholder state.
 
 Target shape:
 

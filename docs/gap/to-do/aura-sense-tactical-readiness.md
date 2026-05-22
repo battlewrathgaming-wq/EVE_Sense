@@ -19,13 +19,15 @@ Track the work required before AURA-Sense can honestly claim tactical viewport r
 - Treat Tactical Viewport First Light as complete, not as full tactical viewport readiness.
 - Rebuild Passive Telemetry with local-first system metadata.
 - Treat Passive Telemetry foundation and live-safe readiness as complete; live network smoke remains explicitly opt-in and deferred until `AURA_SENSE_LIVE_API=1`.
-- Rebuild Threat Intel around explicit search submit or armed clipboard acquisition with capped zKill sample metadata and freshness language; keep ESI killmail expansion deferred until explicitly authorized.
+- Treat scoped Threat Intel and Clipboard Acquisition as complete for offline/gated foundation behavior; keep live Threat Intel zKill network smoke deferred until explicitly enabled and recorded.
+- Keep ESI killmail expansion deferred until explicitly authorized.
+- Keep local type metadata deferred until a concrete type-label consumer appears.
 - Keep Combat Witness backend-owned normalized events, bounded rolling cache, and 5s/15s/30s snapshots as the foundation for future presentation.
 - Keep live/API smoke checks separate from offline verification.
 - Keep Electron visual smoke separate from offline verification.
 - Treat Combat Logging Test Suite as complete with raw repair/healing parser support explicitly deferred until exact samples exist.
 - Treat Passive Telemetry live-safe readiness as complete with live network smoke still deferred behind `AURA_SENSE_LIVE_API=1`.
-- Proceed next with Milestone 09: scoped Threat Intel and hands-free Clipboard Acquisition.
+- Proceed next with Milestone 10: integrated tactical viewport composition, unless Overseer issues a narrower hardening task.
 - Use feature-aligned milestones for implementation sequencing instead of assigning one-off micro-tasks.
 - Record completion evidence in `docs/gap/complete/` as gaps close.
 
@@ -56,6 +58,7 @@ AURA-Sense has a verified tactical viewport skeleton with separated telemetry la
 - `docs/roadmap/milestone-05-combat-witness-operational-loop.md`
 - `docs/roadmap/milestone-08-passive-telemetry-live-safe-readiness.md`
 - `docs/roadmap/milestone-09-scoped-threat-intel-and-clipboard-acquisition.md`
+- `docs/audits/audit-2026-05-22-threat-intel-and-clipboard-handover.md`
 - `docs/audits/audit-2026-05-22-post-passive-live-safe-next-runway.md`
 - `docs/audits/audit-2026-05-22-next-dev-runway-handover.md`
 - `docs/gap/complete/readiness-14-combat-witness-operational-loop.md`
@@ -72,6 +75,15 @@ AURA-Sense has a verified tactical viewport skeleton with separated telemetry la
 - `docs/gap/complete/passive-telemetry-debugging-and-tracing.md`
 - `docs/gap/complete/passive-telemetry-freshness-honesty.md`
 - `docs/gap/complete/passive-telemetry-live-smoke-harness.md`
+- `docs/gap/complete/threat-intel-scan-request-contract.md`
+- `docs/gap/complete/threat-intel-target-resolution-boundary.md`
+- `docs/gap/complete/threat-intel-zkill-scoped-probe.md`
+- `docs/gap/complete/threat-intel-search-ui-surface.md`
+- `docs/gap/complete/clipboard-acquisition-workflow.md`
+- `docs/gap/complete/threat-intel-live-gate-and-observability.md`
+- `docs/gap/complete/threat-intel-renderer-boundary-verification.md`
+- `docs/gap/complete/readiness-05-zkill-ref-boundary.md`
+- `docs/gap/complete/readiness-06-threat-intel-sample-metadata.md`
 - `docs/roadmap/milestone-06-passive-telemetry-foundation.md`
 - `docs/gap/complete/readiness-12-tactical-hud-first-light.md`
 - `docs/gap/complete/readiness-13-electron-visual-smoke.md`

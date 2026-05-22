@@ -88,6 +88,39 @@
         </dl>
         <p id="passive-message">Waiting for a future observed system change.</p>
       </section>
+      <section class="threat-surface" aria-labelledby="threat-title">
+        <div class="section-title">
+          <h2 id="threat-title">Threat Intel</h2>
+          <span id="threat-state">Idle</span>
+        </div>
+        <form id="threat-search" class="threat-search">
+          <label for="threat-target">Target</label>
+          <div>
+            <input id="threat-target" name="threat-target" type="text" autocomplete="off" placeholder="system:Jita, pilot:Chribba">
+            <button type="submit">Scan</button>
+            <button id="clipboard-arm" type="button">Arm</button>
+          </div>
+        </form>
+        <dl class="threat-grid">
+          <div>
+            <dt>Target</dt>
+            <dd id="threat-target-label">Unselected</dd>
+          </div>
+          <div>
+            <dt>Provider</dt>
+            <dd id="threat-provider">None</dd>
+          </div>
+          <div>
+            <dt>Sample</dt>
+            <dd id="threat-sample">0 / 0</dd>
+          </div>
+          <div>
+            <dt>Clipboard</dt>
+            <dd id="clipboard-state">Idle</dd>
+          </div>
+        </dl>
+        <p id="threat-message">Submit a target to run a scoped scan.</p>
+      </section>
     </main>
     <script src="./app.js"></script>
   </body>

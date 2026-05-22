@@ -1,0 +1,11 @@
+{
+  "targets": [
+    { "kind": "system", "label": "Jita", "id": 30000142 },
+    { "kind": "system", "label": "Perimeter", "id": 30000144 },
+    { "kind": "pilot", "label": "Chribba", "id": 138668117 },
+    { "kind": "corporation", "label": "Caldari Navy", "id": 1000035 },
+    { "kind": "alliance", "label": "Goonswarm Federation", "id": 1354830081 },
+    { "kind": "system", "label": "Ambiguous Example", "id": 30000001 },
+    { "kind": "corporation", "label": "Ambiguous Example", "id": 98000001 }
+  ]
+}

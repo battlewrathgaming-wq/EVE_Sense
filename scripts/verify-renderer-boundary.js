@@ -15,6 +15,11 @@ const scanTargets = [
         message: 'renderer must not make network calls directly'
       },
       {
+        name: 'renderer threat provider calls',
+        pattern: /killmail|system_kills|system_jumps|pastSeconds|\/api\//i,
+        message: 'renderer must not contain provider-specific Threat Intel logic'
+      },
+      {
         name: 'renderer node imports',
         pattern: /\brequire\s*\(|\bimport\s+.*\s+from\s+['"](?:node:|electron|fs|path|chokidar)/,
         message: 'renderer must not import Node, Electron, or main-process modules'

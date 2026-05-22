@@ -1,6 +1,6 @@
 # Gap To-Do: Threat Intel Scan Request Contract
 
-Status: Open
+Status: Complete
 Priority: P0
 Milestone: 09 - Scoped Threat Intel And Clipboard Acquisition
 

@@ -1,7 +1,7 @@
 # Current State: AURA-Sense Implementation
 
 Date: 2026-05-22
-Status: Passive Telemetry live-safe readiness complete with live network smoke deferred
+Status: Scoped Threat Intel and Clipboard Acquisition foundation complete with live network smoke deferred
 
 ## What Exists
 
@@ -52,6 +52,14 @@ The current implementation includes:
 - Passive Telemetry ESI aggregate system kills/jumps activity client
 - one-hour Passive Telemetry ESI activity cache with ETag revalidation behavior
 - explicit opt-in Passive Telemetry live API smoke command
+- backend Threat Intel scan request and snapshot contract
+- local/static Threat Intel target resolver for systems, pilots, corporations, alliances, and copied text
+- backend-only scoped Threat Intel zKill `pastSeconds` probe
+- Threat Intel live IO gate with visible blocked state when live calls are disabled
+- compact Threat Intel search surface that scans only on explicit submit
+- Clipboard Acquisition service with armed/listening/sealed/cooldown lifecycle
+- global clipboard arming shortcut registered as `CommandOrControl+Shift+Space`
+- Threat Intel preload bridge with no renderer-owned provider calls
 - curated combat-log fixture ingestion with raw-line hash drift checks
 - machine-readable combat-log event coverage matrix
 - offline combat-log replay harness for parser/runtime/service semantics
@@ -63,8 +71,7 @@ AURA-Sense has not yet completed the full tactical viewport scope.
 
 Not yet proven in this codebase:
 
-- Threat Intel scan lane
-- zKill-backed search and optional ESI expansion pipeline
+- live zKill-backed Threat Intel search and optional ESI expansion pipeline
 - exact raw repair/healing parser coverage
 - local EVE system/type metadata adapters
 - production-grade multi-lane HUD renderer
@@ -73,6 +80,8 @@ Not yet proven in this codebase:
 - live EVE gamelog operational smoke against an operator machine
 - full provider request pulse UI
 - live zKill/ESI smoke execution with `AURA_SENSE_LIVE_API=1`
+- live Threat Intel zKill smoke execution with `AURA_SENSE_LIVE_API=1`
+- exact Ctrl+Shift-only accelerator capture; Electron runtime uses `CommandOrControl+Shift+Space` for the global shortcut and the UI Arm control remains available
 
 ## Intended Runtime Flow
 
@@ -113,7 +122,7 @@ EVE location/log observation
 ### Threat Intel
 
 ```txt
-manual scoped scan
+explicit search submit or armed clipboard acquisition
 -> local/static resolution where possible
 -> zKill discovery refs
 -> bounded zKillmail-backed sample with cap/failure/freshness metadata
@@ -139,7 +148,7 @@ Available command:
 npm run verify:all
 ```
 
-This verifies the current utilities, service rigging, Combat Witness parser/watcher/runtime foundations, Combat Logging Test Suite offline checks, Passive Telemetry foundation, renderer shell, and renderer boundary static checks. It does not verify full tactical viewport readiness.
+This verifies the current utilities, service rigging, Combat Witness parser/watcher/runtime foundations, Combat Logging Test Suite offline checks, Passive Telemetry foundation, Threat Intel request/resolution/zKill normalization/clipboard lifecycle checks, renderer shell, and renderer boundary static checks. It does not verify full tactical viewport readiness.
 
 Runtime visual smoke is implemented as a separate environment-sensitive command:
 
@@ -152,7 +161,7 @@ It writes artifacts under `.tmp\electron-visual-smoke` and is intentionally not 
 ## Known Gaps
 
 - some inherited seed service names remain below the visible product surface
-- no product-facing settings or Threat Intel runtime services yet
+- no product-facing settings persistence yet
 - no renderer diagnostics transport or diagnostics UI yet
 - no active scan service wired to the prepared validator yet
 - no persistent settings save/restart service yet
@@ -160,6 +169,9 @@ It writes artifacts under `.tmp\electron-visual-smoke` and is intentionally not 
 - local metadata resolver is fixture/static only and intentionally small
 - no full provider request pulse UI yet
 - live zKill/ESI smoke command exists but live network run is deferred until `AURA_SENSE_LIVE_API=1`
+- Threat Intel live zKill network run is deferred until explicitly enabled and recorded outside `verify:all`
+- Threat Intel ESI killmail expansion remains deferred
+- local type metadata remains deferred until a concrete type-label consumer appears
 - no exact raw repair/healing fixtures yet; raw `combat.repair` parser support remains deferred
 - concept and research docs are AURA-Sense product doctrine or evidence notes; older audit records may still describe past cleanup work
 
@@ -192,17 +204,18 @@ It writes artifacts under `.tmp\electron-visual-smoke` and is intentionally not 
 - `docs/audits/audit-2026-05-22-api-function-runway-smoke-handover.md`
 - `docs/audits/audit-2026-05-22-passive-telemetry-live-safe-readiness-handover.md`
 - `docs/audits/audit-2026-05-22-post-passive-live-safe-next-runway.md`
+- `docs/audits/audit-2026-05-22-threat-intel-and-clipboard-handover.md`
 - `docs/gap/to-do/aura-sense-tactical-readiness.md`
-- `docs/gap/to-do/threat-intel-scan-request-contract.md`
-- `docs/gap/to-do/threat-intel-target-resolution-boundary.md`
-- `docs/gap/to-do/threat-intel-zkill-scoped-probe.md`
-- `docs/gap/to-do/threat-intel-search-ui-surface.md`
-- `docs/gap/to-do/clipboard-acquisition-workflow.md`
-- `docs/gap/to-do/threat-intel-live-gate-and-observability.md`
-- `docs/gap/to-do/threat-intel-renderer-boundary-verification.md`
-- `docs/gap/to-do/readiness-05-zkill-ref-boundary.md`
-- `docs/gap/to-do/readiness-06-threat-intel-sample-metadata.md`
 - `docs/gap/to-do/readiness-09-local-type-metadata.md`
+- `docs/gap/complete/threat-intel-scan-request-contract.md`
+- `docs/gap/complete/threat-intel-target-resolution-boundary.md`
+- `docs/gap/complete/threat-intel-zkill-scoped-probe.md`
+- `docs/gap/complete/threat-intel-search-ui-surface.md`
+- `docs/gap/complete/clipboard-acquisition-workflow.md`
+- `docs/gap/complete/threat-intel-live-gate-and-observability.md`
+- `docs/gap/complete/threat-intel-renderer-boundary-verification.md`
+- `docs/gap/complete/readiness-05-zkill-ref-boundary.md`
+- `docs/gap/complete/readiness-06-threat-intel-sample-metadata.md`
 - `docs/gap/complete/passive-telemetry-local-system-resolver.md`
 - `docs/gap/complete/passive-telemetry-esi-system-activity.md`
 - `docs/gap/complete/passive-telemetry-scoped-zkill-route.md`

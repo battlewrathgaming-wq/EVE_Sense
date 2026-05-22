@@ -1,6 +1,6 @@
 # Gap To-Do: Threat Intel Live Gate And Observability
 
-Status: Open
+Status: Complete
 Priority: P1
 Milestone: 09 - Scoped Threat Intel And Clipboard Acquisition
 

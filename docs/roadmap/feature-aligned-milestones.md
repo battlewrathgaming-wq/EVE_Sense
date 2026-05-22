@@ -221,7 +221,7 @@ AURA-Sense passive live API smoke refused: F:\Projects\AURA-Sense\.tmp\passive-l
 
 ### Milestone 09: Scoped Threat Intel And Clipboard Acquisition
 
-Status: Active - Next Dev Runway in `docs/roadmap/milestone-09-scoped-threat-intel-and-clipboard-acquisition.md`.
+Status: Complete with live network smoke deferred in `docs/roadmap/milestone-09-scoped-threat-intel-and-clipboard-acquisition.md`.
 
 Feature anchors:
 
@@ -233,6 +233,10 @@ Feature anchors:
 Operational outcome:
 
 Threat Intel supports deliberate scoped scans from explicit search submit or armed clipboard capture, with explicit evidence basis, sample limits, freshness, and failure language.
+
+Implementation note:
+
+Electron global shortcut registration uses `CommandOrControl+Shift+Space` rather than a bare Ctrl+Shift chord. The UI Arm control remains available and the smoke artifact records successful global shortcut registration.
 
 Task chain:
 
@@ -256,6 +260,16 @@ Dev may not scan on search focus alone, keep clipboard listening indefinitely, r
 Acceptance gate:
 
 Explicit search submit or armed clipboard scan returns a tactical zKillmail-backed snapshot with visible evidence basis and no broad background scraping, no focus-triggered API calls, no Atlas persistence, no default ESI expansion, and no renderer API calls.
+
+Completion signal:
+
+```txt
+threat intel verified
+renderer boundary verified (4 files scanned)
+renderer shell verified
+all checks verified
+AURA-Sense visual smoke passed: F:\Projects\AURA-Sense\.tmp\electron-visual-smoke
+```
 
 ### Milestone 10: Integrated Tactical Viewport
 

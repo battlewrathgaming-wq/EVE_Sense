@@ -47,3 +47,30 @@ contextBridge.exposeInMainWorld('auraPassiveTelemetry', {
     };
   }
 });
+
+contextBridge.exposeInMainWorld('auraThreatIntel', {
+  getSnapshot: () => ipcRenderer.invoke('aura:service:invoke', {
+    command: 'threat.intel.snapshot',
+    payload: {}
+  }),
+  scan: (payload = {}) => ipcRenderer.invoke('aura:service:invoke', {
+    command: 'threat.intel.scan',
+    payload
+  }),
+  getClipboardState: () => ipcRenderer.invoke('aura:service:invoke', {
+    command: 'threat.clipboard.snapshot',
+    payload: {}
+  }),
+  armClipboard: (payload = {}) => ipcRenderer.invoke('aura:service:invoke', {
+    command: 'threat.clipboard.arm',
+    payload
+  }),
+  captureClipboard: (payload = {}) => ipcRenderer.invoke('aura:service:invoke', {
+    command: 'threat.clipboard.capture',
+    payload
+  }),
+  cancelClipboard: () => ipcRenderer.invoke('aura:service:invoke', {
+    command: 'threat.clipboard.cancel',
+    payload: {}
+  })
+});

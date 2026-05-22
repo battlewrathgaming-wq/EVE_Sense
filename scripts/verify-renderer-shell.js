@@ -27,6 +27,7 @@ function main() {
   assert(preload.includes('auraWindow'), 'preload should expose Frame window bridge');
   assert(preload.includes('auraCombatWitness'), 'preload should expose Combat Witness snapshot bridge');
   assert(preload.includes('auraPassiveTelemetry'), 'preload should expose Passive Telemetry snapshot bridge');
+  assert(preload.includes('auraThreatIntel'), 'preload should expose Threat Intel bridge');
   assert(preload.includes('aura:combat-witness:get-snapshot'), 'preload should expose Combat Witness snapshot request');
   assert(preload.includes('aura:combat-witness:subscribe'), 'preload should expose Combat Witness subscription request');
   assert(preload.includes('aura:passive-telemetry:get-snapshot'), 'preload should expose Passive Telemetry snapshot request');
@@ -42,6 +43,9 @@ function main() {
   assert(html.includes('passive-system'), 'renderer should include Passive Telemetry current-system target');
   assert(html.includes('passive-activity'), 'renderer should include Passive Telemetry activity target');
   assert(html.includes('event-list'), 'renderer should include bounded event stream target');
+  assert(html.includes('threat-search'), 'renderer should include Threat Intel search form');
+  assert(html.includes('threat-target'), 'renderer should include Threat Intel target input');
+  assert(html.includes('clipboard-arm'), 'renderer should include Clipboard Acquisition arm control');
   assert(app.includes('seed.readiness'), 'renderer should request seed readiness through services');
   assert(app.includes("window.aura.invokeService('combat.witness.status'"), 'renderer should read Combat Witness runtime status through services');
   assert(app.includes("window.aura.invokeService('combat.witness.start'"), 'renderer should start Combat Witness watcher through services');
@@ -51,6 +55,11 @@ function main() {
   assert(app.includes('window.auraPassiveTelemetry.getSnapshot'), 'renderer should request backend-owned Passive Telemetry snapshots');
   assert(app.includes('window.auraPassiveTelemetry.subscribeSnapshots'), 'renderer should subscribe through Passive Telemetry bridge');
   assert(app.includes('snapshot.activity.shipKills'), 'renderer should present backend-owned Passive Telemetry activity');
+  assert(app.includes('window.auraThreatIntel.scan'), 'renderer should run Threat Intel scans through preload bridge');
+  assert(app.includes("inputSource: 'search'"), 'renderer should mark explicit search input source');
+  assert(app.includes('armClipboard'), 'renderer should arm Clipboard Acquisition through preload bridge');
+  assert(app.includes("addEventListener('focus'"), 'renderer should handle focus without scanning');
+  assert(!app.includes("addEventListener('focus', submitThreatSearch"), 'renderer focus must not dispatch Threat Intel scan');
   assert(app.includes('snapshot.operational?.watcher'), 'renderer should present backend-owned watcher status');
   assert(app.includes('snapshot.freshness?.status'), 'renderer should present backend-owned freshness status');
   assert(app.includes('window.auraWindow.setAlwaysOnTop'), 'renderer should toggle always-on-top through Frame bridge');

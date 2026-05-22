@@ -3,7 +3,9 @@ const state = {
     alwaysOnTop: false
   },
   unsubscribeCombatWitness: null,
-  unsubscribePassiveTelemetry: null
+  unsubscribePassiveTelemetry: null,
+  clipboardPoll: null,
+  clipboardStatePoll: null
 };
 
 async function boot() {
@@ -12,6 +14,7 @@ async function boot() {
   await bootWatcherControls();
   await bootCombatWitness();
   await bootPassiveTelemetry();
+  await bootThreatIntel();
 }
 
 async function bootRuntimeHealth() {
@@ -39,6 +42,22 @@ async function bootPassiveTelemetry() {
   state.unsubscribePassiveTelemetry = window.auraPassiveTelemetry.subscribeSnapshots(renderPassiveTelemetry);
 }
 
+async function bootThreatIntel() {
+  document.querySelector('#threat-search').addEventListener('submit', submitThreatSearch);
+  document.querySelector('#clipboard-arm').addEventListener('click', armClipboardAcquisition);
+  document.querySelector('#threat-target').addEventListener('focus', () => {
+    renderThreatMessage('Ready for explicit scan submit.');
+  });
+  if (!window.auraThreatIntel) {
+    renderThreatSnapshot(null);
+    renderClipboardState(null);
+    return;
+  }
+  renderThreatSnapshot(await window.auraThreatIntel.getSnapshot());
+  renderClipboardState(await window.auraThreatIntel.getClipboardState());
+  state.clipboardStatePoll = setInterval(refreshClipboardState, 1000);
+}
+
 async function bootWatcherControls() {
   document.querySelector('#watcher-controls').addEventListener('submit', startWatcher);
   document.querySelector('#stop-watcher').addEventListener('click', stopWatcher);
@@ -57,6 +76,12 @@ async function bootFrame() {
   document.querySelector('#close-window').addEventListener('click', () => {
     state.unsubscribeCombatWitness?.();
     state.unsubscribePassiveTelemetry?.();
+    if (state.clipboardPoll) {
+      clearInterval(state.clipboardPoll);
+    }
+    if (state.clipboardStatePoll) {
+      clearInterval(state.clipboardStatePoll);
+    }
     window.auraWindow.close();
   });
 }
@@ -114,6 +139,83 @@ function renderPassiveTelemetry(snapshot) {
   document.querySelector('#passive-activity').textContent = passiveActivity(snapshot);
   document.querySelector('#passive-freshness').textContent = passiveStateLabel(snapshot?.freshness?.status || status);
   document.querySelector('#passive-message').textContent = passiveMessage(snapshot);
+}
+
+async function submitThreatSearch(event) {
+  event.preventDefault();
+  const form = event.currentTarget;
+  const button = form.querySelector('button[type="submit"]');
+  button.disabled = true;
+  try {
+    const targetText = document.querySelector('#threat-target').value;
+    const snapshot = await window.auraThreatIntel.scan({
+      targetText,
+      inputSource: 'search'
+    });
+    renderThreatSnapshot(snapshot);
+  } catch (error) {
+    renderThreatSnapshot({ status: 'failed', message: error.message });
+  } finally {
+    button.disabled = false;
+  }
+}
+
+async function armClipboardAcquisition() {
+  const button = document.querySelector('#clipboard-arm');
+  button.disabled = true;
+  try {
+    const snapshot = await window.auraThreatIntel.armClipboard();
+    renderClipboardState(snapshot);
+    scheduleClipboardPoll();
+  } finally {
+    button.disabled = false;
+  }
+}
+
+function scheduleClipboardPoll() {
+  if (state.clipboardPoll) {
+    clearInterval(state.clipboardPoll);
+  }
+  state.clipboardPoll = setInterval(async () => {
+    const snapshot = await window.auraThreatIntel.captureClipboard();
+    renderClipboardState(snapshot);
+    if (snapshot.lastCapture?.targetText) {
+      document.querySelector('#threat-target').value = snapshot.lastCapture.targetText;
+      renderThreatSnapshot(snapshot.lastCapture.result);
+    }
+    if (snapshot.state !== 'listening') {
+      clearInterval(state.clipboardPoll);
+      state.clipboardPoll = null;
+    }
+  }, 400);
+}
+
+async function refreshClipboardState() {
+  if (!window.auraThreatIntel) {
+    return;
+  }
+  renderClipboardState(await window.auraThreatIntel.getClipboardState());
+}
+
+function renderThreatSnapshot(snapshot) {
+  const status = snapshot?.status || 'empty';
+  document.querySelector('#threat-state').textContent = threatStateLabel(status);
+  document.querySelector('#threat-target-label').textContent = snapshot?.target?.label || 'Unselected';
+  document.querySelector('#threat-provider').textContent = snapshot?.zkill
+    ? `${snapshot.zkill.provider} ${formatNumber(snapshot.zkill.lookbackSeconds)}s`
+    : 'None';
+  document.querySelector('#threat-sample').textContent = snapshot?.zkill
+    ? `${formatNumber(snapshot.zkill.selectedCount)} / ${formatNumber(snapshot.zkill.discoveredCount)}`
+    : '0 / 0';
+  document.querySelector('#threat-message').textContent = threatMessage(snapshot);
+}
+
+function renderClipboardState(snapshot) {
+  document.querySelector('#clipboard-state').textContent = clipboardStateLabel(snapshot?.state);
+}
+
+function renderThreatMessage(message) {
+  document.querySelector('#threat-message').textContent = message;
 }
 
 async function startWatcher(event) {
@@ -261,6 +363,51 @@ function passiveStateLabel(status) {
     return 'Degraded';
   }
   return 'Unavailable';
+}
+
+function threatStateLabel(status) {
+  if (status === 'succeeded') {
+    return 'Sampled';
+  }
+  if (status === 'partial') {
+    return 'Partial';
+  }
+  if (status === 'blocked') {
+    return 'Blocked';
+  }
+  if (status === 'failed') {
+    return 'Degraded';
+  }
+  if (status === 'ambiguous') {
+    return 'Ambiguous';
+  }
+  if (status === 'unresolved' || status === 'unsupported' || status === 'empty') {
+    return 'Idle';
+  }
+  return 'Pending';
+}
+
+function threatMessage(snapshot) {
+  if (!snapshot) {
+    return 'Threat Intel bridge unavailable.';
+  }
+  if (snapshot.status === 'blocked') {
+    return snapshot.message || 'Threat Intel live IO is blocked.';
+  }
+  if (snapshot.status === 'succeeded' || snapshot.status === 'partial') {
+    return snapshot.zkill?.capped ? 'Scoped zKill sample is capped.' : 'Scoped zKill sample refreshed.';
+  }
+  return snapshot.message || 'Submit a target to run a scoped scan.';
+}
+
+function clipboardStateLabel(status) {
+  if (status === 'listening') {
+    return 'Listening';
+  }
+  if (status === 'cooldown') {
+    return 'Cooldown';
+  }
+  return 'Idle';
 }
 
 function passiveMessage(snapshot) {

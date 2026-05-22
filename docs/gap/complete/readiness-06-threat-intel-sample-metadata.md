@@ -1,7 +1,7 @@
 # Gap To-Do: Threat Intel Sample Metadata
 
 Date: 2026-05-22
-Status: Open - Active Under Milestone 09
+Status: Complete
 
 ## Actionables
 
@@ -17,7 +17,7 @@ Status: Open - Active Under Milestone 09
 
 Every active scan should make its evidence basis clear without turning the HUD into an Atlas report.
 
-This packet is active under Milestone 09 once scoped zKill-backed Threat Intel search exists. Do not implement sample metadata against mock renderer-only state.
+This packet was completed under Milestone 09 after scoped zKill-backed Threat Intel search existed. Sample metadata was implemented against backend snapshots, not mock renderer-only state.
 
 The scan result should be able to answer:
 

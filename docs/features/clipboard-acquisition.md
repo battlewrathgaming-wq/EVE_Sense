@@ -1,6 +1,6 @@
 # Feature: Clipboard Acquisition
 
-Status: Conceptual Goalpost
+Status: Implemented Foundation
 Date: 2026-05-22
 
 ## Purpose
@@ -16,13 +16,16 @@ The operator should not need to focus the AURA-Sense window during fullscreen EV
 ## Intended Interaction
 
 - The operator sees an acquisition indicator in the UI.
-- The operator presses Ctrl+Shift to arm clipboard acquisition.
+- The operator presses the global acquisition shortcut or uses the HUD Arm control.
 - AURA-Sense opens a 3 second listening window.
 - If a valid target is copied during that window, AURA-Sense inserts it into the search box and runs the scoped scan.
+- Clipboard content already present before arming is ignored unless it changes during the listening window.
 - The listener then seals and enters a 5 second cooldown.
 - If nothing valid is captured, the listener times out, seals, and enters a 5 second cooldown.
 - The cooldown applies after capture, timeout, cancellation, or rejected clipboard content.
 - The scan remains a Threat Intel search-box workflow even when the search box is populated hands-free.
+
+Implementation note: Electron registers `CommandOrControl+Shift+Space` for the current hands-free shortcut. Bare modifier-only Ctrl+Shift remains a design intent note, not the current runtime accelerator.
 
 ## Data Classification
 

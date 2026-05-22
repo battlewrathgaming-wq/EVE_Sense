@@ -1,6 +1,6 @@
 # Gap To-Do: Threat Intel Target Resolution Boundary
 
-Status: Open
+Status: Complete
 Priority: P0
 Milestone: 09 - Scoped Threat Intel And Clipboard Acquisition
 

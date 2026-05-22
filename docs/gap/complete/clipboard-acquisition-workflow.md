@@ -1,6 +1,6 @@
 # Gap To-Do: Clipboard Acquisition Workflow
 
-Status: Open
+Status: Complete
 Priority: P1
 Milestone: 09 - Scoped Threat Intel And Clipboard Acquisition
 

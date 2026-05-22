@@ -79,7 +79,8 @@ body {
 
 .combat-surface,
 .event-surface,
-.passive-surface {
+.passive-surface,
+.threat-surface {
   border: 1px solid var(--line);
   border-radius: 8px;
   background: var(--panel);
@@ -165,14 +166,20 @@ dd {
   padding: 18px 20px;
 }
 
-.passive-grid {
+.threat-surface {
+  padding: 18px 20px;
+}
+
+.passive-grid,
+.threat-grid {
   display: grid;
   grid-template-columns: 1.2fr 0.8fr 0.8fr 0.8fr;
   gap: 10px;
   margin: 0 0 12px;
 }
 
-.passive-grid div {
+.passive-grid div,
+.threat-grid div {
   min-height: 72px;
   border: 1px solid var(--line);
   border-radius: 8px;
@@ -185,11 +192,60 @@ dd {
   font-size: 0.86rem;
 }
 
+#threat-message {
+  color: var(--muted);
+  font-size: 0.86rem;
+}
+
 .watcher-controls {
   border-top: 1px solid var(--line);
   padding: 12px 0 16px;
   display: grid;
   gap: 8px;
+}
+
+.threat-search {
+  border-top: 1px solid var(--line);
+  padding: 12px 0 16px;
+  display: grid;
+  gap: 8px;
+}
+
+.threat-search label {
+  color: var(--muted);
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.threat-search div {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: 8px;
+}
+
+.threat-search input,
+.threat-search button {
+  min-height: 36px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel-strong);
+  color: var(--fg);
+  font: inherit;
+}
+
+.threat-search input {
+  min-width: 0;
+  padding: 0 10px;
+}
+
+.threat-search button {
+  padding: 0 14px;
+  cursor: pointer;
+}
+
+.threat-search button:hover {
+  border-color: var(--accent);
 }
 
 .watcher-controls label {
@@ -279,7 +335,8 @@ dd {
 
   .combat-surface,
   .status-grid,
-  .passive-grid {
+  .passive-grid,
+  .threat-grid {
     grid-template-columns: 1fr;
   }
 
@@ -290,17 +347,21 @@ dd {
 
   .section-title,
   .watcher-controls div,
+  .threat-search div,
   .event-list li {
     align-items: flex-start;
     flex-direction: column;
   }
 
-  .watcher-controls div {
+  .watcher-controls div,
+  .threat-search div {
     display: flex;
   }
 
   .watcher-controls input,
-  .watcher-controls button {
+  .watcher-controls button,
+  .threat-search input,
+  .threat-search button {
     width: 100%;
   }
 }

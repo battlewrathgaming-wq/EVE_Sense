@@ -1,6 +1,6 @@
 # Gap To-Do: Threat Intel zKill Scoped Probe
 
-Status: Open
+Status: Complete
 Priority: P0
 Milestone: 09 - Scoped Threat Intel And Clipboard Acquisition
 
@@ -33,8 +33,7 @@ Threat Intel needs a backend-only zKill probe for deliberate scans that returns 
 
 ## Related Files
 
-- `docs/gap/to-do/readiness-05-zkill-ref-boundary.md`
-- `docs/gap/to-do/readiness-06-threat-intel-sample-metadata.md`
+- `docs/gap/complete/readiness-05-zkill-ref-boundary.md`
+- `docs/gap/complete/readiness-06-threat-intel-sample-metadata.md`
 - `docs/contracts/threat-intel-contract.md`
 - future Threat Intel zKill service files
-

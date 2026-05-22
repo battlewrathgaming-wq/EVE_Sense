@@ -1,6 +1,6 @@
 const fs = require('node:fs');
 const path = require('node:path');
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, clipboard, globalShortcut, ipcMain } = require('electron');
 const { APP_NAME } = require('../constants');
 const { createCombatWitnessBridge } = require('../combat/combatWitnessBridge');
 const { createCombatWitnessRuntime, decorateSnapshot } = require('../combat/combatWitnessRuntime');
@@ -13,12 +13,18 @@ const { ZKillSystemContextClient } = require('../passive/zKillSystemContextClien
 const { HttpClient } = require('../services/httpClient');
 const { createDefaultRegistry, registerElectronServiceHandlers } = require('../services/serviceRegistry');
 const { TASK_CLASSIFICATIONS } = require('../services/taskRunner');
+const { createClipboardAcquisitionService } = require('../threat/clipboardAcquisitionService');
+const { createThreatIntelService } = require('../threat/threatIntelService');
+const { createThreatIntelTargetResolver } = require('../threat/threatIntelTargetResolver');
+const { ThreatIntelZkillClient } = require('../threat/threatIntelZkillClient');
 const { registerRuntimeErrorHandlers } = require('./runtimeErrorHandling');
 const { createFrameWindow, registerFrameWindowHandlers } = require('../modules/Frame');
 
 const registry = createDefaultRegistry();
 const passiveRequestLog = (entry) => traceRuntimeDiagnostic(entry.diagnostic_event || 'passive_request_log', entry);
 const passiveLiveIoGate = createLiveIoGate();
+const threatRequestLog = (entry) => traceRuntimeDiagnostic(entry.diagnostic_event || 'threat_request_log', entry);
+const threatLiveIoGate = createLiveIoGate();
 const passiveTelemetryService = createPassiveTelemetryService({
   esiActivityClient: new PassiveEsiSystemActivityClient({
     httpClient: new HttpClient({ timeoutMs: 10000, maxAttempts: 2, onRequestLog: passiveRequestLog }),
@@ -30,6 +36,19 @@ const passiveTelemetryService = createPassiveTelemetryService({
   zkillClient: new ZKillSystemContextClient({
     httpClient: new HttpClient({ timeoutMs: 10000, maxAttempts: 2, onRequestLog: passiveRequestLog })
   })
+});
+const threatIntelService = createThreatIntelService({
+  liveIoGate: threatLiveIoGate,
+  resolveTarget: createThreatIntelTargetResolver(),
+  trace: traceRuntimeDiagnostic,
+  zkillClient: new ThreatIntelZkillClient({
+    httpClient: new HttpClient({ timeoutMs: 10000, maxAttempts: 2, onRequestLog: threatRequestLog })
+  })
+});
+const clipboardAcquisitionService = createClipboardAcquisitionService({
+  scan: (request) => threatIntelService.scan(request),
+  readClipboard: () => clipboard.readText(),
+  trace: traceRuntimeDiagnostic
 });
 const combatWitnessRuntime = createCombatWitnessRuntime({
   observers: [(event) => {
@@ -51,6 +70,7 @@ let mainWindow = null;
 
 registerCombatWitnessRuntimeCommands(registry, combatWitnessRuntime);
 registerPassiveTelemetryCommands(registry, passiveTelemetryService);
+registerThreatIntelCommands(registry, threatIntelService, clipboardAcquisitionService);
 
 function createWindow() {
   const window = createFrameWindow(app, {
@@ -79,6 +99,7 @@ app.whenReady().then(() => {
   combatWitnessBridge.register(ipcMain);
   passiveTelemetryBridge.register(ipcMain);
   createWindow();
+  registerClipboardGlobalShortcut();
 
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
@@ -91,6 +112,10 @@ app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit();
   }
+});
+
+app.on('will-quit', () => {
+  globalShortcut.unregisterAll();
 });
 
 function registerCombatWitnessRuntimeCommands(serviceRegistry, runtime) {
@@ -139,6 +164,66 @@ function registerPassiveTelemetryCommands(serviceRegistry, service) {
       description: 'Enable or disable Passive Telemetry live IO gate',
       handler: (payload = {}) => service.setLiveIoEnabled(payload.enabled === true, payload.reason || null)
     });
+}
+
+function registerThreatIntelCommands(serviceRegistry, service, acquisition) {
+  serviceRegistry
+    .register('threat.intel.snapshot', {
+      classification: TASK_CLASSIFICATIONS.READ_ONLY,
+      description: 'Return latest Threat Intel scan snapshot',
+      handler: () => service.snapshot()
+    })
+    .register('threat.intel.scan', {
+      classification: TASK_CLASSIFICATIONS.EXTERNAL_IO,
+      description: 'Run a deliberate scoped Threat Intel scan',
+      handler: (payload = {}, context = {}) => service.scan(payload, { signal: context.signal })
+    })
+    .register('threat.intel.live-io.status', {
+      classification: TASK_CLASSIFICATIONS.READ_ONLY,
+      description: 'Return Threat Intel live IO gate status',
+      handler: () => service.liveIoStatus()
+    })
+    .register('threat.intel.live-io.set-enabled', {
+      classification: TASK_CLASSIFICATIONS.LOCAL_MUTATION,
+      description: 'Enable or disable Threat Intel live IO gate',
+      handler: (payload = {}) => service.setLiveIoEnabled(payload.enabled === true, payload.reason || null)
+    })
+    .register('threat.clipboard.snapshot', {
+      classification: TASK_CLASSIFICATIONS.READ_ONLY,
+      description: 'Return Clipboard Acquisition lifecycle state',
+      handler: () => acquisition.snapshot()
+    })
+    .register('threat.clipboard.arm', {
+      classification: TASK_CLASSIFICATIONS.LOCAL_MUTATION,
+      description: 'Arm Clipboard Acquisition for one target capture',
+      handler: (payload = {}) => acquisition.arm(payload)
+    })
+    .register('threat.clipboard.capture', {
+      classification: TASK_CLASSIFICATIONS.LOCAL_MUTATION,
+      description: 'Capture current clipboard text through Clipboard Acquisition',
+      handler: (payload = {}) => acquisition.capture(payload)
+    })
+    .register('threat.clipboard.cancel', {
+      classification: TASK_CLASSIFICATIONS.LOCAL_MUTATION,
+      description: 'Cancel Clipboard Acquisition and enter cooldown',
+      handler: () => acquisition.cancel()
+    });
+}
+
+function registerClipboardGlobalShortcut() {
+  try {
+    const registered = globalShortcut.register('CommandOrControl+Shift+Space', () => {
+      clipboardAcquisitionService.arm().catch((error) => {
+        traceRuntimeDiagnostic('clipboard_acquisition_global_shortcut_error', { message: error.message });
+      });
+    });
+    traceRuntimeDiagnostic('clipboard_acquisition_global_shortcut', {
+      accelerator: 'CommandOrControl+Shift+Space',
+      registered
+    });
+  } catch (error) {
+    traceRuntimeDiagnostic('clipboard_acquisition_global_shortcut_error', { message: error.message });
+  }
 }
 
 function traceRuntimeDiagnostic(event, payload = {}) {
@@ -210,6 +295,7 @@ async function runVisualSmoke(window, outputDir) {
   assertSmoke(checks.hasEventList, 'renderer should contain event list surface');
   assertSmoke(checks.hasWatcherControls, 'renderer should contain Combat Witness watcher controls');
   assertSmoke(checks.hasPassiveSurface, 'renderer should contain Passive Telemetry surface');
+  assertSmoke(checks.hasThreatSurface, 'renderer should contain Threat Intel surface');
   assertSmoke(checks.noParserRuntimeExposure, 'renderer should not expose parser/runtime modules');
 
   const image = await window.webContents.capturePage();
@@ -260,6 +346,7 @@ function smokeChecks(window) {
       hasEventList: Boolean(document.querySelector('#event-list')),
       hasWatcherControls: Boolean(document.querySelector('#watcher-controls') && document.querySelector('#gamelog-folder')),
       hasPassiveSurface: Boolean(document.querySelector('.passive-surface') && document.querySelector('#passive-system')),
+      hasThreatSurface: Boolean(document.querySelector('.threat-surface') && document.querySelector('#threat-search') && document.querySelector('#clipboard-arm')),
       noParserRuntimeExposure: (
         typeof window.CombatWitnessService === 'undefined' &&
         typeof window.EveCombatLogParser === 'undefined' &&
@@ -268,6 +355,7 @@ function smokeChecks(window) {
       signalText: document.querySelector('#combat-signal')?.textContent || null,
       watcherText: document.querySelector('#watcher-state')?.textContent || null,
       passiveText: document.querySelector('#passive-state')?.textContent || null,
+      threatText: document.querySelector('#threat-state')?.textContent || null,
       summaryText: document.querySelector('#combat-summary')?.textContent || null,
       eventListText: document.querySelector('#event-list')?.textContent || null
     });
