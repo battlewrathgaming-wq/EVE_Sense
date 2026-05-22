@@ -1,7 +1,7 @@
 # Gap To-Do: Local Type Metadata
 
 Date: 2026-05-22
-Status: Open - Conditional / Deferred
+Status: Complete
 
 ## Actionables
 

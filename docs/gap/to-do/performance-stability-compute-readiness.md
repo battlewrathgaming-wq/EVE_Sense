@@ -227,7 +227,7 @@ This overview has been split into individual task files so each line can be impl
 
 `readiness-05-zkill-ref-boundary.md` and `readiness-06-threat-intel-sample-metadata.md` are complete through Milestone 09.
 
-`readiness-09-local-type-metadata.md` remains conditional. Do not begin local type metadata work until an integrated viewport or Threat Intel timeline clearly consumes type labels.
+`readiness-09-local-type-metadata.md` is complete for the compact lookup foundation. Keep `local-metadata-sde-builder-hardening.md` active for builder hardening and do not expand local metadata consumers without a concrete viewport or Threat Intel timeline need.
 
 Proceed next through `docs/roadmap/milestone-10-integrated-tactical-viewport.md`.
 

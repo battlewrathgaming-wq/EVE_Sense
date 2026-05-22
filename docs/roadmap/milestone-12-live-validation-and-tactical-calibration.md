@@ -66,12 +66,13 @@ Task packet: `docs/gap/to-do/repair-healing-raw-fixture-intake.md`.
 
 ### P2 Task 5: Local Metadata Consumer Hardening
 
+- Status: Complete for compact type lookup foundation; future consumers may extend artifact deliberately.
 - Add compact local metadata only for visible consumers that now need labels.
 - Resolve type/system labels locally where practical.
 - Keep unresolved IDs visible.
 - Avoid large runtime SDE parsing and live ESI type lookup.
 
-Task packet: `docs/gap/to-do/local-metadata-consumer-hardening.md`.
+Task packet: `docs/gap/complete/local-metadata-consumer-hardening.md`.
 
 ### P2 Task 6: Live Findings Audit And Doctrine Update
 

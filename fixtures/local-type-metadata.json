@@ -1,0 +1,40 @@
+{
+  "kind": "aura-sense.local-type-metadata",
+  "schemaVersion": 1,
+  "generatedAt": "2026-05-23T00:00:00.000Z",
+  "source": {
+    "source_url": "seed",
+    "build_number": "seed",
+    "variant": "jsonl",
+    "etag": null,
+    "last_modified": null,
+    "file_checksum": null,
+    "latest_metadata_url": null,
+    "latest_metadata_checksum": null,
+    "latest_metadata_etag": null,
+    "latest_metadata_last_modified": null
+  },
+  "typeCount": 4,
+  "types": {
+    "34": {
+      "name": "Tritanium",
+      "groupId": 18,
+      "categoryId": 4
+    },
+    "587": {
+      "name": "Rifter",
+      "groupId": 25,
+      "categoryId": 6
+    },
+    "621": {
+      "name": "Caracal",
+      "groupId": 26,
+      "categoryId": 6
+    },
+    "670": {
+      "name": "Capsule",
+      "groupId": 29,
+      "categoryId": 6
+    }
+  }
+}

@@ -21,7 +21,7 @@ Track the work required before AURA-Sense can honestly claim tactical viewport r
 - Treat Passive Telemetry foundation and live-safe readiness as complete; live network smoke remains explicitly opt-in and deferred until `AURA_SENSE_LIVE_API=1`.
 - Treat scoped Threat Intel and Clipboard Acquisition as complete for offline/gated foundation behavior; keep live Threat Intel zKill network smoke deferred until explicitly enabled and recorded.
 - Keep ESI killmail expansion deferred until explicitly authorized.
-- Keep local type metadata deferred until a concrete type-label consumer appears.
+- Treat local type metadata foundation as complete with explicit SDE refresh command and unresolved-ID fallback.
 - Keep Combat Witness backend-owned normalized events, bounded rolling cache, and 5s/15s/30s snapshots as the foundation for future presentation.
 - Treat Combat Witness weapon counts, source/target counts, repair balance, and spike outliers as backend-observed metrics; require copy/calibration guardrails before polished HUD emphasis.
 - Keep live/API smoke checks separate from offline verification.
@@ -31,7 +31,9 @@ Track the work required before AURA-Sense can honestly claim tactical viewport r
 - Treat Milestone 10 integrated tactical viewport composition as complete with spike calibration and live smoke deferred.
 - Treat Milestone 11 operational hardening and runtime control as complete.
 - Proceed next with Milestone 12 live validation and tactical calibration.
-- Treat provider request pulse, native folder picker, local metadata, and active scan validator reconciliation as gap-analysis follow-ups; do not let them expand live validation scope without evidence.
+- Treat provider request pulse, native folder picker, and active scan validator reconciliation as gap-analysis follow-ups; do not let them expand live validation scope without evidence.
+- Treat Milestone 13 aggressive testing and bug hunting as a parallel hardening runway; it should find defects, not add product scope.
+- Treat active SDE download artifacts as explicit generated material; do not stage them by default.
 - Use feature-aligned milestones for implementation sequencing instead of assigning one-off micro-tasks.
 - Record completion evidence in `docs/gap/complete/` as gaps close.
 
@@ -67,8 +69,10 @@ AURA-Sense has a verified tactical viewport skeleton with separated telemetry la
 - `docs/audits/audit-2026-05-22-integrated-viewport-handover.md`
 - `docs/audits/audit-2026-05-22-operational-hardening-handover.md`
 - `docs/audits/audit-2026-05-22-status-end-state-gap-analysis.md`
+- `docs/audits/audit-2026-05-23-aggressive-testing-assessment.md`
 - `docs/roadmap/milestone-11-operational-hardening-and-runtime-control.md`
 - `docs/roadmap/milestone-12-live-validation-and-tactical-calibration.md`
+- `docs/roadmap/milestone-13-aggressive-testing-and-bug-hunting.md`
 - `docs/audits/audit-2026-05-22-threat-intel-and-clipboard-handover.md`
 - `docs/audits/audit-2026-05-22-post-threat-intel-combat-metrics-overseer-review.md`
 - `docs/audits/audit-2026-05-22-next-two-milestones-overseer-scope.md`
@@ -93,6 +97,8 @@ AURA-Sense has a verified tactical viewport skeleton with separated telemetry la
 - `docs/gap/complete/runtime-startup-and-session-recovery.md`
 - `docs/gap/complete/runtime-smoke-policy-and-failure-records.md`
 - `docs/gap/complete/atlas-handoff-decision-boundary.md`
+- `docs/gap/complete/local-metadata-consumer-hardening.md`
+- `docs/gap/complete/readiness-09-local-type-metadata.md`
 - `docs/gap/complete/passive-telemetry-local-system-resolver.md`
 - `docs/gap/complete/passive-telemetry-esi-system-activity.md`
 - `docs/gap/complete/passive-telemetry-scoped-zkill-route.md`
@@ -113,6 +119,16 @@ AURA-Sense has a verified tactical viewport skeleton with separated telemetry la
 - `docs/gap/to-do/provider-request-pulse-ui.md`
 - `docs/gap/to-do/native-gamelog-folder-picker.md`
 - `docs/gap/to-do/active-scan-validator-reconciliation.md`
+- `docs/gap/to-do/aggressive-test-harness-matrix.md`
+- `docs/gap/to-do/combat-parser-hostile-fixtures.md`
+- `docs/gap/to-do/gamelog-watcher-chaos-tests.md`
+- `docs/gap/to-do/renderer-preload-boundary-adversarial-tests.md`
+- `docs/gap/to-do/live-io-provider-fault-injection.md`
+- `docs/gap/to-do/clipboard-acquisition-race-tests.md`
+- `docs/gap/to-do/runtime-settings-diagnostics-fault-tests.md`
+- `docs/gap/to-do/electron-visual-state-regression-tests.md`
+- `docs/gap/to-do/local-metadata-sde-builder-hardening.md`
+- `docs/gap/to-do/bug-hunt-triage-and-failure-records.md`
 - `docs/roadmap/milestone-06-passive-telemetry-foundation.md`
 - `docs/gap/complete/readiness-12-tactical-hud-first-light.md`
 - `docs/gap/complete/readiness-13-electron-visual-smoke.md`

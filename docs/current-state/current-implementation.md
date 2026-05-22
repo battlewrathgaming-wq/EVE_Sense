@@ -1,7 +1,7 @@
 # Current State: AURA-Sense Implementation
 
-Date: 2026-05-22
-Status: Operational hardening and runtime control complete; Milestone 12 live validation and calibration scoped
+Date: 2026-05-23
+Status: Operational hardening and runtime control complete; Milestone 12 live validation and calibration scoped; Milestone 13 aggressive testing scoped
 
 ## What Exists
 
@@ -70,6 +70,8 @@ The current implementation includes:
 - compact diagnostics review surface backed by sanitized runtime diagnostics
 - runtime smoke policy documentation and Electron capture failure record
 - ADR documenting Atlas handoff as deferred
+- explicit SDE source-bundle staging/cleanup utility for local metadata refreshes
+- compact local type metadata artifact and read-only type lookup helper
 - curated combat-log fixture ingestion with raw-line hash drift checks
 - machine-readable combat-log event coverage matrix
 - offline combat-log replay harness for parser/runtime/service semantics
@@ -85,7 +87,7 @@ Not yet proven in this codebase:
 
 - live zKill-backed Threat Intel search and optional ESI expansion pipeline
 - exact raw repair/healing parser coverage
-- local EVE system/type metadata adapters
+- full refreshed EVE type metadata artifact generated from current SDE source
 - production-grade multi-lane HUD renderer beyond the current integrated foundation
 - native folder picker for gamelog folder
 - live EVE gamelog operational smoke against an operator machine
@@ -174,17 +176,19 @@ It writes artifacts under `.tmp\electron-visual-smoke` and is intentionally not 
 - some inherited seed service names remain below the visible product surface
 - inherited active scan validator language remains to be reconciled with the implemented Threat Intel scan contract
 - no native folder picker yet
-- local metadata resolver is fixture/static only and intentionally small
+- local metadata resolver and type lookup are fixture/static until an explicit SDE refresh is run
 - no full provider request pulse UI yet
 - live zKill/ESI smoke command exists but live network run is deferred until `AURA_SENSE_LIVE_API=1`
 - Threat Intel live zKill network run is deferred until explicitly enabled and recorded outside `verify:all`
 - Threat Intel ESI killmail expansion remains deferred
-- local type metadata remains deferred until a concrete type-label consumer appears
+- local type metadata foundation exists with unresolved-ID fallback; full refresh remains explicit
 - no exact raw repair/healing fixtures yet; raw `combat.repair` parser support remains deferred
 - Combat Witness damage spike detection is lightweight and still needs real dataset calibration before strong HUD emphasis
 - Combat Witness repair balance is observed HPS minus DPS only; it is not survival, stability, or tank-state evidence
 - integrated viewport does not display damage spike outliers yet; calibration remains open
 - live validation/calibration is now scoped as a future milestone, not yet implemented
+- aggressive testing and bug hunting are now scoped as a parallel hardening runway, not yet implemented
+- real SDE refresh/download artifacts must remain explicit and should not be staged by default
 - concept and research docs are AURA-Sense product doctrine or evidence notes; older audit records may still describe past cleanup work
 
 ## Related Documents
@@ -220,20 +224,30 @@ It writes artifacts under `.tmp\electron-visual-smoke` and is intentionally not 
 - `docs/audits/audit-2026-05-22-post-threat-intel-combat-metrics-overseer-review.md`
 - `docs/audits/audit-2026-05-22-integrated-viewport-handover.md`
 - `docs/audits/audit-2026-05-22-operational-hardening-handover.md`
+- `docs/audits/audit-2026-05-23-sde-local-type-metadata-handover.md`
+- `docs/audits/audit-2026-05-23-aggressive-testing-assessment.md`
 - `docs/audits/audit-2026-05-22-status-end-state-gap-analysis.md`
 - `docs/audits/audit-2026-05-22-next-two-milestones-overseer-scope.md`
 - `docs/gap/to-do/aura-sense-tactical-readiness.md`
-- `docs/gap/to-do/readiness-09-local-type-metadata.md`
 - `docs/gap/to-do/combat-window-weapon-spike-followups.md`
 - `docs/gap/to-do/live-operator-smoke-playbook.md`
 - `docs/gap/to-do/live-api-smoke-evidence.md`
 - `docs/gap/to-do/provider-request-pulse-ui.md`
 - `docs/gap/to-do/combat-metric-calibration-real-datasets.md`
 - `docs/gap/to-do/repair-healing-raw-fixture-intake.md`
-- `docs/gap/to-do/local-metadata-consumer-hardening.md`
 - `docs/gap/to-do/native-gamelog-folder-picker.md`
 - `docs/gap/to-do/active-scan-validator-reconciliation.md`
 - `docs/gap/to-do/live-findings-audit-and-doctrine-update.md`
+- `docs/gap/to-do/aggressive-test-harness-matrix.md`
+- `docs/gap/to-do/combat-parser-hostile-fixtures.md`
+- `docs/gap/to-do/gamelog-watcher-chaos-tests.md`
+- `docs/gap/to-do/renderer-preload-boundary-adversarial-tests.md`
+- `docs/gap/to-do/live-io-provider-fault-injection.md`
+- `docs/gap/to-do/clipboard-acquisition-race-tests.md`
+- `docs/gap/to-do/runtime-settings-diagnostics-fault-tests.md`
+- `docs/gap/to-do/electron-visual-state-regression-tests.md`
+- `docs/gap/to-do/local-metadata-sde-builder-hardening.md`
+- `docs/gap/to-do/bug-hunt-triage-and-failure-records.md`
 - `docs/gap/complete/threat-intel-scan-request-contract.md`
 - `docs/gap/complete/threat-intel-target-resolution-boundary.md`
 - `docs/gap/complete/threat-intel-zkill-scoped-probe.md`
@@ -267,6 +281,8 @@ It writes artifacts under `.tmp\electron-visual-smoke` and is intentionally not 
 - `docs/gap/complete/runtime-startup-and-session-recovery.md`
 - `docs/gap/complete/runtime-smoke-policy-and-failure-records.md`
 - `docs/gap/complete/atlas-handoff-decision-boundary.md`
+- `docs/gap/complete/local-metadata-consumer-hardening.md`
+- `docs/gap/complete/readiness-09-local-type-metadata.md`
 - `docs/roadmap/runtime-smoke-policy.md`
 - `docs/adr/adr-2026-05-22-atlas-handoff-deferred.md`
 - `docs/failures/failure-2026-05-22-electron-capture-transient-viz.md`
@@ -288,5 +304,6 @@ It writes artifacts under `.tmp\electron-visual-smoke` and is intentionally not 
 - `docs/roadmap/milestone-10-integrated-tactical-viewport.md`
 - `docs/roadmap/milestone-11-operational-hardening-and-runtime-control.md`
 - `docs/roadmap/milestone-12-live-validation-and-tactical-calibration.md`
+- `docs/roadmap/milestone-13-aggressive-testing-and-bug-hunting.md`
 - `docs/roadmap/passive-telemetry-live-readiness-interlock.md`
 - `docs/roadmap/development-artifact-trail.md`

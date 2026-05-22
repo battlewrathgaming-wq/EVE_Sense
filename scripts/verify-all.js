@@ -17,6 +17,7 @@ const checks = [
   ['verify:services', ['node', 'scripts/verify-services.js']],
   ['verify:http', ['node', 'scripts/verify-http-client.js']],
   ['verify:passive-telemetry', ['node', 'scripts/verify-passive-telemetry.js']],
+  ['verify:local-type-metadata', ['node', 'scripts/verify-local-type-metadata.js']],
   ['verify:threat-intel', ['node', 'scripts/verify-threat-intel.js']],
   ['verify:frame', ['node', 'scripts/verify-frame-module.js']],
   ['verify:renderer-boundary', ['node', 'scripts/verify-renderer-boundary.js']],

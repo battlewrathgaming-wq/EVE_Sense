@@ -6,7 +6,7 @@ function projectRoot() {
 }
 
 function auraTempRoot() {
-  const root = process.env.AURA_CORE_TMP || path.join(projectRoot(), '.tmp');
+  const root = process.env.AURA_SENSE_TMP || process.env.AURA_CORE_TMP || path.join(projectRoot(), '.tmp');
   fs.mkdirSync(root, { recursive: true });
   return root;
 }

@@ -35,6 +35,5 @@ Threat Intel must classify and resolve operator-entered targets without guessing
 
 - `docs/features/vision.md`
 - `docs/terms/metadata.md`
-- `docs/gap/to-do/readiness-09-local-type-metadata.md`
+- `docs/gap/complete/readiness-09-local-type-metadata.md`
 - future target resolver files
-
