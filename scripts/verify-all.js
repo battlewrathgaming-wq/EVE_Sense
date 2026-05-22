@@ -22,6 +22,7 @@ const checks = [
   ['verify:threat-intel', ['node', 'scripts/verify-threat-intel.js']],
   ['verify:frame', ['node', 'scripts/verify-frame-module.js']],
   ['verify:renderer-boundary', ['node', 'scripts/verify-renderer-boundary.js']],
+  ['verify:renderer-boundary-adversarial', ['node', 'scripts/verify-renderer-boundary-adversarial.js']],
   ['verify:renderer-shell', ['node', 'scripts/verify-renderer-shell.js']]
 ];
 

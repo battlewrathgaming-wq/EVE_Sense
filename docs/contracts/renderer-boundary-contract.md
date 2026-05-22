@@ -50,6 +50,14 @@ npm run verify:renderer-boundary
 
 This check scans `src/renderer` and `src/main/preload.js` for direct network calls, filesystem/log access, main-process imports from renderer files, and combat parser ownership signals.
 
+Adversarial boundary check:
+
+```powershell
+npm run verify:renderer-boundary-adversarial
+```
+
+This check verifies hostile renderer/preload patterns are caught, the preload service bridge uses an explicit renderer command allowlist, full backend service inventory is not exposed through `listServices`, and snapshot subscriptions remove listeners and notify backend unsubscribe channels.
+
 The check is also included in:
 
 ```powershell

@@ -61,7 +61,9 @@ Task packet: `docs/gap/to-do/gamelog-watcher-chaos-tests.md`.
 - Attempt renderer misuse patterns against service bridge, preload API, provider strings, filesystem access, parser ownership, and subscription cleanup.
 - Preserve renderer presentation-only doctrine.
 
-Task packet: `docs/gap/to-do/renderer-preload-boundary-adversarial-tests.md`.
+Task packet: `docs/gap/complete/renderer-preload-boundary-adversarial-tests.md`.
+
+Status: Complete in `docs/gap/complete/renderer-preload-boundary-adversarial-tests.md`; focused command is `npm.cmd run verify:renderer-boundary-adversarial`.
 
 ### P1 Task 5: Live IO Provider Fault Injection
 

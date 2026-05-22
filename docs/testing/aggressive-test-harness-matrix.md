@@ -22,7 +22,7 @@ This matrix maps AURA-Sense invariants to verification commands so aggressive te
 
 | Invariant | Primary command | Secondary command/evidence | Notes |
 | --- | --- | --- | --- |
-| Renderer remains presentation-only | `npm.cmd run verify:renderer-boundary` | `npm.cmd run verify:renderer-shell` | Renderer must not fetch, parse logs, read filesystem, import main modules, or compute tactical truth. |
+| Renderer remains presentation-only | `npm.cmd run verify:renderer-boundary` | `npm.cmd run verify:renderer-boundary-adversarial`, `npm.cmd run verify:renderer-shell` | Renderer must not fetch, parse logs, read filesystem, import main modules, compute tactical truth, or use unlisted service commands. |
 | Parser truth boundary | `npm.cmd run verify:combat-parser` | `npm.cmd run verify:combat-parser-hostile`, `npm.cmd run verify:combat-coverage` | Accepted lines require exact fixtures; hostile and near-miss lines reject with hash-only evidence. |
 | Watcher append-only behavior | `npm.cmd run verify:gamelog-watcher` | future watcher chaos command | Must not replay old files or leak raw private lines in diagnostics. |
 | Live IO gate | `npm.cmd run verify:passive-telemetry`, `npm.cmd run verify:threat-intel` | live smoke only when explicitly enabled | Live calls must be blockable, lane-specific, and outside `verify:all`. |
@@ -49,4 +49,4 @@ The offline confidence command must never require:
 | Command | Included in `verify:all` | Scope |
 | --- | --- | --- |
 | `npm.cmd run verify:combat-parser-hostile` | Yes | Hostile and near-miss combat parser rejection, hash-only rejection evidence, coverage matrix honesty. |
-
+| `npm.cmd run verify:renderer-boundary-adversarial` | Yes | Renderer/preload hostile pattern checks, preload command allowlist, subscription cleanup verification. |

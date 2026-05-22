@@ -1,6 +1,6 @@
 # Gap To-Do: Renderer Preload Boundary Adversarial Tests
 
-Status: Open
+Status: Complete
 Priority: P0
 Milestone: 13 - Aggressive Testing And Bug Hunting
 
@@ -26,3 +26,11 @@ Renderer isolation is product doctrine. Static checks exist, but adversarial pat
 - Boundary tests catch representative adversarial patterns.
 - Renderer remains presentation-only.
 - `npm.cmd run verify:all` passes.
+
+## Completion Notes
+
+- Added `npm.cmd run verify:renderer-boundary-adversarial`.
+- Added hostile renderer/preload pattern self-tests so rules prove they catch representative attacks.
+- Added preload command allowlist enforcement for the generic `window.aura.invokeService` bridge.
+- Changed `window.aura.listServices` to expose only renderer-allowed command names, not the full backend registry.
+- Verified Combat Witness and Passive Telemetry subscriptions remove listeners and invoke backend unsubscribe channels.

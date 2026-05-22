@@ -1,12 +1,29 @@
 const { contextBridge, ipcRenderer } = require('electron');
 
+const RENDERER_SERVICE_COMMANDS = Object.freeze([
+  'seed.readiness',
+  'runtime.settings.snapshot',
+  'runtime.live-io.snapshot',
+  'runtime.live-io.set-enabled',
+  'runtime.diagnostics.snapshot',
+  'combat.witness.status',
+  'combat.witness.start',
+  'combat.witness.stop'
+]);
+const RENDERER_SERVICE_COMMAND_SET = new Set(RENDERER_SERVICE_COMMANDS);
+
 contextBridge.exposeInMainWorld('aura', {
-  listServices: () => ipcRenderer.invoke('aura:service:list'),
-  invokeService: (command, payload = {}, options = {}) => ipcRenderer.invoke('aura:service:invoke', {
-    command,
-    payload,
-    ...options
-  })
+  listServices: () => Promise.resolve([...RENDERER_SERVICE_COMMANDS]),
+  invokeService: (command, payload = {}, options = {}) => {
+    if (!RENDERER_SERVICE_COMMAND_SET.has(command)) {
+      throw new Error(`Renderer service command is not exposed: ${command}`);
+    }
+    return ipcRenderer.invoke('aura:service:invoke', {
+      command,
+      payload,
+      ...options
+    });
+  }
 });
 
 contextBridge.exposeInMainWorld('auraWindow', {
