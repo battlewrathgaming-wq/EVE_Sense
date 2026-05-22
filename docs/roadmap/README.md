@@ -19,6 +19,7 @@ Current entries:
 - `milestone-10-integrated-tactical-viewport.md`
 - `milestone-11-operational-hardening-and-runtime-control.md`
 - `milestone-12-live-validation-and-tactical-calibration.md`
+- `milestone-13-aggressive-testing-and-bug-hunting.md`
 - `passive-telemetry-live-readiness-interlock.md`
 - `architecture-needs-review-2026-05-22.md`
 - `development-artifact-trail.md`

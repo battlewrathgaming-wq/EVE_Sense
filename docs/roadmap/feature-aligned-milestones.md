@@ -413,6 +413,48 @@ Acceptance gate:
 
 AURA-Sense has live/manual evidence and calibration decisions recorded without weakening offline verification or expanding product scope.
 
+### Milestone 13: Aggressive Testing And Bug Hunting
+
+Status: Planned / Parallel Hardening Runway in `docs/roadmap/milestone-13-aggressive-testing-and-bug-hunting.md`.
+
+Feature anchors:
+
+- Element 1: Tactical HUD Shell
+- Element 2: Combat Witness
+- Element 5: Clipboard Acquisition
+- Element 6: Diagnostics And Degraded State
+- Element 7: Settings And Runtime Control
+- Element 8: Local Metadata
+- Element 9: External API Boundary
+- Support Feature: Combat Logging Test Suite
+
+Operational outcome:
+
+AURA-Sense has an adversarial testing layer that actively tries to break tactical truth boundaries, runtime recovery, provider behavior, renderer isolation, and live-readiness assumptions.
+
+Task chain:
+
+1. Define an aggressive test harness matrix.
+2. Add hostile parser fixtures.
+3. Add gamelog watcher chaos tests.
+4. Add renderer/preload boundary adversarial tests.
+5. Add live IO provider fault injection.
+6. Add Clipboard Acquisition race tests.
+7. Add runtime settings and diagnostics fault tests.
+8. Expand Electron visual state regression tests.
+9. Harden local metadata/SDE builder behavior before broader reliance.
+10. Add bug-hunt triage and failure-record discipline.
+
+Autonomy envelope:
+
+Dev may add verification scripts, fixtures, smoke permutations, fake provider clients, diagnostics tests, failure records, and metadata builder verification.
+
+Dev may not make `verify:all` depend on live network, Electron, local EVE logs, or large SDE assets. Dev may not bless downloaded SDE artifacts without deterministic tests and a handover.
+
+Acceptance gate:
+
+Aggressive tests cover P0 invariants, findings are recorded, reusable failures become failure records, and `npm.cmd run verify:all` remains offline and passing.
+
 ## Dev Instruction Rule
 
 Future Dev handovers should identify:
