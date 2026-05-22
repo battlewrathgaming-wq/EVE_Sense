@@ -1,5 +1,6 @@
 const fs = require('node:fs');
 const path = require('node:path');
+const crypto = require('node:crypto');
 const { collectCompleteLines } = require('./lineBuffer');
 const { parseEveLogLine } = require('./combatLogParser');
 const { RecentEventDeduper } = require('./recentEventDeduper');
@@ -118,9 +119,21 @@ class EveGamelogWatcher {
 
     const events = [];
     for (const line of complete.lines) {
-      const event = this.parseLine(line);
+      let event;
+      try {
+        event = this.parseLine(line);
+      } catch (error) {
+        this.reportRejectedLine({
+          filePath,
+          line,
+          reason: 'parser_error',
+          message: error.message
+        });
+        continue;
+      }
+
       if (!event) {
-        this.onRejectedLine({ filePath, line });
+        this.reportRejectedLine({ filePath, line, reason: 'unparsed' });
         continue;
       }
       if (this.deduper.isDuplicate(event)) {
@@ -128,7 +141,16 @@ class EveGamelogWatcher {
         continue;
       }
       events.push(event);
-      this.onEvent(event);
+      try {
+        this.onEvent(event);
+      } catch (error) {
+        this.trace('listener_error', {
+          filePath,
+          eventId: event.id,
+          rawLineHash: event.rawLineHash,
+          message: error.message
+        });
+      }
     }
 
     this.trace('tail_read', { filePath, start, end: stats.size, lines: complete.lines.length, events: events.length });
@@ -140,6 +162,25 @@ class EveGamelogWatcher {
     this.onStatus(status);
     this.trace('status', status);
     return status;
+  }
+
+  reportRejectedLine({ filePath, line, reason, message }) {
+    const rejected = {
+      filePath,
+      rawLineHash: sha256(line),
+      reason,
+      message
+    };
+    if (reason !== 'parser_error') {
+      rejected.line = line;
+    }
+    this.onRejectedLine(rejected);
+    this.trace('line_rejected', {
+      filePath,
+      rawLineHash: rejected.rawLineHash,
+      reason,
+      message
+    });
   }
 }
 
@@ -169,6 +210,10 @@ function readUtf8Range(filePath, start, endExclusive) {
 
 function isTextLog(filePath) {
   return String(filePath || '').toLowerCase().endsWith('.txt');
+}
+
+function sha256(value) {
+  return crypto.createHash('sha256').update(String(value)).digest('hex');
 }
 
 module.exports = {

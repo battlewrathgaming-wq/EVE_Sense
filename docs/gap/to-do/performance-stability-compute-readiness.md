@@ -114,7 +114,7 @@ Renderer remains presentation-only as the app grows.
 
 ## Priority 7: Combat Witness Core
 
-Status: Open - Partial. Parser, gamelog watcher, duplicate suppression, and a 15 second rolling metric primitive exist. Event fan-out, bounded runtime retention policy, 5s/15s/30s snapshots, and compact renderer snapshot emission remain open.
+Status: Open - Partial. Parser, gamelog watcher, duplicate suppression, 15 second rolling metrics, prune-on-add retention, and a retained-event cap exist. Watcher strategy hardening, event fan-out, 5s/15s/30s snapshots, and compact renderer snapshot emission remain open.
 
 ### Actionables
 
@@ -123,6 +123,7 @@ Status: Open - Partial. Parser, gamelog watcher, duplicate suppression, and a 15
 - Add computed snapshot windows.
 - Emit compact snapshots to renderer.
 - Keep one-shot event streams separate from snapshot metrics.
+- Add chokidar-style watcher behavior or a polling fallback so log observation remains reliable when `fs.watch` is weak.
 
 ### Completion Signal
 
@@ -134,9 +135,11 @@ What has been observed in the last 5/15/30 seconds?
 
 without renderer owning the computation.
 
+Log observation remains append-only and fixture-backed under the selected watcher strategy or fallback.
+
 ## Priority 8: Combat Parser Fixture Tests
 
-Status: Open - Partial. Deterministic parser and watcher verification exists, but malformed timestamp rollover, listener failure behavior, and broader raw sample coverage still need acceptance hardening.
+Status: Complete in `docs/gap/complete/readiness-08-combat-parser-fixtures.md`.
 
 ### Actionables
 
@@ -185,9 +188,8 @@ This overview has been split into individual task files so each line can be impl
 3. `readiness-05-zkill-ref-boundary.md`
 4. `readiness-06-threat-intel-sample-metadata.md`
 5. `readiness-07-combat-witness-core.md`
-6. `readiness-08-combat-parser-fixtures.md`
-7. `readiness-09-local-type-metadata.md`
-8. `readiness-10-runtime-error-handling.md`
+6. `readiness-09-local-type-metadata.md`
+7. `readiness-10-runtime-error-handling.md`
 
 This sequence improves safety before adding heavier combat features.
 

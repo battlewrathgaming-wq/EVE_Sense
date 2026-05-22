@@ -24,10 +24,12 @@ try {
   const statuses = [];
   const rejected = [];
   const events = [];
+  const traces = [];
   const watcher = new EveGamelogWatcher({
     onStatus: (status) => statuses.push(status),
     onRejectedLine: (line) => rejected.push(line),
-    onEvent: (event) => events.push(event)
+    onEvent: (event) => events.push(event),
+    trace: (event, payload) => traces.push({ event, payload })
   });
 
   const status = watcher.start(folder);
@@ -64,6 +66,58 @@ try {
 
   watcher.stop();
   assert.ok(statuses.some((entry) => entry.state === 'watching'), 'watcher should report watching status');
+
+  const parserFailures = [];
+  const parserFailureWatcher = new EveGamelogWatcher({
+    parseLine: (line) => {
+      if (line.includes('throw-parser')) {
+        throw new Error('parser boom');
+      }
+      return {
+        id: line,
+        kind: 'navigation.jump',
+        eventTime: '2026-05-22T01:01:10.000Z',
+        rawLineHash: line
+      };
+    },
+    onRejectedLine: (line) => parserFailures.push(line),
+    onEvent: (event) => events.push(event)
+  });
+  const parserFailureLog = path.join(folder, '20260522_030303_123.txt');
+  fs.writeFileSync(parserFailureLog, '');
+  parserFailureWatcher.offsets.set(parserFailureLog, 0);
+  append(parserFailureLog, 'throw-parser\nok-after-parser-error\n');
+  const parserFailureEvents = parserFailureWatcher.handleFile(parserFailureLog);
+  assert.strictEqual(parserFailures.length, 1, 'parser exceptions should report rejected line');
+  assert.strictEqual(parserFailures[0].reason, 'parser_error', 'parser exception should use parser_error reason');
+  assert.ok(parserFailures[0].rawLineHash, 'parser exception report should include raw line hash');
+  assert.strictEqual(parserFailures[0].line, undefined, 'parser exception report should not retain raw line text');
+  assert.strictEqual(parserFailureEvents.length, 1, 'watcher should continue after parser exception');
+
+  const listenerTraces = [];
+  const listenerWatcher = new EveGamelogWatcher({
+    parseLine: (line) => ({
+      id: line,
+      kind: 'navigation.jump',
+      eventTime: '2026-05-22T01:01:10.000Z',
+      rawLineHash: line
+    }),
+    onEvent: (event) => {
+      if (event.id === 'listener-throws') {
+        throw new Error('listener boom');
+      }
+      events.push(event);
+    },
+    trace: (event, payload) => listenerTraces.push({ event, payload })
+  });
+  const listenerFailureLog = path.join(folder, '20260522_040404_123.txt');
+  fs.writeFileSync(listenerFailureLog, '');
+  listenerWatcher.offsets.set(listenerFailureLog, 0);
+  append(listenerFailureLog, 'listener-throws\nlistener-continues\n');
+  const listenerFailureEvents = listenerWatcher.handleFile(listenerFailureLog);
+  assert.strictEqual(listenerFailureEvents.length, 2, 'listener exceptions should not stop later events');
+  assert.ok(listenerTraces.some((entry) => entry.event === 'listener_error'), 'listener exception should emit trace');
+  assert.ok(events.some((event) => event.id === 'listener-continues'), 'watcher should continue after listener exception');
 
   console.log('gamelog watcher verified');
 } finally {

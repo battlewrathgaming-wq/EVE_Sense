@@ -66,6 +66,26 @@
     {
       "name": "malformed line",
       "raw": "this is not an eve log line"
+    },
+    {
+      "name": "invalid timestamp month",
+      "raw": "[ 2021.99.02 18:23:52 ] (combat) Mining Drone misses you completely"
+    },
+    {
+      "name": "invalid timestamp day rollover",
+      "raw": "[ 2021.02.31 18:23:52 ] (combat) Mining Drone misses you completely"
+    },
+    {
+      "name": "invalid timestamp hour",
+      "raw": "[ 2021.11.02 99:23:52 ] (combat) Mining Drone misses you completely"
+    },
+    {
+      "name": "invalid timestamp minute",
+      "raw": "[ 2021.11.02 18:99:52 ] (combat) Mining Drone misses you completely"
+    },
+    {
+      "name": "invalid timestamp second",
+      "raw": "[ 2021.11.02 18:23:99 ] (combat) Mining Drone misses you completely"
     }
   ]
 }

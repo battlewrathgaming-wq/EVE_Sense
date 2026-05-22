@@ -65,8 +65,13 @@ function parseEnvelope(line) {
     return null;
   }
 
+  const eventTime = parseEveTimestamp(match.groups.date, match.groups.time);
+  if (!eventTime) {
+    return null;
+  }
+
   return {
-    eventTime: parseEveTimestamp(match.groups.date, match.groups.time),
+    eventTime,
     channel: match.groups.channel.trim(),
     message: match.groups.message.trim()
   };
@@ -202,7 +207,40 @@ function directionFromRelation(relation) {
 function parseEveTimestamp(date, time) {
   const [year, month, day] = date.split('.').map(Number);
   const [hour, minute, second] = time.split(':').map(Number);
-  return new Date(Date.UTC(year, month - 1, day, hour, minute, second)).toISOString();
+  if (
+    !Number.isInteger(year) ||
+    !Number.isInteger(month) ||
+    !Number.isInteger(day) ||
+    !Number.isInteger(hour) ||
+    !Number.isInteger(minute) ||
+    !Number.isInteger(second) ||
+    month < 1 ||
+    month > 12 ||
+    day < 1 ||
+    day > 31 ||
+    hour < 0 ||
+    hour > 23 ||
+    minute < 0 ||
+    minute > 59 ||
+    second < 0 ||
+    second > 59
+  ) {
+    return null;
+  }
+
+  const timestamp = new Date(Date.UTC(year, month - 1, day, hour, minute, second));
+  if (
+    timestamp.getUTCFullYear() !== year ||
+    timestamp.getUTCMonth() !== month - 1 ||
+    timestamp.getUTCDate() !== day ||
+    timestamp.getUTCHours() !== hour ||
+    timestamp.getUTCMinutes() !== minute ||
+    timestamp.getUTCSeconds() !== second
+  ) {
+    return null;
+  }
+
+  return timestamp.toISOString();
 }
 
 function cleanRawLine(line) {

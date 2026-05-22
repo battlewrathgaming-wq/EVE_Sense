@@ -1,9 +1,12 @@
 const DEFAULT_WINDOW_MS = 15000;
+const DEFAULT_MAX_EVENTS = 500;
 
 class CombatRollingWindow {
-  constructor({ windowMs = DEFAULT_WINDOW_MS } = {}) {
+  constructor({ windowMs = DEFAULT_WINDOW_MS, maxEvents = DEFAULT_MAX_EVENTS } = {}) {
     this.windowMs = windowMs;
+    this.maxEvents = maxEvents;
     this.events = [];
+    this.latestEventMs = null;
   }
 
   add(event) {
@@ -12,6 +15,10 @@ class CombatRollingWindow {
     }
 
     this.events.push(event);
+    const eventMs = Date.parse(event.eventTime);
+    this.latestEventMs = this.latestEventMs == null ? eventMs : Math.max(this.latestEventMs, eventMs);
+    this.prune(this.latestEventMs);
+    this.enforceMaxEvents();
     return event;
   }
 
@@ -109,8 +116,16 @@ class CombatRollingWindow {
     });
   }
 
+  enforceMaxEvents() {
+    if (!Number.isInteger(this.maxEvents) || this.maxEvents < 1 || this.events.length <= this.maxEvents) {
+      return;
+    }
+    this.events = this.events.slice(this.events.length - this.maxEvents);
+  }
+
   clear() {
     this.events = [];
+    this.latestEventMs = null;
   }
 }
 
@@ -139,5 +154,6 @@ function mostCommon(counts) {
 
 module.exports = {
   CombatRollingWindow,
+  DEFAULT_MAX_EVENTS,
   DEFAULT_WINDOW_MS
 };

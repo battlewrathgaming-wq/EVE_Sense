@@ -128,4 +128,38 @@ assert.strictEqual(snapshot.balance.takenDps, 3, 'balance should expose damage t
 assert.strictEqual(snapshot.balance.repairReceivedHps, 2, 'balance should expose repair received HPS');
 assert.strictEqual(snapshot.balance.receivedRepairMinusDamagePerSecond, -1, 'balance should expose received HPS minus taken DPS');
 
+const prunedWindow = new CombatRollingWindow({ windowMs: 15000 });
+prunedWindow.add({
+  id: 'old-hit',
+  kind: 'combat.damage',
+  direction: 'incoming',
+  amount: 99,
+  eventTime: '2021-11-02T18:00:00.000Z'
+});
+prunedWindow.add({
+  id: 'new-hit',
+  kind: 'combat.damage',
+  direction: 'incoming',
+  amount: 1,
+  eventTime: '2021-11-02T18:01:00.000Z'
+});
+assert.strictEqual(prunedWindow.events.length, 1, 'rolling window should prune expired events on add');
+assert.strictEqual(prunedWindow.events[0].id, 'new-hit', 'rolling window should retain the newest in-window event');
+
+const cappedWindow = new CombatRollingWindow({ windowMs: 60000, maxEvents: 3 });
+for (let index = 0; index < 5; index += 1) {
+  cappedWindow.add({
+    id: `cap-${index}`,
+    kind: 'combat.damage',
+    direction: 'incoming',
+    amount: 1,
+    eventTime: `2021-11-02T18:00:0${index}.000Z`
+  });
+}
+assert.deepStrictEqual(
+  cappedWindow.events.map((event) => event.id),
+  ['cap-2', 'cap-3', 'cap-4'],
+  'rolling window should cap retained events under append-heavy input'
+);
+
 console.log('combat parser verified');

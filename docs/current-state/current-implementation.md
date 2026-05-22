@@ -22,6 +22,9 @@ The current implementation includes:
 - fixture-backed EVE combat log parser boundary
 - configurable EVE gamelog folder watcher
 - 15 second rolling Combat Witness damage/repair metrics
+- strict EVE timestamp validation for parsed log envelopes
+- watcher parser/listener failure isolation
+- rolling metric prune-on-add and retained-event cap
 
 ## What Does Not Yet Exist
 
@@ -111,9 +114,8 @@ This verifies the current seed utilities, service rigging, Combat Witness parser
 - no AURA-Sense runtime services yet
 - no formal Combat Witness event bus yet
 - no Combat Witness snapshot service yet
+- no chokidar-style watcher adapter or polling fallback yet; current watcher relies on `fs.watch`
 - no exact raw repair/healing fixtures yet
-- combat parser timestamp validation still needs rollover hardening
-- rolling Combat Witness retention is currently enforced by snapshot/prune behavior, not by a runtime service cap
 - historical Aura 7 docs remain in `docs/Concept`, `docs/research`, and historical audit files for reference
 
 ## Related Documents
@@ -122,4 +124,5 @@ This verifies the current seed utilities, service rigging, Combat Witness parser
 - `docs/audits/audit-2026-05-22-aura7-scope-alignment.md`
 - `docs/audits/engineering_audit_contribution.md`
 - `docs/audits/audit-2026-05-22-combat-parser-overseer-review.md`
+- `docs/audits/audit-2026-05-22-combat-parser-hardening-handover.md`
 - `docs/gap/to-do/aura-sense-rewrite-readiness.md`
