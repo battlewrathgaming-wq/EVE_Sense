@@ -21,6 +21,7 @@ Track the work required before AURA-Sense can honestly claim tactical viewport r
 - Keep Combat Witness backend-owned normalized events, bounded rolling cache, and 5s/15s/30s snapshots as the foundation for future presentation.
 - Keep live/API smoke checks separate from offline verification.
 - Keep Electron visual smoke separate from offline verification.
+- Use feature-aligned milestones for implementation sequencing instead of assigning one-off micro-tasks.
 - Record completion evidence in `docs/gap/complete/` as gaps close.
 
 ## Guardrails
@@ -46,6 +47,9 @@ AURA-Sense has a verified tactical viewport skeleton with separated telemetry la
 - `docs/contracts/combat-witness-contract.md`
 - `docs/roadmap/milestone-02-runtime-observability.md`
 - `docs/roadmap/milestone-03-tactical-viewport-first-light.md`
+- `docs/roadmap/feature-aligned-milestones.md`
+- `docs/roadmap/milestone-05-combat-witness-operational-loop.md`
+- `docs/gap/to-do/readiness-14-combat-witness-operational-loop.md`
 - `docs/gap/complete/readiness-12-tactical-hud-first-light.md`
 - `docs/gap/complete/readiness-13-electron-visual-smoke.md`
 - `docs/roadmap/development-artifact-trail.md`

@@ -339,6 +339,7 @@ No Atlas behavior exists in AURA-Sense core unless a future ADR defines an expli
 Before implementing a feature element, Dev should identify:
 
 - the target element in this document
+- the active feature-aligned milestone in `docs/roadmap/feature-aligned-milestones.md`
 - the current gap packet
 - the backend owner of truth
 - the renderer presentation contract
@@ -346,3 +347,5 @@ Before implementing a feature element, Dev should identify:
 - explicit deferrals
 
 If a slice cannot answer those points, it is not ready for implementation.
+
+Milestones should group related tasks into feature outcomes. The feature vision sets the goalposts; milestone task chains give Dev room to work without turning every small implementation step into a separate user decision.

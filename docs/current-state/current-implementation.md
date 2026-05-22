@@ -53,6 +53,7 @@ Not yet proven in this codebase:
 - network gate and live diagnostics for EVE APIs
 - production-grade multi-lane HUD renderer
 - live gamelog watcher lifecycle connected to the Combat Witness viewport
+- feature-aligned Milestone 05 implementation is not yet complete
 
 ## Intended Runtime Flow
 
@@ -157,9 +158,12 @@ It writes artifacts under `.tmp\electron-visual-smoke` and is intentionally not 
 - `docs/audits/audit-2026-05-22-electron-smoke-overseer-handover.md`
 - `docs/audits/audit-2026-05-22-electron-visual-smoke-handover.md`
 - `docs/gap/to-do/aura-sense-tactical-readiness.md`
+- `docs/gap/to-do/readiness-14-combat-witness-operational-loop.md`
 - `docs/gap/complete/readiness-13-electron-visual-smoke.md`
 - `docs/features/vision.md`
+- `docs/roadmap/feature-aligned-milestones.md`
 - `docs/roadmap/milestone-02-runtime-observability.md`
 - `docs/roadmap/milestone-03-tactical-viewport-first-light.md`
 - `docs/roadmap/milestone-04-runtime-smoke-readiness.md`
+- `docs/roadmap/milestone-05-combat-witness-operational-loop.md`
 - `docs/roadmap/development-artifact-trail.md`

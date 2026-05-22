@@ -1,0 +1,223 @@
+# Feature-Aligned Milestones
+
+Status: Active
+Date: 2026-05-22
+Owner: Overseer direction, Dev execution
+
+## Purpose
+
+This roadmap turns the feature vision into larger implementation envelopes.
+
+The goal is to stop treating every implementation step as a separate user-mediated decision. Dev should be able to take a feature-aligned milestone, work through its task chain, preserve the guardrails, verify the result, and hand back a coherent slice.
+
+## Source Of Truth
+
+All milestones must reference:
+
+- `docs/features/vision.md`
+- `docs/current-state/current-implementation.md`
+- relevant contracts and schemas
+- active or completed gap packets
+- latest Overseer handover
+
+If a proposed task does not map to a feature element, it needs an Overseer clarification before implementation.
+
+## Milestone Shape
+
+Each milestone should define:
+
+- feature anchors
+- operational outcome
+- task chain
+- autonomy envelope
+- acceptance gate
+- explicit deferrals
+- expected verification
+- expected handover contents
+
+Task chains are intentionally multi-step. They give Dev room to implement the feature slice without requiring the user to approve every small move.
+
+## Active Sequence
+
+### Milestone 05: Combat Witness Operational Loop
+
+Feature anchors:
+
+- Element 1: Tactical HUD Shell
+- Element 2: Combat Witness
+- Element 6: Diagnostics And Degraded State
+- Element 7: Settings And Runtime Control
+
+Operational outcome:
+
+Combat Witness moves from first-light presentation to an operator-usable local runtime loop: configured log path, watcher lifecycle, backend snapshot bridge, degraded status, visual smoke evidence, and no renderer-owned telemetry.
+
+Task chain:
+
+1. Establish product-facing log path/settings flow using existing validators.
+2. Wire live gamelog watcher lifecycle into the Combat Witness bridge.
+3. Surface watcher state and degraded/unavailable status in the HUD without adding new tactical claims.
+4. Preserve backend-owned snapshots and bounded event streams.
+5. Extend renderer-shell/static verification for new presentation boundaries.
+6. Extend `smoke:electron` checks and screenshots for the live-loop UI states that can be proven offline.
+7. Update current-state, complete the gap packet, and hand over with verification.
+
+Autonomy envelope:
+
+Dev may touch main/preload/renderer service wiring, settings/log-path service code, Combat Witness bridge lifecycle code, renderer copy for watcher status, verification scripts, and smoke checks.
+
+Acceptance gate:
+
+AURA-Sense can point at a valid gamelog folder, start or reflect watcher status, present Combat Witness freshness/degraded state, pass `verify:all`, and pass `smoke:electron` without live network or Atlas behavior.
+
+### Milestone 06: Passive Telemetry Foundation
+
+Feature anchors:
+
+- Element 3: Passive Telemetry
+- Element 6: Diagnostics And Degraded State
+- Element 8: Local Metadata
+- Element 9: External API Boundary
+
+Operational outcome:
+
+Passive Telemetry provides current environment awareness with freshness language and strict separation from Threat Intel.
+
+Task chain:
+
+1. Define Passive Telemetry snapshot schema before renderer work.
+2. Add local-first metadata adapter only for the first required environment labels.
+3. Add backend Passive Telemetry service with freshness and degraded states.
+4. Keep live/API calls scoped, optional, cached, and observable.
+5. Present a compact passive panel in the HUD.
+6. Extend verification for lane separation and renderer boundaries.
+7. Extend smoke evidence for passive empty/ready/degraded states.
+8. Update current-state and handover.
+
+Autonomy envelope:
+
+Dev may add backend passive telemetry service code, compact metadata adapter code, schema docs, renderer panel code, and verification for the lane.
+
+Acceptance gate:
+
+Passive Telemetry can present current environment state without calling Threat Intel paths, without broad polling, and without historical storage.
+
+### Milestone 07: Scoped Threat Intel Foundation
+
+Feature anchors:
+
+- Element 4: Threat Intel
+- Element 5: Clipboard Acquisition
+- Element 8: Local Metadata
+- Element 9: External API Boundary
+
+Operational outcome:
+
+Threat Intel supports deliberate scoped scans with explicit evidence basis, sample limits, freshness, and failure language.
+
+Task chain:
+
+1. Define target acquisition and scan request contract.
+2. Implement or adapt clipboard acquisition only as an armed, temporary input workflow.
+3. Add zKill discovery-ref normalization.
+4. Add ESI killmail expansion with timeout/cancel/retry and explicit User-Agent.
+5. Add sample, cap, failed-expansion, and freshness metadata.
+6. Add local type metadata only where the Threat Intel output consumes it.
+7. Present a compact scan result surface that avoids certainty language.
+8. Verify renderer isolation, API boundary behavior, and sample metadata.
+9. Record live smoke separately if any live API checks are run.
+
+Autonomy envelope:
+
+Dev may implement backend clients/services, acquisition workflow, scoped renderer controls, metadata adapter use, and verification for the Threat Intel lane.
+
+Acceptance gate:
+
+A scoped scan returns a tactical snapshot with visible evidence basis and no broad background scraping, no Atlas persistence, and no renderer API calls.
+
+### Milestone 08: Integrated Tactical Viewport
+
+Feature anchors:
+
+- Element 1: Tactical HUD Shell
+- Element 2: Combat Witness
+- Element 3: Passive Telemetry
+- Element 4: Threat Intel
+- Element 6: Diagnostics And Degraded State
+
+Operational outcome:
+
+The HUD composes multiple lanes into one calm tactical viewport without merging their truth models.
+
+Task chain:
+
+1. Define lane priority and visual hierarchy.
+2. Preserve each lane's freshness, uncertainty, and degraded state.
+3. Add layout modes only if the operator workflow needs them.
+4. Verify lane boundaries and renderer ownership rules.
+5. Extend visual smoke across the integrated viewport.
+6. Run an Overseer language pass for overclaiming.
+7. Update current-state and milestone evidence.
+
+Autonomy envelope:
+
+Dev may refine HUD composition, copy, CSS/layout, smoke coverage, and lane orchestration. Dev may not merge backend truth models.
+
+Acceptance gate:
+
+The viewport shows Combat Witness, Passive Telemetry, and Threat Intel as separate tactical lanes with clear freshness and no false certainty.
+
+### Milestone 09: Operational Hardening And Handoff Boundaries
+
+Feature anchors:
+
+- Element 6: Diagnostics And Degraded State
+- Element 7: Settings And Runtime Control
+- Element 9: External API Boundary
+- Element 10: Atlas Handoff
+
+Operational outcome:
+
+AURA-Sense becomes stable enough for longer operator sessions while keeping Atlas handoff explicit and deferred unless justified.
+
+Task chain:
+
+1. Harden settings persistence and recovery.
+2. Add operator-facing degraded-state review.
+3. Decide CI policy for smoke commands.
+4. Audit API/network behavior under failure.
+5. Define Atlas handoff ADR only if a concrete user workflow exists.
+6. Add failure records for reusable bug classes.
+7. Update current-state and handover.
+
+Autonomy envelope:
+
+Dev may harden runtime control, diagnostics, smoke policy, and documentation. Atlas integration remains deferred unless an ADR authorizes a narrow handoff.
+
+Acceptance gate:
+
+AURA-Sense can run longer sessions with visible degraded states, recoverable settings, scoped network behavior, and no accidental Atlas import.
+
+## Dev Instruction Rule
+
+Future Dev handovers should identify:
+
+- milestone number and name
+- feature anchors from `docs/features/vision.md`
+- completed tasks in the chain
+- tasks intentionally left incomplete
+- files touched
+- verification run
+- smoke/live evidence if applicable
+- current-state updates
+- explicit deferrals
+
+## Overseer Review Rule
+
+Overseer reviews should judge milestone progress by feature outcome, not by number of small tasks completed.
+
+The question is:
+
+```txt
+Did this work move the intended feature element closer to trustworthy tactical operation without broadening the product?
+```
