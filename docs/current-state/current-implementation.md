@@ -19,6 +19,9 @@ The current implementation includes:
 - HTTP client wrapper utilities
 - Frame module documentation for borderless and always-on-top windows
 - fixture-first offline verification command
+- fixture-backed EVE combat log parser boundary
+- configurable EVE gamelog folder watcher
+- 15 second rolling Combat Witness damage/repair metrics
 
 ## What Does Not Yet Exist
 
@@ -26,11 +29,12 @@ AURA-Sense has not yet rebuilt Aura 7 runtime parity.
 
 Not yet proven in this codebase:
 
-- EVE gamelog watcher
 - Passive Telemetry lane
 - Threat Intel scan lane
 - zKill discovery to ESI expansion pipeline
-- Combat Witness parser, rolling cache, and snapshots
+- formal normalized event bus/fan-out service
+- Combat Witness snapshot emission service
+- exact raw repair/healing parser coverage
 - local EVE system/type metadata adapters
 - network gate and live diagnostics for EVE APIs
 - AURA-Sense production HUD renderer
@@ -86,7 +90,8 @@ manual scoped scan
 new combat log line
 -> parser fixture-backed normalization
 -> rolling backend cache
--> 5s/15s/30s computed snapshots
+-> 15s computed metrics foundation
+-> future 5s/15s/30s computed snapshots
 -> compact renderer update
 ```
 
@@ -98,17 +103,20 @@ Available seed command:
 npm run verify:all
 ```
 
-This verifies the current seed utilities, service rigging, renderer shell, and renderer boundary static checks. It does not verify Aura 7 feature parity.
+This verifies the current seed utilities, service rigging, Combat Witness parser/watcher foundations, renderer shell, and renderer boundary static checks. It does not verify Aura 7 feature parity.
 
 ## Known Gaps
 
 - some seed shell UI and fallback labels still reflect Aura Core until product shell work begins
 - no AURA-Sense runtime services yet
-- no EVE fixtures wired into verification yet
+- no formal Combat Witness event bus yet
+- no Combat Witness snapshot service yet
+- no exact raw repair/healing fixtures yet
 - historical Aura 7 docs remain in `docs/Concept`, `docs/research`, and historical audit files for reference
 
 ## Related Documents
 
 - `docs/current-state/seed-current-state.md`
 - `docs/audits/audit-2026-05-22-aura7-scope-alignment.md`
+- `docs/audits/engineering_audit_contribution.md`
 - `docs/gap/to-do/aura-sense-rewrite-readiness.md`
