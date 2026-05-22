@@ -7,6 +7,7 @@
   "scripts": {
     "start": "electron .",
     "verify:all": "node scripts/verify-all.js",
+    "verify:combat-parser": "node scripts/verify-combat-parser.js",
     "verify:core": "node scripts/verify-core.js",
     "verify:services": "node scripts/verify-services.js",
     "verify:http": "node scripts/verify-http-client.js",
