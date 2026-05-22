@@ -1,0 +1,156 @@
+# Gap: Combat Log Replay And Repair Balance Next Scope
+
+Status: Open
+Priority: P1
+
+## Need
+
+AURA-Sense needs the next Combat Witness testing and compute slice to do two things:
+
+1. Strengthen combat log replay confidence without making every test filesystem-heavy.
+2. Prepare the observed HPS-DPS repair balance concept for future HUD presentation.
+
+This scope follows the Combat Logging Test Suite review and keeps the work backend-owned until snapshot output is precise.
+
+## Replay Strategy
+
+Use two replay layers.
+
+### Lower-Level Semantic Replay
+
+Keep the fast deterministic path:
+
+```txt
+fixture raw line
+-> line-buffer/chunk simulation
+-> parser
+-> Combat Witness runtime/service
+-> golden snapshot
+```
+
+Use this for most golden dataset tests.
+
+Strengths:
+
+- fast
+- deterministic timestamps
+- easy partial-line and chunking cases
+- good parser/event/snapshot coverage
+- no filesystem noise
+
+Limitations:
+
+- does not prove offset seeding
+- does not prove append-only file reads
+- does not prove watcher rejection behavior
+- can drift from runtime ingestion if watcher semantics change
+
+### Watcher-Path Replay Smoke
+
+Add a smaller representative replay using temporary files and `EveGamelogWatcher.handleFile`.
+
+Target path:
+
+```txt
+temporary gamelog folder/file
+-> seed existing file offset
+-> append fixture bytes
+-> handleFile
+-> parser
+-> runtime/service
+-> snapshot assertion
+```
+
+Use this to prove ingestion semantics, not every parser case.
+
+Strengths:
+
+- proves real append path
+- proves offset seeding
+- proves partial-line buffering through watcher
+- proves watcher rejection/diagnostic behavior
+- closer to actual EVE gamelog behavior
+
+Limitations:
+
+- more setup
+- slower than semantic replay
+- less focused for pure parser failures
+
+## Repair Balance Concept
+
+The UI-facing concept is a future tug-of-war radial based on:
+
+```txt
+repair balance = observed incoming HPS - observed incoming DPS
+```
+
+AURA-Sense does not know:
+
+- current HP
+- max HP
+- resist profile
+- incoming volley risk
+- repair cycle certainty
+- whether future reps will continue
+
+Therefore this metric must not imply survival, safety, or recommendation.
+
+Preferred language:
+
+- `Repair Balance +12/s`
+- `Repair Balance -38/s`
+- `Incoming Pressure`
+- `Repair Throughput`
+- `Observed repair balance`
+
+Avoid:
+
+- `Stable`
+- `Safe`
+- `Breaking`
+- `Tank holds`
+- `You will survive`
+
+## Guardrails
+
+- Do not add renderer radial UI in this slice.
+- Do not claim HPS from raw logs until exact repair/healing fixtures exist.
+- Do not infer HP state.
+- Do not infer future healing.
+- Do not make all replay tests depend on filesystem behavior.
+- Do not replay historical logs in normal runtime behavior.
+- Keep golden tests deterministic and wall-clock independent.
+
+## Implementation Requirements
+
+- Add a watcher-path replay verification using a temporary gamelog folder.
+- Keep existing lower-level replay as the main semantic golden harness.
+- Strengthen golden snapshot data so at least one dataset proves mixed-window aggregation, not only pruning.
+- Include incoming damage, outgoing damage, misses, jump events, and at least synthetic normalized repair events until exact raw repair fixtures exist.
+- Assert `balance.receivedRepairMinusDamagePerSecond`.
+- Assert that repair balance remains an observed metric, not a tactical verdict.
+
+## Completion Signal
+
+- `npm.cmd run verify:combat-replay` covers lower-level semantic replay.
+- A watcher-path replay smoke is included in verification.
+- Golden snapshots include a non-trivial 15 second case with incoming damage and incoming repair.
+- Verification proves HPS-DPS math as `receivedRepairMinusDamagePerSecond`.
+- Documentation or fixture notes clearly state that raw repair parsing remains deferred until exact samples exist.
+- `npm.cmd run verify:all` passes.
+
+## Related Files
+
+- `docs/features/combat-logging-test-suite.md`
+- `docs/gap/complete/combat-log-replay-harness.md`
+- `docs/gap/complete/combat-log-golden-snapshot-tests.md`
+- `docs/gap/complete/combat-log-repair-healing-fixtures.md`
+- `fixtures/combat-log-replay-dataset.json`
+- `scripts/verify-combat-log-replay.js`
+- `scripts/verify-combat-golden-snapshots.js`
+- `src/combat/eveGamelogWatcher.js`
+- `src/combat/combatWitnessRuntime.js`
+- `src/combat/combatWitnessService.js`
+- `src/combat/combatRollingWindow.js`
+
