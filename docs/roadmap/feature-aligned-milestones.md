@@ -43,9 +43,9 @@ Task chains are intentionally multi-step. They give Dev room to implement the fe
 
 Status: Active in `docs/roadmap/passive-telemetry-live-readiness-interlock.md`.
 
-This interlock must clear before Passive Telemetry is treated as live-usable. It addresses real system resolution, bounded zKill `pastSeconds` routes, live IO gating, request observability, and freshness honesty.
+This interlock must clear before Passive Telemetry is treated as live-usable. It addresses real system resolution, ESI system kills/jumps activity, one-hour ETag-aware activity cache records, bounded zKill `pastSeconds` routes, live IO gating, request observability, and freshness honesty.
 
-The interlock is intentionally narrow. It must not add Threat Intel search, Clipboard Acquisition, ESI expansion, Atlas persistence, or renderer network calls.
+The interlock is intentionally narrow. It must not add Threat Intel search, Clipboard Acquisition, ESI killmail expansion, Atlas persistence, or renderer network calls.
 
 ### Milestone 05: Combat Witness Operational Loop
 
@@ -175,7 +175,45 @@ combat log replay verified: events=5 stream=4
 combat golden snapshots verified: windows=5s,15s,30s
 ```
 
-### Milestone 08: Scoped Threat Intel Foundation
+### Milestone 08: Passive Telemetry Live-Safe Readiness
+
+Status: Active - Next Dev Runway in `docs/roadmap/milestone-08-passive-telemetry-live-safe-readiness.md`.
+
+Feature anchors:
+
+- Element 3: Passive Telemetry
+- Element 6: Diagnostics And Degraded State
+- Element 8: Local Metadata
+- Element 9: External API Boundary
+
+Operational outcome:
+
+Passive Telemetry becomes live-safe: it resolves observed systems, fetches ESI aggregate system activity through one-hour ETag-aware cache records, fetches bounded zKill context, obeys a live IO gate, and reports honest freshness/degraded states.
+
+Task chain:
+
+1. Resolve observed system names to local/static system IDs or degrade explicitly.
+2. Add ESI aggregate system kills/jumps activity with one-hour cache and ETag/conditional revalidation where available.
+3. Change passive zKill context to bounded `pastSeconds` routes.
+4. Add a backend live IO gate for passive ESI/zKill calls.
+5. Wire request logging and diagnostics for attempted, blocked, cached, succeeded, failed, timed out, cancelled, capped, partial, and stale paths.
+6. Fix freshness honesty for partial and expired cache states.
+7. Add an explicit live smoke harness outside `verify:all`.
+8. Update current-state and completion evidence.
+
+Autonomy envelope:
+
+Dev may touch Passive Telemetry backend services/clients, local metadata resolver adapters, service registry commands, request logging/diagnostics plumbing, compact passive HUD copy, deterministic verification, live smoke scripts, and docs.
+
+Dev may not add Threat Intel search, Clipboard Acquisition, ESI killmail expansion, Atlas persistence, renderer network calls, broad polling, or false certainty language.
+
+Acceptance gate:
+
+Passive Telemetry can provide current-system ESI activity and bounded zKill context only when live IO is allowed, can block external calls visibly, can read fresh cache records, can revalidate expired records, and can pass offline verification.
+
+### Milestone 09: Scoped Threat Intel And Clipboard Acquisition
+
+Status: Queued in `docs/roadmap/milestone-09-scoped-threat-intel-and-clipboard-acquisition.md`.
 
 Feature anchors:
 
@@ -186,30 +224,32 @@ Feature anchors:
 
 Operational outcome:
 
-Threat Intel supports deliberate scoped scans from a search bar or armed clipboard capture, with explicit evidence basis, sample limits, freshness, and failure language.
+Threat Intel supports deliberate scoped scans from explicit search submit or armed clipboard capture, with explicit evidence basis, sample limits, freshness, and failure language.
 
 Task chain:
 
-1. Define search bar target acquisition and scan request contract.
-2. Implement or adapt clipboard acquisition as a Ctrl+Shift armed, visible, temporary input workflow with timeout and cooldown.
+1. Define search target acquisition and scan request contract.
+2. Implement or adapt clipboard acquisition as a Ctrl+Shift armed, visible, hands-free temporary input workflow with timeout and cooldown.
 3. Insert valid clipboard captures into the search box and auto-run the scoped scan.
 4. Add zKillmail query/ref normalization for the requested target.
 5. Add sample, cap, failed-fetch, and freshness metadata.
 6. Keep ESI killmail expansion deferred unless this milestone is explicitly expanded by Overseer.
 7. Add local type metadata only where the Threat Intel output consumes it.
 8. Present a compact scan result surface that avoids certainty language.
-9. Verify renderer isolation, API boundary behavior, keyboard/listening lifecycle, and sample metadata.
+9. Verify renderer isolation, API boundary behavior, keyboard/listening lifecycle, no-scan-on-focus behavior, cooldown behavior, and sample metadata.
 10. Record live smoke separately if any live API checks are run.
 
 Autonomy envelope:
 
 Dev may implement backend clients/services, acquisition workflow, scoped renderer controls, metadata adapter use, and verification for the Threat Intel lane.
 
+Dev may not scan on search focus alone, keep clipboard listening indefinitely, require AURA-Sense window focus for the primary clipboard arming path, add ESI killmail expansion by default, or import Atlas persistence.
+
 Acceptance gate:
 
-A search bar or armed clipboard scan returns a tactical zKillmail-backed snapshot with visible evidence basis and no broad background scraping, no Atlas persistence, no default ESI expansion, and no renderer API calls.
+Explicit search submit or armed clipboard scan returns a tactical zKillmail-backed snapshot with visible evidence basis and no broad background scraping, no focus-triggered API calls, no Atlas persistence, no default ESI expansion, and no renderer API calls.
 
-### Milestone 09: Integrated Tactical Viewport
+### Milestone 10: Integrated Tactical Viewport
 
 Feature anchors:
 
@@ -241,7 +281,7 @@ Acceptance gate:
 
 The viewport shows Combat Witness, Passive Telemetry, and Threat Intel as separate tactical lanes with clear freshness and no false certainty.
 
-### Milestone 10: Operational Hardening And Handoff Boundaries
+### Milestone 11: Operational Hardening And Handoff Boundaries
 
 Feature anchors:
 

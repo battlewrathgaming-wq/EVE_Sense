@@ -18,8 +18,8 @@ Track the work required before AURA-Sense can honestly claim tactical viewport r
 - Keep Combat Witness runtime path control and watcher lifecycle backend-owned.
 - Treat Tactical Viewport First Light as complete, not as full tactical viewport readiness.
 - Rebuild Passive Telemetry with local-first system metadata.
-- Treat Passive Telemetry foundation as complete; local metadata-backed resolver and live smoke remain future hardening.
-- Rebuild Threat Intel around a search-bar zKillmail probe with capped sample metadata and freshness language; keep ESI expansion deferred until explicitly authorized.
+- Treat Passive Telemetry foundation as complete; live-safe readiness now requires local metadata-backed resolver, ESI aggregate system activity, bounded zKill context, live IO gate, request observability, and live smoke harness.
+- Rebuild Threat Intel around explicit search submit or armed clipboard acquisition with capped zKill sample metadata and freshness language; keep ESI killmail expansion deferred until explicitly authorized.
 - Keep Combat Witness backend-owned normalized events, bounded rolling cache, and 5s/15s/30s snapshots as the foundation for future presentation.
 - Keep live/API smoke checks separate from offline verification.
 - Keep Electron visual smoke separate from offline verification.
@@ -52,6 +52,9 @@ AURA-Sense has a verified tactical viewport skeleton with separated telemetry la
 - `docs/roadmap/milestone-03-tactical-viewport-first-light.md`
 - `docs/roadmap/feature-aligned-milestones.md`
 - `docs/roadmap/milestone-05-combat-witness-operational-loop.md`
+- `docs/roadmap/milestone-08-passive-telemetry-live-safe-readiness.md`
+- `docs/roadmap/milestone-09-scoped-threat-intel-and-clipboard-acquisition.md`
+- `docs/audits/audit-2026-05-22-next-dev-runway-handover.md`
 - `docs/gap/complete/readiness-14-combat-witness-operational-loop.md`
 - `docs/gap/complete/readiness-15-passive-telemetry-foundation.md`
 - `docs/gap/complete/combat-log-dataset-fixture-ingestion.md`

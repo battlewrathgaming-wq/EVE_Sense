@@ -191,7 +191,15 @@ It writes artifacts under `.tmp\electron-visual-smoke` and is intentionally not 
 - `docs/audits/audit-2026-05-22-combat-log-test-suite-milestone-handover.md`
 - `docs/audits/audit-2026-05-22-combat-log-test-suite-handover.md`
 - `docs/audits/audit-2026-05-22-passive-telemetry-live-readiness-endpoint-io.md`
+- `docs/audits/audit-2026-05-22-next-dev-runway-handover.md`
 - `docs/gap/to-do/aura-sense-tactical-readiness.md`
+- `docs/gap/to-do/passive-telemetry-local-system-resolver.md`
+- `docs/gap/to-do/passive-telemetry-esi-system-activity.md`
+- `docs/gap/to-do/passive-telemetry-scoped-zkill-route.md`
+- `docs/gap/to-do/passive-telemetry-live-io-gate.md`
+- `docs/gap/to-do/passive-telemetry-debugging-and-tracing.md`
+- `docs/gap/to-do/passive-telemetry-freshness-honesty.md`
+- `docs/gap/to-do/passive-telemetry-live-smoke-harness.md`
 - `docs/gap/complete/combat-log-dataset-fixture-ingestion.md`
 - `docs/gap/complete/combat-log-event-coverage-matrix.md`
 - `docs/gap/complete/combat-log-replay-harness.md`
@@ -210,5 +218,7 @@ It writes artifacts under `.tmp\electron-visual-smoke` and is intentionally not 
 - `docs/roadmap/milestone-05-combat-witness-operational-loop.md`
 - `docs/roadmap/milestone-06-passive-telemetry-foundation.md`
 - `docs/roadmap/milestone-07-combat-logging-test-suite.md`
+- `docs/roadmap/milestone-08-passive-telemetry-live-safe-readiness.md`
+- `docs/roadmap/milestone-09-scoped-threat-intel-and-clipboard-acquisition.md`
 - `docs/roadmap/passive-telemetry-live-readiness-interlock.md`
 - `docs/roadmap/development-artifact-trail.md`

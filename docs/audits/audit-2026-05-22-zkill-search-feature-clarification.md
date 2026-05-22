@@ -45,8 +45,14 @@ visible indicator
 
 ## Handoff Impact
 
+Supersession note:
+
+Milestone numbering changed after Combat Logging Test Suite completion and Passive Telemetry live-readiness clarification. Use `docs/audits/audit-2026-05-22-next-dev-runway-handover.md` for current sequencing.
+
 Milestone 06 should build Passive Telemetry as gate/current-system zKillmail context.
 
-Milestone 07 should build search-bar Threat Intel and armed Clipboard Acquisition before any ESI expansion work.
+Milestone 08 should make Passive Telemetry live-safe, including ESI aggregate system activity and bounded zKill context.
+
+Milestone 09 should build search-bar Threat Intel and armed Clipboard Acquisition before any ESI killmail expansion work.
 
 Dev should not implement default ESI expansion inside the first search-bar scan.
