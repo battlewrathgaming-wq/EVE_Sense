@@ -22,7 +22,27 @@ In practice, Passive Telemetry should read gate/current-system changes from the 
 ### Task 1: Observation Source
 
 - Reuse backend-owned EVE log observation.
+- Target the normalized event stream shape:
+
+```txt
+EVE gamelog watcher
+-> complete appended lines
+-> parser
+-> normalized observed event stream
+   -> rolling DPS/HPS window consumer
+   -> jump/location consumer
+   -> future EWAR consumer
+   -> future diagnostics/debug consumer
+   -> future HUD snapshot service
+```
+
 - Avoid a second hidden watcher if the existing watcher can safely fan out navigation events.
+- Preserve watcher boundary behavior from `docs/audits/engineering_audit_contribution.md`:
+  - existing files are offset-seeded and not replayed
+  - newly discovered files are seeded at current size and not tail-replayed
+  - only future appended bytes are read
+  - partial lines are buffered until complete
+  - duplicate normalized events are suppressed inside a short TTL
 - Preserve Combat Witness runtime behavior.
 - Document the ownership decision in the handover.
 
@@ -72,6 +92,8 @@ In practice, Passive Telemetry should read gate/current-system changes from the 
 - Do not build Clipboard Acquisition in this milestone.
 - Do not store history.
 - Do not merge Passive Telemetry and Threat Intel.
+- Do not replay old gamelog content to create current-system context.
+- Do not let renderer subscribe to raw normalized events; renderer consumes snapshots.
 
 ## Completion Signal
 

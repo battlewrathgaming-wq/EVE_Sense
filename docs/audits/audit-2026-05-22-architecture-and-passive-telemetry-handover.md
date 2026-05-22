@@ -37,6 +37,30 @@ The main architectural decision is observation ownership.
 
 Dev must avoid creating a silent second watcher path. Prefer a small backend-owned observation fan-out or a narrow routing path from existing backend ownership into Passive Telemetry. Renderer must not parse logs.
 
+Canonical stream target:
+
+```txt
+EVE gamelog watcher
+-> complete appended lines
+-> parser
+-> normalized observed event stream
+   -> rolling DPS/HPS window consumer
+   -> jump/location consumer
+   -> future EWAR consumer
+   -> future diagnostics/debug consumer
+   -> future HUD snapshot service
+```
+
+Preserve the watcher boundary from `docs/audits/engineering_audit_contribution.md`:
+
+- existing files are offset-seeded and not replayed
+- newly discovered files are seeded at current size and not tail-replayed
+- only future appended bytes are read
+- partial lines are buffered until complete
+- duplicate normalized events are suppressed inside a short TTL
+
+Passive Telemetry must not replay old gamelog content to manufacture current context.
+
 Supporting needs:
 
 - Passive Telemetry snapshot contract before UI work
@@ -93,6 +117,8 @@ Dev should work the task chain as a bundled feature milestone:
 Do:
 
 - detect current system from backend-owned log observation
+- preserve append-only gamelog watcher semantics
+- implement Passive Telemetry as a backend consumer of normalized event stream or a documented interim route
 - fetch scoped zKillmail context for the current system
 - expose freshness, sample, cap, and failure metadata
 - present passive context separately from Combat Witness and Threat Intel

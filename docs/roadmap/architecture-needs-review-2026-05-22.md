@@ -26,19 +26,43 @@ Current state:
 - `EveGamelogWatcher` parses both combat and navigation events.
 - `CombatWitnessRuntime` currently owns the watcher lifecycle.
 - Passive Telemetry needs navigation/current-system events from the same local observation stream.
+- The engineering audit records strict watcher behavior:
+  - existing files are offset-seeded and not replayed
+  - newly discovered files are seeded at current size and not tail-replayed
+  - only future appended bytes are read
+  - partial lines are buffered until complete
+  - duplicate normalized events are suppressed inside a short TTL
 
 Need:
 
 Create one backend-owned observation path for EVE gamelog events.
 
+Canonical target:
+
+```txt
+EVE gamelog watcher
+-> complete appended lines
+-> parser
+-> normalized observed event stream
+   -> rolling DPS/HPS window consumer
+   -> jump/location consumer
+   -> future EWAR consumer
+   -> future diagnostics/debug consumer
+   -> future HUD snapshot service
+```
+
 Acceptable approaches:
 
-- Extract a small shared gamelog observation runtime that can feed Combat Witness and Passive Telemetry.
+- Extract a small shared gamelog observation runtime that can feed Combat Witness and Passive Telemetry while preserving append-only watcher semantics.
 - Or, as a narrower first step, let the existing backend runtime publish navigation events to a Passive Telemetry service without giving renderer ownership.
 
 Guardrail:
 
 Do not create a second hidden watcher for Passive Telemetry unless an audit proves it is necessary.
+
+Do not replay old log content to populate Passive Telemetry; it should react to future observed navigation/current-system events.
+
+The normalized event stream should fan out backend-side. Renderer code consumes snapshots only.
 
 ### 2. Passive Snapshot Contract
 

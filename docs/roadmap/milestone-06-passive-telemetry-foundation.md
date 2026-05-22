@@ -26,9 +26,30 @@ AURA-Sense can detect current-system changes from backend-owned log observation,
 ### Task 1: Observation Ownership Decision
 
 - Review current Combat Witness watcher ownership.
+- Use this canonical backend stream target:
+
+```txt
+EVE gamelog watcher
+-> complete appended lines
+-> parser
+-> normalized observed event stream
+   -> rolling DPS/HPS window consumer
+   -> jump/location consumer
+   -> future EWAR consumer
+   -> future diagnostics/debug consumer
+   -> future HUD snapshot service
+```
+
+- Preserve `EveGamelogWatcher` append-only semantics:
+  - offset-seed existing files
+  - seed newly discovered files at current size
+  - read only future appended bytes
+  - buffer partial lines until complete
+  - suppress short-TTL duplicate normalized events
 - Avoid adding a second hidden watcher.
 - Either extract a small shared gamelog observation runtime or route navigation events from backend ownership into Passive Telemetry.
 - Preserve Combat Witness behavior and verification.
+- Keep renderer consumption snapshot-only.
 
 ### Task 2: Passive Snapshot Contract
 
@@ -94,6 +115,7 @@ Dev may not:
 - add Atlas persistence
 - call zKill from renderer
 - create a hidden second watcher without documenting the decision
+- replay existing log files as Passive Telemetry evidence
 - make zKillmail activity sound like complete tactical truth
 
 ## Acceptance Gate
