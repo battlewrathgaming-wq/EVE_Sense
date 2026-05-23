@@ -48,6 +48,12 @@ It is not:
 | `research/` | Non-authoritative findings. |
 | `templates/` | Document templates. |
 
+Repo root:
+
+| Path | Role |
+| --- | --- |
+| `workspace/` | Dot-protocol attention and execution queue. When the user sends `.`, read this folder from top to bottom. |
+
 ## Core Rules
 
 - AURA-Sense observes now; AURA Atlas remembers later.
@@ -66,6 +72,7 @@ The current hardening lane is aggressive testing and bug hunting.
 
 Start with:
 
+- `workspace/README.md` when the user sends `.`
 - `docs/current-state/current-implementation.md`
 - `docs/roadmap/milestone-13-aggressive-testing-and-bug-hunting.md`
 - `docs/testing/aggressive-test-harness-matrix.md`

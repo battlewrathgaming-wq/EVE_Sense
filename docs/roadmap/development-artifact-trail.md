@@ -13,10 +13,11 @@ It exists so future Dev and Overseer sessions can find the current truth without
 
 Start here:
 
-1. `docs/current-state/current-implementation.md`
-2. latest Overseer audit in `docs/audits/`
-3. active milestone in `docs/roadmap/`
-4. active packets in `docs/gap/to-do/`
+1. `workspace/README.md` when the user sends `.`
+2. `docs/current-state/current-implementation.md`
+3. latest Overseer audit in `docs/audits/`
+4. active milestone in `docs/roadmap/`
+5. active packets in `docs/gap/to-do/`
 
 ## Artifact Roles
 
@@ -25,6 +26,7 @@ Start here:
 - `docs/gap/to-do/`: active or deferred implementation packets
 - `docs/gap/complete/`: completed work with verification evidence
 - `docs/roadmap/`: milestone direction and sequencing
+- `workspace/`: dot-protocol attention and execution queue
 - `docs/contracts/`: stable ownership boundaries
 - `docs/schemas/`: stable data/interface shapes
 - `docs/terms/`: shared vocabulary
@@ -40,6 +42,7 @@ Start here:
 - Stale active work should be retired into `docs/gap/complete` with a superseded note.
 - Verification output belongs in completion notes and handovers.
 - New artifacts are warranted when future sessions would otherwise make the wrong architectural or tactical choice.
+- When the user sends `.`, Dev should read `workspace/` from top to bottom before choosing work.
 
 ## Current Assessment
 
