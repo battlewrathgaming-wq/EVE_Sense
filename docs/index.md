@@ -1,94 +1,86 @@
 # AURA-Sense Documentation
 
-This folder preserves the operational memory for AURA-Sense.
+This folder records AURA-Sense product rules, contracts, current state, failures, and future work.
 
-AURA-Sense owns the tactical viewport direction. Current-state records, active gap packets, contracts, feature vision, and verified implementation are authoritative for this repository.
+The authoritative implementation truth lives in `docs/current-state/current-implementation.md`. Audit files are dated review records and should remain intact.
 
-AURA-Sense answers:
+## Product Summary
 
-```txt
-What is happening around me right now?
-What must I notice?
-```
+AURA-Sense is a tactical viewport for recent EVE Online operational observations.
 
-AURA Atlas answers:
+It is:
 
-```txt
-What patterns emerge over time?
-```
+- tactical
+- transient by default
+- backend-owned
+- renderer-presented
+- low-retention
+- uncertainty-aware
+- live-gated
 
-That boundary is mandatory.
+It is not:
 
-## Documentation Purpose
+- AURA Atlas
+- a historical evidence store
+- a broad scraper
+- a fleet command system
+- a renderer-owned telemetry engine
 
-AURA-Sense's main risks are semantic drift and premature implementation weight:
+## Folder Roles
 
-- renderer state becoming telemetry authority
-- passive telemetry contaminating scoped Threat Intel
-- Combat Witness data being treated as historical evidence
-- UI language implying certainty beyond observation
-- external calls widening beyond scoped tactical need
-- persistent storage creeping into a transient HUD product
-- outdated or imported phrasing being mistaken for settled AURA-Sense design
+| Folder | Role |
+| --- | --- |
+| `current-state/` | What the implementation currently does. |
+| `audits/` | Dated reviews and handovers. Do not rewrite as product copy. |
+| `tenets/` | Stable project rules. |
+| `contracts/` | Service, renderer, telemetry, and lane contracts. |
+| `features/` | Product capability goalposts. |
+| `terms/` | Plain-language vocabulary. |
+| `schemas/` | Data structures and snapshot/event shapes. |
+| `roadmap/` | Feature-aligned milestones. |
+| `gap/to-do/` | Active work packets. |
+| `gap/complete/` | Completed work packets. |
+| `testing/` | Verification matrices and test strategy. |
+| `statements/` | Operational doctrine. |
+| `failures/` | Preserved bug classes. |
+| `module/` | Reusable implementation module notes. |
+| `Concept/` | High-level concept references. These must stay aligned with current state. |
+| `research/` | Non-authoritative findings. |
+| `templates/` | Document templates. |
 
-The documentation library preserves why the system behaves a certain way, not only how it currently works.
+## Core Rules
 
-## Folder Map
-
-| Folder | Purpose | Change Frequency |
-| --- | --- | --- |
-| `current-state/` | Grounded description of what currently exists in AURA-Sense | As implementation changes |
-| `research/` | Exploratory findings and tactical evidence notes | As discoveries are made |
-| `contracts/` | Stable rules, ownership boundaries, and interface expectations | Carefully and intentionally |
-| `tenets/` | Foundational truths and architectural invariants | Rare |
-| `statements/` | Operational doctrine and emerging philosophy | Occasional |
-| `audits/` | Current-state technical understanding and handovers | As implementation changes |
-| `failures/` | Preserved lessons from bugs/regressions | When lessons are learned |
-| `adr/` | Architecture Decision Records | Major decisions |
-| `schemas/` | Canonical data structures and interface contracts | When contracts change |
-| `features/` | Product feature concepts before/during implementation | As features are shaped |
-| `testing/` | Verification matrices and command-class boundaries | As test strategy changes |
-| `gap/to-do/` | Known readiness work not yet complete | As gaps are found |
-| `gap/complete/` | Completed gaps with completion signal | As gaps close |
-| `module/` | Reusable implementation module notes | When modules are seeded |
-| `roadmap/` | Future-facing architecture and product direction | As strategy evolves |
-| `terms/` | Plain-language explanations of project concepts | When terminology needs shared understanding |
-| `templates/` | Templates for durable documentation artifacts | Rare |
-| `Concept/` | AURA-Sense concept briefs and high-level doctrine | Reference/history |
-| `Tasks/` | Historical task briefs | Reference/history |
-
-## Artifact Rules
-
-When significant architectural learning occurs, create or update a durable artifact.
-
-- Bug fixed -> add a failure record.
-- Major design choice -> add an ADR.
-- New operational philosophy -> add a statement.
-- New stable truth -> update tenets.
-- Current implementation understanding -> update an audit.
-- Stable data/interface shape -> update a schema document.
-- Future direction -> update roadmap.
-
-Good threshold:
-
-> Would future Codex, a contributor, or a refactor risk making the wrong tactical or architectural choice without this context?
-
-If yes, document it.
-
-## Core Project Memory
-
-The following concepts should remain preserved across implementation:
-
-- AURA-Sense is the current tactical viewport product direction.
-- AURA Atlas is the persistent evidence map.
-- AURA-Sense is tactical, transient, and low-retention.
-- The renderer presents snapshots; it is not telemetry authority.
-- Passive Telemetry, Threat Intel, and Combat Witness are separate lanes.
-- zKill is discovery only.
-- Scoped zKill-backed samples are the first Threat Intel surface; expanded ESI killmails remain deferred until explicitly authorized.
-- Combat Witness is observed telemetry, not evidence-grade history.
+- AURA-Sense observes now; AURA Atlas remembers later.
+- Renderer presents snapshots and events; it does not own telemetry truth.
+- Combat Witness is rolling tactical telemetry, not evidence history.
+- Passive Telemetry must not contaminate Threat Intel.
+- Threat Intel scans are explicit and scoped.
+- Clipboard Acquisition is armed, visible, short-lived, and sealed after use.
+- Live APIs are opt-in and outside deterministic offline verification.
+- Local metadata is preferred for static type/system labels.
 - UI copy must not overclaim certainty.
-- Live API usage must remain scoped, gated, cached, and respectful.
-- Local static metadata should be preferred over repeated live lookup.
-- Imported or older docs must be rewritten into AURA-Sense terms before they guide work.
-- Seed rigging is infrastructure, not product doctrine.
+
+## Current Work
+
+The current hardening lane is aggressive testing and bug hunting.
+
+Start with:
+
+- `docs/current-state/current-implementation.md`
+- `docs/roadmap/milestone-13-aggressive-testing-and-bug-hunting.md`
+- `docs/testing/aggressive-test-harness-matrix.md`
+- `docs/gap/to-do/README.md`
+
+## Update Rule
+
+Update durable docs when the product meaning changes:
+
+- lane boundaries
+- contracts
+- schemas
+- feature goalposts
+- failure lessons
+- current implementation truth
+- roadmap direction
+
+Do not rewrite audits or current-state files during normal product-copy cleanup.

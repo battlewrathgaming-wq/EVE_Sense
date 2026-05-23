@@ -1,132 +1,148 @@
 # AURA-Sense Tenets
 
 Status: Active
-Date: 2026-05-22
+Updated: 2026-05-23
 
-AURA-Sense is a real-time tactical cognition and situational awareness system, not a historical intelligence platform.
-
-It exists to present recent, scoped, operationally useful observations with low cognitive load. It must not become the place where persistent intelligence, historical memory, or authoritative facts are invented.
+These rules define what AURA-Sense is allowed to become.
 
 ## 1. Tactical Viewport First
 
 AURA-Sense answers:
 
-```txt
+```text
 What is happening around me right now?
 What must I notice?
+What is stale, partial, degraded, or unavailable?
 ```
 
-AURA Atlas answers:
-
-```txt
-What patterns emerge over time?
-```
-
-The boundary is mandatory. AURA-Sense may inspect, summarize, and display tactical observations, but persistent historical evidence belongs to Atlas.
+It does not answer long-term evidence questions. That belongs to AURA Atlas.
 
 ## 2. Transient By Default
 
-AURA-Sense should prefer rolling windows, bounded caches, and short-lived telemetry.
+Combat telemetry and tactical context should use rolling windows, bounded caches, and short-lived state.
 
-Combat telemetry, pressure readings, EWAR observations, and topology hints should naturally expire unless deliberately exported or handed to another system.
+Persistence is for settings, diagnostics, fixtures, and explicit local metadata. It is not for historical intelligence unless a future ADR authorizes a narrow handoff.
 
-## 3. Renderer Is Presentation, Not Authority
+## 3. Backend Owns Telemetry Truth
 
-The renderer consumes snapshots and events. It must not own telemetry truth, parse logs directly, call live APIs directly, or become the source of derived tactical state.
+The renderer consumes snapshots and events through the preload/service boundary.
 
-Collection, normalization, caching, and computation belong in backend/main-process services.
+The renderer must not:
 
-## 4. Separate Telemetry Lanes
+- parse EVE logs
+- call zKill or ESI
+- own provider state
+- compute tactical truth
+- bypass service validation
 
-AURA-Sense has distinct lanes:
+## 4. Keep Lanes Separate
 
+AURA-Sense has separate lanes:
+
+- Combat Witness
 - Passive Telemetry
 - Threat Intel
-- Combat Witness
-- Presentation Modes
+- Clipboard Acquisition
+- Diagnostics / Runtime Control
 
-These lanes may inform the same HUD, but they must not silently overwrite one another.
+These lanes may appear together in the HUD, but they must not silently overwrite each other or blur their meaning.
 
-Passive telemetry must not contaminate scoped Threat Intel. Combat Witness must not become evidence-grade intelligence.
+## 5. Combat Witness Is Observation
 
-## 5. Observation Is Not Certainty
+Combat Witness is rolling local telemetry from observed gamelog lines.
 
-AURA-Sense reports what it observed.
+It is not:
 
-Avoid implying:
+- killmail evidence
+- pilot attribution truth
+- long-term combat history
+- survival prediction
 
-- exact survivability
-- confirmed persistent EWAR state
-- perfect pilot attribution
-- complete battlefield state
-- historical operator patterns
+Use language such as observed, recent, witnessed, stale, unavailable, and partial.
 
-Preferred language uses observed, recent, witnessed, pressure, signal, stale, and expired states.
+## 6. Passive Telemetry Is Context
 
-## 6. Combat Witness Is Tactical Telemetry
+Passive Telemetry can provide current-system context and low-frequency activity signals.
 
-Combat Witness is a rolling operational witness.
+It must not:
 
-It is not a killmail database, combat archive, or historical evidence system.
+- become broad background scraping
+- auto-run Threat Intel searches
+- expand ESI killmails
+- retain long-term activity history
 
-It should process newly appended log lines, normalize events, compute short-window summaries, and expire stale observations.
+## 7. Threat Intel Is Explicit And Scoped
 
-## 7. Threat Intel Remains Evidence-Backed
+Threat Intel starts from an operator action:
 
-Scoped Threat Intel starts from deliberate zKill-backed tactical samples.
+- typed search
+- explicit scan submit
+- valid armed clipboard capture
 
-The rule remains:
+Current Threat Intel uses scoped zKill-backed samples with sample/cap/freshness metadata.
 
-```txt
-operator target
--> scoped zKill-backed sample
--> local tactical summary with sample/freshness/failure basis
-```
+ESI killmail expansion is deferred unless a future milestone or ADR authorizes it.
 
-zKill samples are not complete truth. ESI killmail expansion remains deferred until a future milestone or ADR authorizes a narrow path.
+## 8. Clipboard Acquisition Is Not Surveillance
 
-## 8. Low Cognitive Load Wins
+Clipboard Acquisition is:
 
-The HUD must remain readable under pressure.
+- armed deliberately
+- visibly active
+- short-lived
+- sealed after capture, timeout, cancellation, or rejection
+- followed by cooldown
+
+It must not become always-on clipboard monitoring.
+
+## 9. Low Cognitive Load Wins
+
+The HUD should remain calm, compact, and readable under pressure.
 
 Prefer:
 
-- compact snapshots
+- short labels
 - stable layout
+- clear freshness/degraded states
 - restrained motion
-- short tactical labels
-- clear status and uncertainty
+- direct uncertainty language
 
-Avoid investigative overload, dense historical context, and decorative motion that competes with telemetry.
+Avoid investigative overload and historical density.
 
-## 9. Respectful API Use
+## 10. Live APIs Are Gated
 
-External API behavior must remain conservative, scoped, observable, and cache-aware.
+External calls must be:
 
-AURA-Sense should avoid broad scraping, repeated enrichment, and renderer-triggered request spam.
+- explicit
+- scoped
+- cache-aware
+- observable
+- respectful
+- outside `verify:all`
 
-## 10. Local Metadata First
+Provider failures should look like degraded or unavailable state, not empty truth.
 
-Static metadata should come from local/cached data where possible:
+## 11. Local Metadata First
 
-- systems
-- ship/type labels
-- group/category metadata
-- topology/reference data
+Static labels should come from local metadata where practical:
 
-Live APIs should primarily provide dynamic activity and scoped discovery. Killmail expansion remains explicitly deferred unless authorized by future doctrine.
+- ship/type names
+- group/category labels
+- system labels
 
-## 11. AI Is Commentary, Not Telemetry
+Unknown IDs should stay visible rather than being hidden behind guessed labels.
 
-AI may summarize or explain tactical state, but it must not become the source of observed telemetry or hidden transformation logic.
+## 12. AI Is Commentary, Not Telemetry
 
-AI output should remain labeled as commentary or guidance.
+AI may summarize or explain future tactical state only if clearly labeled.
 
-## 12. Product Identity
+It must not become the source of observed telemetry or hidden transformation logic.
 
-```txt
+## 13. Atlas Boundary Remains Mandatory
+
+```text
 AURA-Sense observes now.
 AURA Atlas remembers later.
 ```
 
-AURA-Sense should remain lightweight, bounded, operational, and tactical.
+Do not import Atlas persistence, watch execution, historical reporting, or evidence-retention behavior into AURA-Sense without an explicit future ADR.

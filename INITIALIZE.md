@@ -1,125 +1,44 @@
-# Initialize A New Aura Project
+# AURA-Sense Initialization Note
 
-This folder is a clean, copyable Aura Core seed.
+Status: Historical seed reference
+Updated: 2026-05-23
 
-Current seed state:
+AURA-Sense is already initialized. Do not treat this repository as an unbooted Aura Core seed.
 
-```text
-.git         absent
-node_modules absent
-.tmp         absent
-```
+## Current Rule
 
-The folder is intended to be copied or renamed into a new project directory, then bootstrapped by Codex.
+Use this repository as AURA-Sense:
 
-## Human Step
+- tactical viewport
+- Combat Witness
+- Passive Telemetry
+- Threat Intel
+- Clipboard Acquisition
+- runtime diagnostics
+- local metadata
 
-Copy or rename the top-level folder.
+Do not run a seed bootstrap process that renames the project or resets product identity.
 
-Example:
-
-```text
-Aura_core -> My_New_Aura_Project
-```
-
-After that, open Codex in the renamed/copied project folder and give it this instruction:
-
-```text
-Boot this Aura Core seed. Mirror the new project name where needed, run npm install, run npm run verify:all, then initialize git.
-```
-
-## Codex Boot Checklist
-
-Codex should do the following from the new project root.
-
-## 1. Confirm Starting State
-
-Confirm these local state folders are absent:
-
-```text
-.git
-node_modules
-.tmp
-```
-
-If one exists because the folder was copied from an already-used project, ask before removing it.
-
-## 2. Mirror The New Project Name
-
-Infer the project name from the current directory name.
-
-Update:
-
-```text
-package.json
-package-lock.json
-src/constants.js
-README.md
-docs/current-state/seed-current-state.md
-```
-
-Expected edits:
-
-- `package.json` `name`
-- `package-lock.json` root package `name`
-- app display name in `src/constants.js`
-- User-Agent in `src/constants.js`
-- README title and first description
-- current-state note title/body where it still says Aura Core
-
-Keep reusable module names such as `Frame`, `TaskRunner`, and `ServiceRegistry` unchanged.
-
-## 3. Install Dependencies
+## Normal Development Commands
 
 ```powershell
 npm install
-```
-
-## 4. Verify
-
-```powershell
 npm run verify:all
-```
-
-Do not continue to git initialization until verification passes.
-
-## 5. Initialize Git
-
-```powershell
-git init
-git add .
-git commit -m "Seed project from Aura Core"
-```
-
-If Git reports safe-directory or ownership warnings, resolve those before committing.
-
-## 6. Optional App Smoke
-
-Only after verification passes:
-
-```powershell
+npm.cmd run smoke:electron
 npm start
 ```
 
-Use this to visually confirm the Electron shell opens, the Frame controls render, and the Pin/Minimize/Close buttons are visible.
+## Source Of Truth
 
-## First Project Notes
+Use these docs for current behavior:
 
-Before adding domain code, create or update:
+- `README.md`
+- `docs/current-state/current-implementation.md`
+- `docs/tenets/tenets.md`
+- `docs/features/vision.md`
+- `docs/gap/to-do/README.md`
 
-```text
-docs/current-state/seed-current-state.md
-docs/gap/to-do/README.md
-docs/adr/
-```
-
-Recommended first Codex prompt after boot:
-
-```text
-Review the initialized seed and create the first project-specific current-state note and gap list. Do not add domain implementation yet.
-```
-
-## Seed Rule
+The old seed rule still applies as an implementation warning:
 
 ```text
 Borrow proven rigging. Do not import domain weight before the domain has earned it.

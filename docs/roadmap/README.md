@@ -1,27 +1,50 @@
-# Roadmap
+# AURA-Sense Roadmap
 
-This folder stores future-facing direction.
+Roadmap documents define planned capability envelopes. They are not proof of implementation.
 
-Roadmap docs are not commitments. They describe intended evolution, dependencies, and risks.
+Implementation truth lives in:
 
-Current entries:
+```text
+docs/current-state/current-implementation.md
+```
+
+## Current Position
+
+AURA-Sense has completed the foundation through operational hardening:
+
+- seed rigging and Electron shell
+- runtime observability
+- Combat Witness first light and operational loop
+- Passive Telemetry foundation
+- combat logging test suite
+- live-safe Passive Telemetry readiness, with live smoke still explicit
+- scoped Threat Intel and Clipboard Acquisition foundation
+- integrated tactical viewport
+- runtime control and diagnostics
+
+Current parallel runways:
+
+- Milestone 12: live validation and tactical calibration
+- Milestone 13: aggressive testing and bug hunting
+
+## Roadmap Rules
+
+Each milestone should state:
+
+- feature anchors
+- operational outcome
+- task chain
+- autonomy envelope
+- acceptance gate
+- explicit deferrals
+- verification expectations
+
+Do not treat a roadmap file as product truth until current-state docs and verification confirm the behavior exists.
+
+## Key Files
 
 - `feature-aligned-milestones.md`
-- `milestone-01-startup-rigging.md`
-- `milestone-02-runtime-observability.md`
-- `milestone-03-tactical-viewport-first-light.md`
-- `milestone-04-runtime-smoke-readiness.md`
-- `milestone-05-combat-witness-operational-loop.md`
-- `milestone-06-passive-telemetry-foundation.md`
-- `milestone-07-combat-logging-test-suite.md`
-- `milestone-08-passive-telemetry-live-safe-readiness.md`
-- `milestone-09-scoped-threat-intel-and-clipboard-acquisition.md`
-- `milestone-10-integrated-tactical-viewport.md`
-- `milestone-11-operational-hardening-and-runtime-control.md`
 - `milestone-12-live-validation-and-tactical-calibration.md`
 - `milestone-13-aggressive-testing-and-bug-hunting.md`
 - `passive-telemetry-live-readiness-interlock.md`
-- `architecture-needs-review-2026-05-22.md`
-- `development-artifact-trail.md`
-
-Milestones should be feature-aligned envelopes, not single micro-tasks. Each milestone should point to `docs/features/vision.md`, define a task chain, and give Dev enough autonomy to complete a coherent product slice without asking for approval between every implementation step.
+- `runtime-smoke-policy.md`

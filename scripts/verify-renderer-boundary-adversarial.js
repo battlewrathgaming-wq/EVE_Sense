@@ -56,6 +56,7 @@ const preloadForbiddenRules = [
 const allowedRendererServiceCommands = new Set([
   'seed.readiness',
   'runtime.settings.snapshot',
+  'runtime.gamelog-folder.pick',
   'runtime.live-io.snapshot',
   'runtime.live-io.set-enabled',
   'runtime.diagnostics.snapshot',
@@ -108,7 +109,9 @@ function verifyPreloadShape() {
 
   assertSubscription(preload, 'auraCombatWitness', 'aura:combat-witness:snapshot', 'aura:combat-witness:unsubscribe');
   assertSubscription(preload, 'auraPassiveTelemetry', 'aura:passive-telemetry:snapshot', 'aura:passive-telemetry:unsubscribe');
+  assert.match(preload, /aura:threat-clipboard:snapshot/, 'preload should expose clipboard snapshot push channel');
   assert.match(preload, /typeof callback !== 'function'/g, 'snapshot subscriptions should validate callbacks');
+  assert.match(preload, /threat\.clipboard\.arm/, 'preload should keep backend-owned clipboard acquisition available to shortcut flow');
 }
 
 function extractPreloadAllowlist(preload) {

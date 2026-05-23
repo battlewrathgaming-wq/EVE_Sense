@@ -1,7 +1,7 @@
 const { HttpClient } = require('../services/httpClient');
 const { normalizePastSeconds } = require('../passive/zKillSystemContextClient');
 
-const DEFAULT_THREAT_LOOKBACK_SECONDS = 86400;
+const DEFAULT_THREAT_LOOKBACK_SECONDS = 3600;
 const DEFAULT_THREAT_SAMPLE_LIMIT = 10;
 const ROUTES = Object.freeze({
   system: 'systemID',

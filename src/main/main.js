@@ -1,6 +1,6 @@
 const fs = require('node:fs');
 const path = require('node:path');
-const { app, BrowserWindow, clipboard, globalShortcut, ipcMain } = require('electron');
+const { app, BrowserWindow, clipboard, dialog, globalShortcut, ipcMain } = require('electron');
 const { APP_NAME } = require('../constants');
 const { createCombatWitnessBridge } = require('../combat/combatWitnessBridge');
 const { createCombatWitnessRuntime, decorateSnapshot } = require('../combat/combatWitnessRuntime');
@@ -22,12 +22,21 @@ const { createFrameWindow, registerFrameWindowHandlers } = require('../modules/F
 const { createRuntimeDiagnosticsService } = require('../runtime/runtimeDiagnosticsService');
 const { createRuntimeSettingsService } = require('../runtime/runtimeSettingsService');
 
+const CLIPBOARD_SNAPSHOT_CHANNEL = 'aura:threat-clipboard:snapshot';
+const TARGET_KIND_TOGGLE_CHANNEL = 'aura:threat-target-kind:toggle';
+const WINDOW_PRESENTATION_PAUSE_CHANNEL = 'aura:window:presentation-pause';
+
 const registry = createDefaultRegistry();
 const runtimeDiagnosticsService = createRuntimeDiagnosticsService();
 const passiveRequestLog = (entry) => traceRuntimeDiagnostic(entry.diagnostic_event || 'passive_request_log', entry);
 const passiveLiveIoGate = createLiveIoGate();
 const threatRequestLog = (entry) => traceRuntimeDiagnostic(entry.diagnostic_event || 'threat_request_log', entry);
-const threatLiveIoGate = createLiveIoGate();
+const threatLiveIoGate = createLiveIoGate({
+  reason: 'Threat Intel live IO is disabled',
+  enabledMessage: 'Threat Intel live IO is enabled',
+  disabledMessage: 'Threat Intel live IO is disabled',
+  blockedCode: 'THREAT_LIVE_IO_BLOCKED'
+});
 const passiveTelemetryService = createPassiveTelemetryService({
   esiActivityClient: new PassiveEsiSystemActivityClient({
     httpClient: new HttpClient({ timeoutMs: 10000, maxAttempts: 2, onRequestLog: passiveRequestLog }),
@@ -73,6 +82,16 @@ const runtimeSettingsService = createRuntimeSettingsService({
   settingsPath: path.join(app.getPath('userData'), 'runtime-settings.json')
 });
 let mainWindow = null;
+let clipboardCapturePoll = null;
+let windowPresentationResumeTimer = null;
+let clipboardShortcutStatus = {
+  accelerator: 'Control+\\',
+  fallbackAccelerator: null,
+  registered: false,
+  fallbackRegistered: false,
+  supported: false,
+  message: 'Clipboard shortcut has not been registered yet'
+};
 
 registerCombatWitnessRuntimeCommands(registry, combatWitnessRuntime, runtimeSettingsService);
 registerPassiveTelemetryCommands(registry, passiveTelemetryService);
@@ -81,10 +100,10 @@ registerRuntimeControlCommands(registry, runtimeSettingsService, runtimeDiagnost
 
 function createWindow() {
   const window = createFrameWindow(app, {
-    width: 960,
-    height: 640,
-    minWidth: 720,
-    minHeight: 480,
+    width: 520,
+    height: 420,
+    minWidth: 320,
+    minHeight: 240,
     title: APP_NAME,
     preload: path.join(__dirname, 'preload.js'),
     backgroundColor: '#f5f7f8',
@@ -92,6 +111,7 @@ function createWindow() {
   });
 
   mainWindow = window;
+  registerWindowPresentationPause(window);
   const rendererLoad = window.loadFile(path.join(__dirname, '..', 'renderer', 'index.html'));
   runVisualSmokeIfRequested(window, rendererLoad);
 }
@@ -123,8 +143,41 @@ app.on('window-all-closed', () => {
 });
 
 app.on('will-quit', () => {
+  if (clipboardCapturePoll) {
+    clearInterval(clipboardCapturePoll);
+    clipboardCapturePoll = null;
+  }
+  if (windowPresentationResumeTimer) {
+    clearTimeout(windowPresentationResumeTimer);
+    windowPresentationResumeTimer = null;
+  }
   globalShortcut.unregisterAll();
 });
+
+function registerWindowPresentationPause(window) {
+  const schedulePause = (reason) => {
+    if (!window || window.isDestroyed()) return;
+    window.webContents.send(WINDOW_PRESENTATION_PAUSE_CHANNEL, {
+      paused: true,
+      reason,
+      at: new Date().toISOString()
+    });
+    if (windowPresentationResumeTimer) {
+      clearTimeout(windowPresentationResumeTimer);
+    }
+    windowPresentationResumeTimer = setTimeout(() => {
+      if (!window || window.isDestroyed()) return;
+      window.webContents.send(WINDOW_PRESENTATION_PAUSE_CHANNEL, {
+        paused: false,
+        reason,
+        at: new Date().toISOString()
+      });
+    }, 180);
+  };
+
+  window.on('move', () => schedulePause('move'));
+  window.on('resize', () => schedulePause('resize'));
+}
 
 function registerCombatWitnessRuntimeCommands(serviceRegistry, runtime, settingsService) {
   serviceRegistry
@@ -167,6 +220,32 @@ function registerCombatWitnessRuntimeCommands(serviceRegistry, runtime, settings
       classification: TASK_CLASSIFICATIONS.LOCAL_MUTATION,
       description: 'Stop Combat Witness watcher',
       handler: () => runtime.stop()
+    })
+    .register('runtime.gamelog-folder.pick', {
+      classification: TASK_CLASSIFICATIONS.LOCAL_MUTATION,
+      description: 'Open a native folder picker and configure the selected EVE gamelog folder',
+      handler: async () => {
+        const result = await dialog.showOpenDialog(mainWindow, {
+          title: 'Select EVE Gamelogs Folder',
+          properties: ['openDirectory']
+        });
+        if (result.canceled || !result.filePaths?.[0]) {
+          return {
+            canceled: true,
+            message: 'Folder selection cancelled'
+          };
+        }
+        const gamelogFolder = result.filePaths[0];
+        const status = runtime.configure({ gamelogFolder });
+        if (status.configuredPath && settingsService) {
+          settingsService.save({ gamelogFolder: status.configuredPath });
+        }
+        return {
+          canceled: false,
+          gamelogFolder,
+          status
+        };
+      }
     });
 }
 
@@ -248,7 +327,7 @@ function registerThreatIntelCommands(serviceRegistry, service, acquisition) {
     .register('threat.clipboard.snapshot', {
       classification: TASK_CLASSIFICATIONS.READ_ONLY,
       description: 'Return Clipboard Acquisition lifecycle state',
-      handler: () => acquisition.snapshot()
+      handler: () => acquisition.tick()
     })
     .register('threat.clipboard.arm', {
       classification: TASK_CLASSIFICATIONS.LOCAL_MUTATION,
@@ -264,6 +343,11 @@ function registerThreatIntelCommands(serviceRegistry, service, acquisition) {
       classification: TASK_CLASSIFICATIONS.LOCAL_MUTATION,
       description: 'Cancel Clipboard Acquisition and enter cooldown',
       handler: () => acquisition.cancel()
+    })
+    .register('threat.clipboard.shortcut-status', {
+      classification: TASK_CLASSIFICATIONS.READ_ONLY,
+      description: 'Return Clipboard Acquisition global shortcut registration status',
+      handler: () => clipboardShortcutStatus
     });
 }
 
@@ -307,19 +391,134 @@ function setLiveIoPolicy(payload = {}) {
 }
 
 function registerClipboardGlobalShortcut() {
+  const preferredAccelerator = 'Control+\\';
+  const fallbackAccelerator = 'Control+Alt+Space';
+  const kindToggleAccelerator = 'Alt+\\';
   try {
-    const registered = globalShortcut.register('CommandOrControl+Shift+Space', () => {
-      clipboardAcquisitionService.arm().catch((error) => {
-        traceRuntimeDiagnostic('clipboard_acquisition_global_shortcut_error', { message: error.message });
-      });
-    });
+    const registered = globalShortcut.register(preferredAccelerator, armClipboardFromShortcut);
+    const kindToggleRegistered = globalShortcut.register(kindToggleAccelerator, emitTargetKindToggle);
+    let fallbackRegistered = false;
+    if (!registered) {
+      fallbackRegistered = globalShortcut.register(fallbackAccelerator, armClipboardFromShortcut);
+    }
+    clipboardShortcutStatus = {
+      accelerator: preferredAccelerator,
+      fallbackAccelerator: fallbackRegistered ? fallbackAccelerator : null,
+      registered,
+      fallbackRegistered,
+      kindToggleAccelerator,
+      kindToggleRegistered,
+      supported: registered || fallbackRegistered,
+      message: registered
+        ? 'Ctrl+\\ opens a 3 second clipboard scan window'
+        : (fallbackRegistered
+            ? 'Ctrl+\\ could not be registered; Ctrl+Alt+Space opens a 3 second clipboard scan window'
+            : 'Ctrl+\\ could not be registered; use the Threat Intel scan field')
+    };
     traceRuntimeDiagnostic('clipboard_acquisition_global_shortcut', {
-      accelerator: 'CommandOrControl+Shift+Space',
-      registered
+      ...clipboardShortcutStatus
     });
   } catch (error) {
+    let fallbackRegistered = false;
+    let kindToggleRegistered = false;
+    try {
+      fallbackRegistered = globalShortcut.register(fallbackAccelerator, armClipboardFromShortcut);
+    } catch {
+      fallbackRegistered = false;
+    }
+    try {
+      kindToggleRegistered = globalShortcut.register(kindToggleAccelerator, emitTargetKindToggle);
+    } catch {
+      kindToggleRegistered = false;
+    }
+    clipboardShortcutStatus = {
+      accelerator: preferredAccelerator,
+      fallbackAccelerator: fallbackRegistered ? fallbackAccelerator : null,
+      registered: false,
+      fallbackRegistered,
+      kindToggleAccelerator,
+      kindToggleRegistered,
+      supported: fallbackRegistered,
+      message: fallbackRegistered
+        ? 'Ctrl+\\ shortcut failed; Ctrl+Alt+Space opens a 3 second clipboard scan window'
+        : `Ctrl+\\ shortcut failed: ${error.message}; use the Threat Intel scan field`
+    };
     traceRuntimeDiagnostic('clipboard_acquisition_global_shortcut_error', { message: error.message });
   }
+}
+
+function emitTargetKindToggle() {
+  if (!mainWindow || mainWindow.isDestroyed()) {
+    return;
+  }
+  mainWindow.webContents.send(TARGET_KIND_TOGGLE_CHANNEL, {
+    kind: 'threat.target-kind.toggle',
+    accelerator: 'Alt+\\',
+    toggledAt: new Date().toISOString()
+  });
+}
+
+function armClipboardFromShortcut() {
+  if (!threatLiveIoGate.status().enabled) {
+    emitClipboardSnapshot({
+      kind: 'clipboard.acquisition.snapshot',
+      state: 'blocked',
+      message: 'IO authority is off; clipboard scan was not started',
+      reason: 'io-disabled',
+      listeningUntilMs: null,
+      cooldownUntilMs: null,
+      lastCapture: null
+    });
+    traceRuntimeDiagnostic('clipboard_acquisition_io_blocked', {
+      message: 'IO authority is off; clipboard was not read'
+    });
+    return;
+  }
+  const currentClipboardText = clipboard.readText();
+  const armPayload = String(currentClipboardText || '').trim()
+    ? { clipboardText: currentClipboardText }
+    : {};
+
+  clipboardAcquisitionService.arm(armPayload)
+    .then((snapshot) => {
+      emitClipboardSnapshot(snapshot);
+      scheduleClipboardCapturePoll(snapshot);
+    })
+    .catch((error) => {
+      traceRuntimeDiagnostic('clipboard_acquisition_global_shortcut_error', { message: error.message });
+    });
+}
+
+function scheduleClipboardCapturePoll(snapshot) {
+  if (clipboardCapturePoll) {
+    clearInterval(clipboardCapturePoll);
+    clipboardCapturePoll = null;
+  }
+  if (snapshot?.state !== 'listening') {
+    return;
+  }
+
+  clipboardCapturePoll = setInterval(async () => {
+    try {
+      const next = await clipboardAcquisitionService.capture();
+      emitClipboardSnapshot(next);
+      if (next.state !== 'listening') {
+        clearInterval(clipboardCapturePoll);
+        clipboardCapturePoll = null;
+      }
+    } catch (error) {
+      clearInterval(clipboardCapturePoll);
+      clipboardCapturePoll = null;
+      traceRuntimeDiagnostic('clipboard_acquisition_capture_poll_error', { message: error.message });
+    }
+  }, 400);
+}
+
+function emitClipboardSnapshot(snapshot) {
+  if (!mainWindow || mainWindow.isDestroyed()) {
+    return;
+  }
+  mainWindow.webContents.send(CLIPBOARD_SNAPSHOT_CHANNEL, snapshot);
 }
 
 function traceRuntimeDiagnostic(event, payload = {}) {
@@ -389,15 +588,15 @@ async function runVisualSmoke(window, outputDir) {
   assertSmoke(checks.noElectronGlobal, 'renderer should not expose Electron globals');
   assertSmoke(checks.hasCombatSurface, 'renderer should contain Combat Witness surface');
   assertSmoke(checks.hasIntegratedViewport, 'renderer should contain integrated viewport root');
-  assertSmoke(checks.hasLaneOverview, 'renderer should contain lane overview surface');
-  assertSmoke(checks.hasFreshnessText, 'renderer should show freshness/status text');
+  assertSmoke(checks.hasGlanceStrip, 'renderer should contain compact glance strip');
+  assertSmoke(checks.hasSystemContext, 'renderer should contain system kills/jumps context');
+  assertSmoke(checks.hasClipboardListen, 'renderer should contain clipboard listen state');
+  assertSmoke(checks.hasDrawerControls, 'renderer should contain collapsed detail drawers and diagnostics takeover');
   assertSmoke(checks.hasEventList, 'renderer should contain event list surface');
   assertSmoke(checks.hasWatcherControls, 'renderer should contain Combat Witness watcher controls');
-  assertSmoke(checks.hasPassiveSurface, 'renderer should contain Passive Telemetry surface');
   assertSmoke(checks.hasThreatSurface, 'renderer should contain Threat Intel surface');
-  assertSmoke(checks.hasCombatMetrics, 'renderer should contain integrated Combat Witness metric fields');
-  assertSmoke(checks.hasProviderBasis, 'renderer should contain lane provider basis fields');
-  assertSmoke(checks.hasRuntimeControl, 'renderer should contain runtime control surface');
+  assertSmoke(checks.hasCombatMetrics, 'renderer should contain compact Combat Witness metric fields');
+  assertSmoke(checks.hasRuntimeState, 'renderer should contain runtime state in diagnostics panel');
   assertSmoke(checks.noParserRuntimeExposure, 'renderer should not expose parser/runtime modules');
 
   const image = await window.webContents.capturePage();
@@ -444,16 +643,16 @@ function smokeChecks(window) {
       noNodeRequire: typeof window.require === 'undefined',
       noElectronGlobal: typeof window.ipcRenderer === 'undefined' && typeof window.BrowserWindow === 'undefined',
       hasIntegratedViewport: Boolean(document.querySelector('#integrated-viewport')),
-      hasLaneOverview: Boolean(document.querySelector('.lane-overview') && document.querySelector('#overview-combat') && document.querySelector('#overview-passive') && document.querySelector('#overview-threat')),
-      hasCombatSurface: Boolean(document.querySelector('.combat-surface') && document.querySelector('#combat-summary')),
-      hasCombatMetrics: Boolean(document.querySelector('#incoming-pressure') && document.querySelector('#repair-throughput') && document.querySelector('#repair-balance') && document.querySelector('#observed-source') && document.querySelector('#observed-weapon')),
-      hasFreshnessText: ['Recent', 'Stale', 'Empty', 'Unavailable', 'Degraded', 'Witnessed'].includes(document.querySelector('#combat-signal')?.textContent || ''),
+      hasGlanceStrip: Boolean(document.querySelector('.glance-strip')),
+      hasSystemContext: Boolean(document.querySelector('#system-shipkills') && document.querySelector('#system-jumps') && document.querySelector('#system-ratio')),
+      hasClipboardListen: Boolean(document.querySelector('#clipboard-state') && document.querySelector('#clipboard-key-ctrl') && document.querySelector('#clipboard-key-slash') && !document.querySelector('#shortcut-state')),
+      hasDrawerControls: Boolean(document.querySelector('#threat-drawer') && document.querySelector('#diagnostics-setup-host') && document.querySelector('#diagnostics-panel') && document.querySelector('#diagnostics-toggle')),
+      hasCombatSurface: Boolean(document.querySelector('.combat-surface') && document.querySelector('#pressure-title') && document.querySelector('#net-pressure-gauge')),
+      hasCombatMetrics: Boolean(document.querySelector('#net-pressure-value') && document.querySelector('#incoming-pressure') && document.querySelector('#repair-throughput') && document.querySelector('#incoming-bar') && document.querySelector('#repair-bar')),
       hasEventList: Boolean(document.querySelector('#event-list')),
       hasWatcherControls: Boolean(document.querySelector('#watcher-controls') && document.querySelector('#gamelog-folder')),
-      hasPassiveSurface: Boolean(document.querySelector('.passive-surface') && document.querySelector('#passive-system')),
-      hasThreatSurface: Boolean(document.querySelector('.threat-surface') && document.querySelector('#threat-search') && document.querySelector('#clipboard-arm')),
-      hasProviderBasis: Boolean(document.querySelector('#passive-basis') && document.querySelector('#threat-basis')),
-      hasRuntimeControl: Boolean(document.querySelector('.runtime-control') && document.querySelector('#settings-state') && document.querySelector('#live-io-state') && document.querySelector('#diagnostics-state') && document.querySelector('#live-io-toggle')),
+      hasThreatSurface: Boolean(document.querySelector('.threat-surface') && document.querySelector('#threat-search')),
+      hasRuntimeState: Boolean(document.querySelector('#live-io-state') && document.querySelector('#settings-state')),
       noParserRuntimeExposure: (
         typeof window.CombatWitnessService === 'undefined' &&
         typeof window.EveCombatLogParser === 'undefined' &&
@@ -461,7 +660,6 @@ function smokeChecks(window) {
       ),
       signalText: document.querySelector('#combat-signal')?.textContent || null,
       watcherText: document.querySelector('#watcher-state')?.textContent || null,
-      passiveText: document.querySelector('#passive-state')?.textContent || null,
       threatText: document.querySelector('#threat-state')?.textContent || null,
       combatDetailText: document.querySelector('#combat-detail')?.textContent || null,
       incomingPressureText: document.querySelector('#incoming-pressure')?.textContent || null,

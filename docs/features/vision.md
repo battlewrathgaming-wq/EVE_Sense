@@ -1,301 +1,184 @@
 # Feature Vision: AURA-Sense Product Elements
 
 Status: Active
-Date: 2026-05-22
+Updated: 2026-05-23
 
-## Purpose
-
-This document defines the fixed product elements AURA-Sense is working toward.
-
-It is not an implementation backlog. It is a set of goalposts so Dev can refine implementation without drifting into feature accumulation.
+This document defines the product elements AURA-Sense is building toward. It is not a claim that every element is complete.
 
 ## Product Frame
 
-AURA-Sense is a tactical cognition and situational awareness system.
+AURA-Sense is a tactical viewport for recent, scoped, operationally useful EVE observations.
 
 It should answer:
 
-```txt
+```text
 What is happening around me right now?
 What must I notice?
-What is stale, partial, unavailable, or uncertain?
+What is stale, partial, degraded, or unavailable?
 ```
 
 It should not become:
 
-- Atlas
+- AURA Atlas
 - a historical intelligence warehouse
+- a fleet command suite
 - a recommendation engine
-- a general EVE dashboard
 - a renderer-owned telemetry engine
 
 ## Element 1: Tactical HUD Shell
 
 Goal:
 
-Provide a compact always-available viewport that presents current tactical state without demanding interpretation time.
+Present current tactical state in a compact, stable, low-cognitive-load viewport.
 
-User value:
+Current state:
 
-- glanceable state under pressure
-- stable visual hierarchy
-- low ambiguity copy
-- fast recognition of fresh, stale, empty, and unavailable states
-
-Inputs:
-
-- backend-owned snapshots
-- bounded backend-owned event streams
-- diagnostics state
+- Electron shell exists.
+- Integrated tactical viewport foundation exists.
+- Electron visual smoke exists.
 
 Must not:
 
 - compute telemetry truth in renderer
-- become a decorative dashboard
 - hide degraded state
-- imply complete battlefield knowledge
-
-Acceptance goalpost:
-
-The HUD can present one verified backend snapshot lane with clear freshness and no renderer-owned tactical computation.
+- rely on decorative motion for meaning
 
 ## Element 2: Combat Witness
 
 Goal:
 
-Convert local EVE combat log observations into short-window tactical awareness.
+Convert local EVE gamelog observations into short-window tactical awareness.
 
-User value:
+Current state:
 
-- recent incoming damage awareness
-- recent repair/healing awareness
-- compact rolling context
-- bounded event memory for immediate perception
-
-Inputs:
-
-- EVE gamelog lines
-- parser fixtures
-- backend rolling cache
-- 5s/15s/30s snapshots
+- parser fixtures exist
+- watcher/runtime path exists
+- 5s/15s/30s snapshots exist
+- observed pressure, repair balance, source, weapon count, and spike-related metrics exist
+- repair/healing raw fixture coverage is still incomplete
 
 Must not:
 
 - become historical combat storage
-- infer intent or allegiance without evidence
-- issue recommendations
-- expose raw parser authority to the renderer
-
-Acceptance goalpost:
-
-Backend can answer what was witnessed recently, with bounded retention and verified parser behavior, and the renderer can present that state as observation rather than certainty.
+- infer unseen state
+- present repair balance as survival truth
 
 ## Element 3: Passive Telemetry
 
 Goal:
 
-Read current system transitions from EVE logs and provide low-frequency system activity context for the system the operator has just entered.
+Provide current-system context and low-frequency activity signals.
 
-User value:
+Current state:
 
-- current system context
-- gate-jump awareness
-- local environment cues
-- low-noise background state
-- reduced manual lookup pressure
-
-Inputs:
-
-- EVE log observation for gate jumps or current-system changes
-- current system name or ID resolution
-- scoped ESI system activity pulls for current system kills and jumps
-- scoped zKillmail fetch for the current system
-- local/static metadata where practical
-- freshness, cache lifetime, ETag, and last-updated metadata where available
+- local/static system resolver exists
+- scoped zKill system context route exists
+- ESI aggregate system kills/jumps activity client exists
+- live IO gate exists
+- stale/partial freshness honesty exists
 
 Must not:
 
+- auto-run Threat Intel
+- expand ESI killmails
 - poll aggressively
-- create hidden background intelligence collection
-- merge into Threat Intel
-- store long-term history
-- repeatedly fetch while the operator remains in the same system
-- imply that zKillmail activity is complete tactical truth
-- treat ESI aggregate kills/jumps as complete tactical truth
-- retain ESI system activity as long-term history
-- expand ESI killmails inside Passive Telemetry
-
-Acceptance goalpost:
-
-When the operator jumps into a system, AURA-Sense can detect the current system from logs, resolve the system ID, run scoped ESI system activity pulls and a scoped zKillmail context fetch, and present compact fresh/stale/unavailable system context without turning it into an active Threat Intel scan.
+- retain long-term activity history
 
 ## Element 4: Threat Intel
 
 Goal:
 
-Support deliberate scoped tactical inspection through an operator-driven search bar for a system, pilot, corporation, alliance, or copied target.
+Support deliberate scoped tactical inspection from typed input or captured text.
 
-User value:
+Current state:
 
-- fast sampled threat context
-- visible evidence basis
-- clear partial/complete/capped language
-- bounded external API behavior
-
-Inputs:
-
-- typed search bar target
-- user-initiated scan target
-- local/static resolution where possible
-- zKill discovery refs
-- zKillmail query results
-- sample, cap, failure, and freshness metadata
-- optional ESI-expanded killmails only if a future milestone explicitly authorizes expansion
+- scan request/snapshot contract exists
+- local/static target resolver exists
+- scoped zKill probe exists
+- compact search surface exists
+- live zKill smoke remains deferred until explicitly gated and recorded
+- ESI expansion remains deferred
 
 Must not:
 
 - treat zKill summaries as truth
-- run broad background scraping
-- hide sample limits
-- become Atlas reporting
-- auto-run from passive system telemetry
-- add ESI expansion by default
-
-Acceptance goalpost:
-
-The operator can type or paste a target into the search bar, run a scoped zKillmail-backed probe, and receive a tactical snapshot with visible sample size, freshness, cap, and failure metadata.
+- scan on focus alone
+- run broad background collection
+- add Atlas persistence
 
 ## Element 5: Clipboard Acquisition
 
 Goal:
 
-Let the operator deliberately acquire a copied EVE target for a short tactical workflow.
+Let the operator deliberately acquire a copied EVE target for a short Threat Intel workflow.
 
-User value:
+Current state:
 
-- low-friction target entry
-- no persistent clipboard surveillance
-- clear armed/listening/sealed state
-
-Inputs:
-
-- visible acquisition indicator
-- Ctrl+Shift keyboard chord to arm acquisition
-- 3 second arming window
-- 3 second clipboard listening window
-- validation and target classification
-- automatic transfer into the search box and scan run when a valid target is captured
-- 5 second cooldown after capture, timeout, cancellation, or rejected clipboard content
-- global/hands-free arming path that does not require focusing the AURA-Sense window during fullscreen play
+- armed/listening/sealed/cooldown lifecycle exists
+- global shortcut is `CommandOrControl+Shift+Space`
+- UI Arm control remains available
 
 Must not:
 
-- listen indefinitely
-- silently capture unrelated clipboard content
-- trigger broad background scans
-- blur with passive telemetry
-- remain armed without a visible indicator
-- bypass the search bar / Threat Intel scan boundary
-- require window focus for the primary arming workflow
+- monitor clipboard indefinitely
+- hide listener state
+- bypass Threat Intel scan boundaries
 - re-arm during cooldown
-
-Acceptance goalpost:
-
-The operator can press Ctrl+Shift without focusing the AURA-Sense window, see an armed visual indicator, copy a target within the short listening window, have AURA-Sense place the target into the search box and run the scoped scan, then see the listener seal and enter a 5 second cooldown.
 
 ## Element 6: Diagnostics And Degraded State
 
 Goal:
 
-Make runtime confidence observable without flooding the operator.
+Make runtime confidence visible without flooding the HUD.
 
-User value:
+Current state:
 
-- degraded states are visible
-- failures are explainable
-- normal operation remains quiet
-- Dev can verify behavior without guessing
-
-Inputs:
-
-- watcher diagnostics
-- parser/listener failures
-- API client diagnostics
-- runtime error diagnostics
-- renderer process status
+- diagnostics policy exists
+- runtime error handling exists
+- diagnostics review surface exists
+- provider/degraded state display exists
 
 Must not:
 
-- spam the HUD
-- hide errors behind optimistic UI
-- mix Dev logs with operator-facing state without filtering
-
-Acceptance goalpost:
-
-Important degraded states are surfaced through shared diagnostics policy while routine noise is throttled or suppressed.
-
-Runtime confidence goalpost:
-
-AURA-Sense can launch the real Electron shell in explicit smoke mode, capture first-light visual evidence, write a structured result file, and exit cleanly without live logs or network calls.
+- show provider failure as empty truth
+- leak private raw logs
+- mix developer noise into operator state without filtering
 
 ## Element 7: Settings And Runtime Control
 
 Goal:
 
-Allow the operator to configure required runtime paths and modes without putting services into invalid states.
+Let the operator configure runtime paths and live IO policy without invalid service state.
 
-User value:
+Current state:
 
-- clear setup path
-- recoverable misconfiguration
-- explicit validation messages
-- no silent runtime drift
-
-Inputs:
-
-- gamelog folder path
-- window/display preferences
-- diagnostics preference
-- future lane-specific toggles
+- validated gamelog folder settings exist
+- startup recovery exists without auto-starting watcher
+- live IO policy control exists
 
 Must not:
 
 - accept invalid paths silently
-- restart watchers without validation
-- expose internal implementation toggles as product controls
-
-Acceptance goalpost:
-
-Settings changes are validated before service mutation and degraded states remain visible when configuration is incomplete.
+- auto-start watchers just because settings exist
+- expose internal toggles as product controls
 
 ## Element 8: Local Metadata
 
 Goal:
 
-Resolve tactical labels locally where practical so AURA-Sense avoids unnecessary live lookup.
+Resolve tactical labels locally where practical.
 
-User value:
+Current state:
 
-- readable ship, type, and system labels
-- lower latency
-- lower API dependence
-- clearer unresolved states
-
-Inputs:
-
-- compact local metadata adapters
-- explicit unresolved ID fallback
-- scoped consumers from Passive Telemetry or Threat Intel
+- local type metadata foundation exists
+- read-only type lookup helper exists
+- full refreshed SDE-derived metadata remains explicit and not default
 
 Must not:
 
-- import heavy static datasets before consumers exist
 - hide unresolved IDs
-- make metadata freshness claims it cannot prove
-
-Acceptance goalpost:
-
-Known IDs resolve locally for active consumers, unknown IDs remain visible, and no large metadata dependency is added before the product needs it.
+- stage real SDE artifacts by default
+- claim freshness it cannot prove
 
 ## Element 9: External API Boundary
 
@@ -303,105 +186,66 @@ Goal:
 
 Keep live external calls scoped, respectful, observable, and replaceable.
 
-User value:
+Current state:
 
-- reliable tactical scans
-- clear unavailable/degraded language
-- no hidden broad fetch behavior
-
-Inputs:
-
-- explicit user-initiated requests
-- injectable HTTP client
-- request timeout/cancel/retry policy
-- cache and diagnostics policy
+- HTTP wrapper exists
+- live IO gate exists
+- Passive Telemetry live smoke harness exists
+- Threat Intel zKill live path is gated and deferred for explicit run
 
 Must not:
 
 - call APIs from renderer
-- run broad discovery without user intent
+- run live APIs in `verify:all`
 - retry noisily under failure
-- hide sample or freshness limits
-
-Acceptance goalpost:
-
-Every live request path has a scoped caller, timeout, cancellation path, diagnostics, and verification outside the renderer.
+- hide cap/freshness/sample limits
 
 ## Element 10: Atlas Handoff
 
 Goal:
 
-Permit future handoff to AURA Atlas without importing Atlas behavior into AURA-Sense.
+Allow future handoff to AURA Atlas without importing Atlas into AURA-Sense.
 
-User value:
+Current state:
 
-- tactical now remains separate from historical later
-- durable investigation can happen elsewhere
-- AURA-Sense stays lightweight
-
-Inputs:
-
-- explicit exported context, if ever justified
-- operator action
-- clear boundary copy
+- Atlas handoff is deferred by ADR.
 
 Must not:
 
 - persist evidence by default
-- run watch execution
-- create hidden reporting stores
-- blur tactical observation with historical proof
-
-Acceptance goalpost:
-
-No Atlas behavior exists in AURA-Sense core unless a future ADR defines an explicit handoff boundary.
+- add Atlas watch execution
+- create hidden historical reporting stores
 
 ## Support Feature: Combat Logging Test Suite
 
 Goal:
 
-Let engineers test real EVE gamelog datasets safely and deterministically without turning runtime behavior into replay scanning.
+Test real EVE gamelog examples safely through curated fixtures.
 
-User value:
+Current state:
 
-- parser changes become safer
-- real-data edge cases are preserved as explicit fixtures
-- Combat Witness snapshots become reproducible
-- repair/healing support can be added only after exact raw samples prove it
-
-Inputs:
-
-- curated raw EVE gamelog lines
-- source file and line metadata where useful
-- raw line hash
-- proposed event family
-- expected parser outcome or expected rejection
-- ordered fixture datasets for replay/golden snapshot checks
+- fixture ingestion exists
+- event coverage matrix exists
+- replay harness exists
+- golden snapshot tests exist
+- hostile parser fixtures exist
 
 Must not:
 
-- ingest entire private log directories by default
-- store private raw logs outside explicit fixtures
-- require Electron for parser/replay verification
-- use replay harness behavior in normal runtime operation
-- infer tactical truth from coverage percentages
+- ingest private log directories by default
+- require Electron for parser verification
+- use replay harness behavior in normal runtime
 
-Acceptance goalpost:
+## Current Hardening Focus
 
-AURA-Sense can ingest curated real-data fixture rows, track parser event-family coverage, replay ordered datasets through watcher/runtime/service semantics, compare golden Combat Witness snapshots, and add repair/healing support only from exact raw fixtures.
+The active hardening runway is Milestone 13:
 
-## Implementation Refinement Rule
+- hostile parser and renderer boundary tests are partly complete
+- watcher chaos tests remain open
+- live IO provider fault injection remains open
+- clipboard acquisition race tests remain open
+- runtime settings diagnostics fault tests remain open
+- Electron visual state regression tests remain open
+- local metadata/SDE builder hardening remains open
 
-Before implementing a feature element, Dev should identify:
-
-- the target element in this document
-- the active feature-aligned milestone in `docs/roadmap/feature-aligned-milestones.md`
-- the current gap packet
-- the backend owner of truth
-- the renderer presentation contract
-- verification that proves the slice
-- explicit deferrals
-
-If a slice cannot answer those points, it is not ready for implementation.
-
-Milestones should group related tasks into feature outcomes. The feature vision sets the goalposts; milestone task chains give Dev room to work without turning every small implementation step into a separate user decision.
+Use `docs/current-state/current-implementation.md` for current implementation truth.

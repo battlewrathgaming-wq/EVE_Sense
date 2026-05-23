@@ -10,178 +10,255 @@
     <header class="frame-chrome">
       <div class="frame-drag-region">
         <span>AURA-Sense</span>
+        <span id="watcher-indicator" class="watcher-indicator" title="Log Watcher: unavailable" aria-label="Log Watcher unavailable"></span>
       </div>
       <nav class="frame-controls" aria-label="Window controls">
+        <button class="frame-button io-power-button" type="button" id="top-live-io-toggle" title="Toggle IO authority" aria-label="Enable IO authority" aria-pressed="false">IO</button>
+        <button class="frame-button icon-button" type="button" id="diagnostics-toggle" title="Diagnostics" aria-label="Open diagnostics" aria-pressed="false">
+          <span class="cog-icon" aria-hidden="true"></span>
+        </button>
         <button class="frame-button" type="button" id="pin-window" title="Toggle always on top" aria-label="Toggle always on top">Pin</button>
         <button class="frame-button" type="button" id="minimize-window" title="Minimize" aria-label="Minimize">_</button>
         <button class="frame-button danger" type="button" id="close-window" title="Close" aria-label="Close">X</button>
       </nav>
     </header>
-    <main id="integrated-viewport" class="viewport" aria-label="AURA-Sense tactical viewport">
-      <section class="lane-overview" aria-label="Lane status overview">
-        <div>
-          <span>Combat</span>
-          <strong id="overview-combat">Unavailable</strong>
+    <main id="integrated-viewport" class="viewport" aria-label="AURA-Sense compact combat overlay">
+      <section class="glance-strip combat-mode" aria-label="Five second combat glance">
+        <div class="system-glance">
+          <span class="label">System</span>
+          <strong id="passive-system">--</strong>
         </div>
-        <div>
-          <span>System</span>
-          <strong id="overview-passive">Unavailable</strong>
-        </div>
-        <div>
-          <span>Intel</span>
-          <strong id="overview-threat">Idle</strong>
+        <div class="signal-row" aria-label="System activity">
+          <span class="signal-chip">
+            <span>Kills</span>
+            <strong id="system-shipkills">--</strong>
+          </span>
+          <span class="signal-chip">
+            <span>Jumps</span>
+            <strong id="system-jumps">--</strong>
+          </span>
+          <span class="signal-chip quiet">
+            <span>Ratio</span>
+            <strong id="system-ratio">--</strong>
+          </span>
         </div>
       </section>
-      <section class="combat-surface lane-surface primary-lane" aria-labelledby="combat-title">
-        <div class="surface-header">
-          <p class="eyebrow">Combat Witness</p>
-          <h1 id="combat-title">Recent observations</h1>
-          <p class="summary" id="combat-summary">Waiting for backend snapshot.</p>
-          <p class="lane-detail" id="combat-detail">Combat Witness snapshot unavailable.</p>
-        </div>
-        <dl class="status-grid">
-          <div>
-            <dt>Signal</dt>
-            <dd id="combat-signal">Unavailable</dd>
+
+      <div class="main-row combat-mode">
+        <div class="left-stack">
+          <div class="utility-chip weapon-context configurable-tile">
+              <span id="front-context-label">Observed Weapon</span>
+              <strong id="front-context-value">--</strong>
+              <button id="front-context-selector" class="tile-corner-select" type="button" title="Choose display" aria-label="Choose tile display" aria-expanded="false"></button>
+              <div id="front-context-menu" class="tile-select-menu" hidden>
+                <button type="button" data-front-context-mode="weapon">Weapon</button>
+                <button type="button" data-front-context-mode="source">Source</button>
+                <button type="button" data-front-context-mode="balance">Balance</button>
+              </div>
           </div>
+
+          <details id="threat-drawer" class="drawer threat-surface">
+            <summary>
+              <span>Threat Provider</span>
+              <strong id="front-threat-provider">zKill</strong>
+            </summary>
+            <form id="threat-search" class="threat-search">
+              <label for="threat-target" class="shortcut-input-label">
+                <span id="clipboard-listen" class="search-clipboard-widget" aria-label="Clipboard scan window state">
+                  <span>Copy +</span>
+                  <span class="key-row inline-keys">
+                    <span id="clipboard-key-ctrl" class="key-chip">Ctrl</span>
+                    <span id="clipboard-key-slash" class="key-chip">\</span>
+                  </span>
+                  <strong id="clipboard-state">Idle</strong>
+                </span>
+                <span id="threat-kind-selector" class="kind-selector" role="group" aria-label="Target kind selector">
+                  <button class="kind-pill" type="button" data-threat-kind="pilot" aria-pressed="false">Pilot</button>
+                  <button class="kind-pill" type="button" data-threat-kind="system" aria-pressed="true">System</button>
+                  <span id="threat-kind-status" class="kind-status">System</span>
+                  <button class="kind-pill" type="button" data-threat-kind="corporation" aria-pressed="false">Corp</button>
+                  <button class="kind-pill" type="button" data-threat-kind="alliance" aria-pressed="false">Al</button>
+                </span>
+                <span id="threat-target-label" class="target-label">--</span>
+              </label>
+              <div class="threat-input-row">
+                <input id="threat-target" name="threat-target" type="text" autocomplete="off" placeholder="system:Jita, pilot:Chribba">
+              </div>
+              <div id="threat-pulse" class="threat-pulse" aria-label="zKill one hour pulse">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </form>
+            <p id="threat-message">Copy a target, then press Ctrl+\.</p>
+          </details>
+
+          <div class="utility-chip source-context">
+            <span>Observed Source</span>
+            <strong id="front-observed-source">--</strong>
+          </div>
+        </div>
+
+        <section class="combat-surface lane-surface" aria-labelledby="pressure-title">
+          <div class="pressure-heading">
+            <p id="pressure-title" class="eyebrow">Combat Witness</p>
+          </div>
+          <div class="pressure-scope" aria-label="Combat pressure">
+            <div id="net-pressure-gauge" class="pressure-gauge" aria-label="Net repair minus incoming damage">
+              <div class="pressure-core">
+                <span id="net-pressure-label">Net</span>
+                <strong id="net-pressure-value">0</strong>
+              </div>
+            </div>
+            <div class="pressure-rails">
+              <div class="bar-row" id="incoming-pressure-row">
+                <div class="bar-label">
+                  <span>15s Incoming</span>
+                  <strong id="incoming-pressure">0</strong>
+                </div>
+                <div class="meter"><span id="incoming-bar"></span></div>
+              </div>
+              <div class="bar-row" id="repair-throughput-row">
+                <div class="bar-label">
+                  <span>15s Repair</span>
+                  <strong id="repair-throughput">0</strong>
+                </div>
+                <div class="meter repair"><span id="repair-bar"></span></div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <section id="diagnostics-panel" class="diagnostics-panel" aria-label="Diagnostics">
+        <div class="diagnostics-header">
           <div>
-            <dt>Watcher</dt>
+            <p class="eyebrow">Diagnostics</p>
+            <h1>System State</h1>
+          </div>
+          <div class="diagnostics-actions">
+            <strong id="diagnostics-state">Quiet</strong>
+            <button id="diagnostics-close" type="button">Return</button>
+          </div>
+        </div>
+        <div id="diagnostics-setup-host" class="diagnostics-setup-host">
+          <form id="watcher-controls" class="setup-tile" aria-label="Log setup">
+            <div>
+              <span>Log Setup</span>
+              <strong id="runtime-health">Checking</strong>
+            </div>
+            <input id="gamelog-folder" name="gamelog-folder" type="text" autocomplete="off" aria-label="EVE gamelog folder" placeholder="No folder selected">
+            <div class="setup-actions">
+              <button id="pick-gamelog-folder" type="button">Browse</button>
+              <button id="watcher-toggle" type="submit">Start</button>
+            </div>
+            <p id="watcher-message">Select the EVE gamelog folder once.</p>
+          </form>
+        </div>
+        <dl class="advanced-grid">
+          <div>
+            <dt>Log Watcher</dt>
             <dd id="watcher-state">Unavailable</dd>
           </div>
           <div>
-            <dt>5s incoming</dt>
-            <dd id="incoming-5s">0</dd>
+            <dt>Combat State</dt>
+            <dd id="combat-title">Quiet</dd>
           </div>
           <div>
-            <dt>15s repair</dt>
-            <dd id="repair-15s">0</dd>
+            <dt>Combat Summary</dt>
+            <dd id="combat-summary">Waiting for backend snapshot.</dd>
+          </div>
+          <div>
+            <dt>Combat Detail</dt>
+            <dd id="combat-detail">Combat Witness snapshot unavailable.</dd>
+          </div>
+          <div>
+            <dt>Combat Signal</dt>
+            <dd id="combat-signal">Unavailable</dd>
+          </div>
+          <div>
+            <dt>Scan State</dt>
+            <dd id="threat-state">Idle</dd>
           </div>
           <div>
             <dt>Witnessed</dt>
             <dd id="event-count">0</dd>
           </div>
-        </dl>
-        <dl class="combat-metric-grid">
           <div>
-            <dt>Incoming pressure</dt>
-            <dd id="incoming-pressure">0 DPS</dd>
+            <dt>5s Incoming</dt>
+            <dd id="incoming-5s">0</dd>
           </div>
           <div>
-            <dt>Repair throughput</dt>
-            <dd id="repair-throughput">0 HPS</dd>
+            <dt>15s Repair</dt>
+            <dd id="repair-15s">0</dd>
           </div>
           <div>
-            <dt>Observed repair balance</dt>
+            <dt>Repair Balance</dt>
             <dd id="repair-balance">0 /s</dd>
           </div>
           <div>
-            <dt>Observed source</dt>
+            <dt>Observed Source</dt>
             <dd id="observed-source">Unobserved</dd>
           </div>
           <div>
-            <dt>Most observed weapon</dt>
+            <dt>Observed Weapon</dt>
             <dd id="observed-weapon">Unobserved</dd>
           </div>
+          <div>
+            <dt>Passive State</dt>
+            <dd id="passive-state">Unavailable</dd>
+          </div>
+          <div>
+            <dt>Passive Sample</dt>
+            <dd id="passive-sample">0</dd>
+          </div>
+          <div>
+            <dt>Passive Activity</dt>
+            <dd id="passive-activity">0 / 0</dd>
+          </div>
+          <div>
+            <dt>Passive Freshness</dt>
+            <dd id="passive-freshness">Unavailable</dd>
+          </div>
+          <div>
+            <dt>Passive Basis</dt>
+            <dd id="passive-basis">No provider</dd>
+          </div>
+          <div>
+            <dt>Threat Provider</dt>
+            <dd id="threat-provider">zKill</dd>
+          </div>
+          <div>
+            <dt>Threat Sample</dt>
+            <dd id="threat-sample">0 / 0</dd>
+          </div>
+          <div>
+            <dt>Threat Basis</dt>
+            <dd id="threat-basis">No scan</dd>
+          </div>
+          <div>
+            <dt>Live IO</dt>
+            <dd class="io-control">
+              <span id="live-io-state">Disabled</span>
+              <button id="live-io-toggle" type="button">Enable IO</button>
+            </dd>
+          </div>
+          <div>
+            <dt>Settings</dt>
+            <dd id="settings-state">Loading</dd>
+          </div>
         </dl>
-      </section>
-      <div class="support-lanes">
-        <section class="passive-surface lane-surface" aria-labelledby="passive-title">
-          <div class="section-title">
-            <h2 id="passive-title">Passive Telemetry</h2>
-            <span id="passive-state">Unavailable</span>
-          </div>
-          <dl class="passive-grid">
-            <div>
-              <dt>Current system</dt>
-              <dd id="passive-system">Unobserved</dd>
-            </div>
-            <div>
-              <dt>zKill sample</dt>
-              <dd id="passive-sample">0</dd>
-            </div>
-            <div>
-              <dt>Activity</dt>
-              <dd id="passive-activity">0 / 0</dd>
-            </div>
-            <div>
-              <dt>Freshness</dt>
-              <dd id="passive-freshness">Unavailable</dd>
-            </div>
-            <div>
-              <dt>Basis</dt>
-              <dd id="passive-basis">No provider</dd>
-            </div>
-          </dl>
-          <p id="passive-message">Waiting for a future observed system change.</p>
-        </section>
-        <section class="threat-surface lane-surface" aria-labelledby="threat-title">
-          <div class="section-title">
-            <h2 id="threat-title">Threat Intel</h2>
-            <span id="threat-state">Idle</span>
-          </div>
-          <form id="threat-search" class="threat-search">
-            <label for="threat-target">Target</label>
-            <div>
-              <input id="threat-target" name="threat-target" type="text" autocomplete="off" placeholder="system:Jita, pilot:Chribba">
-              <button type="submit">Scan</button>
-              <button id="clipboard-arm" type="button">Arm</button>
-            </div>
-          </form>
-          <dl class="threat-grid">
-            <div>
-              <dt>Target</dt>
-              <dd id="threat-target-label">Unselected</dd>
-            </div>
-            <div>
-              <dt>Provider</dt>
-              <dd id="threat-provider">None</dd>
-            </div>
-            <div>
-              <dt>Sample</dt>
-              <dd id="threat-sample">0 / 0</dd>
-            </div>
-            <div>
-              <dt>Clipboard</dt>
-              <dd id="clipboard-state">Idle</dd>
-            </div>
-            <div>
-              <dt>Basis</dt>
-              <dd id="threat-basis">No scan</dd>
-            </div>
-          </dl>
-          <p id="threat-message">Submit a target to run a scoped scan.</p>
-        </section>
-      </div>
-      <section class="event-surface lane-surface" aria-labelledby="events-title">
-        <div class="section-title">
-          <h2 id="events-title">Event stream</h2>
-          <span id="runtime-health">Checking runtime</span>
+        <div class="diagnostics-events">
+          <p class="eyebrow">Event Stream</p>
+          <ul id="event-list" class="event-list"></ul>
         </div>
-        <section class="runtime-control" aria-label="Runtime control">
-          <div>
-            <span>Settings</span>
-            <strong id="settings-state">Loading</strong>
-          </div>
-          <div>
-            <span>Live IO</span>
-            <strong id="live-io-state">Disabled</strong>
-          </div>
-          <div>
-            <span>Diagnostics</span>
-            <strong id="diagnostics-state">Quiet</strong>
-          </div>
-          <button id="live-io-toggle" type="button">Enable live IO</button>
-        </section>
-        <form id="watcher-controls" class="watcher-controls">
-          <label for="gamelog-folder">Gamelog folder</label>
-          <div>
-            <input id="gamelog-folder" name="gamelog-folder" type="text" autocomplete="off" placeholder="EVE Logs\\Gamelogs">
-            <button type="submit">Start</button>
-            <button id="stop-watcher" type="button">Stop</button>
-          </div>
-          <p id="watcher-message">Configure a local EVE gamelog folder to begin watching.</p>
-        </form>
-        <ul id="event-list" class="event-list"></ul>
+        <p id="passive-message">Waiting for a future observed system change.</p>
+        <p id="shortcut-message">Ctrl+\ opens a 3 second clipboard scan window, then listening stops.</p>
       </section>
     </main>
     <script src="./app.js"></script>

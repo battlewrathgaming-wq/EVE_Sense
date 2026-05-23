@@ -66,7 +66,7 @@ function createThreatIntelService({
         target: resolved,
         gate,
         zkill: compactProbe(probe),
-        message: probe.capped ? 'Scoped zKill sample is capped' : 'Scoped zKill sample refreshed',
+        message: `${formatKillmailCount(probe.discoveredCount)} in ${formatLookbackLabel(probe.lookbackSeconds)}`,
         failure: probe.failures[0] || null
       };
       trace('threat_intel_scan_completed', {
@@ -193,6 +193,19 @@ function boundedInteger(value, fallback, min, max) {
     return fallback;
   }
   return Math.min(max, Math.max(min, number));
+}
+
+function formatLookbackLabel(seconds) {
+  const value = Number(seconds);
+  if (value === 3600) return '1h';
+  if (value > 0 && value % 3600 === 0) return `${value / 3600}h`;
+  if (value > 0 && value % 60 === 0) return `${value / 60}m`;
+  return `${value || DEFAULT_THREAT_LOOKBACK_SECONDS}s`;
+}
+
+function formatKillmailCount(count) {
+  const value = Number(count) || 0;
+  return `${value} ${value === 1 ? 'killmail' : 'killmails'}`;
 }
 
 module.exports = {

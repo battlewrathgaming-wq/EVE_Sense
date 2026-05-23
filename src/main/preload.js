@@ -3,6 +3,7 @@ const { contextBridge, ipcRenderer } = require('electron');
 const RENDERER_SERVICE_COMMANDS = Object.freeze([
   'seed.readiness',
   'runtime.settings.snapshot',
+  'runtime.gamelog-folder.pick',
   'runtime.live-io.snapshot',
   'runtime.live-io.set-enabled',
   'runtime.diagnostics.snapshot',
@@ -30,7 +31,17 @@ contextBridge.exposeInMainWorld('auraWindow', {
   getState: () => ipcRenderer.invoke('aura:window:get-state'),
   setAlwaysOnTop: (enabled) => ipcRenderer.invoke('aura:window:set-always-on-top', enabled === true),
   minimize: () => ipcRenderer.invoke('aura:window:minimize'),
-  close: () => ipcRenderer.invoke('aura:window:close')
+  close: () => ipcRenderer.invoke('aura:window:close'),
+  subscribePresentationPauses: (callback) => {
+    if (typeof callback !== 'function') {
+      throw new Error('Window presentation pause callback must be a function');
+    }
+    const listener = (_event, payload) => callback(payload);
+    ipcRenderer.on('aura:window:presentation-pause', listener);
+    return () => {
+      ipcRenderer.removeListener('aura:window:presentation-pause', listener);
+    };
+  }
 });
 
 contextBridge.exposeInMainWorld('auraCombatWitness', {
@@ -89,5 +100,29 @@ contextBridge.exposeInMainWorld('auraThreatIntel', {
   cancelClipboard: () => ipcRenderer.invoke('aura:service:invoke', {
     command: 'threat.clipboard.cancel',
     payload: {}
-  })
+  }),
+  getShortcutStatus: () => ipcRenderer.invoke('aura:service:invoke', {
+    command: 'threat.clipboard.shortcut-status',
+    payload: {}
+  }),
+  subscribeClipboardSnapshots: (callback) => {
+    if (typeof callback !== 'function') {
+      throw new Error('Clipboard snapshot callback must be a function');
+    }
+    const listener = (_event, snapshot) => callback(snapshot);
+    ipcRenderer.on('aura:threat-clipboard:snapshot', listener);
+    return () => {
+      ipcRenderer.removeListener('aura:threat-clipboard:snapshot', listener);
+    };
+  },
+  subscribeTargetKindToggles: (callback) => {
+    if (typeof callback !== 'function') {
+      throw new Error('Target kind toggle callback must be a function');
+    }
+    const listener = (_event, payload) => callback(payload);
+    ipcRenderer.on('aura:threat-target-kind:toggle', listener);
+    return () => {
+      ipcRenderer.removeListener('aura:threat-target-kind:toggle', listener);
+    };
+  }
 });

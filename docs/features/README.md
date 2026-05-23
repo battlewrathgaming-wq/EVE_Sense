@@ -1,19 +1,31 @@
-# Features
+# AURA-Sense Feature Documents
 
-This folder captures product feature concepts before or during implementation.
+Feature documents define product goalposts and boundaries.
 
-Start with:
+They are not audits and not implementation logs.
 
-- `vision.md`
-- `combat-logging-test-suite.md`
-
-Feature documents should explain:
+Each feature document should state:
 
 - user value
+- current status
 - data classification
-- creation/update path
+- backend owner of truth
+- renderer presentation boundary
 - what the feature must not do
-- relationship to AURA-Sense tactical scope
+- verification expectations
 
-Feature docs are goalposts. Implementation should refine toward them through small verified slices, not expand the product surface by improvising new panels.
+Current feature anchors:
 
+- Tactical HUD shell
+- Combat Witness
+- Passive Telemetry
+- Threat Intel
+- Clipboard Acquisition
+- Diagnostics and degraded state
+- Settings and runtime control
+- Local metadata
+- External API boundary
+- Atlas handoff boundary
+- Combat Logging Test Suite
+
+Implementation truth lives in `docs/current-state/current-implementation.md`.

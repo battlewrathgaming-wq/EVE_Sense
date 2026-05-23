@@ -13,6 +13,8 @@ const { ThreatIntelZkillClient, normalizeThreatZkillRefs } = require('../src/thr
   assert.strictEqual(normalized.request.inputSource, 'clipboard', 'clipboard input should use same request contract');
   assert.strictEqual(normalized.request.lookbackSeconds, 120, 'lookback should be normalized');
   assert.strictEqual(normalized.request.sampleLimit, 3, 'sample limit should be normalized');
+  const defaultWindow = normalizeScanRequest({ targetText: 'system:Jita' });
+  assert.strictEqual(defaultWindow.request.lookbackSeconds, 3600, 'Threat Intel should default to a one-hour zKill pulse');
 
   const resolver = createThreatIntelTargetResolver();
   const jita = resolver({ targetText: 'system:Jita' });
@@ -63,6 +65,10 @@ const { ThreatIntelZkillClient, normalizeThreatZkillRefs } = require('../src/thr
   assert.strictEqual(blocked.failure.code, 'PASSIVE_LIVE_IO_BLOCKED', 'blocked scan should expose gate code');
   assert.strictEqual(blockedCalls, 0, 'blocked scan should not call zKill');
 
+  const blockedClipboard = await blockedService.scan({ targetText: 'system:Jita', inputSource: 'clipboard' });
+  assert.strictEqual(blockedClipboard.status, 'blocked', 'disabled live IO should block clipboard Threat Intel scans');
+  assert.strictEqual(blockedCalls, 0, 'blocked clipboard scan should not call zKill');
+
   const successService = createThreatIntelService({
     liveIoGate: createLiveIoGate({ enabled: true }),
     resolveTarget: resolver,
@@ -82,6 +88,8 @@ const { ThreatIntelZkillClient, normalizeThreatZkillRefs } = require('../src/thr
   const success = await successService.scan({ targetText: 'system:Jita', inputSource: 'clipboard', sampleLimit: 1 });
   assert.strictEqual(success.status, 'succeeded', 'live-enabled injected scan should succeed');
   assert.strictEqual(success.zkill.selectedCount, 1, 'successful scan should expose selected sample count');
+  assert.strictEqual(success.zkill.discoveredCount, 1, 'successful scan should expose one-hour killmail count');
+  assert.strictEqual(success.message, '1 killmail in 1h', 'successful scan should read as a last-hour count');
 
   let nowMs = Date.parse('2026-05-22T07:00:00.000Z');
   let clipboardText = 'old clipboard';
@@ -92,6 +100,11 @@ const { ThreatIntelZkillClient, normalizeThreatZkillRefs } = require('../src/thr
     validateTarget: (text) => text === 'system:Jita'
   });
   assert.strictEqual(captureService.snapshot().state, 'idle', 'clipboard acquisition should start idle');
+  const immediate = await captureService.arm({ clipboardText: 'system:Jita' });
+  assert.strictEqual(immediate.state, 'cooldown', 'shortcut acquisition should capture current clipboard immediately');
+  assert.strictEqual(immediate.lastCapture.targetText, 'system:Jita', 'shortcut acquisition should retain immediate clipboard target');
+  nowMs += 6000;
+  assert.strictEqual(captureService.tick().state, 'idle', 'immediate shortcut acquisition should cool down cleanly');
   await captureService.arm();
   assert.strictEqual(captureService.snapshot().state, 'listening', 'clipboard acquisition should enter listening state');
   const unchanged = await captureService.capture();
