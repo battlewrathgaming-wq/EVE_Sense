@@ -21,6 +21,7 @@ const checks = [
   ['verify:passive-telemetry', ['node', 'scripts/verify-passive-telemetry.js']],
   ['verify:local-type-metadata', ['node', 'scripts/verify-local-type-metadata.js']],
   ['verify:threat-intel', ['node', 'scripts/verify-threat-intel.js']],
+  ['verify:clipboard-race', ['node', 'scripts/verify-clipboard-acquisition-race.js']],
   ['verify:frame', ['node', 'scripts/verify-frame-module.js']],
   ['verify:renderer-boundary', ['node', 'scripts/verify-renderer-boundary.js']],
   ['verify:renderer-boundary-adversarial', ['node', 'scripts/verify-renderer-boundary-adversarial.js']],

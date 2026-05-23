@@ -80,6 +80,8 @@ Task packet: `docs/gap/to-do/live-io-provider-fault-injection.md`.
 
 Task packet: `docs/gap/to-do/clipboard-acquisition-race-tests.md`.
 
+Status: Complete in `docs/gap/complete/clipboard-acquisition-race-tests.md`; focused command is `npm.cmd run verify:clipboard-race`.
+
 ### P1 Task 7: Runtime Settings And Diagnostics Fault Tests
 
 - Test corrupted JSON, schema drift, missing directories, permission-like failures, save/load races, diagnostic limit enforcement, and sanitization.

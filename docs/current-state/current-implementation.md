@@ -59,6 +59,7 @@ The current implementation includes:
 - Threat Intel live IO gate with visible blocked state when live calls are disabled
 - compact Threat Intel search surface that scans only on explicit submit
 - Clipboard Acquisition service with armed/listening/sealed/cooldown lifecycle
+- Clipboard Acquisition race verification for rapid arm/cancel/capture, unchanged content, rejection, timeout, scan failure, cooldown, and concurrent arm semantics
 - global clipboard arming shortcut using `Control+\` where available with fallback shortcut status reporting
 - Threat Intel preload bridge with no renderer-owned provider calls
 - integrated tactical viewport layout with lane overview and separate Combat Witness, Passive Telemetry, and Threat Intel surfaces
@@ -192,7 +193,7 @@ It writes artifacts under `.tmp\electron-visual-smoke` and is intentionally not 
 - Combat Witness repair balance is observed HPS minus DPS only; it is not survival, stability, or tank-state evidence
 - integrated viewport does not display damage spike outliers yet; calibration remains open
 - live validation/calibration is now scoped as a future milestone, not yet implemented
-- aggressive testing and bug hunting are now active as a parallel hardening runway; P0 parser hostile fixtures, watcher chaos, renderer/preload adversarial tests, and Electron visual state regression smoke are covered
+- aggressive testing and bug hunting are now active as a parallel hardening runway; P0 parser hostile fixtures, watcher chaos, renderer/preload adversarial tests, Electron visual state regression smoke, and Clipboard Acquisition race tests are covered
 - real SDE refresh/download artifacts must remain explicit and should not be staged by default
 - concept and research docs are AURA-Sense product doctrine or evidence notes; older audit records may still describe past cleanup work
 
@@ -249,7 +250,7 @@ It writes artifacts under `.tmp\electron-visual-smoke` and is intentionally not 
 - `docs/gap/complete/gamelog-watcher-chaos-tests.md`
 - `docs/gap/complete/renderer-preload-boundary-adversarial-tests.md`
 - `docs/gap/to-do/live-io-provider-fault-injection.md`
-- `docs/gap/to-do/clipboard-acquisition-race-tests.md`
+- `docs/gap/complete/clipboard-acquisition-race-tests.md`
 - `docs/gap/to-do/runtime-settings-diagnostics-fault-tests.md`
 - `docs/gap/complete/electron-visual-state-regression-tests.md`
 - `docs/gap/to-do/local-metadata-sde-builder-hardening.md`

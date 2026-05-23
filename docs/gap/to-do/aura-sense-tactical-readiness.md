@@ -124,7 +124,7 @@ AURA-Sense has a verified tactical viewport skeleton with separated telemetry la
 - `docs/gap/complete/gamelog-watcher-chaos-tests.md`
 - `docs/gap/complete/renderer-preload-boundary-adversarial-tests.md`
 - `docs/gap/to-do/live-io-provider-fault-injection.md`
-- `docs/gap/to-do/clipboard-acquisition-race-tests.md`
+- `docs/gap/complete/clipboard-acquisition-race-tests.md`
 - `docs/gap/to-do/runtime-settings-diagnostics-fault-tests.md`
 - `docs/gap/complete/electron-visual-state-regression-tests.md`
 - `docs/gap/to-do/local-metadata-sde-builder-hardening.md`

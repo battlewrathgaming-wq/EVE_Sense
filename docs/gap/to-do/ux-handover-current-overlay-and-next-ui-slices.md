@@ -48,18 +48,14 @@ npm.cmd run smoke:electron
 
 - The compact overlay is visually denser than the earlier integrated viewport; visual state regression smoke now covers the first alternate-state matrix.
 - Some diagnostics labels remain backend-ish and should be audited before another presentation polish pass.
-- Clipboard shortcut status can fall back when `Ctrl+\` is unavailable; UX should present fallback state clearly without implying failure.
+- Clipboard shortcut status can fall back when `Ctrl+\` is unavailable; service-level race tests now cover acquisition lifecycle boundaries.
 - The native folder picker exists in runtime code and the older packet has been reconciled to complete.
 - Provider state now has compact lane-specific pulse chips; hostile provider fault injection remains separate hardening work.
 - Combat metrics now have a completed plain-English baseline. Runtime field renames and UI copy changes remain future work requiring review.
 
 ## Recommended UX Sequence
 
-1. Continue `clipboard-acquisition-race-tests.md` before further shortcut UX polish.
-
-   Prove rapid arm/cancel/capture, unchanged clipboard, scan failure, cooldown, and shortcut/UI concurrency.
-
-2. Defer replay UI until `combat-witness-replay-system-channel.md` is implemented.
+1. Defer replay UI until `combat-witness-replay-system-channel.md` is implemented.
 
    Replay is a backend/system channel first. Do not add controls, scrubbers, drawers, or replay pills until live/replay snapshot separation is verified.
 
@@ -67,7 +63,6 @@ npm.cmd run smoke:electron
 
 Active UI or UX-adjacent packets:
 
-- `docs/gap/to-do/clipboard-acquisition-race-tests.md`
 - `docs/gap/to-do/combat-window-weapon-spike-followups.md`
 - `docs/gap/to-do/combat-witness-replay-system-channel.md`
 
@@ -98,3 +93,4 @@ Security/hardening packets that should inform UX but not become UI work by thems
 - `docs/gap/complete/native-gamelog-folder-picker.md`
 - `docs/gap/complete/electron-visual-state-regression-tests.md`
 - `docs/gap/complete/provider-request-pulse-ui.md`
+- `docs/gap/complete/clipboard-acquisition-race-tests.md`

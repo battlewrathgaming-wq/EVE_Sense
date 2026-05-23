@@ -27,7 +27,7 @@ This matrix maps AURA-Sense invariants to verification commands so aggressive te
 | Watcher append-only behavior | `npm.cmd run verify:gamelog-watcher` | `npm.cmd run verify:gamelog-watcher-chaos` | Must not replay old files or leak raw private lines in diagnostics. |
 | Live IO gate | `npm.cmd run verify:passive-telemetry`, `npm.cmd run verify:threat-intel` | live smoke only when explicitly enabled | Live calls must be blockable, lane-specific, and outside `verify:all`. |
 | Provider failure visibility | `npm.cmd run verify:http` | future provider fault-injection command | Timeout, malformed, 429/500, stale cache, and ETag failures should remain observable without live network. |
-| Clipboard lifecycle | `npm.cmd run verify:threat-intel`, `npm.cmd run verify:services` | future clipboard race command, Electron smoke if UI changes | Capture is operator-armed and must not broaden collection. |
+| Clipboard lifecycle | `npm.cmd run verify:threat-intel`, `npm.cmd run verify:clipboard-race` | `npm.cmd run verify:services`, Electron smoke if UI changes | Capture is operator-armed, race-tested, and must not broaden collection. |
 | Settings recovery | `npm.cmd run verify:runtime-control` | future runtime settings fault command | Corrupt or missing settings should degrade visibly and recoverably. |
 | Diagnostics sanitization | `npm.cmd run verify:diagnostics` | future runtime diagnostics fault command | Diagnostics are evidence, not raw private payload storage. |
 | Visual state | `npm.cmd run smoke:electron` | future visual state regression artifacts | Electron smoke stays separate from offline verification. |
@@ -51,3 +51,4 @@ The offline confidence command must never require:
 | `npm.cmd run verify:combat-parser-hostile` | Yes | Hostile and near-miss combat parser rejection, hash-only rejection evidence, coverage matrix honesty. |
 | `npm.cmd run verify:renderer-boundary-adversarial` | Yes | Renderer/preload hostile pattern checks, preload command allowlist, subscription cleanup verification. |
 | `npm.cmd run verify:gamelog-watcher-chaos` | Yes | Append-only watcher chaos, polling fallback, truncation/replacement handling, listener/parser failure isolation, hash-only rejection evidence. |
+| `npm.cmd run verify:clipboard-race` | Yes | Clipboard Acquisition rapid arm/cancel/capture, unchanged/rejected content, timeout, scan failure sealing, cooldown, and concurrent arm semantics. |

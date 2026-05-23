@@ -15,6 +15,9 @@ function createClipboardAcquisitionService({
     if (state.state === 'cooldown' && current < state.cooldownUntilMs) {
       return snapshot('cooldown-active');
     }
+    if (state.state === 'listening' && current <= state.listeningUntilMs) {
+      return snapshot('already-listening');
+    }
     const armedClipboardText = clipboardText == null ? normalizeClipboardText(readClipboard()) : null;
     state = {
       state: 'listening',
@@ -49,10 +52,21 @@ function createClipboardAcquisitionService({
       return seal('rejected', targetText);
     }
 
-    const result = typeof scan === 'function'
-      ? await scan({ targetText, inputSource: 'clipboard' })
-      : null;
-    return seal('captured', targetText, result);
+    try {
+      const result = typeof scan === 'function'
+        ? await scan({ targetText, inputSource: 'clipboard' })
+        : null;
+      return seal('captured', targetText, result);
+    } catch (error) {
+      return seal('scan-failed', targetText, {
+        status: 'failed',
+        message: error.message,
+        failure: {
+          code: error.code || 'CLIPBOARD_SCAN_FAILED',
+          message: error.message
+        }
+      });
+    }
   }
 
   function cancel() {
