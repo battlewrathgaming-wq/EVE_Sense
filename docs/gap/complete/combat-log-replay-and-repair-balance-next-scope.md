@@ -134,14 +134,14 @@ Current behavior to preserve:
 - Routine events such as `poll_tick`, `tail_read`, `file_event`, `file_seeded`, `offsets_seeded`, and `duplicate_suppressed` are low-value by default.
 - High-value events such as `listener_error`, `watcher_strategy_fallback`, `partial_line_dropped`, and non-routine `line_rejected` stay visible.
 - `line_rejected` with `reason: 'unparsed'` is low-value by default.
-- `line_rejected` with `reason: 'parser_error'` is high-value and reports `rawLineHash` instead of echoing the raw line.
+- `line_rejected` reports `rawLineHash` instead of echoing the raw line.
 - Verbose diagnostics mode preserves low-value watcher events for dataset debugging.
 
 Requirements:
 
 - Replay verification should be able to capture watcher traces deterministically.
 - Watcher-path replay should assert the useful rejection/debug path, including unparsed lines, parser errors, and trace `source`.
-- Parser errors must continue to avoid raw-line leakage in trace payloads while preserving `rawLineHash`.
+- Parser and unparsed-line rejections must continue to avoid raw-line leakage in trace and callback payloads while preserving `rawLineHash`.
 - Any new debug output must go through diagnostics policy rather than ad hoc console logging.
 
 ## Implementation Requirements

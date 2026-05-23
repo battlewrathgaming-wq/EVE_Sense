@@ -1,6 +1,6 @@
 # Gap To-Do: Gamelog Watcher Chaos Tests
 
-Status: Open
+Status: Complete
 Priority: P0
 Milestone: 13 - Aggressive Testing And Bug Hunting
 
@@ -29,3 +29,14 @@ The watcher must remain append-only, bounded, and diagnostic-safe under filesyst
 - Watcher chaos verification exists and is deterministic under `.tmp`.
 - Append-only behavior is proven across failure cases.
 - `npm.cmd run verify:all` passes.
+
+## Completion Notes
+
+- Added `npm.cmd run verify:gamelog-watcher-chaos`.
+- Chaos verification runs under project `.tmp` and does not depend on real operator folders.
+- Existing files and newly discovered files seed at current size instead of replaying historical content.
+- Truncation or rotation-like replacement clears partial state and seeds the replacement size instead of replaying replacement content.
+- Polling fallback is verified by forcing `fs.watch` failure in an offline fixture.
+- Duplicate TTL burst behavior is verified through `RecentEventDeduper`.
+- Parser and listener failures are isolated so later events continue.
+- Rejected-line callbacks and traces preserve `rawLineHash` and do not retain raw line text.

@@ -24,7 +24,7 @@ This matrix maps AURA-Sense invariants to verification commands so aggressive te
 | --- | --- | --- | --- |
 | Renderer remains presentation-only | `npm.cmd run verify:renderer-boundary` | `npm.cmd run verify:renderer-boundary-adversarial`, `npm.cmd run verify:renderer-shell` | Renderer must not fetch, parse logs, read filesystem, import main modules, compute tactical truth, or use unlisted service commands. |
 | Parser truth boundary | `npm.cmd run verify:combat-parser` | `npm.cmd run verify:combat-parser-hostile`, `npm.cmd run verify:combat-coverage` | Accepted lines require exact fixtures; hostile and near-miss lines reject with hash-only evidence. |
-| Watcher append-only behavior | `npm.cmd run verify:gamelog-watcher` | future watcher chaos command | Must not replay old files or leak raw private lines in diagnostics. |
+| Watcher append-only behavior | `npm.cmd run verify:gamelog-watcher` | `npm.cmd run verify:gamelog-watcher-chaos` | Must not replay old files or leak raw private lines in diagnostics. |
 | Live IO gate | `npm.cmd run verify:passive-telemetry`, `npm.cmd run verify:threat-intel` | live smoke only when explicitly enabled | Live calls must be blockable, lane-specific, and outside `verify:all`. |
 | Provider failure visibility | `npm.cmd run verify:http` | future provider fault-injection command | Timeout, malformed, 429/500, stale cache, and ETag failures should remain observable without live network. |
 | Clipboard lifecycle | `npm.cmd run verify:threat-intel`, `npm.cmd run verify:services` | future clipboard race command, Electron smoke if UI changes | Capture is operator-armed and must not broaden collection. |
@@ -50,3 +50,4 @@ The offline confidence command must never require:
 | --- | --- | --- |
 | `npm.cmd run verify:combat-parser-hostile` | Yes | Hostile and near-miss combat parser rejection, hash-only rejection evidence, coverage matrix honesty. |
 | `npm.cmd run verify:renderer-boundary-adversarial` | Yes | Renderer/preload hostile pattern checks, preload command allowlist, subscription cleanup verification. |
+| `npm.cmd run verify:gamelog-watcher-chaos` | Yes | Append-only watcher chaos, polling fallback, truncation/replacement handling, listener/parser failure isolation, hash-only rejection evidence. |

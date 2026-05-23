@@ -54,7 +54,9 @@ Status: Complete in `docs/gap/complete/combat-parser-hostile-fixtures.md`; focus
 - Stress offset seeding, append-only reads, partial lines, truncation, rotation, duplicate suppression, deleted files, fallback strategy, and listener failures.
 - Prove no old-file replay and no raw-line diagnostic leakage.
 
-Task packet: `docs/gap/to-do/gamelog-watcher-chaos-tests.md`.
+Task packet: `docs/gap/complete/gamelog-watcher-chaos-tests.md`.
+
+Status: Complete in `docs/gap/complete/gamelog-watcher-chaos-tests.md`; focused command is `npm.cmd run verify:gamelog-watcher-chaos`.
 
 ### P0 Task 4: Renderer/Preload Boundary Adversarial Tests
 

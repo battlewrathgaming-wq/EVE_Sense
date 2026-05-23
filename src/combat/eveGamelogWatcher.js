@@ -169,7 +169,14 @@ class EveGamelogWatcher {
       return [];
     }
 
-    const stats = fs.statSync(filePath);
+    let stats;
+    try {
+      stats = fs.statSync(filePath);
+    } catch (error) {
+      this.setStatus('error', this.folderPath, error.message);
+      return [];
+    }
+
     const previousOffset = this.offsets.get(filePath);
     if (previousOffset == null) {
       this.offsets.set(filePath, stats.size);
@@ -177,7 +184,14 @@ class EveGamelogWatcher {
       return [];
     }
 
-    const start = stats.size < previousOffset ? 0 : previousOffset;
+    if (stats.size < previousOffset) {
+      this.offsets.set(filePath, stats.size);
+      this.partials.delete(filePath);
+      this.trace('file_truncated', { filePath, previousOffset, size: stats.size });
+      return [];
+    }
+
+    const start = previousOffset;
     this.offsets.set(filePath, stats.size);
     if (stats.size <= start) {
       return [];
@@ -253,9 +267,6 @@ class EveGamelogWatcher {
       reason,
       message
     };
-    if (reason !== 'parser_error') {
-      rejected.line = line;
-    }
     this.onRejectedLine(rejected);
     this.trace('line_rejected', {
       filePath,

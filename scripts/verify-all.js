@@ -15,6 +15,7 @@ const checks = [
   ['verify:combat-golden', ['node', 'scripts/verify-combat-golden-snapshots.js']],
   ['verify:diagnostics', ['node', 'scripts/verify-diagnostics-policy.js']],
   ['verify:gamelog-watcher', ['node', 'scripts/verify-gamelog-watcher.js']],
+  ['verify:gamelog-watcher-chaos', ['node', 'scripts/verify-gamelog-watcher-chaos.js']],
   ['verify:services', ['node', 'scripts/verify-services.js']],
   ['verify:http', ['node', 'scripts/verify-http-client.js']],
   ['verify:passive-telemetry', ['node', 'scripts/verify-passive-telemetry.js']],

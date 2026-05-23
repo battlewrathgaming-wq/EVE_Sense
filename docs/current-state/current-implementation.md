@@ -81,6 +81,7 @@ The current implementation includes:
 - aggressive test harness matrix that maps invariants to offline, Electron, live, and manual command classes
 - hostile combat parser fixture verification for malformed envelopes, timestamp edges, near-misses, private-content lookalikes, and oversized lines
 - adversarial renderer/preload boundary verification for hostile patterns, preload command allowlist, and subscription cleanup
+- gamelog watcher chaos verification for append-only seeding, polling fallback, truncation/replacement, deletion, partial lines, duplicate TTL, and failure isolation
 
 ## What Does Not Yet Exist
 
@@ -164,7 +165,7 @@ Available command:
 npm run verify:all
 ```
 
-This verifies the current utilities, service rigging, Combat Witness parser/watcher/runtime foundations, hostile parser rejection fixtures, Combat Logging Test Suite offline checks, Passive Telemetry foundation, Threat Intel request/resolution/zKill normalization/clipboard lifecycle checks, renderer shell, renderer boundary static checks, and adversarial renderer/preload boundary checks. It does not verify full tactical viewport readiness.
+This verifies the current utilities, service rigging, Combat Witness parser/watcher/runtime foundations, hostile parser rejection fixtures, gamelog watcher chaos behavior, Combat Logging Test Suite offline checks, Passive Telemetry foundation, Threat Intel request/resolution/zKill normalization/clipboard lifecycle checks, renderer shell, renderer boundary static checks, and adversarial renderer/preload boundary checks. It does not verify full tactical viewport readiness.
 
 Runtime visual smoke is implemented as a separate environment-sensitive command:
 
@@ -190,7 +191,7 @@ It writes artifacts under `.tmp\electron-visual-smoke` and is intentionally not 
 - Combat Witness repair balance is observed HPS minus DPS only; it is not survival, stability, or tank-state evidence
 - integrated viewport does not display damage spike outliers yet; calibration remains open
 - live validation/calibration is now scoped as a future milestone, not yet implemented
-- aggressive testing and bug hunting are now active as a parallel hardening runway; P0 parser hostile fixtures and renderer/preload adversarial tests are covered, while watcher chaos remains open
+- aggressive testing and bug hunting are now active as a parallel hardening runway; P0 parser hostile fixtures, watcher chaos, and renderer/preload adversarial tests are covered
 - real SDE refresh/download artifacts must remain explicit and should not be staged by default
 - concept and research docs are AURA-Sense product doctrine or evidence notes; older audit records may still describe past cleanup work
 
@@ -244,7 +245,7 @@ It writes artifacts under `.tmp\electron-visual-smoke` and is intentionally not 
 - `docs/gap/complete/aggressive-test-harness-matrix.md`
 - `docs/gap/complete/combat-parser-hostile-fixtures.md`
 - `docs/testing/aggressive-test-harness-matrix.md`
-- `docs/gap/to-do/gamelog-watcher-chaos-tests.md`
+- `docs/gap/complete/gamelog-watcher-chaos-tests.md`
 - `docs/gap/complete/renderer-preload-boundary-adversarial-tests.md`
 - `docs/gap/to-do/live-io-provider-fault-injection.md`
 - `docs/gap/to-do/clipboard-acquisition-race-tests.md`

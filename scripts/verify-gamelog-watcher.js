@@ -45,6 +45,8 @@ try {
   append(logPath, '[ 2026.05.22 01:01:03 ] (notify) ignored\n');
   watcher.handleFile(logPath);
   assert.strictEqual(rejected.length, 1, 'unparsed appended lines should be reported as rejected');
+  assert.ok(rejected[0].rawLineHash, 'unparsed rejected lines should include hash evidence');
+  assert.strictEqual(rejected[0].line, undefined, 'unparsed rejected lines should not retain raw line text');
 
   append(logPath, '[ 2026.05.22 01:01:04 ] (combat) Mining Drone misses you');
   assert.strictEqual(watcher.handleFile(logPath).length, 0, 'partial line should not emit until newline');
