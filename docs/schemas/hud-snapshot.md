@@ -78,6 +78,21 @@ Displayed fields:
 - clipboard acquisition state
 - blocked/partial/capped/provider basis
 
+## Metric Presentation Ordering
+
+Renderer composition should order metrics by presentation behavior:
+
+```txt
+Static
+Scales
+Null states
+```
+
+Static scalar values and labels should be readable before scales, gauges, pulse strips, timelines, or event lists. Examples include incoming DPS, repair HPS, observed repair balance, event count, current system, and scan sample count.
+
+Scales should support the static value below it or beside it: bars, gauges, rolling-window comparisons, provider pulses, and event streams add context after the headline value is visible.
+
+Null states are fallback states for absent or unavailable data. They should replace the value they belong to and stay visually quiet unless operator action is required.
 ## Invariants
 
 - Snapshots should be compact.
@@ -272,4 +287,6 @@ Current passive statuses:
 - `partial`: context was fetched with malformed or incomplete refs
 - `degraded`: system ID resolution or context fetch failed
 - `blocked`: live IO gate blocked passive external calls
+
+
 

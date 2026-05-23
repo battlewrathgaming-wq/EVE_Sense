@@ -46,5 +46,7 @@ Do not treat a roadmap file as product truth until current-state docs and verifi
 - `feature-aligned-milestones.md`
 - `milestone-12-live-validation-and-tactical-calibration.md`
 - `milestone-13-aggressive-testing-and-bug-hunting.md`
+- `milestone-14-back-page-threat-intel-ux.md`
 - `passive-telemetry-live-readiness-interlock.md`
 - `runtime-smoke-policy.md`
+

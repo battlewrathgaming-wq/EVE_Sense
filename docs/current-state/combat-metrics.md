@@ -1,4 +1,4 @@
-# Current State: Combat Metrics
+﻿# Current State: Combat Metrics
 
 Date: 2026-05-23
 Status: Audit baseline for Combat Witness capture, compute, snapshot, and display terminology
@@ -688,6 +688,209 @@ These need more proof before strong HUD emphasis:
 - Damage spike outliers exist but remain intentionally low-emphasis until calibrated.
 - Some current empty states use ambiguous terms such as `Unobserved` or `Empty`.
 
+## Presentation Grouping Rule
+
+Metric presentation should be grouped by how the operator reads the value, not only by where the value comes from.
+
+Default vertical order inside a lane or module:
+
+```txt
+Static
+Scales
+Null states
+```
+
+This means a stable scalar such as incoming DPS, outgoing DPS, repair HPS, observed balance, or event count should sit above bars, gauges, timelines, pulses, or recent-event lists.
+
+A scale should explain a static number, not bury it. If a module shows both `Incoming DPS` and a rolling event list, `Incoming DPS` belongs first. The list can provide context underneath.
+
+Null states are not metrics. They are fallback presentation states for missing, unavailable, blocked, stale, or unobserved data. Null copy should not take the prime position when a real static metric exists.
+
+## Logical Metric Groups
+
+### Static Metrics
+
+Static metrics are single-read values that should be readable at a glance without scanning a list or interpreting a bar.
+
+Primary static metrics:
+
+- combat status/freshness
+- incoming DPS
+- repair HPS
+- observed repair balance
+- outgoing DPS
+- witnessed event count
+- current system label
+- system kills
+- system jumps
+- Threat Intel target label
+- Threat Intel selected/discovered sample count
+
+Presentation rule:
+
+- Put static metrics at the top of their lane or tile.
+- Prefer explicit direction: `Incoming DPS`, `Repair HPS`, `Out DPS`.
+- Avoid plain `DPS` unless the tile context makes direction impossible to miss.
+- Keep static metric labels short and stable.
+
+### Scale Metrics
+
+Scale metrics are values that need comparison, trend, magnitude, or ordered context.
+
+Scale candidates:
+
+- incoming pressure bar
+- repair throughput bar
+- net pressure gauge
+- 5s/15s/30s window comparison
+- provider pulse strip
+- Threat Intel activity pulse
+- recent combat event stream
+- source/weapon/hit-quality count maps
+- spike/outlier lists
+
+Presentation rule:
+
+- Place scales below the relevant static metric.
+- Use scales to answer `how much`, `how recent`, or `what changed` after the scalar is already visible.
+- Keep timelines and lists below headline numbers because they require scanning.
+- Do not let a list push DPS/HPS/balance out of the first read zone.
+
+### Context Labels
+
+Context labels identify what was observed, not how much pressure exists.
+
+Context candidates:
+
+- observed source
+- observed target
+- observed weapon
+- most frequent hit quality
+- current Threat Intel provider
+- Passive/Threat provider basis
+
+Presentation rule:
+
+- Context labels may sit beside static metrics when space allows.
+- Context labels should not outrank pressure throughput metrics in the Combat Witness lane.
+- Use `observed` language because labels may not be durable identities.
+
+### Null States
+
+Null states describe absence, blocked authority, degraded inputs, or unavailable bridges.
+
+Null candidates:
+
+- no combat observed
+- unobserved source
+- unobserved weapon
+- bridge unavailable
+- live IO blocked
+- watcher stopped
+- stale snapshot
+- no scan
+
+Presentation rule:
+
+- Null states replace the value they belong to; they do not become their own metric group.
+- Prefer `No source observed` over `Unobserved` where space allows.
+- Prefer `No combat observed` over backend-ish `Empty` in product surfaces.
+- Keep null states visually quiet unless they require operator action.
+
+## First-Pass Grouping By Lane
+
+### Combat Witness
+
+Static:
+
+- Combat status/freshness
+- Incoming DPS
+- Repair HPS
+- Observed repair balance
+- Out DPS, when displayed
+- Recent event count
+
+Scales:
+
+- net pressure gauge
+- incoming pressure bar
+- repair throughput bar
+- 5s/15s/30s comparison
+- recent event stream
+- spike/outlier details
+
+Context:
+
+- observed source
+- observed weapon
+- observed target
+- most frequent hit quality
+
+Null:
+
+- no combat observed
+- source/weapon not observed
+- watcher unavailable/degraded/blocked
+- stale Combat Witness snapshot
+
+### Passive Telemetry
+
+Static:
+
+- current system
+- ship kills
+- jumps
+- kill/jump ratio
+- freshness state
+
+Scales:
+
+- provider pulse
+- cache/freshness age display, if added
+- recent system activity trend, if added
+
+Context:
+
+- provider basis
+- local/static resolver source
+- ESI/zKill cache state
+
+Null:
+
+- no system observed
+- live IO blocked
+- provider degraded
+- stale passive context
+
+### Threat Intel
+
+Static:
+
+- target label
+- target kind
+- scan status
+- selected/discovered sample count
+- lookback window
+
+Scales:
+
+- zKill pulse strip
+- sampled timeline
+- capped/partial sample indication
+
+Context:
+
+- provider basis
+- input source: typed, clipboard, shortcut
+- ambiguity or unsupported-target reason
+
+Null:
+
+- no scan
+- unresolved target
+- ambiguous target
+- live IO blocked
+- provider failed
 ## Suggested Future HUD Grouping
 
 This is not an implementation instruction, only a product-language guide.
@@ -727,8 +930,10 @@ Replay status, when implemented
 - `docs/contracts/combat-witness-contract.md`
 - `docs/schemas/hud-snapshot.md`
 - `docs/schemas/combat-event.md`
-- `docs/gap/complete/combat-metrics-presentation-audit.md`
-- `docs/gap/to-do/combat-witness-replay-system-channel.md`
-- `docs/gap/to-do/combat-window-weapon-spike-followups.md`
-- `docs/gap/to-do/combat-metric-calibration-real-datasets.md`
-- `docs/gap/to-do/repair-healing-raw-fixture-intake.md`
+- `docs/archive/deprecated-gap-workflow-2026-05-23/complete/combat-metrics-presentation-audit.md`
+- `docs/archive/deprecated-gap-workflow-2026-05-23/to-do/combat-witness-replay-system-channel.md`
+- `docs/archive/deprecated-gap-workflow-2026-05-23/to-do/combat-window-weapon-spike-followups.md`
+- `docs/archive/deprecated-gap-workflow-2026-05-23/to-do/combat-metric-calibration-real-datasets.md`
+- `docs/archive/deprecated-gap-workflow-2026-05-23/to-do/repair-healing-raw-fixture-intake.md`
+
+
