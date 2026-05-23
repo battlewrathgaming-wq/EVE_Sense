@@ -65,6 +65,7 @@ The current implementation includes:
 - Combat Witness integrated display for observed incoming pressure, repair throughput, observed repair balance, observed source, and most observed weapon
 - lane-specific provider/basis display for Passive Telemetry and Threat Intel
 - Electron visual smoke assertions for integrated viewport selectors, combat metric fields, and provider basis fields
+- Electron visual state regression smoke for unavailable, stale, degraded, blocked, partial/capped, cooldown, diagnostics, settings degraded, and narrow viewport states
 - backend-owned runtime settings persistence for validated gamelog folder configuration
 - startup recovery for valid persisted gamelog settings without auto-starting watchers
 - operator-visible live IO policy control for Passive Telemetry and Threat Intel gates
@@ -190,7 +191,7 @@ It writes artifacts under `.tmp\electron-visual-smoke` and is intentionally not 
 - Combat Witness repair balance is observed HPS minus DPS only; it is not survival, stability, or tank-state evidence
 - integrated viewport does not display damage spike outliers yet; calibration remains open
 - live validation/calibration is now scoped as a future milestone, not yet implemented
-- aggressive testing and bug hunting are now active as a parallel hardening runway; P0 parser hostile fixtures, watcher chaos, and renderer/preload adversarial tests are covered
+- aggressive testing and bug hunting are now active as a parallel hardening runway; P0 parser hostile fixtures, watcher chaos, renderer/preload adversarial tests, and Electron visual state regression smoke are covered
 - real SDE refresh/download artifacts must remain explicit and should not be staged by default
 - concept and research docs are AURA-Sense product doctrine or evidence notes; older audit records may still describe past cleanup work
 
@@ -249,7 +250,7 @@ It writes artifacts under `.tmp\electron-visual-smoke` and is intentionally not 
 - `docs/gap/to-do/live-io-provider-fault-injection.md`
 - `docs/gap/to-do/clipboard-acquisition-race-tests.md`
 - `docs/gap/to-do/runtime-settings-diagnostics-fault-tests.md`
-- `docs/gap/to-do/electron-visual-state-regression-tests.md`
+- `docs/gap/complete/electron-visual-state-regression-tests.md`
 - `docs/gap/to-do/local-metadata-sde-builder-hardening.md`
 - `docs/gap/to-do/bug-hunt-triage-and-failure-records.md`
 - `docs/gap/complete/threat-intel-scan-request-contract.md`

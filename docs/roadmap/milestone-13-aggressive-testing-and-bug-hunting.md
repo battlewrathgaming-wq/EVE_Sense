@@ -91,7 +91,9 @@ Task packet: `docs/gap/to-do/runtime-settings-diagnostics-fault-tests.md`.
 - Expand smoke coverage across stale, degraded, blocked, partial, cooldown, diagnostics, settings, and narrow viewport states.
 - Record artifacts without making Electron a dependency of `verify:all`.
 
-Task packet: `docs/gap/to-do/electron-visual-state-regression-tests.md`.
+Task packet: `docs/gap/complete/electron-visual-state-regression-tests.md`.
+
+Status: Complete in `docs/gap/complete/electron-visual-state-regression-tests.md`; focused command is `npm.cmd run smoke:electron`.
 
 ### P2 Task 9: Local Metadata / SDE Builder Hardening
 

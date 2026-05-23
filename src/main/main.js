@@ -26,6 +26,8 @@ const CLIPBOARD_SNAPSHOT_CHANNEL = 'aura:threat-clipboard:snapshot';
 const TARGET_KIND_TOGGLE_CHANNEL = 'aura:threat-target-kind:toggle';
 const WINDOW_PRESENTATION_PAUSE_CHANNEL = 'aura:window:presentation-pause';
 
+configureUserDataPath();
+
 const registry = createDefaultRegistry();
 const runtimeDiagnosticsService = createRuntimeDiagnosticsService();
 const passiveRequestLog = (entry) => traceRuntimeDiagnostic(entry.diagnostic_event || 'passive_request_log', entry);
@@ -92,6 +94,15 @@ let clipboardShortcutStatus = {
   supported: false,
   message: 'Clipboard shortcut has not been registered yet'
 };
+
+function configureUserDataPath() {
+  const userDataDir = process.env.AURA_SENSE_USER_DATA_DIR;
+  if (!userDataDir) {
+    return;
+  }
+  fs.mkdirSync(userDataDir, { recursive: true });
+  app.setPath('userData', userDataDir);
+}
 
 registerCombatWitnessRuntimeCommands(registry, combatWitnessRuntime, runtimeSettingsService);
 registerPassiveTelemetryCommands(registry, passiveTelemetryService);
@@ -599,16 +610,258 @@ async function runVisualSmoke(window, outputDir) {
   assertSmoke(checks.hasRuntimeState, 'renderer should contain runtime state in diagnostics panel');
   assertSmoke(checks.noParserRuntimeExposure, 'renderer should not expose parser/runtime modules');
 
-  const image = await window.webContents.capturePage();
-  fs.writeFileSync(path.join(outputDir, 'first-light.png'), image.toPNG());
+  const firstLightCaptureAttempts = await captureSmokeScreenshot(window, path.join(outputDir, 'first-light.png'));
+  const regressionStates = await captureVisualRegressionStates(window, outputDir);
 
   return {
     status: 'passed',
     checked_at: new Date().toISOString(),
     output_dir: outputDir,
-    screenshots: ['first-light.png'],
-    checks
+    screenshots: ['first-light.png', ...regressionStates.map((state) => state.screenshot)],
+    capture_attempts: [
+      { screenshot: 'first-light.png', attempts: firstLightCaptureAttempts },
+      ...regressionStates.map((state) => ({
+        screenshot: state.screenshot,
+        attempts: state.capture_attempts
+      }))
+    ],
+    checks,
+    regression_states: regressionStates
   };
+}
+
+async function captureVisualRegressionStates(window, outputDir) {
+  const originalBounds = window.getBounds();
+  const states = [
+    {
+      name: 'unavailable',
+      screenshot: 'state-unavailable.png',
+      assertions: ['#pressure-title', '#watcher-indicator', '#incoming-pressure', '#repair-throughput'],
+      script: `
+        resetViewportState();
+        setText('#combat-summary', 'Combat Witness bridge unavailable.');
+        setText('#combat-detail', 'Combat Witness snapshot unavailable.');
+        setText('#combat-signal', 'Unavailable');
+        setText('#watcher-state', 'Unavailable');
+        setText('#watcher-message', 'Log Watcher unavailable.');
+        setText('#incoming-pressure', '0');
+        setText('#repair-throughput', '0');
+      `
+    },
+    {
+      name: 'stale',
+      screenshot: 'state-stale.png',
+      assertions: ['#pressure-title', '#passive-system', '#system-shipkills', '#front-threat-provider'],
+      script: `
+        resetViewportState();
+        setText('#combat-summary', 'No recent combat observed.');
+        setText('#combat-signal', 'Stale');
+        setText('#combat-detail', 'Latest Combat Witness snapshot is stale.');
+        setText('#passive-freshness', 'Stale');
+        setText('#threat-basis', 'Cached provider context');
+      `
+    },
+    {
+      name: 'degraded',
+      screenshot: 'state-degraded.png',
+      assertions: ['#watcher-indicator', '#pressure-title', '#incoming-pressure', '#repair-throughput'],
+      script: `
+        resetViewportState();
+        setText('#watcher-state', 'Degraded');
+        setText('#watcher-message', 'Log Watcher degraded; polling fallback active.');
+        setText('#combat-summary', 'Combat Witness degraded, latest snapshot retained.');
+        document.querySelector('#watcher-indicator')?.classList.add('is-degraded');
+      `
+    },
+    {
+      name: 'blocked',
+      screenshot: 'state-blocked.png',
+      assertions: ['#top-live-io-toggle', '#pressure-title', '#incoming-pressure', '#front-observed-source'],
+      script: `
+        resetViewportState();
+        document.querySelector('#integrated-viewport')?.classList.add('io-off');
+        setText('#live-io-state', 'Off - network and clipboard blocked');
+        setText('#combat-summary', 'Combat Witness remains local while live IO is blocked.');
+        setText('#front-observed-source', 'No source observed');
+        document.querySelector('#top-live-io-toggle')?.classList.remove('is-on');
+      `
+    },
+    {
+      name: 'partial-capped',
+      screenshot: 'state-partial-capped.png',
+      assertions: ['#threat-drawer', '#front-threat-provider', '#threat-pulse', '#threat-message', '#threat-target-label'],
+      script: `
+        resetViewportState();
+        document.querySelector('#threat-drawer').open = true;
+        setText('#threat-state', 'Partial');
+        setText('#threat-target-label', 'Jita');
+        setText('#threat-sample', '10 / 28');
+        setText('#threat-basis', 'zKill capped partial sample');
+        setText('#threat-message', 'Partial provider response; sample capped for display.');
+        document.querySelectorAll('#threat-pulse span').forEach((dot, index) => {
+          dot.classList.toggle('is-active', index < 6);
+          dot.classList.toggle('is-selected', index < 3);
+        });
+      `
+    },
+    {
+      name: 'cooldown',
+      screenshot: 'state-cooldown.png',
+      assertions: ['#threat-drawer', '#clipboard-listen', '#clipboard-state', '#threat-message'],
+      script: `
+        resetViewportState();
+        document.querySelector('#threat-drawer').open = true;
+        document.querySelector('#clipboard-listen')?.classList.add('is-cooldown');
+        setText('#clipboard-state', 'Cooldown');
+        setText('#shortcut-message', 'Ctrl+\\\\ is cooling down after the last clipboard scan.');
+        setText('#threat-message', 'Clipboard scan sealed; cooldown active.');
+      `
+    },
+    {
+      name: 'diagnostics-open',
+      screenshot: 'state-diagnostics-open.png',
+      assertions: ['#diagnostics-panel', '#diagnostics-state', '#watcher-controls', '#event-list'],
+      script: `
+        resetViewportState();
+        document.querySelector('#integrated-viewport')?.classList.add('diagnostics-open');
+        document.querySelector('#diagnostics-toggle')?.classList.add('active');
+        setText('#diagnostics-state', 'Observed');
+        setText('#event-list', '');
+        const item = document.createElement('li');
+        const label = document.createElement('strong');
+        label.textContent = 'Observed state';
+        const detail = document.createElement('span');
+        detail.textContent = 'diagnostics smoke';
+        item.append(label, detail);
+        document.querySelector('#event-list')?.appendChild(item);
+      `
+    },
+    {
+      name: 'settings-degraded',
+      screenshot: 'state-settings-degraded.png',
+      assertions: ['#diagnostics-panel', '#settings-state', '#runtime-health', '#gamelog-folder', '#watcher-message'],
+      script: `
+        resetViewportState();
+        document.querySelector('#integrated-viewport')?.classList.add('diagnostics-open');
+        setText('#settings-state', 'Recovered with degraded path');
+        setText('#runtime-health', 'Runtime ready');
+        setValue('#gamelog-folder', 'C:\\\\EVE\\\\Missing\\\\Gamelogs');
+        setText('#watcher-message', 'Persisted gamelog folder is missing; select a valid folder.');
+      `
+    },
+    {
+      name: 'narrow-viewport',
+      screenshot: 'state-narrow-viewport.png',
+      width: 420,
+      height: 520,
+      assertions: ['#integrated-viewport', '#pressure-title', '#incoming-pressure', '#repair-throughput', '#front-context-value'],
+      script: `
+        resetViewportState();
+        setText('#combat-summary', 'Narrow viewport smoke state.');
+        setText('#incoming-pressure', '742');
+        setText('#repair-throughput', '511');
+        setText('#front-context-value', 'Heavy Neutron Blaster II');
+      `
+    }
+  ];
+
+  const results = [];
+  for (const state of states) {
+    if (state.width && state.height) {
+      window.setSize(state.width, state.height);
+    } else {
+      window.setBounds(originalBounds);
+    }
+    await delay(60);
+    const check = await applyVisualRegressionState(window, state);
+    for (const assertion of check.assertions) {
+      assertSmoke(assertion.visible, `${state.name} should keep ${assertion.selector} visible`);
+    }
+    const captureAttempts = await captureSmokeScreenshot(window, path.join(outputDir, state.screenshot));
+    results.push({
+      name: state.name,
+      screenshot: state.screenshot,
+      capture_attempts: captureAttempts,
+      viewport: check.viewport,
+      assertions: check.assertions
+    });
+  }
+  window.setBounds(originalBounds);
+  return results;
+}
+
+function applyVisualRegressionState(window, state) {
+  return window.webContents.executeJavaScript(`
+    (() => {
+      const setText = (selector, value) => {
+        const element = document.querySelector(selector);
+        if (element) element.textContent = value;
+      };
+      const setValue = (selector, value) => {
+        const element = document.querySelector(selector);
+        if (element) element.value = value;
+      };
+      const resetViewportState = () => {
+        document.querySelector('#integrated-viewport')?.classList.remove('diagnostics-open', 'io-off');
+        document.querySelector('#diagnostics-toggle')?.classList.remove('active');
+        document.querySelector('#threat-drawer').open = false;
+        document.querySelector('#clipboard-listen')?.classList.remove('is-listening', 'is-cooldown', 'is-unsupported');
+        document.querySelector('#watcher-indicator')?.classList.remove('is-watching', 'is-degraded', 'is-blocked');
+        document.querySelectorAll('#threat-pulse span').forEach((dot) => {
+          dot.classList.remove('is-active', 'is-selected');
+        });
+      };
+      ${state.script}
+      const selectors = ${JSON.stringify(state.assertions)};
+      const assertions = selectors.map((selector) => {
+        const element = document.querySelector(selector);
+        const rect = element?.getBoundingClientRect();
+        const style = element ? getComputedStyle(element) : null;
+        return {
+          selector,
+          text: element?.textContent?.trim().slice(0, 120) || null,
+          visible: Boolean(
+            element &&
+            rect &&
+            rect.width > 0 &&
+            rect.height > 0 &&
+            style.display !== 'none' &&
+            style.visibility !== 'hidden'
+          )
+        };
+      });
+      return {
+        viewport: {
+          width: window.innerWidth,
+          height: window.innerHeight
+        },
+        assertions
+      };
+    })();
+  `);
+}
+
+function delay(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function captureSmokeScreenshot(window, filePath) {
+  const maxAttempts = 3;
+  let lastError = null;
+  for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+    try {
+      const image = await window.webContents.capturePage();
+      fs.writeFileSync(filePath, image.toPNG());
+      return attempt;
+    } catch (error) {
+      lastError = error;
+      if (error.message !== 'UnknownVizError' || attempt === maxAttempts) {
+        throw error;
+      }
+      await delay(150 * attempt);
+    }
+  }
+  throw lastError;
 }
 
 function waitForSmokeReady(window) {
