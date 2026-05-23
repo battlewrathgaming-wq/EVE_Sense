@@ -97,6 +97,6 @@ npm.cmd run verify:all
 - `docs/contracts/combat-witness-contract.md`
 - `docs/schemas/hud-snapshot.md`
 - `docs/schemas/combat-event.md`
-- `docs/gap/to-do/combat-window-weapon-spike-followups.md`
+- `docs/gap/complete/combat-window-weapon-spike-followups.md`
 - `docs/gap/to-do/combat-metric-calibration-real-datasets.md`
 - `docs/gap/to-do/repair-healing-raw-fixture-intake.md`

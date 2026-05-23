@@ -63,7 +63,6 @@ npm.cmd run smoke:electron
 
 Active UI or UX-adjacent packets:
 
-- `docs/gap/to-do/combat-window-weapon-spike-followups.md`
 - `docs/gap/to-do/combat-witness-replay-system-channel.md`
 
 Security/hardening packets that should inform UX but not become UI work by themselves:
@@ -94,3 +93,4 @@ Security/hardening packets that should inform UX but not become UI work by thems
 - `docs/gap/complete/electron-visual-state-regression-tests.md`
 - `docs/gap/complete/provider-request-pulse-ui.md`
 - `docs/gap/complete/clipboard-acquisition-race-tests.md`
+- `docs/gap/complete/combat-window-weapon-spike-followups.md`

@@ -40,7 +40,7 @@ Each lane remains independently truthful.
 - Define the integrated HUD sections and priority order before CSS/layout work.
 - Preserve Combat Witness, Passive Telemetry, and Threat Intel as separate lanes.
 - Decide which backend snapshot fields are eligible for first integrated display.
-- Keep Combat Witness weapon/spike metrics available but do not emphasize spikes until the follow-up packet calibrates them.
+- Keep Combat Witness weapon/spike metrics available but do not emphasize spikes until the real-dataset calibration packet resolves them.
 
 Task packet: `docs/gap/complete/integrated-viewport-lane-priority-and-snapshot-contract.md`.
 
@@ -75,7 +75,8 @@ Task packet: `docs/gap/complete/integrated-viewport-request-pulse-and-degraded-s
 Task packets:
 
 - `docs/gap/complete/integrated-viewport-combat-metric-copy-guardrails.md`
-- `docs/gap/to-do/combat-window-weapon-spike-followups.md`
+- `docs/gap/complete/combat-window-weapon-spike-followups.md`
+- `docs/gap/to-do/combat-metric-calibration-real-datasets.md`
 
 ### Task 5: Verification And Smoke Evidence
 

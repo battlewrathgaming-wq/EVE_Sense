@@ -78,7 +78,7 @@ Task packet: `docs/gap/to-do/live-io-provider-fault-injection.md`.
 
 - Stress rapid arm/cancel/capture, unchanged clipboard, rejected content, cooldown re-arm, scan failure during capture, and concurrent global shortcut/UI arm paths.
 
-Task packet: `docs/gap/to-do/clipboard-acquisition-race-tests.md`.
+Task packet: `docs/gap/complete/clipboard-acquisition-race-tests.md`.
 
 Status: Complete in `docs/gap/complete/clipboard-acquisition-race-tests.md`; focused command is `npm.cmd run verify:clipboard-race`.
 

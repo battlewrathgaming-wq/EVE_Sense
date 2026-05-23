@@ -12,7 +12,7 @@ Combat Witness now exposes richer metrics: weapon counts, observed sources/targe
 
 - Choose which Combat Witness metrics are ready for integrated HUD display.
 - Prefer copy such as `Observed weapon`, `Most observed weapon`, `Incoming pressure`, `Repair throughput`, and `Observed repair balance`.
-- Keep spike outliers low-emphasis until calibrated by `combat-window-weapon-spike-followups.md`.
+- Keep spike outliers low-emphasis until calibrated by `combat-metric-calibration-real-datasets.md`.
 - Explain stale/empty windows without implying combat stopped.
 - Add renderer-shell/smoke checks for any new displayed metric fields.
 
@@ -31,7 +31,8 @@ Combat Witness now exposes richer metrics: weapon counts, observed sources/targe
 
 ## Related Files
 
-- `docs/gap/to-do/combat-window-weapon-spike-followups.md`
+- `docs/gap/complete/combat-window-weapon-spike-followups.md`
+- `docs/gap/to-do/combat-metric-calibration-real-datasets.md`
 - `docs/schemas/hud-snapshot.md`
 - `docs/schemas/combat-event.md`
 - `src/combat/combatRollingWindow.js`

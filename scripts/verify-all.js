@@ -13,6 +13,7 @@ const checks = [
   ['verify:combat-coverage', ['node', 'scripts/verify-combat-log-coverage.js']],
   ['verify:combat-replay', ['node', 'scripts/verify-combat-log-replay.js']],
   ['verify:combat-golden', ['node', 'scripts/verify-combat-golden-snapshots.js']],
+  ['verify:combat-window-followups', ['node', 'scripts/verify-combat-window-weapon-spike-followups.js']],
   ['verify:diagnostics', ['node', 'scripts/verify-diagnostics-policy.js']],
   ['verify:gamelog-watcher', ['node', 'scripts/verify-gamelog-watcher.js']],
   ['verify:gamelog-watcher-chaos', ['node', 'scripts/verify-gamelog-watcher-chaos.js']],

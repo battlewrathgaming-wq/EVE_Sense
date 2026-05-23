@@ -115,7 +115,7 @@ AURA-Sense has a verified tactical viewport skeleton with separated telemetry la
 - `docs/gap/complete/threat-intel-renderer-boundary-verification.md`
 - `docs/gap/complete/readiness-05-zkill-ref-boundary.md`
 - `docs/gap/complete/readiness-06-threat-intel-sample-metadata.md`
-- `docs/gap/to-do/combat-window-weapon-spike-followups.md`
+- `docs/gap/complete/combat-window-weapon-spike-followups.md`
 - `docs/gap/complete/provider-request-pulse-ui.md`
 - `docs/gap/complete/native-gamelog-folder-picker.md`
 - `docs/gap/to-do/active-scan-validator-reconciliation.md`

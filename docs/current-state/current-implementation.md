@@ -82,6 +82,7 @@ The current implementation includes:
 - deterministic Combat Witness golden snapshot verification
 - watcher-path combat replay smoke for append-only, offset-seeded ingestion semantics
 - Combat Witness observed source/target, hit-quality, damage-type, weapon-count, repair-balance, and spike-outlier metrics
+- deterministic Combat Witness weapon/spike followup verification for repeated weapons, ties, missing weapon labels, outgoing spike labels, pruning, and bounds
 - aggressive test harness matrix that maps invariants to offline, Electron, live, and manual command classes
 - hostile combat parser fixture verification for malformed envelopes, timestamp edges, near-misses, private-content lookalikes, and oversized lines
 - adversarial renderer/preload boundary verification for hostile patterns, preload command allowlist, and subscription cleanup
@@ -235,7 +236,7 @@ It writes artifacts under `.tmp\electron-visual-smoke` and is intentionally not 
 - `docs/audits/audit-2026-05-22-status-end-state-gap-analysis.md`
 - `docs/audits/audit-2026-05-22-next-two-milestones-overseer-scope.md`
 - `docs/gap/to-do/aura-sense-tactical-readiness.md`
-- `docs/gap/to-do/combat-window-weapon-spike-followups.md`
+- `docs/gap/complete/combat-window-weapon-spike-followups.md`
 - `docs/gap/to-do/live-operator-smoke-playbook.md`
 - `docs/gap/to-do/live-api-smoke-evidence.md`
 - `docs/gap/complete/provider-request-pulse-ui.md`
