@@ -1,102 +1,61 @@
-# Conversational Prompts
+﻿# Conversational Prompts
 
 Status: Active
 
-Use these prompts to reduce user relay work between Overseer and Dev chats.
-
-## User To Overseer: Plan Or Refresh
+## User To Overseer: Initiate Or Refresh Runway
 
 ```txt
-Overseer: audit current repo state and docs against AURA-Sense doctrine.
-Check tree health.
-Define or refresh the next milestone in workspace/current.md.
-Keep it feature-aligned, with prioritized tasks and guardrails.
-Update current-state/docs only if truth changed.
-Commit if appropriate.
+Overseer: initiate from the AURA-Sense repo root.
+
+Confirm cwd, repo root, branch, tree health, workspace files, active milestone, and latest handshake sequence.
+
+Read workspace/overview.md, workspace/current.md, recent workspace handshakes, active docs/roadmap milestone, current-state, relevant contracts/ADRs, verification docs, and the shared Aura coordination authority.
+
+Do not merely create a one-task packet unless risk requires it.
+Look 2-4 tasks ahead and define a bounded Dev runway in workspace/current.md.
+
+Report:
+- why this runway is safe
+- what is intentionally excluded
+- what requires human decision
+- expected Dev handshake filename
 ```
 
-## User To Dev: Execute Current Packet
+## User To Dev: Execute Current Runway
 
 ```txt
 .
 ```
 
-Meaning:
-
-```txt
-Read workspace/README.md, workspace/00-dot-protocol.md, and workspace/current.md.
-Read linked docs.
-Check git status.
-Execute the task queue top to bottom.
-Update Evidence and Dev Handoff in workspace/current.md.
-Run required verification.
-Return only for blockers or final handoff.
-```
-
 ## User To Dev: Narrow Execution
 
 ```txt
-Dev: use the dot protocol, but only execute P0 in workspace/current.md.
+Dev: use the dot protocol, but execute only [named portion] of workspace/current.md.
 Leave evidence and verification output in the packet.
+Create the expected handshake, adjusted only if the narrowed scope changes the filename.
 ```
 
 ## User To Overseer: Review Dev Work
 
 ```txt
-Overseer: review Dev handoff in workspace/current.md.
+Overseer: review the Dev handoff and latest DevHS file.
 Audit tree health and verification.
-Judge against docs/features/vision.md, current-state, contracts, and active milestone.
-Accept, redirect, or rewrite the packet.
-Archive completed packet if accepted.
-Update current-state/audits/gaps as needed.
-Commit if appropriate.
+Judge against workspace/current.md, the active roadmap milestone, current-state, contracts, and user intent.
+Accept, redirect, or rewrite current.md.
+Create the next OverseerHS file.
 ```
 
-## User To Overseer: Create Next Packet
+## User To Overseer: Milestone Closure
 
 ```txt
-Overseer: archive or retire the current workspace packet if complete.
-Overwrite workspace/current.md with the next milestone/task packet.
-Prioritize tasks by implementation importance.
-Include guardrails, evidence requirements, and Dev handoff fields.
+Overseer: assess whether the active milestone is complete.
+If accepted, update durable docs only where truth changed, batch archive milestone handshakes to workspace/complete/milestone-XX/, update workspace/overview.md, and rewrite workspace/current.md for the next milestone or idle state.
 ```
 
-## User To Dev: Blocker Response
+## User To Agent: Chat Retirement
 
 ```txt
-Dev: stop execution and report only:
-- blocker
-- file or command involved
-- safest options
-- recommended next action
+Use the Agent Chat Retirement Process.
+Write only evidence-bound lessons from this chat/session and artifacts explicitly observed during it.
+Do not invent lessons for completeness.
 ```
-
-## User To Overseer: State Reset
-
-```txt
-Overseer: perform a state reset.
-Read current-state, latest audits, workspace/current.md, and git status.
-Resolve documentation drift.
-Rewrite workspace/current.md to match current truth.
-```
-
-## Handoff Shape
-
-Dev handoff should include:
-
-- what changed
-- why it stayed in scope
-- files changed
-- tests run
-- artifacts produced
-- failures found
-- gap packets moved or left open
-- remaining risk
-
-Overseer review should include:
-
-- accepted or redirected
-- doctrine drift
-- architecture risk
-- state/doc updates
-- next work packet

@@ -1,4 +1,4 @@
-# AURA-Sense Documentation
+﻿# AURA-Sense Documentation
 
 This folder records AURA-Sense product rules, contracts, current state, failures, and future work.
 
@@ -38,8 +38,7 @@ It is not:
 | `terms/` | Plain-language vocabulary. |
 | `schemas/` | Data structures and snapshot/event shapes. |
 | `roadmap/` | Feature-aligned milestones. |
-| `gap/to-do/` | Active work packets. |
-| `gap/complete/` | Completed work packets. |
+| `archive/deprecated-gap-workflow-2026-05-23/` | Historical archive of the former gap task-file workflow. Not active execution. |
 | `testing/` | Verification matrices and test strategy. |
 | `statements/` | Operational doctrine. |
 | `failures/` | Preserved bug classes. |
@@ -52,7 +51,7 @@ Repo root:
 
 | Path | Role |
 | --- | --- |
-| `workspace/` | Dot-protocol attention bridge. When the user sends `.`, read `workspace/README.md`, `workspace/00-dot-protocol.md`, and `workspace/current.md`. |
+| `workspace/` | Active agent coordination bridge. `workspace/current.md` is the only executable packet; handshakes are transaction notes. |
 
 ## Core Rules
 
@@ -68,7 +67,7 @@ Repo root:
 
 ## Current Work
 
-The current hardening lane is aggressive testing and bug hunting.
+The current hardening lane is aggressive testing and bug hunting. Active execution is now carried by `workspace/current.md`; the former `docs/gap` task lifecycle is archived.
 
 Start with:
 
@@ -77,7 +76,7 @@ Start with:
 - `docs/current-state/current-implementation.md`
 - `docs/roadmap/milestone-13-aggressive-testing-and-bug-hunting.md`
 - `docs/testing/aggressive-test-harness-matrix.md`
-- `docs/gap/to-do/README.md`
+- `workspace/overview.md`
 
 ## Update Rule
 
@@ -92,3 +91,9 @@ Update durable docs when the product meaning changes:
 - roadmap direction
 
 Do not rewrite audits or current-state files during normal product-copy cleanup.
+
+## Deprecated Gap Workflow
+
+The former docs/gap/to-do and docs/gap/complete task files were moved to docs/archive/deprecated-gap-workflow-2026-05-23/. Treat them as historical context only unless workspace/current.md explicitly references an archived file.
+
+

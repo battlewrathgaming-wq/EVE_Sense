@@ -1,63 +1,54 @@
-# Current Workspace Packet
+﻿# Current Workspace Packet
 
 Status: Active
 Updated: 2026-05-23
 Owner: Overseer planning, Dev execution
 
+## Coordination State
+
+Active milestone: Milestone 13 - Aggressive Testing And Bug Hunting
+Roadmap source: `docs/roadmap/milestone-13-aggressive-testing-and-bug-hunting.md`
+Sequence: HS01
+Previous accepted handshake: None under the new workspace handshake sequence
+Current executor: Dev
+Current focus: provider/live fault hardening and runtime diagnostics faults
+Expected output: DevHS01-sense-aggressive-hardening-runway.md
+Archive target on milestone completion: `workspace/complete/milestone-13/`
+
 ## Purpose
 
-This is the overwriteable current milestone/task packet.
+This is the only active executable work packet for AURA-Sense.
 
-Overseer may replace this file whenever the active milestone, task queue, or focus changes. Dev should treat this file as the current execution context when the user sends `.`.
+The former `docs/gap` task lifecycle has been archived under `docs/archive/deprecated-gap-workflow-2026-05-23/`. Those files are historical context only. This packet now carries the executable runway.
 
-## Current Milestone
+## Required Reading
 
-Milestone 13: Aggressive Testing And Bug Hunting
-
-Primary source:
-
-- `docs/roadmap/milestone-13-aggressive-testing-and-bug-hunting.md`
-
-## Intent
-
-Increase confidence by trying to break AURA-Sense without adding product scope.
-
-The current priority is adversarial verification:
-
-- parser hostile inputs
-- gamelog watcher chaos
-- renderer/preload boundary misuse
-- live IO/provider fault injection
-- clipboard lifecycle races
-- runtime settings/diagnostics faults
-- visual state regressions
-- local metadata/SDE hardening
-
-## Tree Health Requirement
-
-Before implementation, Dev must run:
-
-```powershell
-git status --short
-```
-
-Rules:
-
-- Do not ignore dirty tree state.
-- Preserve unrelated user/Dev changes.
-- If changes overlap the task, inspect them and work with them.
-- If generated SDE artifacts exist, do not stage them by default.
-- If the tree is too ambiguous to proceed safely, return to chat.
-
-## Source Documents
-
-Read before implementation:
-
+- `workspace/overview.md`
+- `workspace/00-dot-protocol.md`
 - `docs/current-state/current-implementation.md`
-- `docs/features/vision.md`
 - `docs/roadmap/milestone-13-aggressive-testing-and-bug-hunting.md`
 - `docs/testing/aggressive-test-harness-matrix.md`
-- latest relevant `docs/audits/` handover
+- `docs/audits/audit-2026-05-23-active-todo-trail-review.md`
+- `F:\Projects\Docs\Aura-Agent-Coordination\workspace-structure-authority.md`
+
+## Runway Objective
+
+Continue Milestone 13 by converting the next useful aggressive-testing work into deterministic, observable hardening without broadening AURA-Sense product scope.
+
+Focus first on provider/live fault handling and runtime settings/diagnostics fault behavior. Treat live/manual packets as gated evidence work, not default Dev execution.
+
+## Ordered Runway
+
+1. Provider/live IO fault injection:
+   - simulate blocked, timeout, cancel, retry exhaustion, 429, 500, malformed JSON, non-array provider responses, stale cache, and ETag/revalidation failure behavior where applicable
+   - prove failures remain lane-specific and operator-visible
+   - keep live APIs outside `verify:all`
+2. Runtime settings and diagnostics fault tests:
+   - cover corrupted JSON, schema drift, missing or invalid directories, permission-like failures, save/load race-like behavior, diagnostic limit enforcement, and sanitization/redaction behavior
+3. Documentation/test index reconciliation:
+   - update durable docs only if implementation truth, verification command inventory, or milestone meaning changes
+   - do not recreate `docs/gap` task files
+4. If the first two slices are completed cleanly and verification remains green, prepare the next runway recommendation for local metadata/SDE hardening and bug-hunt triage.
 
 ## Guardrails
 
@@ -69,42 +60,35 @@ Read before implementation:
 - Do not weaken renderer boundary checks.
 - Do not stage downloaded SDE ZIPs by default.
 - Bug-hunting helpers are not product features unless explicitly accepted.
+- Archived gap files are historical context, not active work packets.
 
-## Task Queue
+## Stop Conditions
 
-Work top to bottom. Skip only with evidence and explanation.
+Return to chat before continuing if:
 
-### P0
+- live network/API action is needed without explicit operator authorization
+- a test failure reveals a doctrine or architecture decision
+- current-state, roadmap, observed code, and this packet disagree materially
+- generated SDE or private operator artifacts would need to be retained or staged
+- the working tree contains overlapping unknown changes in files needed for this runway
 
-1. Continue the first incomplete P0 aggressive-testing packet:
-   - `docs/gap/to-do/aggressive-test-harness-matrix.md`
-   - `docs/gap/to-do/combat-parser-hostile-fixtures.md`
-   - `docs/gap/to-do/gamelog-watcher-chaos-tests.md`
-   - `docs/gap/to-do/renderer-preload-boundary-adversarial-tests.md`
-2. Add or update deterministic verification.
-3. Run `npm.cmd run verify:all`.
+## Verification Required
 
-### P1
+Run the focused verification added or affected by the work, then run:
 
-Continue after P0 packets or explicit direction:
+```powershell
+npm.cmd run verify:all
+```
 
-- `docs/gap/to-do/live-io-provider-fault-injection.md`
-- `docs/gap/to-do/clipboard-acquisition-race-tests.md`
-- `docs/gap/to-do/runtime-settings-diagnostics-fault-tests.md`
-- `docs/gap/to-do/electron-visual-state-regression-tests.md`
+Do not run by default:
 
-### P2
-
-Continue only after higher-priority work or explicit direction:
-
-- `docs/gap/to-do/local-metadata-sde-builder-hardening.md`
-- `docs/gap/to-do/bug-hunt-triage-and-failure-records.md`
-- `docs/gap/to-do/native-gamelog-folder-picker.md`
-- `docs/gap/to-do/active-scan-validator-reconciliation.md`
+- `npm.cmd run smoke:electron` unless renderer/smoke behavior changes or Overseer requests it
+- live API smoke unless explicitly gated with operator approval
+- manual operator smoke
 
 ## Evidence
 
-Dev updates this section before handoff.
+Dev updates this before handoff.
 
 Verification run:
 
@@ -138,8 +122,7 @@ Dev fills this in when work is complete:
 - tests added/updated:
 - verification output:
 - failures found:
-- failure records created:
-- docs/gaps moved or updated:
+- handshake created:
 - remaining risk:
 
 ## Overseer Review
