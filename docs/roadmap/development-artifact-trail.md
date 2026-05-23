@@ -14,10 +14,11 @@ It exists so future Dev and Overseer sessions can find the current truth without
 Start here:
 
 1. `workspace/README.md` when the user sends `.`
-2. `docs/current-state/current-implementation.md`
-3. latest Overseer audit in `docs/audits/`
-4. active milestone in `docs/roadmap/`
-5. active packets in `docs/gap/to-do/`
+2. `workspace/current.md` for the active overwriteable milestone/task packet
+3. `docs/current-state/current-implementation.md`
+4. latest Overseer audit in `docs/audits/`
+5. active milestone in `docs/roadmap/`
+6. active packets in `docs/gap/to-do/`
 
 ## Artifact Roles
 
@@ -26,7 +27,8 @@ Start here:
 - `docs/gap/to-do/`: active or deferred implementation packets
 - `docs/gap/complete/`: completed work with verification evidence
 - `docs/roadmap/`: milestone direction and sequencing
-- `workspace/`: dot-protocol attention and execution queue
+- `workspace/`: dot-protocol attention bridge and overwriteable current packet
+- `workspace/archive/`: accepted or redirected workspace packets retained when they are useful evidence
 - `docs/contracts/`: stable ownership boundaries
 - `docs/schemas/`: stable data/interface shapes
 - `docs/terms/`: shared vocabulary
@@ -42,7 +44,8 @@ Start here:
 - Stale active work should be retired into `docs/gap/complete` with a superseded note.
 - Verification output belongs in completion notes and handovers.
 - New artifacts are warranted when future sessions would otherwise make the wrong architectural or tactical choice.
-- When the user sends `.`, Dev should read `workspace/` from top to bottom before choosing work.
+- When the user sends `.`, Dev should read `workspace/README.md`, `workspace/00-dot-protocol.md`, and `workspace/current.md` before choosing work.
+- `workspace/current.md` may be overwritten by Overseer when focus changes; durable truth remains in current-state, audits, gaps, failures, contracts, schemas, terms, and roadmap docs.
 
 ## Current Assessment
 

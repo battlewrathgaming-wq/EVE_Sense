@@ -2,7 +2,26 @@
 
 This folder is the repo-local attention bridge between Overseer, Dev, and the user.
 
-When the user sends this exact signal:
+The workflow uses one overwriteable active packet:
+
+```txt
+workspace/current.md
+```
+
+`current.md` is disposable current attention. It can be overwritten whenever the active milestone or task queue changes.
+
+Durable memory still lives in:
+
+- `docs/current-state/`
+- `docs/audits/`
+- `docs/gap/to-do/`
+- `docs/gap/complete/`
+- `docs/failures/`
+- `workspace/archive/`
+
+## Dot Signal
+
+When the user sends this exact signal in a Dev chat:
 
 ```txt
 .
@@ -11,26 +30,40 @@ When the user sends this exact signal:
 it means:
 
 ```txt
-Read this workspace folder from top to bottom.
-Execute the queue.
-Return to chat only for blockers, unsafe ambiguity, permission/live-network needs, or final handover.
+Read workspace/README.md.
+Read workspace/00-dot-protocol.md.
+Read workspace/current.md.
+Execute the task queue top to bottom.
+Return only for blockers, unsafe ambiguity, permission/live-network needs, or final handover.
 ```
+
+## Roles
+
+Overseer:
+
+- audits repo and docs against project intent
+- checks tree health before directing work
+- overwrites `workspace/current.md` with the next milestone/task packet
+- updates state/docs when truth changes
+- archives completed packets when accepted
+
+Dev:
+
+- treats `.` as the execution signal
+- works only the scoped tasks in `workspace/current.md`
+- leaves evidence in `workspace/current.md`
+- updates docs/gaps only where the packet requires it
+- runs verification and hands back concise results
 
 ## Read Order
 
-1. `00-dot-protocol.md`
-2. `10-attention.md`
-3. `20-queue.md`
-4. `30-context.md`
-5. `90-done.md`
+1. `README.md`
+2. `00-dot-protocol.md`
+3. `current.md`
+4. `prompts.md` only when writing or refreshing workflow prompts
 
-Then cross-check:
-
-1. `docs/current-state/current-implementation.md`
-2. the active roadmap milestone
-3. relevant `docs/gap/to-do` packets
-4. latest relevant `docs/audits` handover
+Then cross-check linked docs from `current.md`.
 
 ## Rule
 
-This folder tells Dev where to look and what to do next. It does not override current-state, contracts, live IO policy, renderer boundary doctrine, or user instructions in the active chat.
+This folder focuses current work. It does not override current-state, contracts, live IO policy, renderer boundary doctrine, or newer user instructions in the active chat.

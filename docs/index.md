@@ -52,7 +52,7 @@ Repo root:
 
 | Path | Role |
 | --- | --- |
-| `workspace/` | Dot-protocol attention and execution queue. When the user sends `.`, read this folder from top to bottom. |
+| `workspace/` | Dot-protocol attention bridge. When the user sends `.`, read `workspace/README.md`, `workspace/00-dot-protocol.md`, and `workspace/current.md`. |
 
 ## Core Rules
 
@@ -73,6 +73,7 @@ The current hardening lane is aggressive testing and bug hunting.
 Start with:
 
 - `workspace/README.md` when the user sends `.`
+- `workspace/current.md` for the active overwriteable milestone/task packet
 - `docs/current-state/current-implementation.md`
 - `docs/roadmap/milestone-13-aggressive-testing-and-bug-hunting.md`
 - `docs/testing/aggressive-test-harness-matrix.md`
