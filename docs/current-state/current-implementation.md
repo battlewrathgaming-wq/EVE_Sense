@@ -39,6 +39,7 @@ The current implementation includes:
 - backend-owned Combat Witness freshness status
 - Electron visual smoke command with first-light screenshot/result artifacts
 - session-scoped Combat Witness gamelog path control
+- native gamelog folder picker routed through the main-process service boundary
 - backend-owned Combat Witness watcher lifecycle
 - Combat Witness HUD watcher unavailable/degraded/watching status
 - Passive Telemetry backend snapshot lane
@@ -58,7 +59,7 @@ The current implementation includes:
 - Threat Intel live IO gate with visible blocked state when live calls are disabled
 - compact Threat Intel search surface that scans only on explicit submit
 - Clipboard Acquisition service with armed/listening/sealed/cooldown lifecycle
-- global clipboard arming shortcut registered as `CommandOrControl+Shift+Space`
+- global clipboard arming shortcut using `Control+\` where available with fallback shortcut status reporting
 - Threat Intel preload bridge with no renderer-owned provider calls
 - integrated tactical viewport layout with lane overview and separate Combat Witness, Passive Telemetry, and Threat Intel surfaces
 - Combat Witness integrated display for observed incoming pressure, repair throughput, observed repair balance, observed source, and most observed weapon
@@ -93,12 +94,11 @@ Not yet proven in this codebase:
 - exact raw repair/healing parser coverage
 - full refreshed EVE type metadata artifact generated from current SDE source
 - production-grade multi-lane HUD renderer beyond the current integrated foundation
-- native folder picker for gamelog folder
 - live EVE gamelog operational smoke against an operator machine
 - full provider request pulse UI
 - live zKill/ESI smoke execution with `AURA_SENSE_LIVE_API=1`
 - live Threat Intel zKill smoke execution with `AURA_SENSE_LIVE_API=1`
-- exact Ctrl+Shift-only accelerator capture; Electron runtime uses `CommandOrControl+Shift+Space` for the global shortcut and the UI Arm control remains available
+- exact Ctrl+Shift-only accelerator capture; Electron runtime uses the current Clipboard Acquisition shortcut path with fallback status reporting and the focused UI shortcut remains available
 
 ## Intended Runtime Flow
 
@@ -179,7 +179,6 @@ It writes artifacts under `.tmp\electron-visual-smoke` and is intentionally not 
 
 - some inherited seed service names remain below the visible product surface
 - inherited active scan validator language remains to be reconciled with the implemented Threat Intel scan contract
-- no native folder picker yet
 - local metadata resolver and type lookup are fixture/static until an explicit SDE refresh is run
 - no full provider request pulse UI yet
 - live zKill/ESI smoke command exists but live network run is deferred until `AURA_SENSE_LIVE_API=1`
@@ -239,7 +238,7 @@ It writes artifacts under `.tmp\electron-visual-smoke` and is intentionally not 
 - `docs/gap/to-do/provider-request-pulse-ui.md`
 - `docs/gap/to-do/combat-metric-calibration-real-datasets.md`
 - `docs/gap/to-do/repair-healing-raw-fixture-intake.md`
-- `docs/gap/to-do/native-gamelog-folder-picker.md`
+- `docs/gap/complete/native-gamelog-folder-picker.md`
 - `docs/gap/to-do/active-scan-validator-reconciliation.md`
 - `docs/gap/to-do/live-findings-audit-and-doctrine-update.md`
 - `docs/gap/complete/aggressive-test-harness-matrix.md`

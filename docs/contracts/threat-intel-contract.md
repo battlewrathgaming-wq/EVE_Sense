@@ -60,7 +60,7 @@ The `zkill` section includes provider, endpoint family, scoped target route, loo
 
 Clipboard Acquisition is an input workflow feeding the same scan contract. It has visible `idle`, `listening`, and `cooldown` states, opens a 3 second listening window, ignores unchanged clipboard content from before arming, seals after capture/rejection/timeout/cancel, and enforces a 5 second cooldown before re-arming.
 
-The implemented global shortcut is `CommandOrControl+Shift+Space`. This preserves hands-free acquisition in Electron while avoiding a bare modifier-only accelerator. The in-window Arm control remains available.
+The implemented preferred global shortcut is `Control+\`. If that chord cannot be registered, Electron reports fallback status and attempts `Control+Alt+Space`. Focused overlay controls also support local keyboard affordances. The scan field remains available for manual operation.
 
 ## Invariants
 

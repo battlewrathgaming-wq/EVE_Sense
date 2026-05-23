@@ -236,7 +236,7 @@ Threat Intel supports deliberate scoped scans from explicit search submit or arm
 
 Implementation note:
 
-Electron global shortcut registration uses `CommandOrControl+Shift+Space` rather than a bare Ctrl+Shift chord. The UI Arm control remains available and the smoke artifact records successful global shortcut registration.
+Electron global shortcut registration uses `Control+\` as the preferred chord with `Control+Alt+Space` fallback status reporting rather than a bare Ctrl+Shift chord. Focused UI keyboard affordances remain available.
 
 Task chain:
 

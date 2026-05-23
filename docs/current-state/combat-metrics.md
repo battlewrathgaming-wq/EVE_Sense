@@ -727,7 +727,7 @@ Replay status, when implemented
 - `docs/contracts/combat-witness-contract.md`
 - `docs/schemas/hud-snapshot.md`
 - `docs/schemas/combat-event.md`
-- `docs/gap/to-do/combat-metrics-presentation-audit.md`
+- `docs/gap/complete/combat-metrics-presentation-audit.md`
 - `docs/gap/to-do/combat-witness-replay-system-channel.md`
 - `docs/gap/to-do/combat-window-weapon-spike-followups.md`
 - `docs/gap/to-do/combat-metric-calibration-real-datasets.md`

@@ -25,7 +25,7 @@ Do not start this milestone until Passive Telemetry live-safe readiness has clea
 
 The operator can run a scoped zKill-backed tactical probe by submitting a search target or by using armed clipboard acquisition. The result shows target, scope, provider, lookback, sample cap, freshness, failure/cap/partial state, and no false certainty.
 
-Implementation note: Electron global shortcut registration uses `CommandOrControl+Shift+Space` rather than a bare Ctrl+Shift chord. The HUD Arm control remains available for focused operation, and the smoke artifact records the global shortcut as registered.
+Implementation note: Electron global shortcut registration uses `Control+\` as the preferred chord with `Control+Alt+Space` fallback status reporting rather than a bare Ctrl+Shift chord. Focused overlay keyboard affordances remain available.
 
 ## Task Chain
 
@@ -76,7 +76,7 @@ Task packet: `docs/gap/complete/threat-intel-search-ui-surface.md`.
 ### Task 5: Clipboard Acquisition
 
 - Status: Complete with shortcut caveat above.
-- Implement Ctrl+Shift hands-free acquisition without requiring AURA-Sense window focus.
+- Implement hands-free acquisition without requiring AURA-Sense window focus.
 - Show visible armed, listening, sealed, and cooldown state.
 - Open a 3 second clipboard listening window.
 - Insert a valid captured target into the search box and run the scoped scan.
@@ -141,7 +141,7 @@ Dev may not:
 Milestone 09 is complete when:
 
 - explicit search submit can run a scoped zKill-backed probe through backend services
-- valid Ctrl+Shift clipboard acquisition can populate search and run the same scoped scan
+- valid clipboard acquisition can populate search and run the same scoped scan
 - listener arms, listens, seals, and enters a 5 second cooldown visibly
 - live IO disabled state blocks external calls
 - result language shows sample, cap, freshness, partial/failure state, and provider basis
@@ -164,7 +164,7 @@ Electron visual smoke completed:
 
 ```txt
 AURA-Sense visual smoke passed: F:\Projects\AURA-Sense\.tmp\electron-visual-smoke
-clipboard_acquisition_global_shortcut { accelerator: 'CommandOrControl+Shift+Space', registered: true }
+clipboard_acquisition_global_shortcut recorded successful registration during milestone smoke
 ```
 
 Deferred by design:

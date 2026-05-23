@@ -49,33 +49,25 @@ npm.cmd run smoke:electron
 - The compact overlay is visually denser than the earlier integrated viewport and needs regression coverage across alternate states.
 - Some diagnostics labels remain backend-ish and should be audited before another presentation polish pass.
 - Clipboard shortcut status can fall back when `Ctrl+\` is unavailable; UX should present fallback state clearly without implying failure.
-- The native folder picker exists in runtime code, but the older `native-gamelog-folder-picker.md` packet still needs reconciliation or closure.
+- The native folder picker exists in runtime code and the older packet has been reconciled to complete.
 - Provider state is still split across compact labels, diagnostics, and lane messages; `provider-request-pulse-ui.md` remains open.
-- Combat metrics now have a plain-English baseline, but `combat-metrics-presentation-audit.md` should be completed before renaming fields or changing metric emphasis.
+- Combat metrics now have a completed plain-English baseline. Runtime field renames and UI copy changes remain future work requiring review.
 
 ## Recommended UX Sequence
 
-1. Complete `combat-metrics-presentation-audit.md`.
-
-   Use `docs/current-state/combat-metrics.md` as the baseline. Do not change runtime fields or UI labels until the audit is accepted.
-
-2. Reconcile `native-gamelog-folder-picker.md`.
-
-   The product now has a main-process folder picker path. Verify the packet against current behavior, add any missing checks, then move it to complete or update the remaining gap precisely.
-
-3. Add `electron-visual-state-regression-tests.md`.
+1. Continue from `electron-visual-state-regression-tests.md`.
 
    Cover unavailable, stale, degraded, blocked, partial, capped, cooldown, diagnostics open, settings recovered/degraded, and narrow viewport states. Keep this outside `verify:all`.
 
-4. Implement or refine `provider-request-pulse-ui.md`.
+2. Implement or refine `provider-request-pulse-ui.md`.
 
    Feed from backend-owned diagnostics or snapshot metadata only. Show blocked, pending, cached, succeeded, failed, capped, partial, and stale without showing raw provider payloads.
 
-5. Continue `clipboard-acquisition-race-tests.md` before further shortcut UX polish.
+3. Continue `clipboard-acquisition-race-tests.md` before further shortcut UX polish.
 
    Prove rapid arm/cancel/capture, unchanged clipboard, scan failure, cooldown, and shortcut/UI concurrency.
 
-6. Defer replay UI until `combat-witness-replay-system-channel.md` is implemented.
+4. Defer replay UI until `combat-witness-replay-system-channel.md` is implemented.
 
    Replay is a backend/system channel first. Do not add controls, scrubbers, drawers, or replay pills until live/replay snapshot separation is verified.
 
@@ -83,8 +75,6 @@ npm.cmd run smoke:electron
 
 Active UI or UX-adjacent packets:
 
-- `docs/gap/to-do/combat-metrics-presentation-audit.md`
-- `docs/gap/to-do/native-gamelog-folder-picker.md`
 - `docs/gap/to-do/electron-visual-state-regression-tests.md`
 - `docs/gap/to-do/provider-request-pulse-ui.md`
 - `docs/gap/to-do/clipboard-acquisition-race-tests.md`
@@ -114,6 +104,7 @@ Security/hardening packets that should inform UX but not become UI work by thems
 - `docs/contracts/combat-witness-contract.md`
 - `docs/gap/complete/renderer-preload-boundary-adversarial-tests.md`
 - `docs/gap/complete/gamelog-watcher-chaos-tests.md`
-- `docs/gap/to-do/combat-metrics-presentation-audit.md`
+- `docs/gap/complete/combat-metrics-presentation-audit.md`
+- `docs/gap/complete/native-gamelog-folder-picker.md`
 - `docs/gap/to-do/electron-visual-state-regression-tests.md`
 - `docs/gap/to-do/provider-request-pulse-ui.md`

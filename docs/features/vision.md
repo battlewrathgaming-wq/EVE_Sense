@@ -115,7 +115,7 @@ Let the operator deliberately acquire a copied EVE target for a short Threat Int
 Current state:
 
 - armed/listening/sealed/cooldown lifecycle exists
-- global shortcut is `CommandOrControl+Shift+Space`
+- preferred global shortcut is `Control+\` with fallback status reporting
 - UI Arm control remains available
 
 Must not:

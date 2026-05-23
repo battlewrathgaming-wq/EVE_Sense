@@ -1,6 +1,6 @@
 # Gap: Combat Metrics Presentation Audit
 
-Status: Open
+Status: Complete
 Priority: P1
 
 ## Need
@@ -29,27 +29,18 @@ This is a documentation and review task first. It should not change runtime beha
 - Inventory every Combat Witness metric currently exposed in snapshots.
 - Inventory every Combat Witness metric currently displayed in the HUD or diagnostics surface.
 - Write plain-English summaries for each metric.
-- Identify whether each metric is:
-  - human-readable
-  - actionable
-  - non-invasive
-  - ambiguous
-  - display-ready
-  - diagnostics-only
-  - calibration-needed
+- Identify whether each metric is human-readable, actionable, non-invasive, ambiguous, display-ready, diagnostics-only, or calibration-needed.
 - Propose better terminology where current labels are unclear.
 - Call out gaps between computed metrics and displayed metrics.
 - Call out display labels that imply more certainty than the backend owns.
 
 ## Required Current-State Document
 
-Create or maintain:
+Maintained:
 
 - `docs/current-state/combat-metrics.md`
 
-The document should be plain-English first. It should be useful to a product reviewer who does not know the parser internals.
-
-Required sections:
+Completed sections:
 
 - What the log parser captures
 - What rolling windows compute
@@ -72,13 +63,28 @@ Required sections:
 - Do not promote damage spike outliers into warnings before calibration.
 - Do not imply raw repair/healing parser support exists before exact fixtures prove it.
 
-## Completion Signal
+## Completion Evidence
 
-- `docs/current-state/combat-metrics.md` exists and maps capture, compute, snapshot, and display layers.
+- `docs/current-state/combat-metrics.md` maps capture, compute, snapshot, and display layers.
 - Ambiguous terms have proposed replacements.
 - Gaps between computed and displayed metrics are explicitly listed.
-- The document identifies which metrics should remain diagnostics-only.
-- The document identifies which metrics can safely inform the future HUD presentation task.
+- Diagnostics-only and calibration-needed metrics are separated from HUD-safe metrics.
+- The audit records the repair parser caveat and the observed-only nature of source, target, weapon, spike, and repair-balance fields.
+
+## Deferred Risks
+
+- This packet does not authorize runtime field renames or UI copy changes.
+- Damage spike outliers still require real-dataset calibration before prominent HUD treatment.
+- Raw repair/healing parser support remains fixture-gated.
+- Outgoing miss and observed-attempt counts remain future compute/display work.
+
+## Verification Signal
+
+Documentation review only. Runtime verification is covered by the current project verification suite:
+
+```powershell
+npm.cmd run verify:all
+```
 
 ## Related Files
 
@@ -87,6 +93,7 @@ Required sections:
 - `src/combat/combatWitnessService.js`
 - `src/renderer/app.js`
 - `src/renderer/index.html`
+- `docs/current-state/combat-metrics.md`
 - `docs/contracts/combat-witness-contract.md`
 - `docs/schemas/hud-snapshot.md`
 - `docs/schemas/combat-event.md`

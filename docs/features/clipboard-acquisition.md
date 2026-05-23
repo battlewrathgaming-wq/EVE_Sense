@@ -25,7 +25,7 @@ The operator should not need to focus the AURA-Sense window during fullscreen EV
 - The cooldown applies after capture, timeout, cancellation, or rejected clipboard content.
 - The scan remains a Threat Intel search-box workflow even when the search box is populated hands-free.
 
-Implementation note: Electron registers `CommandOrControl+Shift+Space` for the current hands-free shortcut. Bare modifier-only Ctrl+Shift remains a design intent note, not the current runtime accelerator.
+Implementation note: Electron registers `Control+\` as the preferred hands-free shortcut and reports fallback status if the runtime must use `Control+Alt+Space`. Bare modifier-only Ctrl+Shift remains a design intent note, not the current runtime accelerator.
 
 ## Data Classification
 
