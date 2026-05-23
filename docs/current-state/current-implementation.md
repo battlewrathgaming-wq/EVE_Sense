@@ -64,6 +64,7 @@ The current implementation includes:
 - integrated tactical viewport layout with lane overview and separate Combat Witness, Passive Telemetry, and Threat Intel surfaces
 - Combat Witness integrated display for observed incoming pressure, repair throughput, observed repair balance, observed source, and most observed weapon
 - lane-specific provider/basis display for Passive Telemetry and Threat Intel
+- lane-specific provider pulse chips for Passive Telemetry and Threat Intel derived from backend-owned snapshot metadata
 - Electron visual smoke assertions for integrated viewport selectors, combat metric fields, and provider basis fields
 - Electron visual state regression smoke for unavailable, stale, degraded, blocked, partial/capped, cooldown, diagnostics, settings degraded, and narrow viewport states
 - backend-owned runtime settings persistence for validated gamelog folder configuration
@@ -181,7 +182,7 @@ It writes artifacts under `.tmp\electron-visual-smoke` and is intentionally not 
 - some inherited seed service names remain below the visible product surface
 - inherited active scan validator language remains to be reconciled with the implemented Threat Intel scan contract
 - local metadata resolver and type lookup are fixture/static until an explicit SDE refresh is run
-- no full provider request pulse UI yet
+- provider fault injection remains open for hostile live IO failure matrices
 - live zKill/ESI smoke command exists but live network run is deferred until `AURA_SENSE_LIVE_API=1`
 - Threat Intel live zKill network run is deferred until explicitly enabled and recorded outside `verify:all`
 - Threat Intel ESI killmail expansion remains deferred
@@ -236,7 +237,7 @@ It writes artifacts under `.tmp\electron-visual-smoke` and is intentionally not 
 - `docs/gap/to-do/combat-window-weapon-spike-followups.md`
 - `docs/gap/to-do/live-operator-smoke-playbook.md`
 - `docs/gap/to-do/live-api-smoke-evidence.md`
-- `docs/gap/to-do/provider-request-pulse-ui.md`
+- `docs/gap/complete/provider-request-pulse-ui.md`
 - `docs/gap/to-do/combat-metric-calibration-real-datasets.md`
 - `docs/gap/to-do/repair-healing-raw-fixture-intake.md`
 - `docs/gap/complete/native-gamelog-folder-picker.md`

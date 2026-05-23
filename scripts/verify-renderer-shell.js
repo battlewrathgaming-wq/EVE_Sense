@@ -61,6 +61,8 @@ function main() {
   assert(html.includes('system-shipkills'), 'renderer should include system ship kills target');
   assert(html.includes('system-jumps'), 'renderer should include system jumps target');
   assert(html.includes('system-ratio'), 'renderer should include system ratio target');
+  assert(html.includes('passive-provider-pulse'), 'renderer should include Passive provider pulse chip');
+  assert(html.includes('threat-provider-pulse'), 'renderer should include Threat provider pulse chip');
   assert(html.includes('clipboard-key-ctrl'), 'renderer should include Ctrl key scan indicator');
   assert(html.includes('clipboard-key-slash'), 'renderer should include slash key scan indicator');
   assert(html.includes('search-clipboard-widget'), 'renderer should embed Clipboard Acquisition state in the Threat search box');
@@ -101,6 +103,7 @@ function main() {
   assert(html.includes('passive-system'), 'renderer should include Passive Telemetry current-system target');
   assert(html.includes('passive-activity'), 'renderer should include Passive Telemetry activity target');
   assert(html.includes('passive-basis'), 'renderer should include Passive Telemetry provider basis target');
+  assert(html.includes('passive-pulse-detail'), 'renderer should include Passive provider pulse diagnostic detail');
   assert(html.includes('event-list'), 'renderer should include bounded event stream target');
   assert(html.includes('settings-state'), 'renderer should include runtime settings state target');
   assert(html.includes('live-io-state'), 'renderer should include live IO policy state target');
@@ -112,6 +115,7 @@ function main() {
   assert(!html.includes('<button type="submit">Scan</button>'), 'combat Threat Intel surface should not expose a scan button');
   assert(html.includes('threat-pulse'), 'renderer should include a compact zKill pulse timeline');
   assert(html.includes('threat-basis'), 'renderer should include Threat Intel provider basis target');
+  assert(html.includes('threat-pulse-detail'), 'renderer should include Threat provider pulse diagnostic detail');
   assert(!html.includes('clipboard-arm'), 'renderer should not require a UI arm button for clipboard scans');
   assert(!html.includes('<dt>Freshness</dt>'), 'default renderer should not expose Freshness as a top-level tile');
   assert(!html.includes('<dt>Basis</dt>'), 'default renderer should not expose Basis as a top-level tile');
@@ -146,6 +150,9 @@ function main() {
   assert(app.includes('window.auraThreatIntel.scan'), 'renderer should run Threat Intel scans through preload bridge');
   assert(app.includes("inputSource: 'search'"), 'renderer should mark explicit search input source');
   assert(app.includes('renderThreatPulse'), 'renderer should render compact Threat Intel pulse state');
+  assert(app.includes('providerPulseFromPassive'), 'renderer should derive Passive provider pulse from backend snapshot metadata');
+  assert(app.includes('providerPulseFromThreat'), 'renderer should derive Threat provider pulse from backend snapshot metadata');
+  assert(app.includes('renderProviderPulse'), 'renderer should render lane-specific provider pulse chips');
   assert(app.includes('armClipboard'), 'renderer should arm Clipboard Acquisition through preload bridge');
   assert(app.includes('getShortcutStatus'), 'renderer should show Clipboard Acquisition shortcut status');
   assert(app.includes('subscribeClipboardSnapshots'), 'renderer should subscribe to shortcut-driven clipboard snapshots');

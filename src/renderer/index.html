@@ -42,6 +42,10 @@
             <strong id="system-ratio">--</strong>
           </span>
         </div>
+        <div class="provider-pulse-row" aria-label="Provider pulse">
+          <span id="passive-provider-pulse" class="provider-pulse is-unavailable" title="Passive provider pulse">Passive --</span>
+          <span id="threat-provider-pulse" class="provider-pulse is-empty" title="Threat provider pulse">Threat --</span>
+        </div>
       </section>
 
       <div class="main-row combat-mode">
@@ -230,6 +234,10 @@
             <dd id="passive-basis">No provider</dd>
           </div>
           <div>
+            <dt>Passive Pulse</dt>
+            <dd id="passive-pulse-detail">Unavailable</dd>
+          </div>
+          <div>
             <dt>Threat Provider</dt>
             <dd id="threat-provider">zKill</dd>
           </div>
@@ -240,6 +248,10 @@
           <div>
             <dt>Threat Basis</dt>
             <dd id="threat-basis">No scan</dd>
+          </div>
+          <div>
+            <dt>Threat Pulse</dt>
+            <dd id="threat-pulse-detail">No scan</dd>
           </div>
           <div>
             <dt>Live IO</dt>

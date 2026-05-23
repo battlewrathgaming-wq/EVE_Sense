@@ -31,7 +31,7 @@ Track the work required before AURA-Sense can honestly claim tactical viewport r
 - Treat Milestone 10 integrated tactical viewport composition as complete with spike calibration and live smoke deferred.
 - Treat Milestone 11 operational hardening and runtime control as complete.
 - Proceed next with Milestone 12 live validation and tactical calibration.
-- Treat provider request pulse and active scan validator reconciliation as gap-analysis follow-ups; do not let them expand live validation scope without evidence.
+- Treat active scan validator reconciliation as a gap-analysis follow-up; do not let it expand live validation scope without evidence.
 - Treat Milestone 13 aggressive testing and bug hunting as a parallel hardening runway; it should find defects, not add product scope.
 - Treat active SDE download artifacts as explicit generated material; do not stage them by default.
 - Use feature-aligned milestones for implementation sequencing instead of assigning one-off micro-tasks.
@@ -116,7 +116,7 @@ AURA-Sense has a verified tactical viewport skeleton with separated telemetry la
 - `docs/gap/complete/readiness-05-zkill-ref-boundary.md`
 - `docs/gap/complete/readiness-06-threat-intel-sample-metadata.md`
 - `docs/gap/to-do/combat-window-weapon-spike-followups.md`
-- `docs/gap/to-do/provider-request-pulse-ui.md`
+- `docs/gap/complete/provider-request-pulse-ui.md`
 - `docs/gap/complete/native-gamelog-folder-picker.md`
 - `docs/gap/to-do/active-scan-validator-reconciliation.md`
 - `docs/gap/complete/aggressive-test-harness-matrix.md`

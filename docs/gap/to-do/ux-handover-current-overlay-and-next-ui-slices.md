@@ -50,20 +50,16 @@ npm.cmd run smoke:electron
 - Some diagnostics labels remain backend-ish and should be audited before another presentation polish pass.
 - Clipboard shortcut status can fall back when `Ctrl+\` is unavailable; UX should present fallback state clearly without implying failure.
 - The native folder picker exists in runtime code and the older packet has been reconciled to complete.
-- Provider state is still split across compact labels, diagnostics, and lane messages; `provider-request-pulse-ui.md` remains open.
+- Provider state now has compact lane-specific pulse chips; hostile provider fault injection remains separate hardening work.
 - Combat metrics now have a completed plain-English baseline. Runtime field renames and UI copy changes remain future work requiring review.
 
 ## Recommended UX Sequence
 
-1. Implement or refine `provider-request-pulse-ui.md`.
-
-   Feed from backend-owned diagnostics or snapshot metadata only. Show blocked, pending, cached, succeeded, failed, capped, partial, and stale without showing raw provider payloads.
-
-2. Continue `clipboard-acquisition-race-tests.md` before further shortcut UX polish.
+1. Continue `clipboard-acquisition-race-tests.md` before further shortcut UX polish.
 
    Prove rapid arm/cancel/capture, unchanged clipboard, scan failure, cooldown, and shortcut/UI concurrency.
 
-3. Defer replay UI until `combat-witness-replay-system-channel.md` is implemented.
+2. Defer replay UI until `combat-witness-replay-system-channel.md` is implemented.
 
    Replay is a backend/system channel first. Do not add controls, scrubbers, drawers, or replay pills until live/replay snapshot separation is verified.
 
@@ -71,7 +67,6 @@ npm.cmd run smoke:electron
 
 Active UI or UX-adjacent packets:
 
-- `docs/gap/to-do/provider-request-pulse-ui.md`
 - `docs/gap/to-do/clipboard-acquisition-race-tests.md`
 - `docs/gap/to-do/combat-window-weapon-spike-followups.md`
 - `docs/gap/to-do/combat-witness-replay-system-channel.md`
@@ -102,4 +97,4 @@ Security/hardening packets that should inform UX but not become UI work by thems
 - `docs/gap/complete/combat-metrics-presentation-audit.md`
 - `docs/gap/complete/native-gamelog-folder-picker.md`
 - `docs/gap/complete/electron-visual-state-regression-tests.md`
-- `docs/gap/to-do/provider-request-pulse-ui.md`
+- `docs/gap/complete/provider-request-pulse-ui.md`

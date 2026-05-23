@@ -601,6 +601,7 @@ async function runVisualSmoke(window, outputDir) {
   assertSmoke(checks.hasIntegratedViewport, 'renderer should contain integrated viewport root');
   assertSmoke(checks.hasGlanceStrip, 'renderer should contain compact glance strip');
   assertSmoke(checks.hasSystemContext, 'renderer should contain system kills/jumps context');
+  assertSmoke(checks.hasProviderPulse, 'renderer should contain lane-specific provider pulse chips');
   assertSmoke(checks.hasClipboardListen, 'renderer should contain clipboard listen state');
   assertSmoke(checks.hasDrawerControls, 'renderer should contain collapsed detail drawers and diagnostics takeover');
   assertSmoke(checks.hasEventList, 'renderer should contain event list surface');
@@ -898,6 +899,7 @@ function smokeChecks(window) {
       hasIntegratedViewport: Boolean(document.querySelector('#integrated-viewport')),
       hasGlanceStrip: Boolean(document.querySelector('.glance-strip')),
       hasSystemContext: Boolean(document.querySelector('#system-shipkills') && document.querySelector('#system-jumps') && document.querySelector('#system-ratio')),
+      hasProviderPulse: Boolean(document.querySelector('#passive-provider-pulse') && document.querySelector('#threat-provider-pulse') && document.querySelector('#passive-pulse-detail') && document.querySelector('#threat-pulse-detail')),
       hasClipboardListen: Boolean(document.querySelector('#clipboard-state') && document.querySelector('#clipboard-key-ctrl') && document.querySelector('#clipboard-key-slash') && !document.querySelector('#shortcut-state')),
       hasDrawerControls: Boolean(document.querySelector('#threat-drawer') && document.querySelector('#diagnostics-setup-host') && document.querySelector('#diagnostics-panel') && document.querySelector('#diagnostics-toggle')),
       hasCombatSurface: Boolean(document.querySelector('.combat-surface') && document.querySelector('#pressure-title') && document.querySelector('#net-pressure-gauge')),
@@ -919,6 +921,8 @@ function smokeChecks(window) {
       repairBalanceText: document.querySelector('#repair-balance')?.textContent || null,
       passiveBasisText: document.querySelector('#passive-basis')?.textContent || null,
       threatBasisText: document.querySelector('#threat-basis')?.textContent || null,
+      passivePulseText: document.querySelector('#passive-provider-pulse')?.textContent || null,
+      threatPulseText: document.querySelector('#threat-provider-pulse')?.textContent || null,
       settingsStateText: document.querySelector('#settings-state')?.textContent || null,
       liveIoStateText: document.querySelector('#live-io-state')?.textContent || null,
       diagnosticsStateText: document.querySelector('#diagnostics-state')?.textContent || null,

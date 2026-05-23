@@ -249,6 +249,55 @@ dt {
   overflow: hidden;
 }
 
+.provider-pulse-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 4px;
+}
+
+.provider-pulse {
+  min-width: 0;
+  min-height: 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--panel-strong);
+  color: var(--muted);
+  font-size: 0.62rem;
+  font-weight: 800;
+  overflow: hidden;
+  padding: 0 7px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.provider-pulse.is-succeeded,
+.provider-pulse.is-fresh,
+.provider-pulse.is-cached {
+  border-color: rgba(84, 215, 216, 0.62);
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.provider-pulse.is-pending,
+.provider-pulse.is-partial,
+.provider-pulse.is-capped,
+.provider-pulse.is-stale {
+  border-color: rgba(216, 177, 74, 0.68);
+  color: var(--warning);
+  background: rgba(216, 177, 74, 0.1);
+}
+
+.provider-pulse.is-blocked,
+.provider-pulse.is-failed,
+.provider-pulse.is-degraded {
+  border-color: rgba(214, 110, 99, 0.7);
+  color: var(--danger);
+  background: rgba(214, 110, 99, 0.1);
+}
+
 .signal-chip {
   min-width: 0;
   padding: 6px 7px;
@@ -1085,6 +1134,12 @@ dd {
 
   .signal-chip strong {
     font-size: 0.86rem;
+  }
+
+  .provider-pulse {
+    min-height: 20px;
+    padding: 0 5px;
+    font-size: 0.54rem;
   }
 
   .key-row {

@@ -394,6 +394,7 @@ function renderPassiveTelemetry(snapshot) {
   setText('passive-activity', passiveActivity(snapshot));
   setText('passive-freshness', passiveStateLabel(snapshot?.freshness?.status || status));
   setText('passive-basis', passiveBasis(snapshot));
+  renderProviderPulse('passive', providerPulseFromPassive(snapshot));
   setText('passive-message', passiveMessage(snapshot));
   byId('system-ratio').classList.toggle('is-warm', hasSystem && shipKills > 0);
 }
@@ -515,6 +516,7 @@ function renderThreatSnapshot(snapshot) {
   setText('front-threat-provider', threatProviderLabel(snapshot, 'zKill'));
   setText('threat-sample', threatSample(snapshot));
   setText('threat-basis', threatBasis(snapshot));
+  renderProviderPulse('threat', providerPulseFromThreat(snapshot));
   renderThreatPulse(snapshot);
   renderThreatMessage(threatMessage(snapshot));
 }
@@ -925,6 +927,131 @@ function threatBasis(snapshot) {
   if (snapshot.status === 'partial') return 'Partial pulse';
   if (snapshot.zkill) return `${lookbackLabel(snapshot.zkill.lookbackSeconds)} zKill count`;
   return snapshot.status === 'empty' ? 'No scan' : 'No provider';
+}
+
+function providerPulseFromPassive(snapshot) {
+  if (!snapshot) {
+    return {
+      state: 'unavailable',
+      label: 'Passive --',
+      detail: 'Passive provider unavailable'
+    };
+  }
+  if (snapshot.status === 'blocked') {
+    return {
+      state: 'blocked',
+      label: 'Passive blocked',
+      detail: snapshot.message || 'Passive live IO blocked'
+    };
+  }
+  if (snapshot.status === 'degraded') {
+    return {
+      state: 'degraded',
+      label: 'Passive failed',
+      detail: snapshot.failure?.message || snapshot.message || 'Passive provider degraded'
+    };
+  }
+  if (snapshot.status === 'partial' || snapshot.zkill?.partial || snapshot.activity?.partial) {
+    return {
+      state: snapshot.zkill?.capped ? 'capped' : 'partial',
+      label: snapshot.zkill?.capped ? 'Passive capped' : 'Passive partial',
+      detail: passiveBasis(snapshot)
+    };
+  }
+  if (snapshot.status === 'stale' || snapshot.freshness?.status === 'stale') {
+    return {
+      state: 'stale',
+      label: 'Passive stale',
+      detail: snapshot.message || 'Passive provider context stale'
+    };
+  }
+  const cacheState = snapshot.activity?.cache?.state;
+  if (cacheState === 'hit' || cacheState === 'revalidated') {
+    return {
+      state: 'cached',
+      label: 'Passive cached',
+      detail: passiveBasis(snapshot)
+    };
+  }
+  if (snapshot.status === 'fresh') {
+    return {
+      state: 'fresh',
+      label: 'Passive fresh',
+      detail: passiveBasis(snapshot)
+    };
+  }
+  if (snapshot.currentSystem && !snapshot.zkill && !snapshot.activity) {
+    return {
+      state: 'pending',
+      label: 'Passive pending',
+      detail: snapshot.message || 'Passive provider fetch pending'
+    };
+  }
+  return {
+    state: 'unavailable',
+    label: 'Passive --',
+    detail: snapshot.message || 'No passive provider context'
+  };
+}
+
+function providerPulseFromThreat(snapshot) {
+  if (!snapshot || snapshot.status === 'empty') {
+    return {
+      state: 'empty',
+      label: 'Threat --',
+      detail: 'No Threat Intel scan'
+    };
+  }
+  if (snapshot.status === 'pending') {
+    return {
+      state: 'pending',
+      label: 'Threat pending',
+      detail: snapshot.message || 'Threat provider scan pending'
+    };
+  }
+  if (snapshot.status === 'blocked') {
+    return {
+      state: 'blocked',
+      label: 'Threat blocked',
+      detail: snapshot.message || 'Threat Intel live IO blocked'
+    };
+  }
+  if (snapshot.status === 'failed') {
+    return {
+      state: 'failed',
+      label: 'Threat failed',
+      detail: snapshot.failure?.message || snapshot.message || 'Threat provider failed'
+    };
+  }
+  if (snapshot.status === 'partial') {
+    return {
+      state: snapshot.zkill?.capped ? 'capped' : 'partial',
+      label: snapshot.zkill?.capped ? 'Threat capped' : 'Threat partial',
+      detail: threatBasis(snapshot)
+    };
+  }
+  if (snapshot.status === 'succeeded') {
+    return {
+      state: snapshot.zkill?.capped ? 'capped' : 'succeeded',
+      label: snapshot.zkill?.capped ? 'Threat capped' : 'Threat sampled',
+      detail: threatBasis(snapshot)
+    };
+  }
+  return {
+    state: 'unavailable',
+    label: 'Threat --',
+    detail: snapshot.message || 'No threat provider context'
+  };
+}
+
+function renderProviderPulse(lane, pulse) {
+  const chip = byId(`${lane}-provider-pulse`);
+  const detail = byId(`${lane}-pulse-detail`);
+  const stateClass = `is-${pulse.state || 'unavailable'}`;
+  chip.className = `provider-pulse ${stateClass}`;
+  chip.textContent = pulse.label;
+  chip.title = pulse.detail;
+  detail.textContent = pulse.detail;
 }
 
 function passiveActivity(snapshot) {
