@@ -28,6 +28,10 @@ const SCAN_ROOTS = [
 
 const EXTENSIONS = new Set(['.md', '.js', '.html']);
 const MAX_REPORT = 40;
+const EXTERNAL_ADVISORY_MARKERS = [
+  'Status: Advisory only, not Sense authority',
+  'Status: Active conformance guidance for remote Lab consumers'
+];
 
 function main() {
   const options = parseArgs();
@@ -40,15 +44,19 @@ function main() {
   }
 
   const files = collectScanFiles(options);
+  const fileMeta = buildFileMeta(files);
   const warnings = [
-    ...findBorrowingWarnings(files, lookup),
+    ...findBorrowingWarnings(files, lookup, fileMeta, options),
     ...findBoundaryWarnings(files),
-    ...discoverCandidates(files, lookup)
+    ...discoverCandidates(files, lookup, fileMeta)
   ];
+  const mutedFiles = files.filter((file) => fileMeta.get(file)?.muteExternalVocabulary);
 
   console.log(`Sense protected-term discovery mode: ${options.baseline ? 'baseline' : 'working-set'}`);
   console.log(`Sense protected-term discovery source: ${options.baseline ? 'explicit broad baseline' : 'git status --short changed files'}`);
+  console.log(`Sense protected-term discovery quarantine terms: ${options.quarantine ? 'included by request' : 'muted by default; use --quarantine for low-confidence Lab quarantine terms'}`);
   console.log(`Sense protected-term discovery: scanned ${files.length} file(s)`);
+  console.log(`Sense protected-term discovery: ${mutedFiles.length} advisory/conformance file(s) scanned with external vocabulary muted`);
   console.log(`Sense protected-term discovery: ${warnings.length} warning-only item(s)`);
 
   for (const warning of warnings.slice(0, MAX_REPORT)) {
@@ -69,9 +77,26 @@ function main() {
   console.log('sense protected-term discovery completed');
 }
 
+function buildFileMeta(files) {
+  const meta = new Map();
+  for (const file of files) {
+    let text = '';
+    try {
+      text = fs.readFileSync(file, 'utf8');
+    } catch (_error) {
+      text = '';
+    }
+    meta.set(file, {
+      muteExternalVocabulary: EXTERNAL_ADVISORY_MARKERS.some((marker) => text.includes(marker))
+    });
+  }
+  return meta;
+}
+
 function parseArgs() {
   return {
-    baseline: process.argv.includes('--baseline')
+    baseline: process.argv.includes('--baseline'),
+    quarantine: process.argv.includes('--quarantine')
   };
 }
 
@@ -180,10 +205,11 @@ function walk(dir, files) {
   }
 }
 
-function findBorrowingWarnings(files, lookup) {
+function findBorrowingWarnings(files, lookup, fileMeta, options) {
   const warnings = [];
-  const externalTerms = [...lookup.external, ...lookup.quarantine];
+  const externalTerms = options.quarantine ? [...lookup.external, ...lookup.quarantine] : lookup.external;
   forEachLine(files, (line, file, lineNumber) => {
+    if (fileMeta.get(file)?.muteExternalVocabulary) return;
     if (isProtectiveOrReferenceLine(line)) return;
     for (const entry of externalTerms) {
       if (!includesTerm(line, entry.term)) continue;
@@ -244,7 +270,7 @@ function findBoundaryWarnings(files) {
   return dedupe(warnings);
 }
 
-function discoverCandidates(files, lookup) {
+function discoverCandidates(files, lookup, fileMeta) {
   const known = new Set([
     ...lookup.own,
     ...lookup.external,
@@ -254,6 +280,7 @@ function discoverCandidates(files, lookup) {
 
   const candidates = [];
   forEachLine(files, (line, file, lineNumber) => {
+    if (fileMeta.get(file)?.muteExternalVocabulary) return;
     if (isProtectiveOrReferenceLine(line)) return;
     for (const term of extractCandidateTerms(line)) {
       if (known.has(term.toLowerCase())) continue;
