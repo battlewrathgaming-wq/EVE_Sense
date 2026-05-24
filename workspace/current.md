@@ -1,6 +1,6 @@
 # Current Workspace Packet
 
-Status: Active - Advisory Review
+Status: Idle - Advisory Review Complete
 Updated: 2026-05-24
 Owner: Overseer continuity, specialist/advisory execution
 
@@ -10,17 +10,17 @@ Active milestone: None
 Current advisory track: Sense-owned Lab presentation adoption review
 Latest closed milestone: Milestone 14 - Back-Page Threat Intel UX
 Latest accepted closure: `workspace/complete/milestone-14/OverseerHS03-milestone-14-closure.md`
-Current executor: Advisory reviewer
-Current focus: Decide which Aura Lab presentation mechanics are useful, unsafe, adaptable, or deferrable under Sense authority
-Expected output: `workspace/SenseAdoptionHS01-aura-lab-presentation-mechanics-review.md`
+Current executor: None
+Current focus: Awaiting human decision on Passive Telemetry Bridge State Readout prototype
+Expected output: None
 
 ## Purpose
 
-This is the only active executable packet for AURA-Sense.
+This is the current AURA-Sense coordination packet.
 
-The human selected a Sense-owned Lab presentation adoption review as the next activity. This is advisory alignment work, not Dev implementation and not shared doctrine creation.
+The Sense-owned Lab presentation adoption review has been completed as advisory alignment work, not Dev implementation and not shared doctrine creation.
 
-AURA-Sense should review Lab presentation mechanics only as advisory input. Sense authority remains project-local: transient tactical viewport, backend-owned truth, live-gated state, lane separation, and no Atlas-style historical evidence storage.
+AURA-Sense reviewed Lab Bridge State Readout mechanics only as advisory input. Sense authority remains project-local: transient tactical viewport, backend-owned truth, live-gated state, lane separation, and no Atlas-style historical evidence storage.
 
 ## Required Reading
 
@@ -47,45 +47,26 @@ Advisory context only if available and explicitly needed:
 - `F:\Projects\Docs\Aura-Project-Orchestration\active-alignment.md`
 - `F:\Projects\Docs\Aura-Project-Orchestration\project-lanes.md`
 
-## Review Objective
+## Review Result
 
-Produce a Sense-owned adoption review that answers:
+Artifact created:
 
-1. Which Lab presentation mechanics are useful for Sense.
-2. Which Lab mechanics are unsafe or irrelevant for Sense.
-3. Which mechanics need Sense-specific adaptation.
-4. Whether the next Sense step should be UI/UX, Engineering, Dev, or pause.
-5. What, if anything, might later be proposed back to Aura Core as neutral reusable rigging.
+```txt
+workspace/SenseAdoptionHS01-aura-lab-presentation-mechanics-review.md
+```
 
-## Review Focus
+Recommendation:
 
-Map structure without importing meaning:
+```txt
+Adapt Lab Bridge State Readout for Sense, do not adopt wholesale.
+Best first trial lane: Passive Telemetry.
+Next role/action: UI/UX packet for a Passive Telemetry readout prototype, then Dev only if accepted.
+```
 
-- separate family/state axes
-- fixture-backed display mapping
-- state grammar
-- source/freshness/certainty slots
-- diagnostics demotion
-- long-text and narrow viewport pressure
-- family-aware visual smoke
-- shell/bridge safety expectations
+## Preserved Guardrails
 
-Pressure these through Sense-specific needs:
-
-- compact tactical display
-- transient state
-- live-gated provider state
-- stale/partial/unavailable lanes
-- overlay and narrow viewport constraints
-- strong visual hierarchy
-- trust/certainty language that must not overstate what is known
-- passive/backend-owned truth
-- no Atlas-style historical evidence storage unless explicitly accepted later by Sense
-
-## Guardrails
-
-- Do not implement code.
-- Do not create a Dev runway.
+- No code was implemented.
+- No Dev runway is active.
 - Do not edit shared Aura doctrine.
 - Do not create Lab/Core adapters.
 - Do not treat Lab as Sense authority.
@@ -98,68 +79,28 @@ Pressure these through Sense-specific needs:
 - Do not use archived docs/gap as active queues unless current project authority references them.
 - Label repo-verified facts separately from advisory assumptions and recommendations.
 
-## Expected Artifact
-
-Create:
-
-```txt
-workspace/SenseAdoptionHS01-aura-lab-presentation-mechanics-review.md
-```
-
-The artifact should include:
-
-1. Role and boundary.
-2. Files reviewed.
-3. Repo-verified Sense facts.
-4. Advisory/Lab/orchestration context used.
-5. Sense output model to preserve.
-6. Lab mechanics that appear useful.
-7. Lab mechanics that are unsafe or irrelevant.
-8. Sense-specific adaptations required.
-9. Bridge/state/smoke patterns that might be safely universalized.
-10. Terms or semantics that must remain Sense-local.
-11. Terms or semantics that must not be imported from Lab.
-12. Terms or semantics that must not be imported from Atlas.
-13. Double-work risks.
-14. Context-poisoning risks.
-15. Human decisions needed.
-16. Recommended next role/action.
-17. What should stay Sense-local.
-18. What might later belong in shared orchestration.
-
-Mark the artifact:
-
-```txt
-Status: Advisory Sense-owned adoption review, not project authority
-```
-
-## Stop Conditions
-
-Return to chat before continuing if:
-
-- Lab files cannot be identified from advisory context and the review would become guesswork
-- the review starts creating implementation tasks instead of adoption findings
-- shared doctrine would be needed to answer the question
-- Sense and Lab terms conflict in a way that requires human naming authority
-- a recommendation would make renderer state authoritative
-- a recommendation would turn latest-snapshot review into historical storage
-
 ## Verification
 
-No code verification is required.
+No code verification was required or run.
 
 Do not run `verify:all` or Electron smoke for this advisory review unless the human explicitly changes the task into implementation or validation work.
 
 ## Evidence
 
-Not yet recorded.
+```txt
+Artifact: workspace/SenseAdoptionHS01-aura-lab-presentation-mechanics-review.md
+Recommendation: adapt
+Best first lane: Passive Telemetry
+Prototype: UI/UX-only Passive Telemetry Bridge State Readout mapping before Dev
+Project authority changes: none
+Implementation changes: none
+Verification run: none; not required for advisory review
+```
 
 ## Handoff
 
-Advisory reviewer fills this in when complete:
-
-- artifact created:
-- project authority changes:
-- implementation changes:
-- recommended next action:
-- human decisions needed:
+- artifact created: `workspace/SenseAdoptionHS01-aura-lab-presentation-mechanics-review.md`
+- project authority changes: none
+- implementation changes: none
+- recommended next action: UI/UX packet for Passive Telemetry readout prototype using existing snapshot fields only
+- human decisions needed: approve/adjust Passive Telemetry as first lane; choose `Fresh` vs `Recent context`; decide whether `Local only` is acceptable fallback wording
