@@ -28,6 +28,7 @@ const state = {
   presentationResumeTimer: null,
   threatPeekTimer: null,
   threatPeekActive: false,
+  lastThreatSnapshot: null,
   watcherState: 'unavailable',
   liveIoEnabled: false,
   frontContextMode: loadFrontContextMode(),
@@ -78,7 +79,7 @@ async function bootPassiveTelemetry() {
 
 async function bootThreatIntel() {
   byId('threat-search').addEventListener('submit', submitThreatSearch);
-  byId('threat-target').addEventListener('focus', () => renderThreatMessage('Copy a target, then press Ctrl+\\. Enter still works when focused.'));
+  byId('threat-target').addEventListener('focus', () => renderThreatMessage('Manual fallback ready. Focus alone does not scan.'));
   byId('threat-kind-selector').addEventListener('click', selectThreatTargetKind);
   renderThreatTargetKind();
 
@@ -402,10 +403,11 @@ function renderPassiveTelemetry(snapshot) {
 async function submitThreatSearch(event) {
   event.preventDefault();
   const form = event.currentTarget;
-  const button = form.querySelector('button[type="submit"]');
-  if (button) button.disabled = true;
+  const input = byId('threat-target');
+  input.disabled = true;
   try {
-    const targetText = byId('threat-target').value;
+    const targetText = input.value;
+    setThreatAcquisitionState('scanning', targetText || 'Manual fallback scan');
     const snapshot = await window.auraThreatIntel.scan({
       targetText,
       targetKind: state.threatTargetKind,
@@ -415,19 +417,19 @@ async function submitThreatSearch(event) {
   } catch (error) {
     renderThreatSnapshot({ status: 'failed', message: error.message });
   } finally {
-    if (button) button.disabled = false;
+    input.disabled = false;
   }
 }
 
 async function armClipboardAcquisition() {
-  const button = byId('clipboard-arm');
-  button.disabled = true;
   try {
+    setThreatBackPageOpen(true);
+    setThreatAcquisitionState('pulling', 'Pulling clipboard target');
     const snapshot = await window.auraThreatIntel.armClipboard();
     renderClipboardState(snapshot);
     scheduleClipboardPoll();
   } finally {
-    button.disabled = false;
+    updateKeyGlow();
   }
 }
 
@@ -441,7 +443,7 @@ function scheduleClipboardPoll() {
     consumeClipboardCapture(snapshot);
     if (snapshot.lastCapture?.targetText) {
       byId('threat-target').value = snapshot.lastCapture.targetText;
-      byId('threat-drawer').open = true;
+      setThreatBackPageOpen(true);
       renderThreatSnapshot(snapshot.lastCapture.result);
     }
     if (snapshot.state !== 'listening') {
@@ -474,7 +476,7 @@ function consumeClipboardCapture(snapshot) {
   }
   state.lastClipboardCaptureKey = key;
   byId('threat-target').value = capture.targetText;
-  byId('threat-drawer').open = true;
+  setThreatBackPageOpen(true);
   if (capture.result) {
     if (shouldRescanCaptureWithKind(capture.result)) {
       rescanClipboardCapture(capture.targetText);
@@ -482,12 +484,14 @@ function consumeClipboardCapture(snapshot) {
       renderThreatSnapshot(capture.result);
     }
   } else {
-    renderThreatMessage('Clipboard target captured. Submit scan when ready.');
+    setThreatAcquisitionState('scanning', capture.targetText);
+    renderThreatMessage('Clipboard target captured; scan pending.');
   }
 }
 
 async function rescanClipboardCapture(targetText) {
   try {
+    setThreatAcquisitionState('scanning', targetText);
     const snapshot = await window.auraThreatIntel.scan({
       targetText,
       targetKind: state.threatTargetKind,
@@ -509,15 +513,19 @@ function shouldRescanCaptureWithKind(result) {
 function renderThreatSnapshot(snapshot) {
   if (queuePresentationUpdate('threatSnapshot', snapshot, renderThreatSnapshot)) return;
   const status = snapshot?.status || 'empty';
+  state.lastThreatSnapshot = snapshot || null;
   setText('threat-state', threatStateLabel(status));
   setText('threat-target-label', snapshot?.target?.label || '--');
+  setText('threat-display-target', threatDisplayTarget(snapshot));
   renderThreatKindStatus(snapshot);
   setText('threat-provider', threatProviderLabel(snapshot, 'zKill'));
-  setText('front-threat-provider', threatProviderLabel(snapshot, 'zKill'));
+  setText('front-threat-provider', 'Back page');
   setText('threat-sample', threatSample(snapshot));
   setText('threat-basis', threatBasis(snapshot));
   renderProviderPulse('threat', providerPulseFromThreat(snapshot));
   renderThreatPulse(snapshot);
+  renderThreatReport(snapshot);
+  setThreatAcquisitionState(status === 'pending' ? 'scanning' : 'idle', threatDisplayTarget(snapshot));
   renderThreatMessage(threatMessage(snapshot));
 }
 
@@ -539,6 +547,50 @@ function renderThreatMessage(message) {
   setText('threat-message', message);
 }
 
+function renderThreatReport(snapshot) {
+  const status = snapshot?.status || 'empty';
+  const target = threatDisplayTarget(snapshot);
+  setText('threat-report-target', target);
+  setText('threat-report-status', threatStateLabel(status));
+  setText('threat-report-basis', threatBasis(snapshot));
+  setText('threat-report-sample', threatSample(snapshot));
+  setText('threat-report-message', threatReportMessage(snapshot));
+}
+
+function threatDisplayTarget(snapshot) {
+  return snapshot?.target?.label || snapshot?.request?.targetText || 'No scan';
+}
+
+function clipboardDisplayTarget(snapshot) {
+  if (snapshot?.lastCapture?.targetText) return snapshot.lastCapture.targetText;
+  if (state.lastThreatSnapshot) return threatDisplayTarget(state.lastThreatSnapshot);
+  return 'No scan';
+}
+
+function threatReportMessage(snapshot) {
+  if (!snapshot || snapshot.status === 'empty') return 'Report persists until the next scan.';
+  if (snapshot.status === 'blocked') return snapshot.message || 'Live IO blocked.';
+  if (snapshot.status === 'partial') return snapshot.failure?.message || snapshot.message || 'Partial sample; not complete coverage.';
+  if (snapshot.status === 'failed') return snapshot.failure?.message || snapshot.message || 'Scan failed.';
+  if (snapshot.status === 'succeeded') return snapshot.message || 'Scoped zKill sample refreshed.';
+  return snapshot.message || 'No provider result yet.';
+}
+
+function setThreatAcquisitionState(status, label) {
+  const bar = byId('threat-acquisition-bar');
+  const normalized = status === 'listening'
+    ? 'listening'
+    : (status === 'pulling' ? 'pulling' : (status === 'cooldown' ? 'cooldown' : (status === 'scanning' || status === 'pending' ? 'scanning' : 'idle')));
+  bar.classList.remove('is-idle', 'is-listening', 'is-pulling', 'is-scanning', 'is-cooldown', 'is-blocked');
+  bar.classList.add(`is-${normalized}`);
+  if (status === 'blocked') {
+    bar.classList.add('is-blocked');
+  }
+  if (label && label !== 'No scan') {
+    setText('threat-display-target', label);
+  }
+}
+
 function renderClipboardState(snapshot) {
   if (queuePresentationUpdate('clipboardState', snapshot, renderClipboardState)) return;
   const status = snapshot?.state || 'idle';
@@ -549,6 +601,7 @@ function renderClipboardState(snapshot) {
   byId('clipboard-listen').classList.toggle('is-listening', listening);
   byId('clipboard-listen').classList.toggle('is-cooldown', cooldown);
   byId('clipboard-listen').classList.toggle('is-unsupported', blocked || !state.liveIoEnabled);
+  setThreatAcquisitionState(status, clipboardDisplayTarget(snapshot));
   if (blocked && snapshot?.message) {
     renderThreatMessage(snapshot.message);
   }
@@ -571,14 +624,16 @@ function selectThreatTargetKind(event) {
   if (!THREAT_TARGET_KINDS.includes(nextKind)) return;
   state.threatTargetKind = nextKind;
   renderThreatTargetKind();
-  renderThreatMessage(`Scanning plain text as ${targetKindLabel(nextKind)}.`);
+  pulseTargetKind();
+  renderThreatMessage(`Target type set to ${targetKindLabel(nextKind)}. No scan started.`);
 }
 
 function toggleThreatTargetKind(_event = null) {
   const current = THREAT_TARGET_KINDS.indexOf(state.threatTargetKind);
   state.threatTargetKind = THREAT_TARGET_KINDS[(current + 1) % THREAT_TARGET_KINDS.length];
   renderThreatTargetKind();
-  renderThreatMessage(`Scanning plain text as ${targetKindLabel(state.threatTargetKind)}.`);
+  pulseTargetKind();
+  renderThreatMessage(`Target type set to ${targetKindLabel(state.threatTargetKind)}. No scan started.`);
 }
 
 function renderThreatTargetKind() {
@@ -590,6 +645,12 @@ function renderThreatTargetKind() {
     button.classList.toggle('is-on', active);
     button.setAttribute('aria-pressed', String(active));
   });
+}
+
+function pulseTargetKind() {
+  const selector = byId('threat-kind-selector');
+  selector.classList.add('is-local-change');
+  setTimeout(() => selector.classList.remove('is-local-change'), 280);
 }
 
 function renderThreatKindStatus(snapshot) {
@@ -757,13 +818,19 @@ function renderEventList(events, status) {
 
 function bootKeyboardGlow() {
   document.addEventListener('keydown', (event) => {
+    if (event.ctrlKey && event.key === '\\' && !event.repeat) {
+      event.preventDefault();
+      setThreatBackPageOpen(true);
+      armClipboardAcquisition();
+      return;
+    }
     if (event.altKey && event.key === '\\') {
       event.preventDefault();
       toggleThreatTargetKind({ source: 'focused-shortcut' });
       return;
     }
     if (event.key === '\\' && !event.repeat) {
-      setThreatPeek(true);
+      setThreatBackPageOpen(true);
     }
     if (event.key === 'Control') {
       state.ctrlDown = true;
@@ -779,39 +846,40 @@ function bootKeyboardGlow() {
     }
     if (event.key === '\\') {
       state.slashDown = false;
-      scheduleThreatPeekClose();
     }
     updateKeyGlow();
   });
 }
 
-function setThreatPeek(open) {
-  if (!state.liveIoEnabled && open) return;
+function setThreatBackPageOpen(open) {
   const drawer = byId('threat-drawer');
   state.threatPeekActive = open === true;
   drawer.open = state.threatPeekActive;
   drawer.classList.toggle('is-peeking', state.threatPeekActive);
+  byId('threat-gateway').classList.toggle('is-active', state.threatPeekActive);
+  byId('threat-gateway-summary').classList.toggle('is-active', state.threatPeekActive);
   if (state.threatPeekTimer) {
     clearTimeout(state.threatPeekTimer);
     state.threatPeekTimer = null;
   }
 }
 
+function setThreatPeek(open) {
+  setThreatBackPageOpen(open);
+}
+
 function scheduleThreatPeekClose(delay = 900) {
-  if (!state.threatPeekActive) return;
-  if (state.ctrlDown || byId('clipboard-listen').classList.contains('is-listening')) return;
-  if (state.threatPeekTimer) {
-    clearTimeout(state.threatPeekTimer);
-  }
-  state.threatPeekTimer = setTimeout(() => {
-    setThreatPeek(false);
-  }, delay);
+  if (!state.threatPeekActive || delay < 0) return;
 }
 
 function updateKeyGlow() {
   const listening = byId('clipboard-listen').classList.contains('is-listening');
+  const cooldown = byId('clipboard-listen').classList.contains('is-cooldown');
   byId('clipboard-key-ctrl').classList.toggle('is-active', state.ctrlDown || listening);
-  byId('clipboard-key-slash').classList.toggle('is-active', state.slashDown || listening);
+  byId('clipboard-key-slash').classList.toggle('is-active', state.slashDown || listening || state.threatPeekActive);
+  byId('clipboard-key-ctrl').classList.toggle('is-authority', listening);
+  byId('clipboard-key-slash').classList.toggle('is-authority', listening);
+  byId('clipboard-key-slash').classList.toggle('is-cooldown', cooldown);
 }
 
 function statusFromSnapshot(snapshot) {

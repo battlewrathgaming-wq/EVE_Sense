@@ -690,14 +690,21 @@ async function captureVisualRegressionStates(window, outputDir) {
     {
       name: 'partial-capped',
       screenshot: 'state-partial-capped.png',
-      assertions: ['#threat-drawer', '#front-threat-provider', '#threat-pulse', '#threat-message', '#threat-target-label'],
+      assertions: ['#threat-drawer', '#threat-acquisition-bar', '#threat-report', '#threat-pulse', '#threat-message', '#threat-target-label'],
       script: `
         resetViewportState();
         document.querySelector('#threat-drawer').open = true;
+        document.querySelector('#threat-acquisition-bar')?.classList.add('is-idle');
         setText('#threat-state', 'Partial');
+        setText('#threat-display-target', 'Jita');
         setText('#threat-target-label', 'Jita');
         setText('#threat-sample', '10 / 28');
         setText('#threat-basis', 'zKill capped partial sample');
+        setText('#threat-report-target', 'Jita');
+        setText('#threat-report-status', 'Partial');
+        setText('#threat-report-basis', 'zKill capped partial sample');
+        setText('#threat-report-sample', '10 / 28');
+        setText('#threat-report-message', 'Partial sample; not complete coverage.');
         setText('#threat-message', 'Partial provider response; sample capped for display.');
         document.querySelectorAll('#threat-pulse span').forEach((dot, index) => {
           dot.classList.toggle('is-active', index < 6);
@@ -708,12 +715,15 @@ async function captureVisualRegressionStates(window, outputDir) {
     {
       name: 'cooldown',
       screenshot: 'state-cooldown.png',
-      assertions: ['#threat-drawer', '#clipboard-listen', '#clipboard-state', '#threat-message'],
+      assertions: ['#threat-drawer', '#threat-acquisition-bar', '#clipboard-listen', '#clipboard-state', '#threat-message'],
       script: `
         resetViewportState();
         document.querySelector('#threat-drawer').open = true;
+        document.querySelector('#threat-acquisition-bar')?.classList.remove('is-idle');
+        document.querySelector('#threat-acquisition-bar')?.classList.add('is-cooldown');
         document.querySelector('#clipboard-listen')?.classList.add('is-cooldown');
         setText('#clipboard-state', 'Cooldown');
+        setText('#threat-display-target', 'Cooldown');
         setText('#shortcut-message', 'Ctrl+\\\\ is cooling down after the last clipboard scan.');
         setText('#threat-message', 'Clipboard scan sealed; cooldown active.');
       `
@@ -807,6 +817,10 @@ function applyVisualRegressionState(window, state) {
         document.querySelector('#diagnostics-toggle')?.classList.remove('active');
         document.querySelector('#threat-drawer').open = false;
         document.querySelector('#clipboard-listen')?.classList.remove('is-listening', 'is-cooldown', 'is-unsupported');
+        document.querySelector('#threat-acquisition-bar')?.classList.remove('is-listening', 'is-pulling', 'is-scanning', 'is-cooldown', 'is-blocked');
+        document.querySelector('#threat-acquisition-bar')?.classList.add('is-idle');
+        document.querySelector('#threat-gateway')?.classList.remove('is-active');
+        document.querySelector('#threat-gateway-summary')?.classList.remove('is-active');
         document.querySelector('#watcher-indicator')?.classList.remove('is-watching', 'is-degraded', 'is-blocked');
         document.querySelectorAll('#threat-pulse span').forEach((dot) => {
           dot.classList.remove('is-active', 'is-selected');
@@ -906,7 +920,7 @@ function smokeChecks(window) {
       hasCombatMetrics: Boolean(document.querySelector('#net-pressure-value') && document.querySelector('#incoming-pressure') && document.querySelector('#repair-throughput') && document.querySelector('#incoming-bar') && document.querySelector('#repair-bar')),
       hasEventList: Boolean(document.querySelector('#event-list')),
       hasWatcherControls: Boolean(document.querySelector('#watcher-controls') && document.querySelector('#gamelog-folder')),
-      hasThreatSurface: Boolean(document.querySelector('.threat-surface') && document.querySelector('#threat-search')),
+      hasThreatSurface: Boolean(document.querySelector('.threat-surface') && document.querySelector('#threat-search') && document.querySelector('#threat-acquisition-bar') && document.querySelector('#threat-gateway') && document.querySelector('#threat-report')),
       hasRuntimeState: Boolean(document.querySelector('#live-io-state') && document.querySelector('#settings-state')),
       noParserRuntimeExposure: (
         typeof window.CombatWitnessService === 'undefined' &&
@@ -916,6 +930,8 @@ function smokeChecks(window) {
       signalText: document.querySelector('#combat-signal')?.textContent || null,
       watcherText: document.querySelector('#watcher-state')?.textContent || null,
       threatText: document.querySelector('#threat-state')?.textContent || null,
+      threatDisplayText: document.querySelector('#threat-display-target')?.textContent || null,
+      threatReportText: document.querySelector('#threat-report')?.textContent || null,
       combatDetailText: document.querySelector('#combat-detail')?.textContent || null,
       incomingPressureText: document.querySelector('#incoming-pressure')?.textContent || null,
       repairBalanceText: document.querySelector('#repair-balance')?.textContent || null,

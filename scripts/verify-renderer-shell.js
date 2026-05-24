@@ -66,6 +66,12 @@ function main() {
   assert(html.includes('clipboard-key-ctrl'), 'renderer should include Ctrl key scan indicator');
   assert(html.includes('clipboard-key-slash'), 'renderer should include slash key scan indicator');
   assert(html.includes('search-clipboard-widget'), 'renderer should embed Clipboard Acquisition state in the Threat search box');
+  assert(html.includes('threat-acquisition-bar'), 'renderer should include display-first Threat Intel acquisition bar');
+  assert(html.includes('threat-display-target'), 'renderer should show the current/last acquired target in the acquisition bar');
+  assert(html.includes('threat-gateway'), 'renderer should include gateway marker for back-page context');
+  assert(html.includes('threat-report'), 'renderer should include persistent Threat Intel report section');
+  assert(html.includes('threat-report-target'), 'renderer report should include target field');
+  assert(html.includes('threat-report-basis'), 'renderer report should include provider basis field');
   assert(html.includes('threat-kind-selector'), 'renderer should include Threat target kind selector');
   assert(html.includes('data-threat-kind="pilot"'), 'renderer should include Pilot target kind pill');
   assert(html.includes('data-threat-kind="system"'), 'renderer should include System target kind pill');
@@ -112,6 +118,7 @@ function main() {
   assert(app.includes("byId('top-live-io-toggle').addEventListener('click', toggleLiveIoPolicy)"), 'renderer should wire top-level IO widget to the same authority action');
   assert(html.includes('threat-search'), 'renderer should include Threat Intel search form');
   assert(html.includes('threat-target'), 'renderer should include Threat Intel target input');
+  assert(html.includes('Manual Threat Intel fallback'), 'renderer should keep manual entry as a fallback');
   assert(!html.includes('<button type="submit">Scan</button>'), 'combat Threat Intel surface should not expose a scan button');
   assert(html.includes('threat-pulse'), 'renderer should include a compact zKill pulse timeline');
   assert(html.includes('threat-basis'), 'renderer should include Threat Intel provider basis target');
@@ -149,6 +156,9 @@ function main() {
   assert(app.includes('incoming.mostObservedWeaponType'), 'renderer should present backend-owned observed weapon metrics');
   assert(app.includes('window.auraThreatIntel.scan'), 'renderer should run Threat Intel scans through preload bridge');
   assert(app.includes("inputSource: 'search'"), 'renderer should mark explicit search input source');
+  assert(app.includes('setThreatAcquisitionState'), 'renderer should present acquisition state through display-first bar classes');
+  assert(app.includes('renderThreatReport'), 'renderer should keep the last Threat Intel report rendered');
+  assert(app.includes('threatReportMessage'), 'renderer report should preserve provider/sample/failure copy');
   assert(app.includes('renderThreatPulse'), 'renderer should render compact Threat Intel pulse state');
   assert(app.includes('providerPulseFromPassive'), 'renderer should derive Passive provider pulse from backend snapshot metadata');
   assert(app.includes('providerPulseFromThreat'), 'renderer should derive Threat provider pulse from backend snapshot metadata');
@@ -165,8 +175,9 @@ function main() {
   assert(app.includes('Wrong type'), 'renderer should show a compact wrong-type resolver state');
   assert(app.includes('subscribeTargetKindToggles'), 'renderer should subscribe to global target-kind toggle shortcuts');
   assert(app.includes("event.altKey && event.key === '\\\\'"), 'renderer should support focused Alt+\\ target-kind toggles');
-  assert(app.includes('setThreatPeek(true)'), 'renderer should support focused plain \\ threat peek');
-  assert(app.includes('scheduleThreatPeekClose'), 'renderer should close threat peek after release');
+  assert(app.includes("event.ctrlKey && event.key === '\\\\'"), 'renderer should support focused Ctrl+\\ clipboard acquisition');
+  assert(app.includes('setThreatBackPageOpen(true)'), 'renderer should support focused plain \\ back-page gateway');
+  assert(!app.includes('scheduleThreatPeekClose();'), 'renderer should not auto-close the back-page gateway on key release');
   assert(app.includes('clipboard-key-ctrl'), 'renderer should maintain Ctrl key visual state');
   assert(app.includes('clipboard-key-slash'), 'renderer should maintain slash key visual state');
   assert(app.includes("addEventListener('focus'"), 'renderer should handle focus without scanning');

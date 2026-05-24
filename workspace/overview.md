@@ -29,8 +29,8 @@ It should present compact, uncertainty-aware tactical state while staying transi
 Milestone: 14 - Back-Page Threat Intel UX
 Roadmap source: `docs/roadmap/milestone-14-back-page-threat-intel-ux.md`
 Current packet: `workspace/current.md`
-Current sequence: HS01
-Latest accepted handshake: Milestone 13 archived under `workspace/complete/milestone-13/`
+Current sequence: HS02
+Latest accepted handshake: `workspace/DevHS01-sense-back-page-threat-intel-foundation.md`
 
 ## Durable Record Index
 

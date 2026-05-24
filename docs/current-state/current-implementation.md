@@ -1,7 +1,7 @@
 # Current State: AURA-Sense Implementation
 
-Date: 2026-05-23
-Status: Operational hardening and runtime control complete; Milestone 12 live validation and calibration scoped; Milestone 13 aggressive testing scoped
+Date: 2026-05-24
+Status: Operational hardening complete; Milestone 13 offline aggressive hardening complete; Milestone 14 back-page Threat Intel UX active
 
 ## What Exists
 
@@ -58,6 +58,7 @@ The current implementation includes:
 - backend-only scoped Threat Intel zKill `pastSeconds` probe
 - Threat Intel live IO gate with visible blocked state when live calls are disabled
 - compact Threat Intel search surface that scans only on explicit submit
+- overlay-native back-page Threat Intel foundation with display-first acquisition bar, gateway marker, local target type controls, and persistent last-scan report
 - Clipboard Acquisition service with armed/listening/sealed/cooldown lifecycle
 - Clipboard Acquisition race verification for rapid arm/cancel/capture, unchanged content, rejection, timeout, scan failure, cooldown, and concurrent arm semantics
 - global clipboard arming shortcut using `Control+\` where available with fallback shortcut status reporting
@@ -98,7 +99,7 @@ Not yet proven in this codebase:
 - live zKill-backed Threat Intel search and optional ESI expansion pipeline
 - exact raw repair/healing parser coverage
 - full refreshed EVE type metadata artifact generated from current SDE source
-- production-grade multi-lane HUD renderer beyond the current integrated foundation
+- production-grade multi-lane HUD renderer beyond the current integrated/back-page foundation
 - live EVE gamelog operational smoke against an operator machine
 - full provider request pulse UI
 - live zKill/ESI smoke execution with `AURA_SENSE_LIVE_API=1`

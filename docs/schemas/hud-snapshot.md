@@ -78,6 +78,18 @@ Displayed fields:
 - clipboard acquisition state
 - blocked/partial/capped/provider basis
 
+Milestone 14 back-page presentation:
+
+- front page keeps only a quiet Threat Intel/back-page affordance and provider pulse context
+- back page owns the display-first Threat Intel acquisition bar
+- gateway marker `\` opens or focuses the back-page context without scanning
+- `\ + CTRL` remains clipboard acquisition + scan through the existing backend/preload flow
+- `\ + ALT` cycles target type as local classification only
+- last scan report persists below the acquisition bar until the next scan replaces it
+- report fields present backend-owned target, status, provider basis, sample counts, cap/partial/blocked/failure messaging
+
+The persistent report is renderer review state for the latest snapshot. It is not historical intelligence storage and must not become Atlas-style evidence.
+
 ## Metric Presentation Ordering
 
 Renderer composition should order metrics by presentation behavior:

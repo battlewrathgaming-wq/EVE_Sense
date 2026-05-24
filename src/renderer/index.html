@@ -61,22 +61,30 @@
               </div>
           </div>
 
-          <details id="threat-drawer" class="drawer threat-surface">
+          <details id="threat-drawer" class="drawer threat-surface back-page-surface">
             <summary>
-              <span>Threat Provider</span>
-              <strong id="front-threat-provider">zKill</strong>
+              <span>Threat Intel</span>
+              <span class="drawer-summary-meta">
+                <span id="threat-gateway-summary" class="gateway-chip" aria-label="Threat Intel gateway">\</span>
+                <strong id="front-threat-provider">Back page</strong>
+              </span>
             </summary>
             <form id="threat-search" class="threat-search">
-              <label for="threat-target" class="shortcut-input-label">
+              <div id="threat-acquisition-bar" class="threat-acquisition-bar is-idle" role="group" aria-label="Threat Intel search display">
+                <span class="bar-kicker">Search / Display</span>
+                <strong id="threat-display-target">No scan</strong>
                 <span id="clipboard-listen" class="search-clipboard-widget" aria-label="Clipboard scan window state">
-                  <span>Copy +</span>
                   <span class="key-row inline-keys">
-                    <span id="clipboard-key-ctrl" class="key-chip">Ctrl</span>
                     <span id="clipboard-key-slash" class="key-chip">\</span>
+                    <span id="clipboard-key-ctrl" class="key-chip">Ctrl</span>
                   </span>
                   <strong id="clipboard-state">Idle</strong>
                 </span>
-                <span id="threat-kind-selector" class="kind-selector" role="group" aria-label="Target kind selector">
+                <input id="threat-target" class="manual-threat-input" name="threat-target" type="text" autocomplete="off" aria-label="Manual Threat Intel fallback" placeholder="Manual fallback target">
+              </div>
+              <div class="gateway-target-row">
+                <span id="threat-gateway" class="gateway-chip" aria-label="Gateway">\</span>
+                <span id="threat-kind-selector" class="kind-selector" role="group" aria-label="Target type selector">
                   <button class="kind-pill" type="button" data-threat-kind="pilot" aria-pressed="false">Pilot</button>
                   <button class="kind-pill" type="button" data-threat-kind="system" aria-pressed="true">System</button>
                   <span id="threat-kind-status" class="kind-status">System</span>
@@ -84,9 +92,6 @@
                   <button class="kind-pill" type="button" data-threat-kind="alliance" aria-pressed="false">Al</button>
                 </span>
                 <span id="threat-target-label" class="target-label">--</span>
-              </label>
-              <div class="threat-input-row">
-                <input id="threat-target" name="threat-target" type="text" autocomplete="off" placeholder="system:Jita, pilot:Chribba">
               </div>
               <div id="threat-pulse" class="threat-pulse" aria-label="zKill one hour pulse">
                 <span></span>
@@ -99,6 +104,25 @@
                 <span></span>
               </div>
             </form>
+            <section id="threat-report" class="threat-report" aria-label="Persistent Threat Intel report">
+              <div>
+                <span>Target</span>
+                <strong id="threat-report-target">No scan</strong>
+              </div>
+              <div>
+                <span>Status</span>
+                <strong id="threat-report-status">Idle</strong>
+              </div>
+              <div>
+                <span>Basis</span>
+                <strong id="threat-report-basis">No provider</strong>
+              </div>
+              <div>
+                <span>Sample</span>
+                <strong id="threat-report-sample">0 / 0</strong>
+              </div>
+              <p id="threat-report-message">Report persists until the next scan.</p>
+            </section>
             <p id="threat-message">Copy a target, then press Ctrl+\.</p>
           </details>
 

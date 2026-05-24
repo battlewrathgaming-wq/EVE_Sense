@@ -8,20 +8,20 @@ Owner: Overseer planning, Dev execution
 
 Active milestone: Milestone 14 - Back-Page Threat Intel UX
 Roadmap source: `docs/roadmap/milestone-14-back-page-threat-intel-ux.md`
-Sequence: HS01
-Previous accepted handshake: Milestone 13 complete; handshakes archived under `workspace/complete/milestone-13/`
+Sequence: HS02
+Previous accepted handshake: `workspace/DevHS01-sense-back-page-threat-intel-foundation.md`
 Current executor: Dev
-Current focus: back-page Threat Intel composition and display-first acquisition bar foundation
-Expected output: `DevHS01-sense-back-page-threat-intel-foundation.md`
+Current focus: back-page Threat Intel polish and validation readiness
+Expected output: `DevHS02-sense-back-page-polish-validation.md`
 Archive target on milestone completion: `workspace/complete/milestone-14/`
 
 ## Purpose
 
 This is the only active executable work packet for AURA-Sense.
 
-Milestone 13 is accepted complete. Milestone 14 now begins the back-page Threat Intel UX slice.
+Milestone 14 HS01 is accepted. It established the back-page Threat Intel foundation, display-first acquisition bar, gateway marker, local target-type controls, clipboard visual grammar, persistent latest scan report, and Electron visual smoke coverage.
 
-The first Milestone 14 runway should establish the overlay-native back-page composition and display-first Threat Intel acquisition surface without broadening provider behavior, adding Atlas persistence, or creating Lab/Core/shared presentation adapter work.
+HS02 should polish the back-page experience and close remaining verification gaps without broadening provider behavior or turning the report into historical storage.
 
 ## Required Reading
 
@@ -34,46 +34,38 @@ The first Milestone 14 runway should establish the overlay-native back-page comp
 - `docs/contracts/threat-intel-contract.md`
 - `docs/schemas/hud-snapshot.md`
 - `docs/features/clipboard-acquisition.md`
+- `workspace/DevHS01-sense-back-page-threat-intel-foundation.md`
+- `workspace/OverseerHS01-sense-back-page-foundation-review.md`
 
 ## Runway Objective
 
-Begin Milestone 14 by reshaping Threat Intel toward an overlay-native back-page workflow while preserving the current backend-owned scan contract.
+Finish the operator-facing polish needed for Milestone 14 acceptance while keeping the scope renderer/presentation-oriented.
 
-The front page should remain the live tactical read. The back page should become the deliberate Threat Intel review and acquisition surface. This packet should establish the layout/state foundation and verification hooks, not complete the whole milestone unless the work remains smaller than expected.
+This packet should improve clarity, density, state copy, and validation coverage for the back-page Threat Intel workflow. It should not expand providers, add historical storage, or create shared presentation abstractions.
 
 ## Ordered Runway
 
-1. Back-page composition foundation:
-   - keep front page focused on travel/general telemetry, Combat Witness pressure/repair, incoming source/contact context, and only trust-affecting runtime health
-   - move or stage Threat Intel search/report behavior as back-page first
-   - preserve lane separation and backend-owned snapshots
-   - do not trigger provider requests merely by opening/closing the back page
-2. Display-first search/display bar:
-   - convert the visible Threat Intel search surface into a display-first acquisition bar
-   - remove visible/manual Search button intent as the primary overlay workflow
-   - support idle target, listening/pulling, scanning, cooldown, and last captured target states
-   - keep focused/manual entry available only as a fallback if needed by existing implementation
-3. Gateway and target-type controls:
-   - treat `\` as gateway/back-page context
-   - keep `\ + CTRL` as clipboard acquire + scan
-   - keep `\ + ALT` as target type cycle
-   - ensure target type change is local classification only and does not scan
-   - do not run scans on focus alone
-4. Clipboard visual state grammar:
-   - teal means ready/local interaction
-   - amber interior means active clipboard authority
-   - amber exterior means cooldown/temporary constraint
-   - listener-active visuals must snap off on capture or scan start
-   - Listening is a state, not a mode
-5. Persistent report foundation:
-   - render last Threat Intel scan report below the search/display bar
-   - keep it stable until the next scan replaces it
-   - keep provider/sample/cap/partial/blocked/failure basis visible and honest
-   - do not turn the report into historical intelligence storage
-6. Verification:
-   - extend renderer/static or shell checks for display-first bar, target pill, gateway semantics, report persistence, and absence of renderer provider calls
-   - run focused checks and then `npm.cmd run verify:all`
-   - run `npm.cmd run smoke:electron` only if renderer/smoke behavior changes enough to require visual validation; if skipped, explain why
+1. Report density and basis copy:
+   - make the persistent report easier to scan in the compact overlay
+   - keep target, target type, status, provider basis, sample/cap/partial/blocked/failure state, and message copy visible
+   - avoid `Threat score`, `Complete result`, `Primary hostile`, or evidence-storage language
+2. Gateway and target type affordance polish:
+   - make `\` gateway state legible without implying clipboard authority
+   - keep target type cycling visibly teal/local
+   - ensure `Alt+\` changes target type without scanning
+   - ensure `Ctrl+\` is the only active clipboard/API chord in the focused path
+3. Clipboard authority visual cleanup:
+   - ensure amber interior appears only during active clipboard authority
+   - ensure cooldown uses amber exterior only
+   - ensure listener-active visuals snap off on capture/search start
+   - remove or rename stale `peek` implementation terms if doing so is low risk and improves maintainability
+4. Verification and smoke completeness:
+   - extend renderer shell/static checks for final copy/state expectations
+   - extend Electron smoke state coverage if selectors or visual states change
+   - run focused checks, `npm.cmd run verify:all`, and `npm.cmd run smoke:electron`
+5. Milestone closure recommendation:
+   - recommend whether Milestone 14 is ready for closure review
+   - if live/manual shortcut feel remains unproven, recommend a separate gated operator-validation packet rather than folding it into `verify:all`
 
 ## Guardrails
 
@@ -93,7 +85,7 @@ The front page should remain the live tactical read. The back page should become
 
 Return to chat before continuing if:
 
-- the front/back split requires a product decision not already covered by the roadmap
+- the polish requires changing the accepted front/back split
 - global shortcut behavior requires live/operator validation
 - a renderer change would weaken boundary checks
 - a report persistence choice starts resembling Atlas evidence storage
@@ -106,6 +98,7 @@ Run focused verification added or affected by the work, then run:
 
 ```powershell
 npm.cmd run verify:all
+npm.cmd run smoke:electron
 ```
 
 Likely focused commands, depending on files touched:
@@ -116,14 +109,6 @@ npm.cmd run verify:renderer-boundary
 npm.cmd run verify:renderer-boundary-adversarial
 npm.cmd run verify:threat-intel
 ```
-
-Conditionally run:
-
-```powershell
-npm.cmd run smoke:electron
-```
-
-Run Electron smoke if the shell/global shortcut behavior, visual smoke selectors, or substantive renderer visual states changed.
 
 Do not run by default:
 
