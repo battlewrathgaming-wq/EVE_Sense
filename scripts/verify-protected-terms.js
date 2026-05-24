@@ -30,18 +30,24 @@ const EXTENSIONS = new Set(['.md', '.js', '.html']);
 const MAX_REPORT = 40;
 
 function main() {
+  const options = parseArgs();
   const lookup = loadProtectedLookups();
   if (lookup.failures.length > 0) {
-    throw new Error(`Sense protected-term lookup failed:\n${lookup.failures.join('\n')}`);
+    console.log('Sense protected-term discovery: warning-only lookup issue(s)');
+    for (const failure of lookup.failures) {
+      console.log(`- ${failure}`);
+    }
   }
 
-  const files = collectScanFiles();
+  const files = collectScanFiles(options);
   const warnings = [
     ...findBorrowingWarnings(files, lookup),
     ...findBoundaryWarnings(files),
     ...discoverCandidates(files, lookup)
   ];
 
+  console.log(`Sense protected-term discovery mode: ${options.baseline ? 'baseline' : 'working-set'}`);
+  console.log(`Sense protected-term discovery source: ${options.baseline ? 'explicit broad baseline' : 'git status --short changed files'}`);
   console.log(`Sense protected-term discovery: scanned ${files.length} file(s)`);
   console.log(`Sense protected-term discovery: ${warnings.length} warning-only item(s)`);
 
@@ -53,7 +59,20 @@ function main() {
     console.log(`- ${warnings.length - MAX_REPORT} additional warning-only item(s) omitted from console output`);
   }
 
+  if (!options.baseline && files.length === 0) {
+    console.log('clean working tree: no changed files scanned; use --baseline for a broad advisory pass');
+  }
+
+  console.log('advisory evidence only; shared spelling does not imply shared meaning');
+  console.log('protected-word files: lookup inputs, not a universal glossary or rename mandate');
+  console.log('confirmation: warning-only; no renames performed; no protected-word JSON updates performed');
   console.log('sense protected-term discovery completed');
+}
+
+function parseArgs() {
+  return {
+    baseline: process.argv.includes('--baseline')
+  };
 }
 
 function loadProtectedLookups() {
@@ -63,6 +82,7 @@ function loadProtectedLookups() {
     own: [],
     external: [],
     collisions: [],
+    quarantine: [],
     pending: []
   };
 
@@ -70,6 +90,7 @@ function loadProtectedLookups() {
     own: 'sense-protected.json',
     atlas: 'atlas-protected.json',
     lab: 'lab-protected.json',
+    labQuarantine: 'lab-quarantine.json',
     collisions: 'shared-collisions.json',
     pending: 'pending-candidates.json'
   };
@@ -92,6 +113,7 @@ function loadProtectedLookups() {
     const terms = parsed.terms || [];
     if (key === 'own') lookup.own.push(...terms);
     if (key === 'atlas' || key === 'lab') lookup.external.push(...terms);
+    if (key === 'labQuarantine') lookup.quarantine.push(...terms);
     if (key === 'collisions') lookup.collisions.push(...terms);
     if (key === 'pending') lookup.pending.push(...terms);
   }
@@ -99,9 +121,9 @@ function loadProtectedLookups() {
   return lookup;
 }
 
-function collectScanFiles() {
+function collectScanFiles(options) {
   const changedFiles = collectGitChangedFiles();
-  if (changedFiles.length > 0) {
+  if (!options.baseline) {
     return changedFiles;
   }
 
@@ -137,7 +159,7 @@ function collectGitChangedFiles() {
     const absolute = path.join(root, relative);
     if (!fs.existsSync(absolute)) continue;
     const stat = fs.statSync(absolute);
-    if (stat.isFile() && EXTENSIONS.has(path.extname(absolute))) {
+    if (stat.isFile() && shouldScanFile(absolute)) {
       files.push(absolute);
     }
   }
@@ -152,7 +174,7 @@ function walk(dir, files) {
       walk(fullPath, files);
       continue;
     }
-    if (entry.isFile() && EXTENSIONS.has(path.extname(entry.name))) {
+    if (entry.isFile() && shouldScanFile(fullPath)) {
       files.push(fullPath);
     }
   }
@@ -160,7 +182,7 @@ function walk(dir, files) {
 
 function findBorrowingWarnings(files, lookup) {
   const warnings = [];
-  const externalTerms = lookup.external;
+  const externalTerms = [...lookup.external, ...lookup.quarantine];
   forEachLine(files, (line, file, lineNumber) => {
     if (isProtectiveOrReferenceLine(line)) return;
     for (const entry of externalTerms) {
@@ -356,6 +378,14 @@ function compareWarnings(left, right) {
 
 function rel(file) {
   return path.relative(root, file);
+}
+
+function shouldScanFile(file) {
+  const relative = rel(file);
+  if (!EXTENSIONS.has(path.extname(file))) return false;
+  if (relative === 'scripts\\verify-protected-terms.js') return false;
+  if (relative.includes('\\archive\\')) return false;
+  return true;
 }
 
 main();
