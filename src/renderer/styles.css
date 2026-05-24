@@ -673,6 +673,7 @@ dt {
   color: var(--muted);
   font-size: 0.7rem;
   font-weight: 700;
+  text-align: right;
 }
 
 .eyebrow,
@@ -766,18 +767,22 @@ h1 {
   display: grid;
   gap: 2px;
   justify-items: center;
+  max-width: 54px;
+  text-align: center;
 }
 
 .pressure-core span {
   color: var(--muted);
-  font-size: 0.58rem;
+  font-size: 0.46rem;
   font-weight: 800;
+  line-height: 1.05;
   text-transform: uppercase;
 }
 
 .pressure-core strong {
-  font-size: 1.12rem;
+  font-size: 0.86rem;
   line-height: 1;
+  white-space: nowrap;
 }
 
 .pressure-gauge.is-danger {
@@ -1440,11 +1445,11 @@ dd {
   }
 
   .pressure-core strong {
-    font-size: 0.9rem;
+    font-size: 0.7rem;
   }
 
   .pressure-core span {
-    font-size: 0.5rem;
+    font-size: 0.38rem;
   }
 
   .pressure-rails {

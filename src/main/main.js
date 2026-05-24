@@ -611,6 +611,8 @@ async function runVisualSmoke(window, outputDir) {
   assertSmoke(checks.hasCombatMetrics, 'renderer should contain compact Combat Witness metric fields');
   assertSmoke(checks.hasRuntimeState, 'renderer should contain runtime state in diagnostics panel');
   assertSmoke(checks.noParserRuntimeExposure, 'renderer should not expose parser/runtime modules');
+  assertSmoke(checks.combatWindowText === '15s rolling observed window', 'Combat Witness should expose rolling observed window copy');
+  assertSmoke(checks.netPressureLabelText === 'Observed balance', 'Combat Witness should expose Observed balance copy');
 
   const firstLightCaptureAttempts = await captureSmokeScreenshot(window, path.join(outputDir, 'first-light.png'));
   const regressionStates = await captureVisualRegressionStates(window, outputDir);
@@ -638,7 +640,7 @@ async function captureVisualRegressionStates(window, outputDir) {
     {
       name: 'unavailable',
       screenshot: 'state-unavailable.png',
-      assertions: ['#pressure-title', '#watcher-indicator', '#incoming-pressure', '#repair-throughput', '#passive-readout-state', '#passive-readout-basis'],
+      assertions: ['#pressure-title', '#pressure-window', '#net-pressure-label', '#watcher-indicator', '#incoming-pressure', '#repair-throughput', '#passive-readout-state', '#passive-readout-basis'],
       script: `
         resetViewportState();
         setText('#combat-summary', 'Combat Witness bridge unavailable.');
@@ -673,7 +675,7 @@ async function captureVisualRegressionStates(window, outputDir) {
     {
       name: 'stale',
       screenshot: 'state-stale.png',
-      assertions: ['#pressure-title', '#passive-system', '#system-shipkills', '#front-threat-provider', '#passive-readout-state', '#passive-readout-basis'],
+      assertions: ['#pressure-title', '#pressure-window', '#net-pressure-label', '#passive-system', '#system-shipkills', '#front-threat-provider', '#passive-readout-state', '#passive-readout-basis'],
       script: `
         resetViewportState();
         setText('#combat-summary', 'No recent combat observed.');
@@ -689,7 +691,7 @@ async function captureVisualRegressionStates(window, outputDir) {
     {
       name: 'degraded',
       screenshot: 'state-degraded.png',
-      assertions: ['#watcher-indicator', '#pressure-title', '#incoming-pressure', '#repair-throughput', '#passive-readout-state'],
+      assertions: ['#watcher-indicator', '#pressure-title', '#pressure-window', '#incoming-pressure', '#repair-throughput', '#passive-readout-state'],
       script: `
         resetViewportState();
         setText('#watcher-state', 'Degraded');
@@ -704,7 +706,7 @@ async function captureVisualRegressionStates(window, outputDir) {
     {
       name: 'blocked',
       screenshot: 'state-blocked.png',
-      assertions: ['#top-live-io-toggle', '#pressure-title', '#incoming-pressure', '#front-observed-source', '#passive-readout-state'],
+      assertions: ['#top-live-io-toggle', '#pressure-title', '#net-pressure-label', '#incoming-pressure', '#front-observed-source', '#passive-readout-state'],
       script: `
         resetViewportState();
         document.querySelector('#integrated-viewport')?.classList.add('io-off');
@@ -821,7 +823,7 @@ async function captureVisualRegressionStates(window, outputDir) {
       screenshot: 'state-narrow-viewport.png',
       width: 420,
       height: 520,
-      assertions: ['#integrated-viewport', '#pressure-title', '#incoming-pressure', '#repair-throughput', '#front-context-value'],
+      assertions: ['#integrated-viewport', '#pressure-title', '#pressure-window', '#net-pressure-label', '#incoming-pressure', '#repair-throughput', '#front-context-value'],
       script: `
         resetViewportState();
         setText('#combat-summary', 'Narrow viewport smoke state.');
@@ -978,7 +980,7 @@ function smokeChecks(window) {
       hasProviderPulse: Boolean(document.querySelector('#passive-provider-pulse') && document.querySelector('#threat-provider-pulse') && document.querySelector('#passive-pulse-detail') && document.querySelector('#threat-pulse-detail')),
       hasClipboardListen: Boolean(document.querySelector('#clipboard-state') && document.querySelector('#clipboard-key-ctrl') && document.querySelector('#clipboard-key-slash') && !document.querySelector('#shortcut-state')),
       hasDrawerControls: Boolean(document.querySelector('#threat-drawer') && document.querySelector('#diagnostics-setup-host') && document.querySelector('#diagnostics-panel') && document.querySelector('#diagnostics-toggle')),
-      hasCombatSurface: Boolean(document.querySelector('.combat-surface') && document.querySelector('#pressure-title') && document.querySelector('#net-pressure-gauge')),
+      hasCombatSurface: Boolean(document.querySelector('.combat-surface') && document.querySelector('#pressure-title') && document.querySelector('#pressure-window') && document.querySelector('#net-pressure-gauge')),
       hasCombatMetrics: Boolean(document.querySelector('#net-pressure-value') && document.querySelector('#incoming-pressure') && document.querySelector('#repair-throughput') && document.querySelector('#incoming-bar') && document.querySelector('#repair-bar')),
       hasEventList: Boolean(document.querySelector('#event-list')),
       hasWatcherControls: Boolean(document.querySelector('#watcher-controls') && document.querySelector('#gamelog-folder')),
@@ -995,6 +997,8 @@ function smokeChecks(window) {
       threatDisplayText: document.querySelector('#threat-display-target')?.textContent || null,
       threatReportText: document.querySelector('#threat-report')?.textContent || null,
       combatDetailText: document.querySelector('#combat-detail')?.textContent || null,
+      combatWindowText: document.querySelector('#pressure-window')?.textContent || null,
+      netPressureLabelText: document.querySelector('#net-pressure-label')?.textContent || null,
       incomingPressureText: document.querySelector('#incoming-pressure')?.textContent || null,
       repairBalanceText: document.querySelector('#repair-balance')?.textContent || null,
       passiveBasisText: document.querySelector('#passive-basis')?.textContent || null,

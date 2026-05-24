@@ -104,6 +104,10 @@ function main() {
   assert(html.includes('net-pressure-gauge'), 'renderer should include net pressure gauge target');
   assert(html.includes('net-pressure-value'), 'renderer should include net pressure value target');
   assert(html.includes('net-pressure-label'), 'renderer should include net pressure label target');
+  assert(html.includes('15s rolling observed window'), 'renderer should keep Combat Witness rolling observed window copy visible');
+  assert(html.includes('Incoming DPS'), 'renderer should label observed incoming pressure as Incoming DPS');
+  assert(html.includes('Repair HPS'), 'renderer should label observed repair throughput as Repair HPS');
+  assert(html.includes('Observed balance'), 'renderer should label repair minus damage as Observed balance');
   assert(html.includes('incoming-pressure'), 'renderer should include observed incoming pressure target');
   assert(html.includes('incoming-bar'), 'renderer should include incoming pressure bar target');
   assert(html.includes('repair-throughput'), 'renderer should include observed repair throughput target');
@@ -172,6 +176,9 @@ function main() {
   assert(app.includes('window15s.damage?.incoming'), 'renderer should present backend-owned Combat Witness incoming metrics');
   assert(app.includes('window15s.repair?.incoming'), 'renderer should present backend-owned Combat Witness repair metrics');
   assert(app.includes('renderNetPressure'), 'renderer should render net repair minus damage pressure');
+  assert(app.includes("setText('net-pressure-label', 'Observed balance')"), 'renderer should keep Observed balance as the gauge label');
+  assert(app.includes("setText('net-pressure-value', signedRate(net))"), 'renderer should show observed balance as a signed rate');
+  assert(app.includes('15s rolling observed window: incoming DPS, repair HPS, and observed balance only.'), 'renderer should keep Combat Witness detail bounded to rolling observed copy');
   assert(app.includes('renderFrontContextTile'), 'renderer should update the configurable front context tile');
   assert(app.includes('localStorage.setItem'), 'renderer should persist presentation-only tile mode locally');
   assert(app.includes("setText('front-threat-provider'"), 'renderer should update front-page threat provider context');

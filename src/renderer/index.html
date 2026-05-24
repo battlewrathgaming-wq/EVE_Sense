@@ -151,25 +151,26 @@
         <section class="combat-surface lane-surface" aria-labelledby="pressure-title">
           <div class="pressure-heading">
             <p id="pressure-title" class="eyebrow">Combat Witness</p>
+            <span id="pressure-window">15s rolling observed window</span>
           </div>
           <div class="pressure-scope" aria-label="Combat pressure">
-            <div id="net-pressure-gauge" class="pressure-gauge" aria-label="Net repair minus incoming damage">
+            <div id="net-pressure-gauge" class="pressure-gauge" aria-label="Observed repair balance">
               <div class="pressure-core">
-                <span id="net-pressure-label">Net</span>
+                <span id="net-pressure-label">Observed balance</span>
                 <strong id="net-pressure-value">0</strong>
               </div>
             </div>
             <div class="pressure-rails">
               <div class="bar-row" id="incoming-pressure-row">
                 <div class="bar-label">
-                  <span>15s Incoming</span>
+                  <span>Incoming DPS</span>
                   <strong id="incoming-pressure">0</strong>
                 </div>
                 <div class="meter"><span id="incoming-bar"></span></div>
               </div>
               <div class="bar-row" id="repair-throughput-row">
                 <div class="bar-label">
-                  <span>15s Repair</span>
+                  <span>Repair HPS</span>
                   <strong id="repair-throughput">0</strong>
                 </div>
                 <div class="meter repair"><span id="repair-bar"></span></div>

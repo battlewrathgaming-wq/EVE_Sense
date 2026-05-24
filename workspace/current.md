@@ -187,37 +187,59 @@ Dev updates this before handoff.
 Verification run:
 
 ```txt
-Pending Dev.
+npm.cmd run verify:renderer-shell
+npm.cmd run verify:combat-witness
+npm.cmd run verify:combat-bridge
+npm.cmd run verify:combat-runtime
+npm.cmd run verify:passive-telemetry
+npm.cmd run verify:renderer-boundary
+npm.cmd run verify:renderer-boundary-adversarial
+npm.cmd run verify:protected-terms
+npm.cmd run verify:all
+npm.cmd run smoke:electron
 ```
 
 Files changed:
 
 ```txt
-Pending Dev.
+src/renderer/index.html
+src/renderer/app.js
+src/renderer/styles.css
+src/main/main.js
+scripts/verify-renderer-shell.js
+workspace/current.md
+workspace/DevHS02-sense-face-refinement-pass.md
 ```
 
 Findings:
 
 ```txt
-Pending Dev.
+Implemented renderer-only Sense face refinement.
+Combat Witness now keeps Combat Witness primary while showing Incoming DPS, Repair HPS, Observed balance, and 15s rolling observed window copy in the first read.
+Observed source and observed weapon compact context remain visible through the existing front tiles and diagnostics.
+Passive Telemetry compact support was preserved with accepted labels and basis behavior unchanged.
+Renderer shell and Electron visual smoke now assert the new Combat Witness face copy/selectors.
+The active-packet Lab advisory path was read at F:\Projects\AURA- Lab\workspace\SenseImportAdvisoryHS65-lab-presentation-adoption.md, and Lab remote-consumer conformance guidance was copied locally as workspace/LabRemoteConsumerConformanceHS66.md.
+Protected-term discovery completed in warning-only mode with 900 warnings and no renames/protected-word JSON changes after handoff files were included. The optional --quarantine sniff remains available for low-confidence Lab quarantine terms.
 ```
 
 Deferrals:
 
 ```txt
-Pending Dev.
+No live provider smoke, manual shortcut validation, or real SDE refresh/download was run.
+No backend contracts, bridge APIs, IPC channels, service commands, payload fields, provider clients, parser/watcher/runtime behavior, or snapshot shapes were changed.
 ```
 
 ## Dev Handoff
 
 Dev fills this in when work is complete:
 
-- completed tasks:
-- tests added/updated:
-- verification output:
-- failures found:
-- handshake created:
-- remaining risk:
+- completed tasks: Compact Combat Witness first-read hierarchy updated; Passive Telemetry accepted compact readout preserved; face composition kept within existing overlay structure; boundary-preserving renderer-only implementation completed.
+- tests added/updated: `scripts/verify-renderer-shell.js` now checks Combat Witness rolling observed window, Incoming DPS, Repair HPS, Observed balance, signed observed balance rendering, and bounded detail copy. `src/main/main.js` Electron smoke now asserts `#pressure-window` and `#net-pressure-label` across first-light/regression/narrow states.
+- verification output: All required commands passed: `verify:combat-witness`, `verify:combat-bridge`, `verify:combat-runtime`, `verify:passive-telemetry`, `verify:renderer-shell`, `verify:renderer-boundary`, `verify:renderer-boundary-adversarial`, `verify:protected-terms`, `verify:all`, and `smoke:electron`.
+- failures found: None during final verification. Protected-term discovery remains warning-only and reported 900 warning-only items after handoff files were included; optional `--quarantine` mode remains available for low-confidence Lab quarantine terms.
+- handshake created: `workspace/DevHS02-sense-face-refinement-pass.md`
+- remaining risk: Gauge center copy is deliberately compact and smoke-covered, but future visual review may still tune exact typography. Combat Witness still inherits existing internal `is-stable` CSS class naming, intentionally not renamed because this packet protects CSS/test identifiers.
 
 ## Overseer Review
 

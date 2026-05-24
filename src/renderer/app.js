@@ -1019,7 +1019,7 @@ function combatDetail(snapshot, status) {
   if (status === 'degraded') return 'Log Watcher state is degraded.';
   if (status === 'stale') return 'Last observed combat event is stale.';
   if (status === 'empty') return 'No bounded combat events have been observed.';
-  return '15s window shows observed pressure and repair only.';
+  return '15s rolling observed window: incoming DPS, repair HPS, and observed balance only.';
 }
 
 function passiveBasis(snapshot) {
@@ -1315,8 +1315,8 @@ function renderNetPressure(netPressure, incoming, repair) {
   gauge.style.setProperty('--repair-arc', `${repairArc}deg`);
   gauge.classList.toggle('is-danger', net < 0);
   gauge.classList.toggle('is-stable', net > 0);
-  setText('net-pressure-label', net < 0 ? '-DMG' : (net > 0 ? '+REPS' : 'NET'));
-  setText('net-pressure-value', formatNumber(Math.abs(net)));
+  setText('net-pressure-label', 'Observed balance');
+  setText('net-pressure-value', signedRate(net));
 }
 
 function toggleQuiet(id, quiet) {
