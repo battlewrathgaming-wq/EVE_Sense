@@ -11,7 +11,7 @@ Current advisory track: Sense-owned Lab presentation adoption review
 Latest closed milestone: Milestone 14 - Back-Page Threat Intel UX
 Latest accepted closure: `workspace/complete/milestone-14/OverseerHS03-milestone-14-closure.md`
 Current executor: None
-Current focus: Awaiting human decision on Passive Telemetry Bridge State Readout prototype
+Current focus: Awaiting next packet; authority decision recorded for project-to-Lab terminology split
 Expected output: None
 
 ## Purpose
@@ -21,6 +21,16 @@ This is the current AURA-Sense coordination packet.
 The Sense-owned Lab presentation adoption review has been completed as advisory alignment work, not Dev implementation and not shared doctrine creation.
 
 AURA-Sense reviewed Lab Bridge State Readout mechanics only as advisory input. Sense authority remains project-local: transient tactical viewport, backend-owned truth, live-gated state, lane separation, and no Atlas-style historical evidence storage.
+
+Human authority decision recorded after the review:
+
+```txt
+Individual projects own internal -> Bridge connections.
+Bridge -> Interface presentation is preserved unless there is conflict or human override.
+When Bridge -> Interface terminology needs ownership, Aura Lab owns user-facing terminology.
+```
+
+For Sense, this means AURA-Sense owns how Combat Witness, Passive Telemetry, Threat Intel, Clipboard Acquisition, runtime settings, diagnostics, and local metadata connect to the Bridge. Lab-owned Interface terminology may be accepted for Bridge-facing presentation where it does not conflict with Sense doctrine, lane boundaries, or human direction.
 
 ## Required Reading
 
@@ -78,6 +88,7 @@ Next role/action: UI/UX packet for a Passive Telemetry readout prototype, then D
 - Do not broaden Sense product direction.
 - Do not use archived docs/gap as active queues unless current project authority references them.
 - Label repo-verified facts separately from advisory assumptions and recommendations.
+- Preserve the human authority split: Sense owns internal-to-Bridge meaning; Lab owns Bridge-to-Interface terminology unless Sense conflict or human override applies.
 
 ## Verification
 
@@ -95,6 +106,7 @@ Prototype: UI/UX-only Passive Telemetry Bridge State Readout mapping before Dev
 Project authority changes: none
 Implementation changes: none
 Verification run: none; not required for advisory review
+Authority decision recorded: projects own internal -> Bridge connections; Lab owns Bridge -> Interface user-facing terminology unless conflict or human override applies.
 ```
 
 ## Handoff
@@ -102,5 +114,5 @@ Verification run: none; not required for advisory review
 - artifact created: `workspace/SenseAdoptionHS01-aura-lab-presentation-mechanics-review.md`
 - project authority changes: none
 - implementation changes: none
-- recommended next action: UI/UX packet for Passive Telemetry readout prototype using existing snapshot fields only
-- human decisions needed: approve/adjust Passive Telemetry as first lane; choose `Fresh` vs `Recent context`; decide whether `Local only` is acceptable fallback wording
+- recommended next action: UI/UX packet for Passive Telemetry readout prototype using existing snapshot fields only, applying the recorded authority split
+- human decisions needed: approve/adjust Passive Telemetry as first lane; confirm any Sense conflicts with Lab-owned Bridge-to-Interface terminology

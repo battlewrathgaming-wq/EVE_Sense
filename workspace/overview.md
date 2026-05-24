@@ -33,6 +33,16 @@ Current sequence: Advisory review after Milestone 14 closure
 Latest accepted handshake: `workspace/complete/milestone-14/OverseerHS03-milestone-14-closure.md`
 Active advisory track: Sense-owned Lab presentation adoption review
 
+## Authority Notes
+
+Human decision recorded 2026-05-24:
+
+- Individual projects own internal -> Bridge connections.
+- Bridge -> Interface presentation should be preserved unless there is conflict or human override.
+- When Bridge -> Interface terminology needs ownership, Aura Lab owns user-facing terminology.
+
+AURA-Sense therefore owns its lane semantics and internal-to-Bridge mapping. Lab-owned Interface terminology can be used for Bridge-facing presentation where it does not conflict with Sense doctrine, lane boundaries, or human direction.
+
 ## Durable Record Index
 
 ### Current State
@@ -74,5 +84,5 @@ Active advisory track: Sense-owned Lab presentation adoption review
 ## Open Questions
 
 - Which remaining live/manual validation items should move into a later operator-validation milestone?
-- Whether the Sense-owned Lab presentation adoption review should accept, adapt, reject, or defer Lab mechanics.
+- Whether the Passive Telemetry Bridge State Readout should proceed as a UI/UX-only prototype under the recorded authority split.
 - What Sense-local milestone should open after the advisory review, if any?
