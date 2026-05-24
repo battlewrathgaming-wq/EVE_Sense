@@ -47,7 +47,8 @@ Displayed fields:
 
 Copy guardrails:
 
-- Use `Incoming pressure`, `Repair throughput`, `Observed repair balance`, `Observed source`, and `Most observed weapon`.
+- Use `Incoming DPS`, `Repair HPS`, `Observed balance`, `Observed source`, and `Observed weapon` for the accepted first-read face.
+- `Incoming pressure`, `Repair throughput`, and `Observed repair balance` remain acceptable explanatory language where space allows.
 - Do not describe repair balance as safety, stability, breaking, tank state, or survival.
 - Do not emphasize spike outliers in the integrated HUD until real-dataset calibration is complete.
 
@@ -63,6 +64,18 @@ Displayed fields:
 - `freshness.status`
 - `gate`/`status` blocked messaging
 - provider basis derived from `zkill` and `activity`
+
+Accepted renderer copy for the compact Passive readout:
+
+- `Fresh context`
+- `Stale context`
+- `Partial sample`
+- `Capped sample`
+- `Live IO blocked`
+- `Degraded`
+- `No observation`
+
+Avoid generic current/aged/fallback/no-data style labels for Passive Telemetry when the lane-specific state is known.
 
 ### Threat Intel Integrated Fields
 

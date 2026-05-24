@@ -1,7 +1,7 @@
 # Current State: AURA-Sense Implementation
 
 Date: 2026-05-24
-Status: Operational hardening complete; Milestone 13 offline aggressive hardening complete; Milestone 14 back-page Threat Intel UX active
+Status: Operational hardening complete; Milestone 13 and Milestone 14 complete; post-Milestone-14 Sense face refinement accepted
 
 ## What Exists
 
@@ -65,6 +65,8 @@ The current implementation includes:
 - Threat Intel preload bridge with no renderer-owned provider calls
 - integrated tactical viewport layout with lane overview and separate Combat Witness, Passive Telemetry, and Threat Intel surfaces
 - Combat Witness integrated display for observed incoming pressure, repair throughput, observed repair balance, observed source, and most observed weapon
+- Combat Witness first-read face for `Incoming DPS`, `Repair HPS`, `Observed balance`, and `15s rolling observed window`
+- Passive Telemetry compact readout using Sense-owned states: `Fresh context`, `Stale context`, `Partial sample`, `Capped sample`, `Live IO blocked`, `Degraded`, and `No observation`
 - lane-specific provider/basis display for Passive Telemetry and Threat Intel
 - lane-specific provider pulse chips for Passive Telemetry and Threat Intel derived from backend-owned snapshot metadata
 - Electron visual smoke assertions for integrated viewport selectors, combat metric fields, and provider basis fields
@@ -101,7 +103,6 @@ Not yet proven in this codebase:
 - full refreshed EVE type metadata artifact generated from current SDE source
 - production-grade multi-lane HUD renderer beyond the current integrated/back-page foundation
 - live EVE gamelog operational smoke against an operator machine
-- full provider request pulse UI
 - live zKill/ESI smoke execution with `AURA_SENSE_LIVE_API=1`
 - live Threat Intel zKill smoke execution with `AURA_SENSE_LIVE_API=1`
 - exact Ctrl+Shift-only accelerator capture; Electron runtime uses the current Clipboard Acquisition shortcut path with fallback status reporting and the focused UI shortcut remains available
@@ -196,9 +197,9 @@ It writes artifacts under `.tmp\electron-visual-smoke` and is intentionally not 
 - Combat Witness repair balance is observed HPS minus DPS only; it is not survival, stability, or tank-state evidence
 - integrated viewport does not display damage spike outliers yet; calibration remains open
 - live validation/calibration is now scoped as a future milestone, not yet implemented
-- aggressive testing and bug hunting are now active as a parallel hardening runway; P0 parser hostile fixtures, watcher chaos, renderer/preload adversarial tests, Electron visual state regression smoke, and Clipboard Acquisition race tests are covered
+- aggressive testing and bug hunting are complete for the offline Milestone 13 scope; live/manual validation remains gated for later operator-validation work
 - real SDE refresh/download artifacts must remain explicit and should not be staged by default
-- concept and research docs are AURA-Sense product doctrine or evidence notes; older audit records may still describe past cleanup work
+- concept and research docs are AURA-Sense product doctrine or local review notes; older audit records may still describe past cleanup work
 
 ## Related Documents
 

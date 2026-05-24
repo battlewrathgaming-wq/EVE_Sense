@@ -1,7 +1,7 @@
 ﻿# Current State: Combat Metrics
 
-Date: 2026-05-23
-Status: Audit baseline for Combat Witness capture, compute, snapshot, and display terminology
+Date: 2026-05-24
+Status: Current baseline for Combat Witness capture, compute, snapshot, and display terminology after accepted face refinement
 
 ## Purpose
 
@@ -591,7 +591,10 @@ The current UI and diagnostics surface display selected Combat Witness fields, i
 - Witnessed event count
 - 5s incoming
 - 15s repair
-- repair balance
+- 15s rolling observed window
+- Incoming DPS
+- Repair HPS
+- Observed balance
 - observed source
 - observed weapon
 - log watcher state
@@ -606,8 +609,6 @@ The current UI does not clearly display:
 - outgoing miss count
 - outgoing observed attempt count
 - most frequent outgoing hit quality
-- incoming DPS as a named DPS/pressure metric
-- incoming repair HPS as a named throughput metric
 - top observed target
 - hit quality counts
 - damage type counts
@@ -687,6 +688,7 @@ These need more proof before strong HUD emphasis:
 - The diagnostics surface currently has several backend-ish labels that need product terminology review.
 - Damage spike outliers exist but remain intentionally low-emphasis until calibrated.
 - Some current empty states use ambiguous terms such as `Unobserved` or `Empty`.
+- The existing renderer still has internal CSS/test names such as `is-stable`; those are below user-facing copy and should not be renamed casually.
 
 ## Presentation Grouping Rule
 

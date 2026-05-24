@@ -13,6 +13,12 @@ Expanded lists:
 
 Lab may use its own product-agnostic presentation vocabulary after the bridge, but Sense owns Sense terms, emitted meanings, lane semantics, live-IO states, and Project -> Bridge language.
 
+## Awaiting Authority Review
+
+Atlas and Lab are expected to produce a first-pass durable terminology review before Sense updates shared-facing terminology classifications again.
+
+Until that arrives, treat this file as Sense-local authority for current meanings and as a warning surface for likely collisions. Do not promote shared spelling into shared doctrine, do not rename contracts from sniffer output, and do not treat Lab presentation language as authority over Sense internal or Project -> Bridge meaning.
+
 ## Preserve Exactly
 
 | Term | Meaning | Why Preserve | Downstream Note |
