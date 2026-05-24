@@ -14,6 +14,7 @@ try {
   verifyOffsetSeedingAndAppendOnly();
   verifyPollingFallbackAndTick();
   verifyDuplicateTtlBursts();
+  verifyTailReadFailureDoesNotAdvanceOffset();
   verifyFailureIsolationAndSanitization();
   console.log('gamelog watcher chaos verified');
 } finally {
@@ -113,6 +114,41 @@ function verifyDuplicateTtlBursts() {
   assert.strictEqual(deduper.isDuplicate(event, 1000), false, 'first burst event should pass');
   assert.strictEqual(deduper.isDuplicate(event, 1200), true, 'duplicate inside TTL should suppress');
   assert.strictEqual(deduper.isDuplicate(event, 2501), false, 'duplicate after TTL should pass again');
+}
+
+function verifyTailReadFailureDoesNotAdvanceOffset() {
+  const folder = makeFolder('tail-read-failure');
+  const logPath = writeLog(folder, '20260523_035000_A.txt', '');
+  const traces = [];
+  const statuses = [];
+  let failOnce = true;
+  const watcher = new EveGamelogWatcher({
+    watcherStrategy: 'polling',
+    onStatus: (status) => statuses.push(status),
+    trace: (event, payload) => traces.push({ event, payload }),
+    readRange: (filePath, start, end) => {
+      if (failOnce) {
+        failOnce = false;
+        throw new Error('simulated permission churn');
+      }
+      return fs.readFileSync(filePath, 'utf8').slice(start, end);
+    },
+    setIntervalFn: () => 1,
+    clearIntervalFn: () => {}
+  });
+
+  watcher.offsets.set(logPath, 0);
+  append(logPath, `${jumpLine('SecretSeed', 'FutureAfterFailure')}`);
+  assert.deepStrictEqual(watcher.handleFile(logPath), [], 'failed range read should emit no events');
+  assert.strictEqual(watcher.offsets.get(logPath), 0, 'failed range read must not advance past unread bytes');
+  assert.strictEqual(statuses.at(-1).state, 'error', 'failed range read should degrade watcher status');
+  assert.ok(traces.some((entry) => entry.event === 'tail_read_failed'), 'failed range read should be diagnostic');
+  assert.doesNotMatch(JSON.stringify(traces), /SecretSeed|FutureAfterFailure/, 'failed range read diagnostics should not leak unread log text');
+
+  const recovered = watcher.handleFile(logPath);
+  assert.strictEqual(recovered.length, 1, 'next successful read should consume previously unread bytes');
+  assert.strictEqual(watcher.offsets.get(logPath), fs.statSync(logPath).size, 'successful read should advance offset after bytes are read');
+  watcher.stop();
 }
 
 function verifyFailureIsolationAndSanitization() {

@@ -26,6 +26,9 @@ bridge.register(ipcMain);
 assert.strictEqual(typeof handlers.get(COMBAT_WITNESS_CHANNELS.getSnapshot), 'function', 'bridge should register snapshot handler');
 assert.strictEqual(typeof handlers.get(COMBAT_WITNESS_CHANNELS.subscribe), 'function', 'bridge should register subscribe handler');
 assert.strictEqual(typeof handlers.get(COMBAT_WITNESS_CHANNELS.unsubscribe), 'function', 'bridge should register unsubscribe handler');
+const invalidSubResult = handlers.get(COMBAT_WITNESS_CHANNELS.subscribe)({});
+assert.strictEqual(invalidSubResult.subscribed, false, 'bridge should reject missing sender subscribe');
+assert.strictEqual(service.snapshotListeners.size, 0, 'invalid subscribe should not create an idle backend subscription');
 
 const sent = [];
 const destroyedHandlers = {};
@@ -41,6 +44,7 @@ const event = { sender };
 
 const subResult = handlers.get(COMBAT_WITNESS_CHANNELS.subscribe)(event);
 assert.strictEqual(subResult.subscribed, true, 'bridge should subscribe sender');
+assert.strictEqual(service.snapshotListeners.size, 1, 'valid subscribe should create one backend subscription');
 assert.strictEqual(sent[0].channel, COMBAT_WITNESS_CHANNELS.snapshot, 'bridge should send initial compact snapshot on subscribe');
 assert.strictEqual(sent[0].payload.kind, 'combat.witness.snapshot', 'initial bridge payload should be snapshot');
 assert.strictEqual(sent[0].payload.freshness.status, 'empty', 'initial bridge payload should expose backend freshness status');
@@ -60,6 +64,7 @@ assert.strictEqual(sent[2].payload.windows['5s'].damage.incoming.total, 15, 'bri
 
 const unsubResult = handlers.get(COMBAT_WITNESS_CHANNELS.unsubscribe)(event);
 assert.strictEqual(unsubResult.unsubscribed, true, 'bridge should unsubscribe sender');
+assert.strictEqual(service.snapshotListeners.size, 0, 'unsubscribe should release idle backend subscription');
 nowMs += 300;
 service.addEvent(combatDamage('hit-3', '2026-05-22T01:00:02.000Z', 2));
 assert.strictEqual(sent.length, 3, 'bridge should stop sending after unsubscribe');
@@ -69,6 +74,7 @@ assert.strictEqual(directSnapshot.kind, 'combat.witness.snapshot', 'bridge shoul
 
 handlers.get(COMBAT_WITNESS_CHANNELS.subscribe)(event);
 destroyedHandlers.destroyed();
+assert.strictEqual(service.snapshotListeners.size, 0, 'destroyed sender should release backend subscription');
 nowMs += 300;
 service.addEvent(combatDamage('hit-4', '2026-05-22T01:00:03.000Z', 4));
 assert.strictEqual(sent.length, 4, 'bridge should only send the resubscribe initial snapshot after sender destruction');

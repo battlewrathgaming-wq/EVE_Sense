@@ -173,6 +173,8 @@ function main() {
   assert(!app.includes("addEventListener('focus', submitThreatSearch"), 'renderer focus must not dispatch Threat Intel scan');
   assert(app.includes('snapshot?.operational?.watcher'), 'renderer should present backend-owned watcher status');
   assert(app.includes('snapshot?.freshness?.status'), 'renderer should present backend-owned freshness status');
+  assert(app.includes("watcherState === 'degraded'"), 'renderer should let degraded watcher state override recent combat freshness');
+  assert(app.includes("watcherState === 'unavailable'"), 'renderer should let unavailable watcher state override recent combat freshness');
   assert(app.includes('window.auraWindow.setAlwaysOnTop'), 'renderer should toggle always-on-top through Frame bridge');
   assert(app.includes('subscribePresentationPauses'), 'renderer should subscribe to presentation pause events');
   assert(app.includes('queuePresentationUpdate'), 'renderer should queue snapshot rendering while presentation is paused');

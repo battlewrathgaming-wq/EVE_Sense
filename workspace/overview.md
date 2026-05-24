@@ -1,7 +1,7 @@
 ﻿# AURA-Sense Workspace Overview
 
 Status: Active
-Last reviewed: 2026-05-23
+Last reviewed: 2026-05-24
 
 ## Vision Statement
 
@@ -29,8 +29,8 @@ It should present compact, uncertainty-aware tactical state while staying transi
 Milestone: 13 - Aggressive Testing And Bug Hunting
 Roadmap source: `docs/roadmap/milestone-13-aggressive-testing-and-bug-hunting.md`
 Current packet: `workspace/current.md`
-Current sequence: HS01
-Latest accepted handshake: None under the new workspace handshake sequence
+Current sequence: HS02
+Latest accepted handshake: `workspace/DevHS01-sense-pre-bridge-hardening.md`
 
 ## Durable Record Index
 

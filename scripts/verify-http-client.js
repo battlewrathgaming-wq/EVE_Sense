@@ -11,6 +11,8 @@ async function main() {
   await verifyCancellation();
   await verifySuccessAndLogHook();
   await verifyInvalidJsonIsNonRetryable();
+  await verifyRateLimitRetryExhaustion();
+  await verifyServerErrorVisibility();
   console.log('HTTP client verified');
 }
 
@@ -97,6 +99,56 @@ async function verifyInvalidJsonIsNonRetryable() {
   assert(!logs[0].statusCode, 'invalid JSON should not be logged as successful status');
 }
 
+async function verifyRateLimitRetryExhaustion() {
+  const logs = [];
+  let attempts = 0;
+  const client = new HttpClient({
+    maxAttempts: 2,
+    fetchImpl: async () => {
+      attempts += 1;
+      return {
+        ok: false,
+        status: 429,
+        headers: { get: (name) => name === 'retry-after' ? '0.001' : null },
+        text: async () => ''
+      };
+    },
+    onRequestLog: (entry) => logs.push(entry)
+  });
+
+  await assertRejects(
+    () => client.json('zkill', 'https://example.invalid/rate-limited'),
+    undefined,
+    'rate-limited request should reject after retry exhaustion'
+  );
+  assert(attempts === 2, 'rate-limited request should retry until configured attempts are exhausted');
+  assert(logs[0].statusCode === 429, 'rate limit failure should preserve status code');
+  assert(logs[0].rateLimited === true, 'rate limit failure should be operator-visible');
+  assert(logs[0].diagnostic_event === 'http_request_rate_limited', 'rate limit failure should use rate-limit diagnostic event');
+}
+
+async function verifyServerErrorVisibility() {
+  const logs = [];
+  const client = new HttpClient({
+    maxAttempts: 1,
+    fetchImpl: async () => ({
+      ok: false,
+      status: 500,
+      headers: { get: () => null },
+      text: async () => ''
+    }),
+    onRequestLog: (entry) => logs.push(entry)
+  });
+
+  await assertRejects(
+    () => client.json('esi', 'https://example.invalid/server-error'),
+    undefined,
+    'server error request should reject'
+  );
+  assert(logs[0].statusCode === 500, 'server error should preserve status code');
+  assert(logs[0].diagnostic_event === 'http_request_error', 'server error should be logged as request error');
+}
+
 function neverFetch(_endpoint, options = {}) {
   return new Promise((_resolve, reject) => {
     if (options.signal?.aborted) {
@@ -129,7 +181,9 @@ async function assertRejects(fn, expectedCode, message) {
   try {
     await fn();
   } catch (error) {
-    assert(error.code === expectedCode, `${message}: expected ${expectedCode}, got ${error.code || error.message}`);
+    if (expectedCode !== undefined) {
+      assert(error.code === expectedCode, `${message}: expected ${expectedCode}, got ${error.code || error.message}`);
+    }
     return;
   }
   throw new Error(message);

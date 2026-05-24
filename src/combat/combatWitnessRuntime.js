@@ -32,6 +32,7 @@ function createCombatWitnessRuntime({
     },
     onStatus: (status) => {
       runtime.watcherStatus = normalizeWatcherStatus(status, now());
+      emitOperationalSnapshot();
     },
     trace
   });
@@ -47,6 +48,7 @@ function createCombatWitnessRuntime({
         strategy: null,
         updatedAt: now()
       };
+      emitOperationalSnapshot();
       return status();
     }
 
@@ -58,6 +60,7 @@ function createCombatWitnessRuntime({
       strategy: null,
       updatedAt: now()
     };
+    emitOperationalSnapshot();
     return status();
   }
 
@@ -77,10 +80,12 @@ function createCombatWitnessRuntime({
         strategy: null,
         updatedAt: now()
       };
+      emitOperationalSnapshot();
       return status();
     }
 
     runtime.watcherStatus = normalizeWatcherStatus(activeWatcher.start(runtime.configuredPath), now());
+    emitOperationalSnapshot();
     return status();
   }
 
@@ -93,6 +98,7 @@ function createCombatWitnessRuntime({
       strategy: null,
       updatedAt: now()
     };
+    emitOperationalSnapshot();
     return status();
   }
 
@@ -113,6 +119,12 @@ function createCombatWitnessRuntime({
 
   function snapshot() {
     return decorateSnapshot(service.snapshot(), status());
+  }
+
+  function emitOperationalSnapshot() {
+    if (typeof service.emitSnapshot === 'function') {
+      service.emitSnapshot(snapshot());
+    }
   }
 
   function observeEvent(event) {

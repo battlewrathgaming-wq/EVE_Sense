@@ -815,7 +815,11 @@ function updateKeyGlow() {
 }
 
 function statusFromSnapshot(snapshot) {
-  return snapshot?.freshness?.status || (snapshot ? 'empty' : 'unavailable');
+  if (!snapshot) return 'unavailable';
+  const watcherState = snapshot?.operational?.watcher?.state;
+  if (watcherState === 'degraded') return 'degraded';
+  if (watcherState === 'unavailable' || watcherState === 'blocked') return 'unavailable';
+  return snapshot?.freshness?.status || 'empty';
 }
 
 function signalLabel(status) {

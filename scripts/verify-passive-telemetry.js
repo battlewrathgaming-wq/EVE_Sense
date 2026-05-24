@@ -248,6 +248,46 @@ assert.strictEqual(service.snapshot().freshness.status, 'unavailable', 'initial 
   assert.strictEqual(activityC.cache.state, 'revalidated', 'expired ESI activity cache should revalidate with ETag');
   assert.strictEqual(activityCalls, 4, 'expired ESI activity cache should perform conditional request pair');
 
+  let staleNowMs = Date.parse('2026-05-22T05:30:00.000Z');
+  let staleCalls = 0;
+  const staleActivityClient = new PassiveEsiSystemActivityClient({
+    now: () => staleNowMs,
+    httpClient: {
+      jsonWithMeta: async (_provider, endpoint, options = {}) => {
+        staleCalls += 1;
+        if (options.headers?.['If-None-Match']) {
+          if (endpoint.includes('system_jumps')) {
+            const error = new Error('synthetic ETag revalidation failure');
+            error.code = 'ESI_REVALIDATION_FAILED';
+            throw error;
+          }
+          return { data: null, statusCode: 304, etag: options.headers['If-None-Match'] };
+        }
+        if (endpoint.includes('system_kills')) {
+          return {
+            data: [{ system_id: 30000142, ship_kills: 6, pod_kills: 2, npc_kills: 12 }],
+            statusCode: 200,
+            etag: '"stale-etag"'
+          };
+        }
+        return {
+          data: [{ system_id: 30000142, ship_jumps: 35 }],
+          statusCode: 200,
+          etag: '"stale-etag"'
+        };
+      }
+    }
+  });
+  const staleA = await staleActivityClient.fetchSystemActivity(30000142, { fetchedAt: '2026-05-22T05:30:00.000Z' });
+  assert.strictEqual(staleA.cache.state, 'refreshed', 'stale-cache setup should first refresh activity');
+  staleNowMs += 2 * 60 * 60 * 1000;
+  await assertRejects(
+    () => staleActivityClient.fetchSystemActivity(30000142),
+    'ESI_REVALIDATION_FAILED',
+    'ETag revalidation failure should remain visible'
+  );
+  assert.strictEqual(staleCalls, 4, 'ETag revalidation failure should attempt conditional kills and jumps reads');
+
   let gateNowMs = Date.parse('2026-05-22T06:00:00.000Z');
   let gateEsiCalls = 0;
   let gateZkillCalls = 0;
@@ -317,3 +357,13 @@ assert.strictEqual(service.snapshot().freshness.status, 'unavailable', 'initial 
   console.error(error);
   process.exit(1);
 });
+
+async function assertRejects(fn, expectedCode, message) {
+  try {
+    await fn();
+  } catch (error) {
+    assert.strictEqual(error.code, expectedCode, message);
+    return;
+  }
+  throw new Error(message);
+}

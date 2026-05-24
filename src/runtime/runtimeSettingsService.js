@@ -51,9 +51,16 @@ function createRuntimeSettingsService({
       savedAt: now(),
       settings: validation.value
     };
-    fs.mkdirSync(path.dirname(settingsPath), { recursive: true });
-    fs.writeFileSync(settingsPath, `${JSON.stringify(document, null, 2)}\n`, 'utf8');
-    snapshot = readySnapshot(settingsPath, validation.value, validation.warnings || [], now);
+    try {
+      fs.mkdirSync(path.dirname(settingsPath), { recursive: true });
+      fs.writeFileSync(settingsPath, `${JSON.stringify(document, null, 2)}\n`, 'utf8');
+      snapshot = readySnapshot(settingsPath, validation.value, validation.warnings || [], now);
+    } catch (error) {
+      snapshot = degradedSnapshot(settingsPath, {
+        code: 'SETTINGS_WRITE_FAILED',
+        message: error.message
+      }, now, previous);
+    }
     return snapshot;
   }
 

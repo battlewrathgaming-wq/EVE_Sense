@@ -19,6 +19,7 @@ class EveGamelogWatcher {
     pollIntervalMs = 1000,
     setIntervalFn = setInterval,
     clearIntervalFn = clearInterval,
+    readRange = readUtf8Range,
     diagnosticsPolicy = defaultDiagnosticsPolicy
   } = {}) {
     this.parseLine = parseLine;
@@ -31,6 +32,7 @@ class EveGamelogWatcher {
     this.pollIntervalMs = pollIntervalMs;
     this.setIntervalFn = setIntervalFn;
     this.clearIntervalFn = clearIntervalFn;
+    this.readRange = readRange;
     this.folderPath = null;
     this.watcher = null;
     this.poller = null;
@@ -192,12 +194,24 @@ class EveGamelogWatcher {
     }
 
     const start = previousOffset;
-    this.offsets.set(filePath, stats.size);
     if (stats.size <= start) {
       return [];
     }
 
-    const text = readUtf8Range(filePath, start, stats.size);
+    let text;
+    try {
+      text = this.readRange(filePath, start, stats.size);
+    } catch (error) {
+      this.setStatus('error', this.folderPath, error.message);
+      this.trace('tail_read_failed', {
+        filePath,
+        start,
+        end: stats.size,
+        message: error.message
+      });
+      return [];
+    }
+    this.offsets.set(filePath, stats.size);
     const complete = collectCompleteLines({
       chunk: text,
       partial: this.partials.get(filePath) || ''

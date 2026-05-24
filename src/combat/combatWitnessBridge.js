@@ -91,11 +91,11 @@ function createCombatWitnessBridge({
   }
 
   function subscribe(event) {
-    ensureServiceSubscription();
     const webContents = event?.sender;
-    if (!webContents) {
-      return { subscribed: false, reason: 'missing sender' };
+    if (!isValidSender(webContents)) {
+      return { subscribed: false, reason: 'invalid sender', subscriberCount: subscribers.size };
     }
+    ensureServiceSubscription();
     subscribers.set(webContents.id, webContents);
     webContents.once?.('destroyed', () => {
       subscribers.delete(webContents.id);
@@ -131,6 +131,13 @@ function createCombatWitnessBridge({
     subscribe,
     unsubscribe
   };
+}
+
+function isValidSender(webContents) {
+  if (!webContents || webContents.id == null || typeof webContents.send !== 'function') {
+    return false;
+  }
+  return webContents.isDestroyed?.() !== true;
 }
 
 module.exports = {
