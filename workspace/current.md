@@ -1,118 +1,205 @@
 # Current Workspace Packet
 
-Status: Idle - Advisory Review Complete
+Status: Active - UI/UX Advisory
 Updated: 2026-05-24
-Owner: Overseer continuity, specialist/advisory execution
+Owner: Overseer continuity, UI/UX advisory execution
 
 ## Coordination State
 
 Active milestone: None
-Current advisory track: Sense-owned Lab presentation adoption review
+Current advisory track: Passive Telemetry Bridge State Readout prototype mapping
 Latest closed milestone: Milestone 14 - Back-Page Threat Intel UX
 Latest accepted closure: `workspace/complete/milestone-14/OverseerHS03-milestone-14-closure.md`
-Current executor: None
-Current focus: Awaiting next packet; authority decision recorded for project-to-Lab terminology split
-Expected output: None
+Current executor: UI/UX reviewer
+Current focus: map Passive Telemetry bridge-fed state into a Sense-safe readout prototype before Dev
+Expected output: `workspace/SenseUIUXHS01-passive-telemetry-bridge-state-readout.md`
 
 ## Purpose
 
-This is the current AURA-Sense coordination packet.
+This is the only active executable packet for AURA-Sense.
 
-The Sense-owned Lab presentation adoption review has been completed as advisory alignment work, not Dev implementation and not shared doctrine creation.
+The human approved the idea of adapting Lab's Bridge State Readout pattern for Sense and then asked whether this should go to Dev. Overseer decision: not Dev yet. First produce a UI/UX-only mapping artifact so Dev does not invent terminology, state mapping, or compact readout behavior while coding.
 
-AURA-Sense reviewed Lab Bridge State Readout mechanics only as advisory input. Sense authority remains project-local: transient tactical viewport, backend-owned truth, live-gated state, lane separation, and no Atlas-style historical evidence storage.
-
-Human authority decision recorded after the review:
+This packet applies the accepted authority split:
 
 ```txt
-Individual projects own internal -> Bridge connections.
-Bridge -> Interface presentation is preserved unless there is conflict or human override.
-When Bridge -> Interface terminology needs ownership, Aura Lab owns user-facing terminology.
+Sense owns internal -> Bridge meaning.
+Lab owns Bridge -> Interface presentation terminology where Sense meaning is preserved and no Human/Sense conflict exists.
+Shared spelling does not imply shared meaning.
 ```
-
-For Sense, this means AURA-Sense owns how Combat Witness, Passive Telemetry, Threat Intel, Clipboard Acquisition, runtime settings, diagnostics, and local metadata connect to the Bridge. Lab-owned Interface terminology may be accepted for Bridge-facing presentation where it does not conflict with Sense doctrine, lane boundaries, or human direction.
 
 ## Required Reading
 
-Project-local authority first:
+Boot and current coordination:
 
 - `AGENTS.md`
 - `workspace/README.md`
 - `workspace/overview.md`
 - `workspace/00-dot-protocol.md`
+- `workspace/critical/README.md`
+- `workspace/critical/critical-terms.md`
+- `workspace/critical/critical-assets.md`
+- `workspace/prompts.md`
+
+Sense authority and accepted/advisory context:
+
 - `docs/current-state/current-implementation.md`
 - `docs/features/vision.md`
 - `docs/schemas/hud-snapshot.md`
 - `docs/contracts/renderer-boundary-contract.md`
 - `docs/contracts/telemetry-lane-contract.md`
 - `docs/contracts/threat-intel-contract.md`
-- `docs/roadmap/milestone-13-aggressive-testing-and-bug-hunting.md`
+- `docs/contracts/combat-witness-contract.md`
 - `docs/roadmap/milestone-14-back-page-threat-intel-ux.md`
+- `workspace/SenseAdoptionHS01-aura-lab-presentation-mechanics-review.md`
 - `workspace/complete/milestone-13/OverseerHS03-milestone-13-closure.md`
 - `workspace/complete/milestone-14/OverseerHS03-milestone-14-closure.md`
 
-Advisory context only if available and explicitly needed:
+Shared terminology authority:
 
-- Aura Lab M08/M09 presentation mechanics notes or handoff artifacts
-- `F:\Projects\Docs\Aura-Project-Orchestration\active-alignment.md`
-- `F:\Projects\Docs\Aura-Project-Orchestration\project-lanes.md`
+- `F:\Projects\Docs\Aura-Project-Orchestration\terminology\TerminologyAuthorityRuleset-2026-05-24.md`
+- `F:\Projects\Docs\Aura-Project-Orchestration\terminology\Sense-Terminology-Boundary-Requirements-2026-05-24.md`
 
-## Review Result
+Source inspection targets for UI/UX mapping only:
 
-Artifact created:
+- `src/passive/passiveTelemetryService.js`
+- `src/passive/passiveTelemetryBridge.js`
+- `src/passive/liveIoGate.js`
+- `src/renderer/index.html`
+- `src/renderer/app.js`
+- `scripts/verify-passive-telemetry.js`
+- `scripts/verify-renderer-shell.js`
+- `src/main/preload.js`
+
+## Objective
+
+Produce a Sense-owned UI/UX mapping for a Passive Telemetry Bridge State Readout prototype.
+
+The mapping must define:
+
+1. Passive Telemetry source fields from existing `passive.telemetry.snapshot`.
+2. Sense-owned internal -> Bridge meanings.
+3. Lab-owned Bridge -> Interface labels that are allowed only when they preserve Sense meaning.
+4. Exact mapping for `fresh`, `stale`, `partial`, `blocked`, `degraded`, and `unavailable`.
+5. Compact layout behavior for the existing tactical viewport.
+6. Which source/basis/age/gap fields are primary vs secondary diagnostics.
+7. Visual smoke states Dev must cover later.
+8. Non-goals and stop conditions for any later Dev packet.
+
+## Required Artifact
+
+Create:
 
 ```txt
-workspace/SenseAdoptionHS01-aura-lab-presentation-mechanics-review.md
+workspace/SenseUIUXHS01-passive-telemetry-bridge-state-readout.md
 ```
 
-Recommendation:
+Mark it:
 
 ```txt
-Adapt Lab Bridge State Readout for Sense, do not adopt wholesale.
-Best first trial lane: Passive Telemetry.
-Next role/action: UI/UX packet for a Passive Telemetry readout prototype, then Dev only if accepted.
+Status: UI/UX advisory mapping, not implementation authority
 ```
 
-## Preserved Guardrails
+Required sections:
 
-- No code was implemented.
-- No Dev runway is active.
-- Do not edit shared Aura doctrine.
-- Do not create Lab/Core adapters.
-- Do not treat Lab as Sense authority.
-- Do not import Lab fixture copy.
-- Do not import Briefing or Neutral Seed semantics.
-- Do not treat Lab's `aura.projectBriefing` or `aura.presentationFixture` as Sense contracts.
-- Do not wake Aura Core for implementation.
-- Do not import Atlas evidence semantics, watch execution, storage, or historical intelligence doctrine.
-- Do not broaden Sense product direction.
-- Do not use archived docs/gap as active queues unless current project authority references them.
-- Label repo-verified facts separately from advisory assumptions and recommendations.
-- Preserve the human authority split: Sense owns internal-to-Bridge meaning; Lab owns Bridge-to-Interface terminology unless Sense conflict or human override applies.
+1. Role and boundary.
+2. Files reviewed.
+3. Repo-verified Passive Telemetry facts.
+4. Authority model applied.
+5. Source field inventory.
+6. Internal -> Bridge meaning table.
+7. Bridge -> Interface label table.
+8. State mapping for:
+   - `fresh`
+   - `stale`
+   - `partial`
+   - `blocked`
+   - `degraded`
+   - `unavailable`
+9. Primary readout fields.
+10. Secondary diagnostics/gaps/warnings.
+11. Compact layout notes.
+12. Visual smoke expectations.
+13. Terms that must remain Sense-owned.
+14. Lab labels that are allowed, adapted, or blocked.
+15. Risks and non-goals.
+16. Recommended next role/action.
+17. Draft Dev runway only if UI/UX recommends Dev next.
+
+## Guardrails
+
+- Do not implement code.
+- Do not create a Dev runway in this pass unless the artifact explicitly recommends one as a draft.
+- Do not rename contracts, payloads, services, IPC channels, CSS classes, or tests.
+- Do not import Lab fixtures.
+- Do not create shared Aura doctrine.
+- Do not touch Core, Atlas, or Lab project files.
+- Do not make live API calls.
+- Do not run live provider smoke.
+- Do not run manual shortcut validation.
+- Do not turn Passive Telemetry into Threat Intel.
+- Do not imply complete system awareness.
+- Do not present zKill/ESI sample data as durable evidence.
+- Do not collapse `blocked`, `partial`, `degraded`, `unavailable`, `stale`, and `fresh`.
+- Keep renderer presentation-only and backend-owned truth intact.
+
+## Expected Direction
+
+Starting stance:
+
+- Use Passive Telemetry as the first trial lane.
+- Prefer `Fresh` or `Recent context` only with lane/source context.
+- Prefer `Stale context` over generic `AGED`.
+- Preserve `Partial sample`, `Live IO blocked`, `Degraded`, and `Unavailable` distinctions.
+- Treat `FALLBACK` cautiously; prefer `Local only` or `Static lookup` only when an existing snapshot field supports that meaning.
+- Avoid generic `NO DATA`; use lane-specific absence wording such as `No observation` or `No provider sample`.
+- Consider whether `Provider pulse` should become calmer provider/sample state wording in the UI/UX mapping, but do not rename it in code.
 
 ## Verification
 
-No code verification was required or run.
+No code verification is required for this UI/UX artifact.
 
-Do not run `verify:all` or Electron smoke for this advisory review unless the human explicitly changes the task into implementation or validation work.
+Do not run `npm.cmd run verify:all` or Electron smoke unless the human changes the task into implementation.
+
+For a future Dev packet, expected verification should include:
+
+```powershell
+npm.cmd run verify:passive-telemetry
+npm.cmd run verify:renderer-shell
+npm.cmd run verify:renderer-boundary
+npm.cmd run verify:renderer-boundary-adversarial
+npm.cmd run verify:all
+```
+
+If renderer visual states change, future Dev should also run:
+
+```powershell
+npm.cmd run smoke:electron
+```
+
+## Stop Conditions
+
+Return to chat before continuing if:
+
+- source inspection shows Passive Telemetry fields cannot support the proposed readout without contract changes
+- the mapping requires live provider behavior changes
+- the mapping requires a shared Lab/Core doctrine decision
+- the mapping would make renderer state authoritative
+- `blocked`, `partial`, `degraded`, `unavailable`, `stale`, or `fresh` cannot be kept distinct
+- Lab-owned interface terminology conflicts with Sense preserve-exact terms and needs Human decision
 
 ## Evidence
 
-```txt
-Artifact: workspace/SenseAdoptionHS01-aura-lab-presentation-mechanics-review.md
-Recommendation: adapt
-Best first lane: Passive Telemetry
-Prototype: UI/UX-only Passive Telemetry Bridge State Readout mapping before Dev
-Project authority changes: none
-Implementation changes: none
-Verification run: none; not required for advisory review
-Authority decision recorded: projects own internal -> Bridge connections; Lab owns Bridge -> Interface user-facing terminology unless conflict or human override applies.
-```
+Not yet recorded.
 
 ## Handoff
 
-- artifact created: `workspace/SenseAdoptionHS01-aura-lab-presentation-mechanics-review.md`
-- project authority changes: none
-- implementation changes: none
-- recommended next action: UI/UX packet for Passive Telemetry readout prototype using existing snapshot fields only, applying the recorded authority split
-- human decisions needed: approve/adjust Passive Telemetry as first lane; confirm any Sense conflicts with Lab-owned Bridge-to-Interface terminology
+UI/UX reviewer fills this in when complete:
+
+- artifact created:
+- repo facts reviewed:
+- authority decisions applied:
+- implementation changes:
+- recommended next action:
+- Dev runway recommended:
+- human decisions needed:
