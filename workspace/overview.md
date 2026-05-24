@@ -29,8 +29,9 @@ It should present compact, uncertainty-aware tactical state while staying transi
 Milestone: None
 Roadmap source: None
 Current packet: `workspace/current.md`
-Current sequence: Idle after Milestone 14 closure
+Current sequence: Advisory review after Milestone 14 closure
 Latest accepted handshake: `workspace/complete/milestone-14/OverseerHS03-milestone-14-closure.md`
+Active advisory track: Sense-owned Lab presentation adoption review
 
 ## Durable Record Index
 
@@ -73,4 +74,5 @@ Latest accepted handshake: `workspace/complete/milestone-14/OverseerHS03-milesto
 ## Open Questions
 
 - Which remaining live/manual validation items should move into a later operator-validation milestone?
-- What Sense-local milestone should open next, if any?
+- Whether the Sense-owned Lab presentation adoption review should accept, adapt, reject, or defer Lab mechanics.
+- What Sense-local milestone should open after the advisory review, if any?
