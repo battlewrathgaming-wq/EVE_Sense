@@ -48,13 +48,14 @@ function main() {
   const warnings = [
     ...findBorrowingWarnings(files, lookup, fileMeta, options),
     ...findBoundaryWarnings(files, fileMeta),
-    ...discoverCandidates(files, lookup, fileMeta)
+    ...(options.discoverCandidates ? discoverCandidates(files, lookup, fileMeta) : [])
   ];
   const mutedFiles = files.filter((file) => fileMeta.get(file)?.muteExternalVocabulary);
 
   console.log(`Sense protected-term discovery mode: ${options.baseline ? 'baseline' : 'working-set'}`);
   console.log(`Sense protected-term discovery source: ${options.baseline ? 'explicit broad baseline' : 'git status --short changed files'}`);
   console.log(`Sense protected-term discovery quarantine terms: ${options.quarantine ? 'included by request' : 'muted by default; use --quarantine for low-confidence Lab quarantine terms'}`);
+  console.log(`Sense protected-term discovery candidate terms: ${options.discoverCandidates ? 'included by request' : 'muted by default; use --discover-candidates for broad new-term discovery'}`);
   console.log(`Sense protected-term discovery: scanned ${files.length} file(s)`);
   console.log(`Sense protected-term discovery: ${mutedFiles.length} advisory/conformance file(s) scanned with external vocabulary muted`);
   console.log(`Sense protected-term discovery: ${warnings.length} warning-only item(s)`);
@@ -96,7 +97,8 @@ function buildFileMeta(files) {
 function parseArgs() {
   return {
     baseline: process.argv.includes('--baseline'),
-    quarantine: process.argv.includes('--quarantine')
+    quarantine: process.argv.includes('--quarantine'),
+    discoverCandidates: process.argv.includes('--discover-candidates')
   };
 }
 
@@ -248,6 +250,26 @@ function findBoundaryWarnings(files, fileMeta) {
       regex: /\bNo data\b/i,
       term: 'No data',
       reason: 'generic No data may hide No scan, No provider, No observation, failed, or blocked'
+    },
+    {
+      regex: /\breport\b/i,
+      term: 'Report',
+      reason: 'report may imply different durability and authority than latest scan or presentation readout'
+    },
+    {
+      regex: /\bfallback\b/i,
+      term: 'Fallback',
+      reason: 'fallback can sound like an alternate truth source unless source/authority is explicit'
+    },
+    {
+      regex: /\bCURRENT\b/,
+      term: 'CURRENT',
+      reason: 'Lab-style CURRENT can overstate Sense lane freshness unless lane/source context is preserved'
+    },
+    {
+      regex: /\bAGED\b/,
+      term: 'AGED',
+      reason: 'Lab-style AGED can collapse Sense stale/freshness states unless lane context is preserved'
     }
   ];
 
