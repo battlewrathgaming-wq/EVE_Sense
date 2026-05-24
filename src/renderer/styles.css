@@ -873,7 +873,7 @@ h1 {
   padding-bottom: 7px;
 }
 
-.drawer.is-peeking {
+.drawer.is-gateway-active {
   border-color: rgba(84, 215, 216, 0.58);
   box-shadow: 0 0 18px rgba(84, 215, 216, 0.12);
   transform: translateY(-1px);
@@ -1024,6 +1024,16 @@ h1 {
   text-transform: uppercase;
 }
 
+.bar-status {
+  grid-column: 1;
+  grid-row: 1;
+  justify-self: end;
+  color: var(--muted);
+  font-size: 0.58rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
 #threat-display-target {
   grid-column: 1;
   min-width: 0;
@@ -1066,6 +1076,12 @@ h1 {
   align-items: center;
 }
 
+.gateway-stack {
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+}
+
 .gateway-chip {
   min-width: 24px;
   min-height: 22px;
@@ -1086,9 +1102,16 @@ h1 {
   box-shadow: 0 0 12px rgba(84, 215, 216, 0.16);
 }
 
+.gateway-label {
+  color: var(--muted);
+  font-size: 0.48rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
 .threat-report {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 5px;
   margin: 7px 8px 0;
 }
@@ -1097,7 +1120,7 @@ h1 {
   min-width: 0;
   border: 1px solid var(--line);
   border-radius: 8px;
-  padding: 6px;
+  padding: 5px 6px;
   background: rgba(20, 38, 42, 0.56);
 }
 

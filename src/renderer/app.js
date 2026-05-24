@@ -26,8 +26,8 @@ const state = {
   pendingPresentation: {},
   presentationPaused: false,
   presentationResumeTimer: null,
-  threatPeekTimer: null,
-  threatPeekActive: false,
+  threatGatewayTimer: null,
+  threatGatewayActive: false,
   lastThreatSnapshot: null,
   watcherState: 'unavailable',
   liveIoEnabled: false,
@@ -525,7 +525,7 @@ function renderThreatSnapshot(snapshot) {
   renderProviderPulse('threat', providerPulseFromThreat(snapshot));
   renderThreatPulse(snapshot);
   renderThreatReport(snapshot);
-  setThreatAcquisitionState(status === 'pending' ? 'scanning' : 'idle', threatDisplayTarget(snapshot));
+  setThreatAcquisitionState(status === 'pending' ? 'scanning' : (status === 'blocked' ? 'blocked' : 'idle'), threatDisplayTarget(snapshot));
   renderThreatMessage(threatMessage(snapshot));
 }
 
@@ -552,8 +552,10 @@ function renderThreatReport(snapshot) {
   const target = threatDisplayTarget(snapshot);
   setText('threat-report-target', target);
   setText('threat-report-status', threatStateLabel(status));
+  setText('threat-report-type', threatReportTargetType(snapshot));
   setText('threat-report-basis', threatBasis(snapshot));
-  setText('threat-report-sample', threatSample(snapshot));
+  setText('threat-report-sample', threatReportSample(snapshot));
+  setText('threat-report-state', threatReportState(snapshot));
   setText('threat-report-message', threatReportMessage(snapshot));
 }
 
@@ -570,9 +572,11 @@ function clipboardDisplayTarget(snapshot) {
 function threatReportMessage(snapshot) {
   if (!snapshot || snapshot.status === 'empty') return 'Report persists until the next scan.';
   if (snapshot.status === 'blocked') return snapshot.message || 'Live IO blocked.';
-  if (snapshot.status === 'partial') return snapshot.failure?.message || snapshot.message || 'Partial sample; not complete coverage.';
+  if (snapshot.status === 'partial') return snapshot.failure?.message || snapshot.message || 'Partial sample; capped or incomplete provider coverage.';
   if (snapshot.status === 'failed') return snapshot.failure?.message || snapshot.message || 'Scan failed.';
-  if (snapshot.status === 'succeeded') return snapshot.message || 'Scoped zKill sample refreshed.';
+  if (snapshot.status === 'ambiguous') return snapshot.message || 'Ambiguous target; no provider sample selected.';
+  if (snapshot.status === 'unresolved' || snapshot.status === 'unsupported') return snapshot.message || 'No provider sample selected.';
+  if (snapshot.status === 'succeeded') return snapshot.message || 'Scoped zKill sample refreshed; not complete coverage.';
   return snapshot.message || 'No provider result yet.';
 }
 
@@ -580,15 +584,47 @@ function setThreatAcquisitionState(status, label) {
   const bar = byId('threat-acquisition-bar');
   const normalized = status === 'listening'
     ? 'listening'
-    : (status === 'pulling' ? 'pulling' : (status === 'cooldown' ? 'cooldown' : (status === 'scanning' || status === 'pending' ? 'scanning' : 'idle')));
+    : (status === 'pulling' ? 'pulling' : (status === 'cooldown' ? 'cooldown' : (status === 'blocked' ? 'blocked' : (status === 'scanning' || status === 'pending' ? 'scanning' : 'idle'))));
   bar.classList.remove('is-idle', 'is-listening', 'is-pulling', 'is-scanning', 'is-cooldown', 'is-blocked');
   bar.classList.add(`is-${normalized}`);
-  if (status === 'blocked') {
-    bar.classList.add('is-blocked');
+  setText('threat-acquisition-status', threatAcquisitionLabel(status));
+  if (normalized === 'scanning') {
+    byId('clipboard-listen').classList.remove('is-listening');
   }
   if (label && label !== 'No scan') {
     setText('threat-display-target', label);
   }
+}
+
+function threatAcquisitionLabel(status) {
+  if (status === 'listening') return 'Listening';
+  if (status === 'pulling') return 'Pulling';
+  if (status === 'cooldown') return 'Cooldown';
+  if (status === 'scanning' || status === 'pending') return 'Scanning';
+  if (status === 'blocked') return 'Blocked';
+  return 'Idle';
+}
+
+function threatReportTargetType(snapshot) {
+  return targetKindLabel(snapshot?.request?.targetKind || snapshot?.target?.kind || state.threatTargetKind);
+}
+
+function threatReportSample(snapshot) {
+  const zkill = snapshot?.zkill;
+  if (!zkill) return '0 / 0';
+  return `${formatNumber(zkill.selectedCount)} / ${formatNumber(zkill.discoveredCount)}`;
+}
+
+function threatReportState(snapshot) {
+  if (!snapshot || snapshot.status === 'empty') return 'No scan';
+  if (snapshot.status === 'blocked') return 'Live IO blocked';
+  if (snapshot.status === 'partial') return snapshot.zkill?.capped ? 'Capped partial sample' : 'Partial sample';
+  if (snapshot.status === 'failed') return 'Provider failed';
+  if (snapshot.status === 'ambiguous') return 'Ambiguous target';
+  if (snapshot.status === 'unresolved') return 'Unresolved target';
+  if (snapshot.status === 'unsupported') return 'Unsupported target';
+  if (snapshot.status === 'succeeded') return snapshot.zkill?.capped ? 'Capped sample' : 'Scoped sample';
+  return threatStateLabel(snapshot.status);
 }
 
 function renderClipboardState(snapshot) {
@@ -765,7 +801,7 @@ function renderLiveIoPolicy(snapshot) {
   byId('top-live-io-toggle').setAttribute('title', enabled ? 'IO authority on' : 'IO authority off');
   byId('clipboard-listen').classList.toggle('is-unsupported', !enabled);
   if (!enabled) {
-    setThreatPeek(false);
+    setThreatBackPageOpen(false);
   }
 }
 
@@ -853,30 +889,22 @@ function bootKeyboardGlow() {
 
 function setThreatBackPageOpen(open) {
   const drawer = byId('threat-drawer');
-  state.threatPeekActive = open === true;
-  drawer.open = state.threatPeekActive;
-  drawer.classList.toggle('is-peeking', state.threatPeekActive);
-  byId('threat-gateway').classList.toggle('is-active', state.threatPeekActive);
-  byId('threat-gateway-summary').classList.toggle('is-active', state.threatPeekActive);
-  if (state.threatPeekTimer) {
-    clearTimeout(state.threatPeekTimer);
-    state.threatPeekTimer = null;
+  state.threatGatewayActive = open === true;
+  drawer.open = state.threatGatewayActive;
+  drawer.classList.toggle('is-gateway-active', state.threatGatewayActive);
+  byId('threat-gateway').classList.toggle('is-active', state.threatGatewayActive);
+  byId('threat-gateway-summary').classList.toggle('is-active', state.threatGatewayActive);
+  if (state.threatGatewayTimer) {
+    clearTimeout(state.threatGatewayTimer);
+    state.threatGatewayTimer = null;
   }
-}
-
-function setThreatPeek(open) {
-  setThreatBackPageOpen(open);
-}
-
-function scheduleThreatPeekClose(delay = 900) {
-  if (!state.threatPeekActive || delay < 0) return;
 }
 
 function updateKeyGlow() {
   const listening = byId('clipboard-listen').classList.contains('is-listening');
   const cooldown = byId('clipboard-listen').classList.contains('is-cooldown');
   byId('clipboard-key-ctrl').classList.toggle('is-active', state.ctrlDown || listening);
-  byId('clipboard-key-slash').classList.toggle('is-active', state.slashDown || listening || state.threatPeekActive);
+  byId('clipboard-key-slash').classList.toggle('is-active', state.slashDown || listening || state.threatGatewayActive);
   byId('clipboard-key-ctrl').classList.toggle('is-authority', listening);
   byId('clipboard-key-slash').classList.toggle('is-authority', listening);
   byId('clipboard-key-slash').classList.toggle('is-cooldown', cooldown);
@@ -953,7 +981,7 @@ function threatMessage(snapshot) {
 }
 
 function clipboardStateLabel(status) {
-  if (status === 'listening') return '3s scan';
+  if (status === 'listening') return 'Pulling';
   if (status === 'cooldown') return 'Cooldown';
   if (status === 'blocked') return 'IO Off';
   return 'Idle';
@@ -996,8 +1024,13 @@ function passiveBasis(snapshot) {
 function threatBasis(snapshot) {
   if (!snapshot) return 'No scan';
   if (snapshot.status === 'blocked') return 'Live IO blocked';
-  if (snapshot.status === 'partial') return 'Partial pulse';
-  if (snapshot.zkill) return `${lookbackLabel(snapshot.zkill.lookbackSeconds)} zKill count`;
+  if (snapshot.zkill) {
+    const provider = snapshot.zkill.provider || 'zKill';
+    const lookback = lookbackLabel(snapshot.zkill.lookbackSeconds);
+    if (snapshot.status === 'partial') return `${provider} ${lookback} partial`;
+    if (snapshot.zkill.capped) return `${provider} ${lookback} capped`;
+    return `${provider} ${lookback} sample`;
+  }
   return snapshot.status === 'empty' ? 'No scan' : 'No provider';
 }
 

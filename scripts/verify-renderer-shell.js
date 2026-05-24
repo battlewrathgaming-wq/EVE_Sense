@@ -28,6 +28,7 @@ function main() {
   assert(main.includes('state-degraded.png'), 'visual smoke should capture degraded state');
   assert(main.includes('state-blocked.png'), 'visual smoke should capture blocked state');
   assert(main.includes('state-partial-capped.png'), 'visual smoke should capture partial/capped provider state');
+  assert(main.includes('state-clipboard-listening.png'), 'visual smoke should capture active clipboard authority state');
   assert(main.includes('state-cooldown.png'), 'visual smoke should capture clipboard cooldown state');
   assert(main.includes('state-diagnostics-open.png'), 'visual smoke should capture diagnostics open state');
   assert(main.includes('state-settings-degraded.png'), 'visual smoke should capture settings degraded state');
@@ -67,11 +68,15 @@ function main() {
   assert(html.includes('clipboard-key-slash'), 'renderer should include slash key scan indicator');
   assert(html.includes('search-clipboard-widget'), 'renderer should embed Clipboard Acquisition state in the Threat search box');
   assert(html.includes('threat-acquisition-bar'), 'renderer should include display-first Threat Intel acquisition bar');
+  assert(html.includes('threat-acquisition-status'), 'renderer should show acquisition state copy in the display bar');
   assert(html.includes('threat-display-target'), 'renderer should show the current/last acquired target in the acquisition bar');
   assert(html.includes('threat-gateway'), 'renderer should include gateway marker for back-page context');
+  assert(html.includes('gateway-label'), 'renderer should label the gateway without implying clipboard authority');
   assert(html.includes('threat-report'), 'renderer should include persistent Threat Intel report section');
   assert(html.includes('threat-report-target'), 'renderer report should include target field');
+  assert(html.includes('threat-report-type'), 'renderer report should include target type field');
   assert(html.includes('threat-report-basis'), 'renderer report should include provider basis field');
+  assert(html.includes('threat-report-state'), 'renderer report should include cap/partial/blocked/failure state field');
   assert(html.includes('threat-kind-selector'), 'renderer should include Threat target kind selector');
   assert(html.includes('data-threat-kind="pilot"'), 'renderer should include Pilot target kind pill');
   assert(html.includes('data-threat-kind="system"'), 'renderer should include System target kind pill');
@@ -157,7 +162,11 @@ function main() {
   assert(app.includes('window.auraThreatIntel.scan'), 'renderer should run Threat Intel scans through preload bridge');
   assert(app.includes("inputSource: 'search'"), 'renderer should mark explicit search input source');
   assert(app.includes('setThreatAcquisitionState'), 'renderer should present acquisition state through display-first bar classes');
+  assert(app.includes('threatAcquisitionLabel'), 'renderer should keep acquisition state copy aligned to bar classes');
   assert(app.includes('renderThreatReport'), 'renderer should keep the last Threat Intel report rendered');
+  assert(app.includes('threatReportTargetType'), 'renderer report should expose target type');
+  assert(app.includes('threatReportSample'), 'renderer report should expose selected/discovered sample counts');
+  assert(app.includes('threatReportState'), 'renderer report should expose cap/partial/blocked/failure state');
   assert(app.includes('threatReportMessage'), 'renderer report should preserve provider/sample/failure copy');
   assert(app.includes('renderThreatPulse'), 'renderer should render compact Threat Intel pulse state');
   assert(app.includes('providerPulseFromPassive'), 'renderer should derive Passive provider pulse from backend snapshot metadata');
@@ -177,7 +186,10 @@ function main() {
   assert(app.includes("event.altKey && event.key === '\\\\'"), 'renderer should support focused Alt+\\ target-kind toggles');
   assert(app.includes("event.ctrlKey && event.key === '\\\\'"), 'renderer should support focused Ctrl+\\ clipboard acquisition');
   assert(app.includes('setThreatBackPageOpen(true)'), 'renderer should support focused plain \\ back-page gateway');
-  assert(!app.includes('scheduleThreatPeekClose();'), 'renderer should not auto-close the back-page gateway on key release');
+  assert(!app.includes('scheduleThreatPeekClose'), 'renderer should not retain legacy peek auto-close handling');
+  assert(!app.includes('threatPeek'), 'renderer should use gateway terms for the back-page context state');
+  assert(app.includes('is-gateway-active'), 'renderer should mark back-page gateway state with gateway wording');
+  assert(app.includes("byId('clipboard-listen').classList.remove('is-listening')"), 'renderer should snap off listener-active visuals when scanning starts');
   assert(app.includes('clipboard-key-ctrl'), 'renderer should maintain Ctrl key visual state');
   assert(app.includes('clipboard-key-slash'), 'renderer should maintain slash key visual state');
   assert(app.includes("addEventListener('focus'"), 'renderer should handle focus without scanning');

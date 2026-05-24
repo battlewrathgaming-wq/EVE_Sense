@@ -690,21 +690,24 @@ async function captureVisualRegressionStates(window, outputDir) {
     {
       name: 'partial-capped',
       screenshot: 'state-partial-capped.png',
-      assertions: ['#threat-drawer', '#threat-acquisition-bar', '#threat-report', '#threat-pulse', '#threat-message', '#threat-target-label'],
+      assertions: ['#threat-drawer', '#threat-acquisition-bar', '#threat-report', '#threat-report-type', '#threat-report-state', '#threat-pulse', '#threat-message', '#threat-target-label'],
       script: `
         resetViewportState();
         document.querySelector('#threat-drawer').open = true;
         document.querySelector('#threat-acquisition-bar')?.classList.add('is-idle');
         setText('#threat-state', 'Partial');
+        setText('#threat-acquisition-status', 'Idle');
         setText('#threat-display-target', 'Jita');
         setText('#threat-target-label', 'Jita');
         setText('#threat-sample', '10 / 28');
-        setText('#threat-basis', 'zKill capped partial sample');
+        setText('#threat-basis', 'zKill 1h partial');
         setText('#threat-report-target', 'Jita');
         setText('#threat-report-status', 'Partial');
-        setText('#threat-report-basis', 'zKill capped partial sample');
+        setText('#threat-report-type', 'System');
+        setText('#threat-report-basis', 'zKill 1h partial');
         setText('#threat-report-sample', '10 / 28');
-        setText('#threat-report-message', 'Partial sample; not complete coverage.');
+        setText('#threat-report-state', 'Capped partial sample');
+        setText('#threat-report-message', 'Partial sample; capped or incomplete provider coverage.');
         setText('#threat-message', 'Partial provider response; sample capped for display.');
         document.querySelectorAll('#threat-pulse span').forEach((dot, index) => {
           dot.classList.toggle('is-active', index < 6);
@@ -713,9 +716,28 @@ async function captureVisualRegressionStates(window, outputDir) {
       `
     },
     {
+      name: 'clipboard-listening',
+      screenshot: 'state-clipboard-listening.png',
+      assertions: ['#threat-drawer', '#threat-acquisition-bar', '#clipboard-listen', '#clipboard-state', '#threat-gateway', '#clipboard-key-ctrl'],
+      script: `
+        resetViewportState();
+        document.querySelector('#threat-drawer').open = true;
+        document.querySelector('#threat-acquisition-bar')?.classList.remove('is-idle');
+        document.querySelector('#threat-acquisition-bar')?.classList.add('is-listening');
+        document.querySelector('#clipboard-listen')?.classList.add('is-listening');
+        document.querySelector('#clipboard-key-ctrl')?.classList.add('is-authority');
+        document.querySelector('#clipboard-key-slash')?.classList.add('is-authority');
+        document.querySelector('#threat-gateway')?.classList.add('is-active');
+        setText('#clipboard-state', 'Pulling');
+        setText('#threat-acquisition-status', 'Listening');
+        setText('#threat-display-target', 'Pulling clipboard target');
+        setText('#threat-message', 'Clipboard authority window open.');
+      `
+    },
+    {
       name: 'cooldown',
       screenshot: 'state-cooldown.png',
-      assertions: ['#threat-drawer', '#threat-acquisition-bar', '#clipboard-listen', '#clipboard-state', '#threat-message'],
+      assertions: ['#threat-drawer', '#threat-acquisition-bar', '#clipboard-listen', '#clipboard-state', '#threat-acquisition-status', '#threat-message'],
       script: `
         resetViewportState();
         document.querySelector('#threat-drawer').open = true;
@@ -723,6 +745,7 @@ async function captureVisualRegressionStates(window, outputDir) {
         document.querySelector('#threat-acquisition-bar')?.classList.add('is-cooldown');
         document.querySelector('#clipboard-listen')?.classList.add('is-cooldown');
         setText('#clipboard-state', 'Cooldown');
+        setText('#threat-acquisition-status', 'Cooldown');
         setText('#threat-display-target', 'Cooldown');
         setText('#shortcut-message', 'Ctrl+\\\\ is cooling down after the last clipboard scan.');
         setText('#threat-message', 'Clipboard scan sealed; cooldown active.');
@@ -816,7 +839,10 @@ function applyVisualRegressionState(window, state) {
         document.querySelector('#integrated-viewport')?.classList.remove('diagnostics-open', 'io-off');
         document.querySelector('#diagnostics-toggle')?.classList.remove('active');
         document.querySelector('#threat-drawer').open = false;
+        document.querySelector('#threat-drawer')?.classList.remove('is-gateway-active');
         document.querySelector('#clipboard-listen')?.classList.remove('is-listening', 'is-cooldown', 'is-unsupported');
+        document.querySelector('#clipboard-key-ctrl')?.classList.remove('is-active', 'is-authority', 'is-cooldown');
+        document.querySelector('#clipboard-key-slash')?.classList.remove('is-active', 'is-authority', 'is-cooldown');
         document.querySelector('#threat-acquisition-bar')?.classList.remove('is-listening', 'is-pulling', 'is-scanning', 'is-cooldown', 'is-blocked');
         document.querySelector('#threat-acquisition-bar')?.classList.add('is-idle');
         document.querySelector('#threat-gateway')?.classList.remove('is-active');
@@ -920,7 +946,7 @@ function smokeChecks(window) {
       hasCombatMetrics: Boolean(document.querySelector('#net-pressure-value') && document.querySelector('#incoming-pressure') && document.querySelector('#repair-throughput') && document.querySelector('#incoming-bar') && document.querySelector('#repair-bar')),
       hasEventList: Boolean(document.querySelector('#event-list')),
       hasWatcherControls: Boolean(document.querySelector('#watcher-controls') && document.querySelector('#gamelog-folder')),
-      hasThreatSurface: Boolean(document.querySelector('.threat-surface') && document.querySelector('#threat-search') && document.querySelector('#threat-acquisition-bar') && document.querySelector('#threat-gateway') && document.querySelector('#threat-report')),
+      hasThreatSurface: Boolean(document.querySelector('.threat-surface') && document.querySelector('#threat-search') && document.querySelector('#threat-acquisition-bar') && document.querySelector('#threat-acquisition-status') && document.querySelector('#threat-gateway') && document.querySelector('#threat-report') && document.querySelector('#threat-report-type') && document.querySelector('#threat-report-state')),
       hasRuntimeState: Boolean(document.querySelector('#live-io-state') && document.querySelector('#settings-state')),
       noParserRuntimeExposure: (
         typeof window.CombatWitnessService === 'undefined' &&

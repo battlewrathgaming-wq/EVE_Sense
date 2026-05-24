@@ -22,15 +22,15 @@ It should present compact, uncertainty-aware tactical state while staying transi
 | Milestone | Roadmap Source | Status | Notes |
 | --- | --- | --- | --- |
 | 13 | `docs/roadmap/milestone-13-aggressive-testing-and-bug-hunting.md` | Complete | Offline aggressive hardening accepted; live/manual validation remains gated for later operator-validation work. |
-| 14 | `docs/roadmap/milestone-14-back-page-threat-intel-ux.md` | Active | Threat Intel back-page UX slice after hardening acceptance. |
+| 14 | `docs/roadmap/milestone-14-back-page-threat-intel-ux.md` | Complete | Back-page Threat Intel UX accepted; live/manual shortcut feel remains gated for optional later operator-validation work. |
 
 ## Active Milestone
 
-Milestone: 14 - Back-Page Threat Intel UX
-Roadmap source: `docs/roadmap/milestone-14-back-page-threat-intel-ux.md`
+Milestone: None
+Roadmap source: None
 Current packet: `workspace/current.md`
-Current sequence: HS02
-Latest accepted handshake: `workspace/DevHS01-sense-back-page-threat-intel-foundation.md`
+Current sequence: Idle after Milestone 14 closure
+Latest accepted handshake: `workspace/complete/milestone-14/OverseerHS03-milestone-14-closure.md`
 
 ## Durable Record Index
 
@@ -73,4 +73,4 @@ Latest accepted handshake: `workspace/DevHS01-sense-back-page-threat-intel-found
 ## Open Questions
 
 - Which remaining live/manual validation items should move into a later operator-validation milestone?
-- After Milestone 14 HS01, does the back-page workflow need a second renderer polish packet or a gated Electron/manual validation packet?
+- What Sense-local milestone should open next, if any?

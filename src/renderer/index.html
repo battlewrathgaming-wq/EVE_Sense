@@ -72,6 +72,7 @@
             <form id="threat-search" class="threat-search">
               <div id="threat-acquisition-bar" class="threat-acquisition-bar is-idle" role="group" aria-label="Threat Intel search display">
                 <span class="bar-kicker">Search / Display</span>
+                <span id="threat-acquisition-status" class="bar-status">Idle</span>
                 <strong id="threat-display-target">No scan</strong>
                 <span id="clipboard-listen" class="search-clipboard-widget" aria-label="Clipboard scan window state">
                   <span class="key-row inline-keys">
@@ -83,7 +84,10 @@
                 <input id="threat-target" class="manual-threat-input" name="threat-target" type="text" autocomplete="off" aria-label="Manual Threat Intel fallback" placeholder="Manual fallback target">
               </div>
               <div class="gateway-target-row">
-                <span id="threat-gateway" class="gateway-chip" aria-label="Gateway">\</span>
+                <span class="gateway-stack">
+                  <span id="threat-gateway" class="gateway-chip" aria-label="Gateway">\</span>
+                  <span class="gateway-label">Gateway</span>
+                </span>
                 <span id="threat-kind-selector" class="kind-selector" role="group" aria-label="Target type selector">
                   <button class="kind-pill" type="button" data-threat-kind="pilot" aria-pressed="false">Pilot</button>
                   <button class="kind-pill" type="button" data-threat-kind="system" aria-pressed="true">System</button>
@@ -114,12 +118,20 @@
                 <strong id="threat-report-status">Idle</strong>
               </div>
               <div>
+                <span>Target type</span>
+                <strong id="threat-report-type">System</strong>
+              </div>
+              <div>
                 <span>Basis</span>
                 <strong id="threat-report-basis">No provider</strong>
               </div>
               <div>
                 <span>Sample</span>
                 <strong id="threat-report-sample">0 / 0</strong>
+              </div>
+              <div>
+                <span>State</span>
+                <strong id="threat-report-state">No scan</strong>
               </div>
               <p id="threat-report-message">Report persists until the next scan.</p>
             </section>
