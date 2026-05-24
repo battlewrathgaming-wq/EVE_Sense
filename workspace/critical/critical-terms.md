@@ -1,0 +1,73 @@
+# Critical Terms
+
+Purpose: list Sense-owned terms, emitted meanings, preserve-exact terms, and downstream translation cautions.
+
+Accepted policy:
+`F:\Projects\Docs\Aura-Project-Orchestration\terminology\TerminologyAuthorityRuleset-2026-05-24.md`
+
+Expanded lists:
+
+- Sense expanded coordination list: `F:\Projects\Docs\Aura-Project-Orchestration\critical\AURA-Sense\critical-terms.md`
+- Cross-project synthesis: `F:\Projects\Docs\Aura-Project-Orchestration\terminology\terminology-critical-cross-project-synthesis-2026-05-24.md`
+- Frequency synthesis: `F:\Projects\Docs\Aura-Project-Orchestration\terminology\terminology-frequency-synthesis-2026-05-24.md`
+
+Lab may use its own product-agnostic presentation vocabulary after the bridge, but Sense owns Sense terms, emitted meanings, lane semantics, live-IO states, and Project -> Bridge language.
+
+## Preserve Exactly
+
+| Term | Meaning | Why Preserve | Downstream Note |
+| --- | --- | --- | --- |
+| `Combat Witness` | Rolling recent combat-log observations and computed tactical summaries. | Not Atlas evidence, not complete history, and not perfect truth. | Lab may present compactly, but should preserve witnessed/recent/observed intent. |
+| `Passive Telemetry` | Low-frequency current-system context lane. | Must not imply background Threat Intel scanning or complete system awareness. | Keep lane isolation visible. |
+| `Threat Intel` | Deliberate scoped operator-initiated inspection. | Must not imply continuous monitoring, complete intelligence, or durable Atlas assessment. | Keep sample/cap/failure/freshness visible. |
+| `Clipboard Acquisition` | Short visible clipboard authority window. | Safety/trust-critical; not background clipboard monitoring. | Avoid generic watching/listening language unless contextualized. |
+| `Gateway` | Sense back-page Threat Intel context marker and interaction model. | Sense-owned UI/context term. | Preserve unless Human/Sense Overseer allows Lab override. |
+| `Live IO blocked` | Backend gate intentionally prevented live provider or clipboard IO. | Different from provider failure, unavailable bridge, or no data. | Do not soften to offline without preserving authority meaning. |
+| `Partial sample` / `Capped sample` | Provider response was incomplete or display/sample capped. | Prevents samples from being read as complete truth. | Must remain visible near provider/sample displays. |
+| `No scan` | No deliberate Threat Intel scan has run. | Different from no provider data, no observation, or provider failure. | Preserve deliberate-scan requirement. |
+| `Observed Source` | Actor/source label observed in local combat events. | Avoids unsupported hostile/enemy/primary labels. | Good Lab-facing label. |
+| `Observed Weapon` / `Most observed weapon` | Weapon label/count observed in combat events. | Avoids unsupported weapon/type certainty. | Prefer observed wording unless source supports more. |
+| `Observed repair balance` | Computed repair-per-second minus incoming-damage-per-second from observed window data. | Avoids safety/survival/prediction claims. | Do not call safe, stable, breaking, or surviving. |
+
+## Sense-Owned Terms
+
+| Term | Meaning | Notes |
+| --- | --- | --- |
+| `combat.witness.snapshot` | Backend-owned Combat Witness snapshot. | Lane payload with observedAt, rolling windows, events, freshness, and watcher state. |
+| `passive.telemetry.snapshot` | Backend-owned Passive Telemetry snapshot. | Current-system, activity, zKill, freshness, gate, provider status, and failure metadata. |
+| `threat.intel.snapshot` | Backend-owned latest Threat Intel scan snapshot. | Request, target, status, live IO, zKill sample, failure, and freshness. |
+| `clipboard.acquisition.snapshot` | Clipboard Acquisition lifecycle snapshot. | Idle/listening/cooldown/blocked states tied to authority window. |
+| `runtime.live-io.snapshot` | Backend live IO policy state. | Live IO is authority state, not provider health. |
+| `auraCombatWitness` / `auraPassiveTelemetry` / `auraThreatIntel` | Preload bridge APIs for Sense lanes. | Bridge-facing JavaScript APIs. |
+| `fresh` / `recent` / `stale` | Lane-specific freshness states. | Not a shared freshness enum. |
+| `empty` / `No scan` | No deliberate Threat Intel scan or no observed events depending on lane. | Do not collapse with failed/degraded/blocked. |
+| `failed` / `degraded` | Provider/runtime impairment. | Different from authority block and no data. |
+| `Pulling` / `Listening` / `Cooldown` | Clipboard Acquisition lifecycle states. | Short visible authority lifecycle, not background monitoring. |
+| `Provider pulse` | Provider/sample status language. | Can imply continuous provider heartbeat; needs presentation care. |
+| `seed.readiness` | Inherited/runtime readiness service command. | Active bridge term, not product doctrine. |
+| `Control+\\`, `Alt+\\`, `\\` | Shortcut model. | Current implementation includes fallback behavior; docs/UI/runtime must match. |
+
+## Translation Caution
+
+| Sense Term | Possible Interface Term | Risk | Decision |
+| --- | --- | --- | --- |
+| `Evidence`-like Sense basis language | observed telemetry / provider sample / local log observation | Collides with Atlas durable Evidence. | Avoid shared Evidence unless Human decides. |
+| `Report` / persistent Threat Intel report | latest scan report / scan readout | Persistent can imply durable history. | Keep "until next scan" or latest-scan basis visible. |
+| `Fresh` / `Recent` / `Current` | fresh context / recent context / current system | Lane-specific freshness can sound like global truth. | Preserve lane/source context. |
+| `Fallback` | manual fallback / local only / static lookup | Can sound like alternate truth source. | Use explicit authority/source labels. |
+| `No data` | No scan / No provider / No observation | One phrase hides distinct states. | Use lane-specific absence language. |
+| `Watch` / `Watcher` | Log Watcher / Watching | Collides with Atlas Watch and clipboard authority. | Reserve watcher for gamelog watcher unless Sense accepts otherwise. |
+| `Listening` | Pulling / Listening | Can imply ongoing clipboard monitoring. | Only for the short visible acquisition state. |
+| `Gateway` vs `gate` | Gateway / Live IO gate | UI context marker vs backend authority gate. | Keep distinct. |
+| `Provider pulse` | provider state / sample state | Pulse may imply continuous provider heartbeat. | Needs Lab/Human presentation choice. |
+| `Sample` | scoped sample | Can imply representative/complete coverage. | Keep count/cap/partial nearby. |
+| `Runtime ready` | runtime ready | Can sound like tactical readiness. | Keep in diagnostics/setup context. |
+| `Seed` / `Core Seed` | inherited/internal readiness | Can become accidental Core doctrine. | Keep out of product/interface terminology unless promoted. |
+
+## Open Questions
+
+- Should `Gateway`, `Pulling`, `Cooldown`, and `Live IO blocked` be preserve-exact in Lab presentation?
+- Should `Combat Witness`, `Passive Telemetry`, `Threat Intel`, and `Clipboard Acquisition` be preserve-exact names or Lab-translatable labels?
+- Should Sense reserve `Threat Intel` while Atlas avoids broader `Intelligence` as a shared work-product term?
+- Should `Provider pulse` remain user-facing, or should Lab choose calmer sample/state language?
+- Should inherited `seed.readiness` / Core Seed language stay out of product-facing copy?
