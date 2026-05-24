@@ -9,7 +9,7 @@ Overseer: initiate from the AURA-Sense repo root.
 
 Confirm cwd, repo root, branch, tree health, workspace files, active milestone, and latest handshake sequence.
 
-Read workspace/overview.md, workspace/current.md, recent workspace handshakes, active docs/roadmap milestone, current-state, relevant contracts/ADRs, verification docs, and the shared Aura coordination authority.
+Read AGENTS.md if present, workspace/overview.md, workspace/current.md, recent workspace handshakes, active docs/roadmap milestone, current-state, relevant contracts/ADRs, verification docs, and the shared Aura coordination authority.
 
 Do not merely create a one-task packet unless risk requires it.
 Look 2-4 tasks ahead and define a bounded Dev runway in workspace/current.md.

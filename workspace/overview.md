@@ -66,7 +66,9 @@ Latest accepted handshake: None under the new workspace handshake sequence
 ### Shared Coordination Authority
 
 - `F:\Projects\Docs\Aura-Agent-Coordination\workspace-structure-authority.md`
-- `F:\Projects\Docs\Aura-Agent-Coordination\relay\role-prompts.md`
+- `F:\Projects\Docs\Aura-Agent-Coordination\roles\README.md`
+- `F:\Projects\Docs\Aura-Agent-Coordination\roles\[role]\README.md`
+- `F:\Projects\Docs\Aura-Agent-Coordination\roles\[role]\prompt.md`
 
 ## Open Questions
 
