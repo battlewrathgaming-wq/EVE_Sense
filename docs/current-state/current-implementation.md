@@ -76,6 +76,7 @@ The current implementation includes:
 - ADR documenting Atlas handoff as deferred
 - explicit SDE source-bundle staging/cleanup utility for local metadata refreshes
 - compact local type metadata artifact and read-only type lookup helper
+- adversarial local metadata/SDE fixture verification for malformed JSONL, unsafe ZIP paths, unsupported compression, oversized entries, failed-build cleanup, provenance, malformed compact artifacts, and unresolved-ID fallback
 - curated combat-log fixture ingestion with raw-line hash drift checks
 - machine-readable combat-log event coverage matrix
 - offline combat-log replay harness for parser/runtime/service semantics
@@ -183,7 +184,7 @@ It writes artifacts under `.tmp\electron-visual-smoke` and is intentionally not 
 
 - some inherited seed service names remain below the visible product surface
 - inherited active scan validator language remains to be reconciled with the implemented Threat Intel scan contract
-- local metadata resolver and type lookup are fixture/static until an explicit SDE refresh is run
+- local metadata resolver and type lookup are fixture/static until an explicit SDE refresh is run; the fixture builder path is adversarially verified but real SDE refresh remains operator-gated
 - provider fault injection remains open for hostile live IO failure matrices
 - live zKill/ESI smoke command exists but live network run is deferred until `AURA_SENSE_LIVE_API=1`
 - Threat Intel live zKill network run is deferred until explicitly enabled and recorded outside `verify:all`

@@ -21,16 +21,16 @@ It should present compact, uncertainty-aware tactical state while staying transi
 
 | Milestone | Roadmap Source | Status | Notes |
 | --- | --- | --- | --- |
-| 13 | `docs/roadmap/milestone-13-aggressive-testing-and-bug-hunting.md` | Active | Continue aggressive testing runway without product scope expansion. |
-| 14 | `docs/roadmap/milestone-14-back-page-threat-intel-ux.md` | Planned | Threat Intel UX slice after hardening direction is accepted. |
+| 13 | `docs/roadmap/milestone-13-aggressive-testing-and-bug-hunting.md` | Complete | Offline aggressive hardening accepted; live/manual validation remains gated for later operator-validation work. |
+| 14 | `docs/roadmap/milestone-14-back-page-threat-intel-ux.md` | Active | Threat Intel back-page UX slice after hardening acceptance. |
 
 ## Active Milestone
 
-Milestone: 13 - Aggressive Testing And Bug Hunting
-Roadmap source: `docs/roadmap/milestone-13-aggressive-testing-and-bug-hunting.md`
+Milestone: 14 - Back-Page Threat Intel UX
+Roadmap source: `docs/roadmap/milestone-14-back-page-threat-intel-ux.md`
 Current packet: `workspace/current.md`
-Current sequence: HS02
-Latest accepted handshake: `workspace/DevHS01-sense-pre-bridge-hardening.md`
+Current sequence: HS01
+Latest accepted handshake: Milestone 13 archived under `workspace/complete/milestone-13/`
 
 ## Durable Record Index
 
@@ -72,5 +72,5 @@ Latest accepted handshake: `workspace/DevHS01-sense-pre-bridge-hardening.md`
 
 ## Open Questions
 
-- Which remaining live/manual validation items should stay in milestone 13 versus move to a later operator-validation milestone?
-- Should any archived gap packet be promoted into roadmap language, or is `workspace/current.md` enough for the next run?
+- Which remaining live/manual validation items should move into a later operator-validation milestone?
+- After Milestone 14 HS01, does the back-page workflow need a second renderer polish packet or a gated Electron/manual validation packet?

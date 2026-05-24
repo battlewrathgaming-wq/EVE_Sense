@@ -1,6 +1,6 @@
 ﻿# Milestone 14: Back-Page Threat Intel UX
 
-Status: Proposed
+Status: Active
 Date: 2026-05-23
 Owner: Overseer direction, Dev execution
 

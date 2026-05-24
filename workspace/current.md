@@ -6,91 +6,74 @@ Owner: Overseer planning, Dev execution
 
 ## Coordination State
 
-Active milestone: Milestone 13 - Aggressive Testing And Bug Hunting
-Roadmap source: `docs/roadmap/milestone-13-aggressive-testing-and-bug-hunting.md`
-Sequence: HS02
-Previous accepted handshake: `workspace/DevHS01-sense-pre-bridge-hardening.md`
+Active milestone: Milestone 14 - Back-Page Threat Intel UX
+Roadmap source: `docs/roadmap/milestone-14-back-page-threat-intel-ux.md`
+Sequence: HS01
+Previous accepted handshake: Milestone 13 complete; handshakes archived under `workspace/complete/milestone-13/`
 Current executor: Dev
-Current focus: local metadata/SDE builder hardening and bug-hunt triage
-Expected output: `DevHS02-sense-metadata-bughunt-hardening.md`
-Archive target on milestone completion: `workspace/complete/milestone-13/`
+Current focus: back-page Threat Intel composition and display-first acquisition bar foundation
+Expected output: `DevHS01-sense-back-page-threat-intel-foundation.md`
+Archive target on milestone completion: `workspace/complete/milestone-14/`
 
 ## Purpose
 
 This is the only active executable work packet for AURA-Sense.
 
-HS01 is accepted. It hardened the Sense-local logger -> runtime -> snapshot -> preload bridge -> renderer path, added initial offline provider/runtime fault coverage, updated Evidence / Dev Handoff, and created `workspace/DevHS01-sense-pre-bridge-hardening.md`.
+Milestone 13 is accepted complete. Milestone 14 now begins the back-page Threat Intel UX slice.
 
-The former `docs/gap` task lifecycle has been archived under `docs/archive/deprecated-gap-workflow-2026-05-23/`. Those files are historical context only.
+The first Milestone 14 runway should establish the overlay-native back-page composition and display-first Threat Intel acquisition surface without broadening provider behavior, adding Atlas persistence, or creating Lab/Core/shared presentation adapter work.
 
 ## Required Reading
 
 - `workspace/overview.md`
 - `workspace/00-dot-protocol.md`
 - `docs/current-state/current-implementation.md`
-- `docs/roadmap/milestone-13-aggressive-testing-and-bug-hunting.md`
-- `docs/testing/aggressive-test-harness-matrix.md`
+- `docs/roadmap/milestone-14-back-page-threat-intel-ux.md`
 - `docs/contracts/renderer-boundary-contract.md`
 - `docs/contracts/telemetry-lane-contract.md`
 - `docs/contracts/threat-intel-contract.md`
-- `workspace/DevHS01-sense-pre-bridge-hardening.md`
-- `workspace/OverseerHS02-sense-hs01-review-and-next-runway.md`
+- `docs/schemas/hud-snapshot.md`
+- `docs/features/clipboard-acquisition.md`
 
 ## Runway Objective
 
-Continue Milestone 13 by hardening the remaining local metadata/SDE and bug-hunt evidence surfaces without broadening product scope.
+Begin Milestone 14 by reshaping Threat Intel toward an overlay-native back-page workflow while preserving the current backend-owned scan contract.
 
-This packet should make local metadata refresh helpers adversarially safe, then add a bug-hunt triage/failure-record pass that records reusable findings or explicit no-finding evidence. Keep all checks deterministic, offline, and separate from live/manual smoke.
-
-## Overseer Review Of HS01
-
-Decision: accepted.
-
-Verification observed by Overseer:
-
-```powershell
-npm.cmd run verify:all
-```
-
-Result: passed.
-
-HS01 accepted work:
-
-- watcher status-only changes now emit renderer-facing Combat Witness snapshots
-- gamelog tail offsets advance only after appended bytes are read successfully
-- Combat Witness bridge validates sender before backend service subscription
-- renderer Combat Witness state reconciles watcher state with freshness
-- runtime settings write failures degrade visibly
-- offline provider/runtime fault tests were expanded
-- `workspace/DevHS01-sense-pre-bridge-hardening.md` was created
-
-Residual note:
-
-- watcher start may emit duplicate operational snapshots through both watcher callback and runtime start publication. This is not blocking because snapshot bridge throttling and idempotent renderer rendering keep it safe, but it can be cleaned up if it becomes noisy.
+The front page should remain the live tactical read. The back page should become the deliberate Threat Intel review and acquisition surface. This packet should establish the layout/state foundation and verification hooks, not complete the whole milestone unless the work remains smaller than expected.
 
 ## Ordered Runway
 
-1. Local metadata/SDE builder hardening:
-   - stress source-bundle staging/cleanup and local type metadata refresh helpers with deterministic fixtures only
-   - cover malformed JSONL, duplicate type IDs, invalid rows, missing required fields, unsupported compression or malformed ZIP/source payloads where applicable, huge-entry/path-boundary behavior, cleanup after failure, and provenance/status reporting
-   - do not download real SDE assets by default
-   - do not stage generated large SDE outputs by default
-2. Local metadata consumer behavior:
-   - prove read-only lookup behavior remains bounded for unresolved IDs, malformed artifacts, missing artifacts, duplicate records, and stale/static fixture artifacts
-   - keep local metadata as helper context, not tactical truth
-3. Bug-hunt triage and failure records:
-   - perform a scoped offline bug-hunt pass over the Milestone 13 hardening surfaces already touched
-   - record reusable bug classes in `docs/failures/` only when a real reusable failure is found
-   - if no reusable failure is found, record explicit no-finding evidence in the Dev handoff
-   - keep exploratory bug-hunt notes distinct from product claims
-4. Provider/runtime follow-up only if still bounded:
-   - add narrow offline provider trace assertions if HS01 left an obvious lane-specific visibility gap
-   - do not reopen live API smoke, Electron smoke, or manual operator smoke unless explicitly authorized
-5. Documentation/test index reconciliation:
-   - update durable docs only if implementation truth, verification command inventory, or milestone meaning changed
-   - do not recreate `docs/gap` task files
-6. Next-runway recommendation:
-   - recommend whether Milestone 13 is ready for closure review, needs another bug-hunt pass, or should defer remaining live/manual validation to a later operator-validation milestone
+1. Back-page composition foundation:
+   - keep front page focused on travel/general telemetry, Combat Witness pressure/repair, incoming source/contact context, and only trust-affecting runtime health
+   - move or stage Threat Intel search/report behavior as back-page first
+   - preserve lane separation and backend-owned snapshots
+   - do not trigger provider requests merely by opening/closing the back page
+2. Display-first search/display bar:
+   - convert the visible Threat Intel search surface into a display-first acquisition bar
+   - remove visible/manual Search button intent as the primary overlay workflow
+   - support idle target, listening/pulling, scanning, cooldown, and last captured target states
+   - keep focused/manual entry available only as a fallback if needed by existing implementation
+3. Gateway and target-type controls:
+   - treat `\` as gateway/back-page context
+   - keep `\ + CTRL` as clipboard acquire + scan
+   - keep `\ + ALT` as target type cycle
+   - ensure target type change is local classification only and does not scan
+   - do not run scans on focus alone
+4. Clipboard visual state grammar:
+   - teal means ready/local interaction
+   - amber interior means active clipboard authority
+   - amber exterior means cooldown/temporary constraint
+   - listener-active visuals must snap off on capture or scan start
+   - Listening is a state, not a mode
+5. Persistent report foundation:
+   - render last Threat Intel scan report below the search/display bar
+   - keep it stable until the next scan replaces it
+   - keep provider/sample/cap/partial/blocked/failure basis visible and honest
+   - do not turn the report into historical intelligence storage
+6. Verification:
+   - extend renderer/static or shell checks for display-first bar, target pill, gateway semantics, report persistence, and absence of renderer provider calls
+   - run focused checks and then `npm.cmd run verify:all`
+   - run `npm.cmd run smoke:electron` only if renderer/smoke behavior changes enough to require visual validation; if skipped, explain why
 
 ## Guardrails
 
@@ -98,23 +81,22 @@ Residual note:
 - Keep this Sense-local.
 - Do not create shared Aura doctrine.
 - Do not create Lab/Core adapters or reusable bridge packages.
-- Do not run live APIs inside `verify:all`.
-- Do not add Atlas persistence.
-- Do not broaden collection.
-- Do not persist private logs.
-- Do not weaken renderer boundary checks.
-- Do not stage downloaded SDE ZIPs or large generated metadata by default.
-- Bug-hunting helpers are not product features unless explicitly accepted.
-- Archived gap files are historical context, not active work packets.
+- Do not call zKill, ESI, fetch, filesystem, parser, watcher, or runtime modules from the renderer.
+- Do not add manual background scans.
+- Do not make search focus trigger a scan.
+- Do not leave clipboard listening beyond the sealed acquisition window.
+- Do not add Atlas persistence, reports, watch execution, evidence stores, or historical intelligence storage.
+- Do not make cooldown look like active listening.
+- Keep live provider smoke separate from `verify:all`.
 
 ## Stop Conditions
 
 Return to chat before continuing if:
 
-- live network/API action is needed without explicit operator authorization
-- real SDE downloads or large generated artifacts would need to be retained or staged
-- a metadata hardening fix would require product semantics beyond local helper lookup
-- a bug-hunt finding reveals a doctrine or architecture decision
+- the front/back split requires a product decision not already covered by the roadmap
+- global shortcut behavior requires live/operator validation
+- a renderer change would weaken boundary checks
+- a report persistence choice starts resembling Atlas evidence storage
 - current-state, roadmap, observed code, and this packet disagree materially
 - the working tree contains overlapping unknown changes in files needed for this runway
 
@@ -129,13 +111,22 @@ npm.cmd run verify:all
 Likely focused commands, depending on files touched:
 
 ```powershell
-npm.cmd run verify:local-type-metadata
-npm.cmd run verify:all
+npm.cmd run verify:renderer-shell
+npm.cmd run verify:renderer-boundary
+npm.cmd run verify:renderer-boundary-adversarial
+npm.cmd run verify:threat-intel
 ```
+
+Conditionally run:
+
+```powershell
+npm.cmd run smoke:electron
+```
+
+Run Electron smoke if the shell/global shortcut behavior, visual smoke selectors, or substantive renderer visual states changed.
 
 Do not run by default:
 
-- `npm.cmd run smoke:electron` unless renderer/smoke behavior changes or Overseer requests it
 - live API smoke unless explicitly gated with operator approval
 - manual operator smoke
 

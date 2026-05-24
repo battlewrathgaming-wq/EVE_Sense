@@ -32,7 +32,7 @@ This matrix maps AURA-Sense invariants to verification commands so aggressive te
 | Settings recovery | `npm.cmd run verify:runtime-control` | future runtime settings fault command | Corrupt or missing settings should degrade visibly and recoverably. |
 | Diagnostics sanitization | `npm.cmd run verify:diagnostics` | future runtime diagnostics fault command | Diagnostics are evidence, not raw private payload storage. |
 | Visual state | `npm.cmd run smoke:electron` | future visual state regression artifacts | Electron smoke stays separate from offline verification. |
-| Local metadata/SDE builder | `npm.cmd run verify:local-type-metadata` | future SDE builder hardening command | Downloads remain explicit; large SDE assets do not enter `verify:all`. |
+| Local metadata/SDE builder | `npm.cmd run verify:local-type-metadata` | `docs/failures/failure-2026-05-24-local-metadata-sde-boundaries.md` | Downloads remain explicit; large SDE assets do not enter `verify:all`; fixture ZIPs cover malformed JSONL, unsafe paths, unsupported compression, oversized entries, cleanup, and bounded lookup behavior. |
 
 ## `verify:all` Exclusions
 
@@ -54,3 +54,4 @@ The offline confidence command must never require:
 | `npm.cmd run verify:gamelog-watcher-chaos` | Yes | Append-only watcher chaos, polling fallback, truncation/replacement handling, listener/parser failure isolation, hash-only rejection evidence. |
 | `npm.cmd run verify:clipboard-race` | Yes | Clipboard Acquisition rapid arm/cancel/capture, unchanged/rejected content, timeout, scan failure sealing, cooldown, and concurrent arm semantics. |
 | `npm.cmd run verify:combat-window-followups` | Yes | Combat Witness repeated weapon labels, tie handling, missing weapon labels, outgoing spike ship labels, pruning, bounds, and spike cap semantics. |
+| `npm.cmd run verify:local-type-metadata` | Yes | Local metadata/SDE fixture ZIP hardening, source cleanup, provenance, malformed compact artifacts, unresolved IDs, unsafe paths, unsupported compression, and oversized entry rejection. |

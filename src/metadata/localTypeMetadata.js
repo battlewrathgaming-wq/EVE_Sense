@@ -9,7 +9,9 @@ const DEFAULT_TYPE_METADATA_PATH = path.join(projectRoot(), 'fixtures', 'local-t
 async function buildLocalTypeMetadata(options = {}) {
   const bundle = await prepareSdeSourceBundle(options);
   try {
-    const types = extractTypesFromSdeZip(bundle.source_path);
+    const types = extractTypesFromSdeZip(bundle.source_path, {
+      maxEntryBytes: options.maxEntryBytes
+    });
     const artifact = {
       kind: 'aura-sense.local-type-metadata',
       schemaVersion: 1,
@@ -43,22 +45,23 @@ function loadLocalTypeMetadata(metadataPath = DEFAULT_TYPE_METADATA_PATH) {
 }
 
 function createTypeLookup(types = {}) {
+  const normalizedTypes = normalizeTypeCatalog(types);
   return {
     labelForType(typeId) {
       const key = String(typeId);
-      const type = types[key];
+      const type = normalizedTypes[key];
       return type?.name ? `${type.name} [typeID: ${key}]` : `Type ${key}`;
     },
     resolveType(typeId) {
       const key = String(typeId);
-      const type = types[key] || null;
+      const type = normalizedTypes[key] || null;
       return type ? { typeId: Number(key), ...type } : null;
     }
   };
 }
 
-function extractTypesFromSdeZip(zipPath) {
-  const entries = readZipEntries(zipPath).filter((entry) => /\.jsonl$/i.test(entry.name));
+function extractTypesFromSdeZip(zipPath, options = {}) {
+  const entries = readZipEntries(zipPath, options).filter((entry) => /\.jsonl$/i.test(entry.name));
   const types = new Map();
   for (const entry of entries) {
     for (const line of entry.text().split(/\r?\n/)) {
@@ -73,6 +76,23 @@ function extractTypesFromSdeZip(zipPath) {
     }
   }
   return Array.from(types.values()).sort((left, right) => left.typeId - right.typeId);
+}
+
+function normalizeTypeCatalog(types = {}) {
+  const normalized = {};
+  for (const [key, type] of Object.entries(types || {})) {
+    const typeId = Number(key);
+    const name = typeof type?.name === 'string' ? type.name.trim() : '';
+    if (!Number.isInteger(typeId) || typeId < 1 || !name) {
+      continue;
+    }
+    normalized[String(typeId)] = {
+      name,
+      groupId: finiteOrNull(type.groupId),
+      categoryId: finiteOrNull(type.categoryId)
+    };
+  }
+  return normalized;
 }
 
 function normalizeTypeRecord(record, sourceName = '') {
@@ -124,5 +144,6 @@ module.exports = {
   createTypeLookup,
   extractTypesFromSdeZip,
   loadLocalTypeMetadata,
+  normalizeTypeCatalog,
   normalizeTypeRecord
 };
