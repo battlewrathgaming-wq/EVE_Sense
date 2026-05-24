@@ -47,7 +47,7 @@ function main() {
   const fileMeta = buildFileMeta(files);
   const warnings = [
     ...findBorrowingWarnings(files, lookup, fileMeta, options),
-    ...findBoundaryWarnings(files),
+    ...findBoundaryWarnings(files, fileMeta),
     ...discoverCandidates(files, lookup, fileMeta)
   ];
   const mutedFiles = files.filter((file) => fileMeta.get(file)?.muteExternalVocabulary);
@@ -227,7 +227,7 @@ function findBorrowingWarnings(files, lookup, fileMeta, options) {
   return dedupe(warnings);
 }
 
-function findBoundaryWarnings(files) {
+function findBoundaryWarnings(files, fileMeta) {
   const patterns = [
     {
       regex: /\boffline\b/i,
@@ -253,6 +253,7 @@ function findBoundaryWarnings(files) {
 
   const warnings = [];
   forEachLine(files, (line, file, lineNumber) => {
+    if (fileMeta.get(file)?.muteExternalVocabulary) return;
     if (isProtectiveOrReferenceLine(line)) return;
     for (const pattern of patterns) {
       if (!pattern.regex.test(line)) continue;
