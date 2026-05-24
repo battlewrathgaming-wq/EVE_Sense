@@ -1,28 +1,33 @@
 # Current Workspace Packet
 
-Status: Idle
+Status: Active
 Updated: 2026-05-24
-Owner: Overseer
+Owner: Overseer planning, Dev execution
 
 ## Coordination State
 
 Active milestone: None - bounded post-Milestone-14 prototype
-Current runway: None - Passive Telemetry Bridge State Readout prototype accepted
+Current runway: Sense Face Refinement Pass - Combat Witness + Passive Telemetry
 Latest closed milestone: Milestone 14 - Back-Page Threat Intel UX
 Latest accepted closure: `workspace/complete/milestone-14/OverseerHS03-milestone-14-closure.md`
 Accepted UI/UX mapping: `workspace/SenseUIUXHS01-passive-telemetry-bridge-state-readout.md`
 Overseer review: `workspace/OverseerHS01-passive-telemetry-readout-mapping-review.md`
 Latest Dev handoff: `workspace/DevHS01-passive-telemetry-readout-prototype.md`
-Latest Overseer acceptance: `workspace/OverseerHS02-passive-telemetry-readout-prototype-review.md`
-Current executor: None
-Current focus: Awaiting human direction
-Expected output: None
+Latest prototype acceptance: `workspace/OverseerHS02-passive-telemetry-readout-prototype-review.md`
+Latest face advisory: `workspace/UIUXHS02-sense-face-presentation-advisory.md`
+Latest Lab advisory input: `F:\Projects\AURA- Lab\workspace\SenseImportAdvisoryHS65-lab-presentation-adoption.md`
+Latest Overseer acceptance: `workspace/OverseerHS03-sense-face-presentation-adoption-review.md`
+Current executor: Dev
+Current focus: renderer-only Combat Witness and Passive Telemetry first-read face refinement
+Expected output: `workspace/DevHS02-sense-face-refinement-pass.md`
 
 ## Purpose
 
-There is no active executable packet for AURA-Sense.
+This is the only active executable packet for AURA-Sense.
 
-The UI/UX mapping for a Passive Telemetry Bridge State Readout was accepted for a narrow Dev runway and the renderer prototype has been accepted. This is a Sense-local renderer presentation prototype. It is not a Lab/Core adapter, not shared doctrine, and not a contract rename.
+The Passive Telemetry readout prototype has been accepted. A new Sense-owned face presentation advisory has also been reviewed and accepted as bounded renderer direction.
+
+This runway adapts selected Lab presentation ideas through Sense-owned meaning. It is not a Lab import, not a Core adapter, not shared doctrine, not a contract rename, and not a broad redesign.
 
 Authority split:
 
@@ -47,6 +52,8 @@ Boot and coordination:
 
 Accepted direction:
 
+- `workspace/UIUXHS02-sense-face-presentation-advisory.md`
+- `workspace/OverseerHS03-sense-face-presentation-adoption-review.md`
 - `workspace/SenseUIUXHS01-passive-telemetry-bridge-state-readout.md`
 - `workspace/OverseerHS01-passive-telemetry-readout-mapping-review.md`
 - `workspace/SenseAdoptionHS01-aura-lab-presentation-mechanics-review.md`
@@ -74,45 +81,50 @@ Reference-only source facts:
 - `scripts/verify-passive-telemetry.js`
 - `src/main/preload.js`
 
+External advisory input, not Sense authority:
+
+- `F:\Projects\AURA- Lab\workspace\SenseImportAdvisoryHS65-lab-presentation-adoption.md`
+
 ## Runway Objective
 
-Implement the Passive Telemetry readout prototype in the renderer using existing `passive.telemetry.snapshot` fields only.
+Implement a compact Sense Face Refinement Pass for Combat Witness and Passive Telemetry using existing renderer surfaces and existing backend-owned snapshot fields only.
 
-The prototype should improve Passive Telemetry's compact presentation by making status, provider/sample basis, freshness/age, and gaps more legible without changing backend contracts or provider behavior.
+The prototype should make the current Combat Witness pressure/repair readout and Passive Telemetry context easier to understand at a glance without changing backend contracts, provider behavior, bridge names, or lane meaning.
 
 ## Ordered Runway
 
-1. Passive readout copy and state mapping:
-   - map `fresh` to `Fresh context`
-   - map `stale` to `Stale context`
-   - map `partial` to `Partial sample`
-   - keep `blocked` as `Live IO blocked`
-   - keep `degraded` as `Degraded`
-   - map no current-system observation to `No observation`
-   - avoid generic `NO DATA`, `CURRENT`, `AGED`, and `FALLBACK` as user-facing copy
-2. Compact readout layout:
-   - keep Passive Telemetry in the existing glance/diagnostics surfaces
-   - do not add a large front-page card
-   - preserve Combat Witness visual priority
-   - keep system, kills, jumps, ratio, and one concise provider/sample state visible
-   - keep long details in the existing diagnostics panel or tooltip-level detail
-3. Provider/sample basis:
-   - preserve zKill sample count, ESI ship kills/jumps, capped, partial, stale, blocked, and degraded distinctions
-   - show `Capped sample` near sample/basis when `zkill.capped` is true
-   - show `Static lookup` or `Local lookup` only when the snapshot supports it through resolver/source fields
-   - prefer calmer user-facing copy like `Provider state` or `Sample state` where appropriate, but do not rename code identifiers just for terminology preference
+1. Combat Witness first-read hierarchy:
+   - keep Combat Witness as the primary lane
+   - make `Incoming DPS`, `Repair HPS`, and `Observed balance` readable as the first pressure/repair read
+   - keep observed source and observed weapon visible as compact context
+   - preserve recent/observed/rolling-window wording
+   - do not present repair balance as safe, stable, surviving, breaking, or tank state
+2. Passive Telemetry compact support:
+   - preserve the accepted Passive readout labels: `Fresh context`, `Stale context`, `Partial sample`, `Capped sample`, `Live IO blocked`, `Degraded`, and `No observation`
+   - keep Passive in the glance strip or equivalent compact support surface
+   - keep system, kills, jumps, ratio, and one concise provider/sample basis visible
+   - show `Static lookup` or `Local lookup` only when resolver/source fields support it
+   - avoid generic `NO DATA`, `CURRENT`, `AGED`, and `FALLBACK` as user-facing Passive copy
+3. Face composition:
+   - preserve the existing lane structure and overlay density
+   - do not add a large front-page card or full app redesign
+   - demote diagnostics visually without hiding source, freshness, basis, gaps, warnings, live IO, watcher, or provider state
+   - keep Threat Intel and Clipboard Acquisition mostly unchanged except for visual consistency at touch points
+   - keep Threat Intel as deliberate scan/back-page behavior and Clipboard Acquisition as a short authority window
 4. Boundary preservation:
    - do not change `passive.telemetry.snapshot` shape
-   - do not rename bridge APIs, IPC channels, service commands, payload fields, CSS/test identifiers, or provider clients
+   - do not change `combat.witness.snapshot` shape
+   - do not rename bridge APIs, IPC channels, service commands, payload fields, CSS/test identifiers, provider clients, or backend state fields
    - do not call zKill, ESI, filesystem, parser, watcher, or runtime modules from the renderer
    - do not merge Passive Telemetry with Combat Witness, Threat Intel, or Clipboard Acquisition
 5. Verification and smoke:
-   - extend renderer shell checks for the accepted Passive readout copy/state expectations
-   - extend Electron visual smoke state coverage if selector/text states change
+   - extend renderer shell checks for the accepted Combat Witness and Passive face expectations
+   - extend Electron visual smoke state coverage if selector/text/layout states change
+   - keep narrow viewport containment covered
    - run all required verification commands
 6. Handoff:
    - update Evidence and Dev Handoff in this packet
-   - create `workspace/DevHS01-passive-telemetry-readout-prototype.md`
+   - create `workspace/DevHS02-sense-face-refinement-pass.md`
    - recommend accept/redirect and note any remaining risks
 
 ## Guardrails
@@ -120,10 +132,12 @@ The prototype should improve Passive Telemetry's compact presentation by making 
 - Renderer presents; backend owns truth.
 - Passive Telemetry remains current-system context.
 - Do not turn Passive Telemetry into Threat Intel.
+- Do not turn Combat Witness into Atlas evidence, historical proof, or predictive combat assessment.
 - Do not imply complete system awareness.
 - Do not present zKill/ESI sample data as durable evidence.
 - Do not import Atlas evidence, watch, report, storage, or assessment semantics.
 - Do not import Lab fixtures or Lab product semantics.
+- Do not import Lab neutral state labels where Sense lane-specific labels are more precise.
 - Do not create shared Aura doctrine.
 - Do not broaden into Combat Witness, Threat Intel, Clipboard Acquisition, Core, Atlas, or Lab work.
 - Do not run live provider smoke unless explicitly authorized by the human.
@@ -135,7 +149,9 @@ The prototype should improve Passive Telemetry's compact presentation by making 
 Return to chat before continuing if:
 
 - implementation requires changing Passive Telemetry backend contracts or provider behavior
+- implementation requires changing Combat Witness backend contracts, parser behavior, or rolling-window computation
 - renderer would need to compute Passive truth instead of presenting snapshot fields
+- renderer would need to compute Combat Witness truth instead of presenting snapshot fields
 - `blocked`, `partial`, `degraded`, `unavailable`, `stale`, and `fresh` cannot remain distinct
 - visual changes crowd or demote Combat Witness priority
 - Lab/Core/shared doctrine decisions become necessary
@@ -146,10 +162,14 @@ Return to chat before continuing if:
 Run:
 
 ```powershell
+npm.cmd run verify:combat-witness
+npm.cmd run verify:combat-bridge
+npm.cmd run verify:combat-runtime
 npm.cmd run verify:passive-telemetry
 npm.cmd run verify:renderer-shell
 npm.cmd run verify:renderer-boundary
 npm.cmd run verify:renderer-boundary-adversarial
+npm.cmd run verify:protected-terms
 npm.cmd run verify:all
 npm.cmd run smoke:electron
 ```
@@ -167,65 +187,44 @@ Dev updates this before handoff.
 Verification run:
 
 ```txt
-npm.cmd run verify:passive-telemetry - passed
-npm.cmd run verify:renderer-shell - passed
-npm.cmd run verify:renderer-boundary - passed
-npm.cmd run verify:renderer-boundary-adversarial - passed
-npm.cmd run verify:all - passed
-npm.cmd run smoke:electron - passed
-
-Electron smoke output:
-AURA-Sense visual smoke passed: F:\Projects\AURA-Sense\.tmp\electron-visual-smoke
-Shortcut diagnostic confirmed Control+\ registered and Alt+\ target-kind toggle registered.
+Pending Dev.
 ```
 
 Files changed:
 
 ```txt
-src/renderer/index.html
-src/renderer/app.js
-src/renderer/styles.css
-src/main/main.js
-scripts/verify-renderer-shell.js
-workspace/current.md
-workspace/DevHS01-passive-telemetry-readout-prototype.md
+Pending Dev.
 ```
 
 Findings:
 
 ```txt
-Passive Telemetry could support the prototype from existing snapshot fields; no backend contract or provider behavior changes were required.
-The old IO-off presentation hid the whole glance strip, which would hide the new Live IO blocked Passive readout; the glance strip now remains visible while IO is off.
-Electron smoke caught an invalid optional-chaining assignment inside the visual fixture reset; fixed before final verification.
-Electron smoke then caught the hidden blocked readout state; fixed before final verification.
-An existing uncommitted workspace/critical/critical-assets.md change was present on disk and left untouched.
+Pending Dev.
 ```
 
 Deferrals:
 
 ```txt
-Live provider smoke was not run.
-Manual operator shortcut validation was not run.
-No Passive Telemetry backend contract, IPC, service command, provider, Core, Lab, Atlas, or shared-doctrine work was attempted.
+Pending Dev.
 ```
 
 ## Dev Handoff
 
 Dev fills this in when work is complete:
 
-- completed tasks: Implemented a renderer-only Passive Telemetry readout prototype with Fresh context, Stale context, Partial/Capped sample, Live IO blocked, Degraded, Provider pending, and No observation copy using existing snapshot fields.
-- tests added/updated: Extended renderer shell checks for Passive readout selectors/copy and Electron visual smoke coverage for fresh, stale, partial/capped, blocked, degraded, unavailable, and narrow/diagnostic states.
-- verification output: `npm.cmd run verify:passive-telemetry`, `npm.cmd run verify:renderer-shell`, `npm.cmd run verify:renderer-boundary`, `npm.cmd run verify:renderer-boundary-adversarial`, `npm.cmd run verify:all`, and `npm.cmd run smoke:electron` all passed.
-- failures found: Initial Electron smoke failed on a fixture syntax issue, then on IO-off hiding the blocked Passive readout; both were fixed and rerun successfully.
-- handshake created: `workspace/DevHS01-passive-telemetry-readout-prototype.md`
-- remaining risk: Live provider behavior and manual operator validation remain gated; `workspace/critical/critical-assets.md` has a pre-existing uncommitted change that was not part of this runway.
+- completed tasks:
+- tests added/updated:
+- verification output:
+- failures found:
+- handshake created:
+- remaining risk:
 
 ## Overseer Review
 
 Overseer fills this in after Dev handoff:
 
-- accepted / redirected: Accepted. Dev completed the renderer-only Passive Telemetry readout prototype from existing `passive.telemetry.snapshot` fields and preserved the required state distinctions.
-- doctrine drift: No doctrine drift found. The change keeps Passive Telemetry as current-system context, keeps provider/sample limitations visible, and does not import Atlas evidence or Lab fixture semantics.
-- architecture risk: Low. Verification preserved renderer boundary checks; the renderer presents bridge snapshots and does not call providers, filesystem, parser, watcher, or runtime modules directly.
-- state updates needed: Packet set idle with `workspace/OverseerHS02-passive-telemetry-readout-prototype-review.md` as the acceptance record.
-- next packet: Human decision. Candidate follow-up is durable current-state documentation cleanup for the accepted readout behavior, but no Dev runway is open.
+- accepted / redirected:
+- doctrine drift:
+- architecture risk:
+- state updates needed:
+- next packet:

@@ -29,10 +29,11 @@ It should present compact, uncertainty-aware tactical state while staying transi
 Milestone: None
 Roadmap source: None
 Current packet: `workspace/current.md`
-Current sequence: Idle after accepted Passive Telemetry readout prototype
+Current sequence: Dev runway after accepted Sense face presentation advisory
 Latest accepted handshake: `workspace/complete/milestone-14/OverseerHS03-milestone-14-closure.md`
 Latest accepted prototype: `workspace/OverseerHS02-passive-telemetry-readout-prototype-review.md`
-Active runway: None
+Latest accepted face advisory: `workspace/OverseerHS03-sense-face-presentation-adoption-review.md`
+Active runway: Sense Face Refinement Pass - Combat Witness + Passive Telemetry
 
 ## Authority Notes
 
@@ -86,4 +87,4 @@ AURA-Sense therefore owns its lane semantics and internal-to-Bridge mapping. Lab
 
 - Which remaining live/manual validation items should move into a later operator-validation milestone?
 - Whether accepted Passive Telemetry readout behavior should be reflected in durable current-state docs.
-- What Sense-local milestone should open next, if any?
+- Whether the Sense Face Refinement Pass should remain a bounded post-Milestone-14 prototype or become the first slice of a new Sense-local milestone after Dev handoff.
