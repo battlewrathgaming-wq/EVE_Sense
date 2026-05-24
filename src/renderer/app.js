@@ -385,6 +385,7 @@ function renderPassiveTelemetry(snapshot) {
   const hasSystem = Boolean(snapshot?.currentSystem?.label);
   const shipKills = Number(activity.shipKills) || 0;
   const jumps = Number(activity.jumps) || 0;
+  const passiveReadout = passiveReadoutFromSnapshot(snapshot);
 
   setText('passive-state', passiveStateLabel(status));
   setText('passive-system', snapshot?.currentSystem?.label || '--');
@@ -395,6 +396,9 @@ function renderPassiveTelemetry(snapshot) {
   setText('passive-activity', passiveActivity(snapshot));
   setText('passive-freshness', passiveStateLabel(snapshot?.freshness?.status || status));
   setText('passive-basis', passiveBasis(snapshot));
+  setText('passive-age', passiveAgeLabel(snapshot));
+  setText('passive-gap', passiveGapLabel(snapshot));
+  renderPassiveReadout(passiveReadout);
   renderProviderPulse('passive', providerPulseFromPassive(snapshot));
   setText('passive-message', passiveMessage(snapshot));
   byId('system-ratio').classList.toggle('is-warm', hasSystem && shipKills > 0);
@@ -951,12 +955,13 @@ function watcherLabel(status) {
 }
 
 function passiveStateLabel(status) {
-  if (status === 'fresh') return 'Fresh';
-  if (status === 'partial') return 'Partial';
-  if (status === 'stale') return 'Stale';
+  if (status === 'fresh') return 'Fresh context';
+  if (status === 'partial') return 'Partial sample';
+  if (status === 'stale') return 'Stale context';
   if (status === 'degraded') return 'Degraded';
-  if (status === 'blocked') return 'Blocked';
-  return 'Unavailable';
+  if (status === 'blocked') return 'Live IO blocked';
+  if (status === 'pending') return 'Provider pending';
+  return 'No observation';
 }
 
 function threatStateLabel(status) {
@@ -997,10 +1002,14 @@ function runtimeSettingsLabel(status) {
 function passiveMessage(snapshot) {
   if (!snapshot) return 'Passive Telemetry bridge unavailable.';
   if (snapshot.status === 'fresh' || snapshot.status === 'partial') {
-    return snapshot.zkill?.capped ? 'Scoped zKill context is capped.' : 'Scoped zKill context refreshed.';
+    if (snapshot.zkill?.capped) return 'Capped sample from scoped zKill context.';
+    if (snapshot.status === 'partial') return 'Partial sample from provider context.';
+    return 'Fresh context from scoped provider sample.';
   }
-  if (snapshot.status === 'stale' && snapshot.zkill?.partial) return 'Partial passive context is stale.';
-  if (snapshot.status === 'blocked') return snapshot.message || 'Passive live IO is blocked.';
+  if (snapshot.status === 'stale' && snapshot.zkill?.partial) return 'Partial sample is stale.';
+  if (snapshot.status === 'stale') return 'Passive context is stale.';
+  if (snapshot.status === 'blocked') return snapshot.message || 'Live IO blocked.';
+  if (snapshot.status === 'degraded') return snapshot.failure?.message || snapshot.message || 'Passive Telemetry degraded.';
   return snapshot.message || 'Waiting for a future observed system change.';
 }
 
@@ -1014,11 +1023,76 @@ function combatDetail(snapshot, status) {
 }
 
 function passiveBasis(snapshot) {
-  if (!snapshot) return 'No provider';
+  if (!snapshot) return 'No provider sample yet';
   if (snapshot.status === 'blocked') return 'Live IO blocked';
+  if (!snapshot.currentSystem) return 'No provider sample yet';
   const zkill = snapshot.zkill ? `zKill ${formatNumber(snapshot.zkill.sampleCount)}` : null;
   const activity = snapshot.activity ? `ESI ${formatNumber(snapshot.activity.shipKills)} / ${formatNumber(snapshot.activity.jumps)}` : null;
-  return [zkill, activity].filter(Boolean).join(' + ') || 'No provider';
+  const lookup = snapshot.currentSystem?.resolverSource === 'local-static' ? 'Static lookup' : null;
+  const basis = [zkill, activity, lookup].filter(Boolean).join(' + ');
+  if (snapshot.zkill?.capped) return basis ? `${basis} - Capped sample` : 'Capped sample';
+  if (snapshot.zkill?.partial || snapshot.activity?.partial || snapshot.status === 'partial') {
+    return basis ? `${basis} - Partial sample` : 'Partial sample';
+  }
+  return basis || 'No provider sample yet';
+}
+
+function passiveReadoutFromSnapshot(snapshot) {
+  if (!snapshot) {
+    return {
+      state: 'unavailable',
+      label: 'No observation',
+      basis: 'Passive Telemetry bridge unavailable.'
+    };
+  }
+  const state = passiveReadoutState(snapshot);
+  return {
+    state,
+    label: passiveStateLabel(state),
+    basis: passiveBasis(snapshot)
+  };
+}
+
+function passiveReadoutState(snapshot) {
+  if (!snapshot?.currentSystem) return 'unavailable';
+  if (snapshot.status === 'blocked') return 'blocked';
+  if (snapshot.status === 'degraded') return 'degraded';
+  if (snapshot.status === 'stale' || snapshot.freshness?.status === 'stale') return 'stale';
+  if (snapshot.status === 'partial' || snapshot.zkill?.partial || snapshot.activity?.partial) {
+    return snapshot.zkill?.capped ? 'capped' : 'partial';
+  }
+  if (snapshot.zkill?.capped) return 'capped';
+  if (snapshot.activity?.cache?.state === 'hit' || snapshot.activity?.cache?.state === 'revalidated') return 'cached';
+  if (snapshot.status === 'fresh') return 'fresh';
+  if (snapshot.currentSystem && !snapshot.zkill && !snapshot.activity) return 'pending';
+  return snapshot.status || 'unavailable';
+}
+
+function renderPassiveReadout(readout) {
+  const stateClass = `is-${readout.state || 'unavailable'}`;
+  const chip = byId('passive-readout-state');
+  chip.className = `readout-state ${stateClass}`;
+  chip.textContent = readout.label;
+  setText('passive-readout-basis', readout.basis);
+  byId('passive-readout-basis').setAttribute('title', readout.basis);
+}
+
+function passiveAgeLabel(snapshot) {
+  const ageMs = Number(snapshot?.freshness?.cacheAgeMs);
+  if (!Number.isFinite(ageMs)) return 'No age';
+  return `${durationLabel(ageMs)} old`;
+}
+
+function passiveGapLabel(snapshot) {
+  if (!snapshot?.currentSystem) return 'No observation';
+  if (snapshot.status === 'blocked') return 'Live IO blocked';
+  if (snapshot.status === 'degraded') return snapshot.failure?.message || snapshot.message || 'Degraded';
+  if (snapshot.status === 'stale' && (snapshot.zkill?.partial || snapshot.activity?.partial)) return 'Partial sample is stale';
+  if (snapshot.status === 'stale') return 'Stale context';
+  if (snapshot.zkill?.capped) return 'Capped sample';
+  if (snapshot.zkill?.partial || snapshot.activity?.partial || snapshot.status === 'partial') return 'Partial sample';
+  if (!snapshot.zkill && !snapshot.activity) return 'No provider sample yet';
+  return snapshot.currentSystem?.resolverSource === 'local-static' ? 'Static lookup' : 'None';
 }
 
 function threatBasis(snapshot) {
@@ -1038,35 +1112,35 @@ function providerPulseFromPassive(snapshot) {
   if (!snapshot) {
     return {
       state: 'unavailable',
-      label: 'Passive --',
-      detail: 'Passive provider unavailable'
+      label: 'No observation',
+      detail: 'Passive Telemetry bridge unavailable'
     };
   }
   if (snapshot.status === 'blocked') {
     return {
       state: 'blocked',
-      label: 'Passive blocked',
-      detail: snapshot.message || 'Passive live IO blocked'
+      label: 'Live IO blocked',
+      detail: snapshot.message || 'Live IO blocked'
     };
   }
   if (snapshot.status === 'degraded') {
     return {
       state: 'degraded',
-      label: 'Passive failed',
+      label: 'Degraded',
       detail: snapshot.failure?.message || snapshot.message || 'Passive provider degraded'
     };
   }
   if (snapshot.status === 'partial' || snapshot.zkill?.partial || snapshot.activity?.partial) {
     return {
       state: snapshot.zkill?.capped ? 'capped' : 'partial',
-      label: snapshot.zkill?.capped ? 'Passive capped' : 'Passive partial',
+      label: snapshot.zkill?.capped ? 'Capped sample' : 'Partial sample',
       detail: passiveBasis(snapshot)
     };
   }
   if (snapshot.status === 'stale' || snapshot.freshness?.status === 'stale') {
     return {
       state: 'stale',
-      label: 'Passive stale',
+      label: 'Stale context',
       detail: snapshot.message || 'Passive provider context stale'
     };
   }
@@ -1074,27 +1148,27 @@ function providerPulseFromPassive(snapshot) {
   if (cacheState === 'hit' || cacheState === 'revalidated') {
     return {
       state: 'cached',
-      label: 'Passive cached',
+      label: 'Cached activity',
       detail: passiveBasis(snapshot)
     };
   }
   if (snapshot.status === 'fresh') {
     return {
       state: 'fresh',
-      label: 'Passive fresh',
+      label: 'Fresh context',
       detail: passiveBasis(snapshot)
     };
   }
   if (snapshot.currentSystem && !snapshot.zkill && !snapshot.activity) {
     return {
       state: 'pending',
-      label: 'Passive pending',
+      label: 'Provider pending',
       detail: snapshot.message || 'Passive provider fetch pending'
     };
   }
   return {
     state: 'unavailable',
-    label: 'Passive --',
+    label: 'No observation',
     detail: snapshot.message || 'No passive provider context'
   };
 }
@@ -1180,6 +1254,16 @@ function lookbackLabel(seconds) {
   if (value > 0 && value % 3600 === 0) return `${value / 3600}h`;
   if (value > 0 && value % 60 === 0) return `${value / 60}m`;
   return `${value || 0}s`;
+}
+
+function durationLabel(ms) {
+  const value = Number(ms);
+  if (!Number.isFinite(value)) return 'unknown';
+  const seconds = Math.max(0, Math.round(value / 1000));
+  if (seconds < 60) return `${seconds}s`;
+  const minutes = Math.round(seconds / 60);
+  if (minutes < 60) return `${minutes}m`;
+  return `${Math.round(minutes / 60)}h`;
 }
 
 function eventLabel(event) {

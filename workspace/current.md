@@ -165,37 +165,58 @@ Dev updates this before handoff.
 Verification run:
 
 ```txt
-Not yet run for this packet.
+npm.cmd run verify:passive-telemetry - passed
+npm.cmd run verify:renderer-shell - passed
+npm.cmd run verify:renderer-boundary - passed
+npm.cmd run verify:renderer-boundary-adversarial - passed
+npm.cmd run verify:all - passed
+npm.cmd run smoke:electron - passed
+
+Electron smoke output:
+AURA-Sense visual smoke passed: F:\Projects\AURA-Sense\.tmp\electron-visual-smoke
+Shortcut diagnostic confirmed Control+\ registered and Alt+\ target-kind toggle registered.
 ```
 
 Files changed:
 
 ```txt
-Not yet recorded.
+src/renderer/index.html
+src/renderer/app.js
+src/renderer/styles.css
+src/main/main.js
+scripts/verify-renderer-shell.js
+workspace/current.md
+workspace/DevHS01-passive-telemetry-readout-prototype.md
 ```
 
 Findings:
 
 ```txt
-Not yet recorded.
+Passive Telemetry could support the prototype from existing snapshot fields; no backend contract or provider behavior changes were required.
+The old IO-off presentation hid the whole glance strip, which would hide the new Live IO blocked Passive readout; the glance strip now remains visible while IO is off.
+Electron smoke caught an invalid optional-chaining assignment inside the visual fixture reset; fixed before final verification.
+Electron smoke then caught the hidden blocked readout state; fixed before final verification.
+An existing uncommitted workspace/critical/critical-assets.md change was present on disk and left untouched.
 ```
 
 Deferrals:
 
 ```txt
-Not yet recorded.
+Live provider smoke was not run.
+Manual operator shortcut validation was not run.
+No Passive Telemetry backend contract, IPC, service command, provider, Core, Lab, Atlas, or shared-doctrine work was attempted.
 ```
 
 ## Dev Handoff
 
 Dev fills this in when work is complete:
 
-- completed tasks:
-- tests added/updated:
-- verification output:
-- failures found:
-- handshake created:
-- remaining risk:
+- completed tasks: Implemented a renderer-only Passive Telemetry readout prototype with Fresh context, Stale context, Partial/Capped sample, Live IO blocked, Degraded, Provider pending, and No observation copy using existing snapshot fields.
+- tests added/updated: Extended renderer shell checks for Passive readout selectors/copy and Electron visual smoke coverage for fresh, stale, partial/capped, blocked, degraded, unavailable, and narrow/diagnostic states.
+- verification output: `npm.cmd run verify:passive-telemetry`, `npm.cmd run verify:renderer-shell`, `npm.cmd run verify:renderer-boundary`, `npm.cmd run verify:renderer-boundary-adversarial`, `npm.cmd run verify:all`, and `npm.cmd run smoke:electron` all passed.
+- failures found: Initial Electron smoke failed on a fixture syntax issue, then on IO-off hiding the blocked Passive readout; both were fixed and rerun successfully.
+- handshake created: `workspace/DevHS01-passive-telemetry-readout-prototype.md`
+- remaining risk: Live provider behavior and manual operator validation remain gated; `workspace/critical/critical-assets.md` has a pre-existing uncommitted change that was not part of this runway.
 
 ## Overseer Review
 

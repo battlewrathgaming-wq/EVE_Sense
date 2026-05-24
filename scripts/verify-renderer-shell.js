@@ -24,6 +24,7 @@ function main() {
   assert(main.includes('captureSmokeScreenshot'), 'visual smoke should use bounded screenshot capture retries');
   assert(main.includes('capture_attempts'), 'visual smoke should record screenshot capture retry counts');
   assert(main.includes('state-unavailable.png'), 'visual smoke should capture unavailable state');
+  assert(main.includes('state-passive-fresh.png'), 'visual smoke should capture fresh Passive readout state');
   assert(main.includes('state-stale.png'), 'visual smoke should capture stale state');
   assert(main.includes('state-degraded.png'), 'visual smoke should capture degraded state');
   assert(main.includes('state-blocked.png'), 'visual smoke should capture blocked state');
@@ -63,6 +64,8 @@ function main() {
   assert(html.includes('system-jumps'), 'renderer should include system jumps target');
   assert(html.includes('system-ratio'), 'renderer should include system ratio target');
   assert(html.includes('passive-provider-pulse'), 'renderer should include Passive provider pulse chip');
+  assert(html.includes('passive-readout-state'), 'renderer should include Passive readout state chip');
+  assert(html.includes('passive-readout-basis'), 'renderer should include Passive readout basis copy');
   assert(html.includes('threat-provider-pulse'), 'renderer should include Threat provider pulse chip');
   assert(html.includes('clipboard-key-ctrl'), 'renderer should include Ctrl key scan indicator');
   assert(html.includes('clipboard-key-slash'), 'renderer should include slash key scan indicator');
@@ -114,6 +117,8 @@ function main() {
   assert(html.includes('passive-system'), 'renderer should include Passive Telemetry current-system target');
   assert(html.includes('passive-activity'), 'renderer should include Passive Telemetry activity target');
   assert(html.includes('passive-basis'), 'renderer should include Passive Telemetry provider basis target');
+  assert(html.includes('passive-age'), 'renderer should include Passive Telemetry age diagnostic target');
+  assert(html.includes('passive-gap'), 'renderer should include Passive Telemetry gap diagnostic target');
   assert(html.includes('passive-pulse-detail'), 'renderer should include Passive provider pulse diagnostic detail');
   assert(html.includes('event-list'), 'renderer should include bounded event stream target');
   assert(html.includes('settings-state'), 'renderer should include runtime settings state target');
@@ -150,6 +155,20 @@ function main() {
   assert(app.includes('window.auraPassiveTelemetry.subscribeSnapshots'), 'renderer should subscribe through Passive Telemetry bridge');
   assert(app.includes('snapshot.activity.shipKills'), 'renderer should present backend-owned Passive Telemetry activity');
   assert(app.includes('formatRatio(shipKills, jumps)'), 'renderer should present backend-owned kills/jumps ratio');
+  assert(app.includes('passiveReadoutFromSnapshot'), 'renderer should derive Passive readout copy from existing snapshot fields');
+  assert(app.includes('passiveReadoutState'), 'renderer should keep Passive readout state mapping explicit');
+  assert(app.includes('renderPassiveReadout'), 'renderer should render compact Passive readout state and basis');
+  assert(app.includes('passiveAgeLabel'), 'renderer should expose Passive age from freshness cache age');
+  assert(app.includes('passiveGapLabel'), 'renderer should expose Passive gap details without changing the snapshot contract');
+  assert(app.includes("'Fresh context'"), 'renderer should map fresh Passive state to Fresh context');
+  assert(app.includes("'Stale context'"), 'renderer should map stale Passive state to Stale context');
+  assert(app.includes("'Partial sample'"), 'renderer should map partial Passive state to Partial sample');
+  assert(app.includes("'Live IO blocked'"), 'renderer should preserve Live IO blocked copy');
+  assert(app.includes("'No observation'"), 'renderer should map no Passive current-system observation to No observation');
+  assert(!html.includes('NO DATA') && !app.includes('NO DATA'), 'renderer should not use generic NO DATA copy for Passive readout');
+  assert(!html.includes('CURRENT') && !app.includes('CURRENT'), 'renderer should not use generic CURRENT copy for Passive readout');
+  assert(!html.includes('AGED') && !app.includes('AGED'), 'renderer should not use generic AGED copy for Passive readout');
+  assert(!html.includes('FALLBACK') && !app.includes('FALLBACK'), 'renderer should not use generic FALLBACK copy for Passive readout');
   assert(app.includes('window15s.damage?.incoming'), 'renderer should present backend-owned Combat Witness incoming metrics');
   assert(app.includes('window15s.repair?.incoming'), 'renderer should present backend-owned Combat Witness repair metrics');
   assert(app.includes('renderNetPressure'), 'renderer should render net repair minus damage pressure');

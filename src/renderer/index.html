@@ -42,6 +42,10 @@
             <strong id="system-ratio">--</strong>
           </span>
         </div>
+        <div class="passive-readout" aria-label="Passive Telemetry readout">
+          <span id="passive-readout-state" class="readout-state is-unavailable">No observation</span>
+          <strong id="passive-readout-basis">No provider sample yet</strong>
+        </div>
         <div class="provider-pulse-row" aria-label="Provider pulse">
           <span id="passive-provider-pulse" class="provider-pulse is-unavailable" title="Passive provider pulse">Passive --</span>
           <span id="threat-provider-pulse" class="provider-pulse is-empty" title="Threat provider pulse">Threat --</span>
@@ -266,8 +270,16 @@
             <dd id="passive-freshness">Unavailable</dd>
           </div>
           <div>
+            <dt>Passive Age</dt>
+            <dd id="passive-age">No age</dd>
+          </div>
+          <div>
             <dt>Passive Basis</dt>
             <dd id="passive-basis">No provider</dd>
+          </div>
+          <div>
+            <dt>Passive Gap</dt>
+            <dd id="passive-gap">No observation</dd>
           </div>
           <div>
             <dt>Passive Pulse</dt>
