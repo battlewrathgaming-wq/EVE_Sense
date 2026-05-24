@@ -35,6 +35,7 @@
     "verify:renderer-boundary": "node scripts/verify-renderer-boundary.js",
     "verify:renderer-boundary-adversarial": "node scripts/verify-renderer-boundary-adversarial.js",
     "verify:renderer-shell": "node scripts/verify-renderer-shell.js",
+    "verify:protected-terms": "node scripts/verify-protected-terms.js",
     "verify:runtime-errors": "node scripts/verify-runtime-error-handling.js",
     "verify:runtime-control": "node scripts/verify-runtime-control.js"
   },
