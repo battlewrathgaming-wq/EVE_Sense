@@ -82,6 +82,7 @@ AURA-Sense owns:
 - Sense source terms
 - Sense data meaning
 - lane and state semantics
+- adapters from Sense bridge output into any adopted presentation head
 - live-IO, sample, freshness, blocked, partial, stale, failed, and degraded meanings
 - runtime behavior
 - bridge-facing APIs, events, payloads, IPC, schemas, services, and contracts
@@ -113,6 +114,7 @@ Aura Lab may:
 - identify missing state, field, freshness, basis, warning, or gap needs
 - suggest human-facing display wording after preserving Sense meaning
 - note portability risks or opportunities without turning them into shared doctrine
+- offer clean presentation head or material patterns as advisory input
 
 ## Lab May Not Do
 
@@ -120,6 +122,7 @@ Aura Lab may not:
 
 - rename Sense terms
 - redefine Sense meanings
+- own Sense adapters
 - create backend, bridge, IPC, payload, persistence, schema, service, runtime, or provider requirements
 - treat a request as implementation approval
 - treat a request as adoption approval
@@ -127,6 +130,7 @@ Aura Lab may not:
 - start Sense implementation
 - make Sense terms into Lab defaults
 - turn Lab labels into Sense bridge fields, service names, payload names, CSS/test identifiers, or product state enums
+- turn Lab material schemas into Sense bridge contracts
 - import Atlas-owned historical proof, storage, tracking, assessment, or workstation semantics into Sense
 
 ## Request Strength

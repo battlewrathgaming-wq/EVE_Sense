@@ -102,6 +102,13 @@ Display request flow:
 - source project files preserve resting state or scoped action only
 - Dev acts only from `workspace/current.md`
 
+Presentation adapter boundary:
+
+- Lab may offer clean presentation heads, materials, grammar, and advisory display comparisons.
+- Sense owns any adapter from Sense bridge output into a clean presentation head.
+- A Lab response or presentation head does not create Sense adapter requirements.
+- If there is conflict between Lab presentation mechanics and Sense bridge meaning, preserve Sense meaning and return to Human/Sense discussion before writing resting state or action.
+
 ## Stop And Ask
 
 Stop and ask the Human if:
@@ -113,4 +120,6 @@ Stop and ask the Human if:
 - live/private/destructive/network work would be required
 - ownership or adoption boundaries are unclear
 - a Lab response is being mistaken for Sense adoption
+- a Lab presentation head is being mistaken for a Sense-owned adapter
+- adapter behavior would need source meaning, bridge, runtime, or renderer ownership decisions
 - discussion interest is being treated as Dev authorization

@@ -31,6 +31,7 @@ F:\Projects\AURA- Lab\workspace\request_display.md
 Authority:
 
 - Sense owns internal -> Bridge meaning, lane semantics, live-IO/sample states, Passive Telemetry, Combat Witness, Threat Intel, Clipboard Acquisition, and renderer semantics.
+- Sense owns any adapter from Sense bridge output into a clean Lab presentation head.
 - Lab may suggest Bridge -> Interface display methods only after Sense meaning is preserved.
 - A request is advisory input, not implementation approval, adoption approval, bridge contract, payload schema, or terminology rename.
 
@@ -61,7 +62,8 @@ Workflow:
 6. Copy or cross-write the scoped request into `F:\Projects\AURA- Lab\workspace\request_display.md` only when Sense submits it.
 7. Lab returns advisory Bridge -> Interface comparison options.
 8. Human/Sense discussion decides fitness, taste, flow, and whether any resting state or scoped action should be recorded.
-9. Dev work opens only if Sense later writes an executable `workspace/current.md` packet.
+9. If implementation is desired, Sense owns any adapter or adoption layer.
+10. Dev work opens only if Sense later writes an executable `workspace/current.md` packet.
 
 Directionality:
 
@@ -71,6 +73,7 @@ Sense-owned meaning
 -> Lab Bridge -> Interface comparison
 -> Human/Sense fitness discussion
 -> optional Sense resting/action record
+-> optional Sense-owned adapter/adoption layer
 -> optional Sense-local current.md Dev runway
 ```
 

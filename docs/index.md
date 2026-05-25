@@ -34,6 +34,7 @@ It is not:
 | `audits/` | Dated reviews and handovers. Do not rewrite as product copy. |
 | `tenets/` | Stable project rules. |
 | `contracts/` | Service, renderer, telemetry, and lane contracts. |
+| `adr/` | Accepted architecture decisions, including tactical scope and target-owned presentation adapter ownership. |
 | `features/` | Product capability goalposts. |
 | `terms/` | Plain-language vocabulary. |
 | `schemas/` | Data structures and snapshot/event shapes. |

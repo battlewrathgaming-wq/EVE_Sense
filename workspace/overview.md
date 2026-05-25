@@ -33,7 +33,7 @@ Roadmap source: None
 Current packet: `workspace/current.md`
 Current sequence: Idle after accepted Passive Telemetry Instrument Band prototype
 Latest accepted handshake: `workspace/complete/milestone-14/OverseerHS03-milestone-14-closure.md`
-Latest accepted prototype: `workspace/OverseerHS02-passive-telemetry-readout-prototype-review.md`
+Latest accepted prototype review: `workspace/OverseerHS02-passive-telemetry-readout-prototype-review.md`
 Latest accepted face advisory: `workspace/OverseerHS03-sense-face-presentation-adoption-review.md`
 Latest accepted face refinement: `workspace/OverseerHS04-sense-face-refinement-review.md`
 Latest Lab M19 adoption review: `workspace/OverseerHS07-sense-m19-instrument-status-band-adoption-review.md`
@@ -69,6 +69,7 @@ AURA-Sense therefore owns its lane semantics and internal-to-Bridge mapping. Lab
 
 - `docs/contracts/`
 - `docs/adr/`
+- `docs/adr/ADR-0003-target-owned-presentation-adapters.md`
 - `docs/tenets/`
 - `docs/statements/`
 - `docs/features/`
