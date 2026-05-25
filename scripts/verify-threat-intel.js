@@ -1,7 +1,14 @@
 const assert = require('node:assert');
 const { createLiveIoGate } = require('../src/passive/liveIoGate');
-const { createClipboardAcquisitionService } = require('../src/threat/clipboardAcquisitionService');
-const { createThreatIntelService, normalizeScanRequest } = require('../src/threat/threatIntelService');
+const {
+  RECENT_CAPTURE_CACHE_MS,
+  createClipboardAcquisitionService
+} = require('../src/threat/clipboardAcquisitionService');
+const {
+  MAX_THREAT_TARGET_TEXT_LENGTH,
+  createThreatIntelService,
+  normalizeScanRequest
+} = require('../src/threat/threatIntelService');
 const { createThreatIntelTargetResolver } = require('../src/threat/threatIntelTargetResolver');
 const { ThreatIntelZkillClient, normalizeThreatZkillRefs } = require('../src/threat/threatIntelZkillClient');
 
@@ -15,6 +22,9 @@ const { ThreatIntelZkillClient, normalizeThreatZkillRefs } = require('../src/thr
   assert.strictEqual(normalized.request.sampleLimit, 3, 'sample limit should be normalized');
   const defaultWindow = normalizeScanRequest({ targetText: 'system:Jita' });
   assert.strictEqual(defaultWindow.request.lookbackSeconds, 3600, 'Threat Intel should default to a one-hour zKill pulse');
+  const tooLong = normalizeScanRequest({ targetText: `system:${'J'.repeat(MAX_THREAT_TARGET_TEXT_LENGTH)}` });
+  assert.strictEqual(tooLong.ok, false, 'overlong Threat Intel targets should fail validation');
+  assert.strictEqual(tooLong.status, 'invalid', 'overlong Threat Intel targets should use invalid status');
 
   const resolver = createThreatIntelTargetResolver();
   const jita = resolver({ targetText: 'system:Jita' });
@@ -105,6 +115,12 @@ const { ThreatIntelZkillClient, normalizeThreatZkillRefs } = require('../src/thr
   assert.strictEqual(immediate.lastCapture.targetText, 'system:Jita', 'shortcut acquisition should retain immediate clipboard target');
   nowMs += 6000;
   assert.strictEqual(captureService.tick().state, 'idle', 'immediate shortcut acquisition should cool down cleanly');
+  const duplicate = await captureService.arm({ clipboardText: 'system:Jita' });
+  assert.strictEqual(duplicate.state, 'cooldown', 'repeat shortcut acquisition should seal into cooldown');
+  assert.strictEqual(duplicate.reason, 'duplicate', 'repeat shortcut acquisition should be duplicate-suppressed');
+  assert.strictEqual(duplicate.lastCapture, null, 'duplicate suppression should not retain raw clipboard target text');
+  nowMs += RECENT_CAPTURE_CACHE_MS + 1;
+  assert.strictEqual(captureService.tick().state, 'idle', 'duplicate cooldown should return idle after cache expires');
   await captureService.arm();
   assert.strictEqual(captureService.snapshot().state, 'listening', 'clipboard acquisition should enter listening state');
   const unchanged = await captureService.capture();

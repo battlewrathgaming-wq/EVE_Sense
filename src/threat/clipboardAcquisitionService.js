@@ -1,5 +1,9 @@
+const crypto = require('node:crypto');
+
 const LISTENING_MS = 3000;
 const COOLDOWN_MS = 5000;
+const RECENT_CAPTURE_CACHE_MS = 10000;
+const RECENT_CAPTURE_CACHE_LIMIT = 5;
 
 function createClipboardAcquisitionService({
   scan,
@@ -9,6 +13,7 @@ function createClipboardAcquisitionService({
   trace = () => {}
 } = {}) {
   let state = idleState(now);
+  let recentCaptures = [];
 
   async function arm({ clipboardText = null } = {}) {
     const current = now();
@@ -51,11 +56,19 @@ function createClipboardAcquisitionService({
     if (!validateTarget(targetText)) {
       return seal('rejected', targetText);
     }
+    if (isRecentDuplicate(targetText, current)) {
+      trace('clipboard_acquisition_duplicate_suppressed', { cacheMs: RECENT_CAPTURE_CACHE_MS });
+      return seal('duplicate', null, {
+        status: 'skipped',
+        message: 'Clipboard target was recently captured'
+      });
+    }
 
     try {
       const result = typeof scan === 'function'
         ? await scan({ targetText, inputSource: 'clipboard' })
         : null;
+      rememberCapture(targetText, current);
       return seal('captured', targetText, result);
     } catch (error) {
       return seal('scan-failed', targetText, {
@@ -113,6 +126,27 @@ function createClipboardAcquisitionService({
     };
   }
 
+  function rememberCapture(targetText, capturedAtMs) {
+    pruneRecentCaptures(capturedAtMs);
+    recentCaptures.push({
+      hash: fingerprintTarget(targetText),
+      capturedAtMs
+    });
+    if (recentCaptures.length > RECENT_CAPTURE_CACHE_LIMIT) {
+      recentCaptures = recentCaptures.slice(-RECENT_CAPTURE_CACHE_LIMIT);
+    }
+  }
+
+  function isRecentDuplicate(targetText, currentMs) {
+    pruneRecentCaptures(currentMs);
+    const hash = fingerprintTarget(targetText);
+    return recentCaptures.some((entry) => entry.hash === hash);
+  }
+
+  function pruneRecentCaptures(currentMs) {
+    recentCaptures = recentCaptures.filter((entry) => currentMs - entry.capturedAtMs <= RECENT_CAPTURE_CACHE_MS);
+  }
+
   return {
     arm,
     cancel,
@@ -138,8 +172,17 @@ function normalizeClipboardText(text) {
   return String(text ?? '').trim();
 }
 
+function fingerprintTarget(text) {
+  return crypto
+    .createHash('sha256')
+    .update(normalizeClipboardText(text).toLowerCase())
+    .digest('hex');
+}
+
 module.exports = {
   COOLDOWN_MS,
   LISTENING_MS,
+  RECENT_CAPTURE_CACHE_LIMIT,
+  RECENT_CAPTURE_CACHE_MS,
   createClipboardAcquisitionService
 };

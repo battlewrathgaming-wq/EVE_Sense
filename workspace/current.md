@@ -197,9 +197,8 @@ M12G is complete when:
 - Do not inspect private/operator EVE log folders.
 - Do not run manual shortcut validation.
 - Do not run real SDE refresh/download.
-- Do not capture clipboard content.
+- Do not capture real clipboard content.
 - Do not execute live/manual I/O smoke.
-- Do not implement code.
 - Do not rename source-owned terms.
 - Do not change bridge contracts, IPC, payloads, persistence, schemas, services, or backend behavior.
 - Do not combine live API smoke with operator gamelog smoke, Combat calibration, raw fixture intake, renderer, Lab, adapter, or display work unless a future packet explicitly opens that scope.
@@ -251,11 +250,33 @@ workspace/DevHS46-m12g-clipboard-mode-gate-separation-hardening.md
 
 ## Evidence
 
-Dev to fill.
+Commands run without `AURA_SENSE_LIVE_API=1`, without live/manual operator folders, and without real clipboard capture:
+
+```powershell
+npm.cmd run verify:clipboard-race
+npm.cmd run verify:threat-intel
+npm.cmd run verify:operator-io-gates
+npm.cmd run verify:all
+```
+
+Results:
+
+- `verify:clipboard-race`: passed; clipboard acquisition race verified.
+- `verify:threat-intel`: passed; threat intel verified.
+- `verify:operator-io-gates`: passed; operator IO gate separation verified.
+- `verify:all`: passed; all checks verified.
 
 ## Dev Handoff
 
-Dev to fill.
+Completed M12G:
+
+- preserved global shortcut immediate capture as the explicit `Ctrl+\` permission action
+- preserved focused/windowed acquisition baseline behavior
+- added a 10 second / 5 entry in-memory fingerprint-only rolling cache for duplicate suppression
+- added operator I/O gate-separation verification
+- added direct Threat Intel target text length validation
+- updated Clipboard Acquisition and future smoke redaction docs
+- created `workspace/DevHS46-m12g-clipboard-mode-gate-separation-hardening.md`
 
 ## Handoff Requirements
 

@@ -1,7 +1,7 @@
 # Current State: AURA-Sense Implementation
 
 Date: 2026-05-25
-Status: Idle after M19; deterministic hardening complete through gamelog containment and provider fault-injection; live/manual validation remains gated
+Status: Active M12 live/manual validation; Threat and Passive live API smokes have bounded evidence; operator I/O smoke remains gated
 
 ## What Exists
 
@@ -58,15 +58,18 @@ The current implementation includes:
 - one-hour Passive Telemetry ESI activity cache with ETag revalidation behavior
 - fixture-only provider fault-injection verification for Passive Telemetry and Threat Intel provider failures
 - explicit opt-in Passive Telemetry live API smoke command
+- accepted Passive-only live API smoke evidence for default Jita context under explicit M12 authorization
 - explicit opt-in Threat Intel live API smoke command with default refusal artifact
+- accepted Threat-only live zKill smoke evidence for default Jita target under explicit M12 authorization
 - backend Threat Intel scan request and snapshot contract
 - local/static Threat Intel target resolver for systems, pilots, corporations, alliances, and copied text
 - backend-only scoped Threat Intel zKill `pastSeconds` probe
 - Threat Intel live IO gate with visible blocked state when live calls are disabled
 - compact Threat Intel search surface that scans only on explicit submit
 - overlay-native back-page Threat Intel foundation with display-first acquisition bar, gateway marker, local target type controls, and persistent last-scan report
-- Clipboard Acquisition service with armed/listening/sealed/cooldown lifecycle
+- Clipboard Acquisition service with global-shortcut immediate capture, focused/windowed listening, recent duplicate suppression, and sealed/cooldown lifecycle
 - Clipboard Acquisition race verification for rapid arm/cancel/capture, unchanged content, rejection, timeout, scan failure, cooldown, and concurrent arm semantics
+- operator I/O gate-separation verification for parser-jump Passive updates independent from Clipboard Acquisition and Threat scan state
 - global clipboard arming shortcut using `Control+\` where available with fallback shortcut status reporting
 - Threat Intel preload bridge with no renderer-owned provider calls
 - integrated tactical viewport layout with lane overview and separate Combat Witness, Passive Telemetry, and Threat Intel surfaces
@@ -106,13 +109,11 @@ AURA-Sense has not yet completed the full tactical viewport scope.
 
 Not yet proven in this codebase:
 
-- live zKill-backed Threat Intel search and optional ESI expansion pipeline
+- optional Threat Intel ESI expansion pipeline
 - exact raw repair/healing parser coverage
 - full refreshed EVE type metadata artifact generated from current SDE source
 - production-grade multi-lane HUD renderer beyond the current integrated/back-page foundation
-- live EVE gamelog operational smoke against an operator machine
-- live zKill/ESI smoke execution with `AURA_SENSE_LIVE_API=1`
-- live Threat Intel zKill smoke execution with `AURA_SENSE_LIVE_API=1`
+- live operator gamelog operational smoke against an operator machine
 - exact Ctrl+Shift-only accelerator capture; Electron runtime uses the current Clipboard Acquisition shortcut path with fallback status reporting and the focused UI shortcut remains available
 
 ## Intended Runtime Flow
@@ -154,7 +155,7 @@ EVE location/log observation
 ### Threat Intel
 
 ```txt
-explicit search submit or armed clipboard acquisition
+keyboard-first Clipboard Acquisition or service/request path
 -> local/static resolution where possible
 -> zKill discovery refs
 -> bounded zKillmail-backed sample with cap/failure/freshness metadata
@@ -209,8 +210,8 @@ Live API smoke scripts use smoke-local verbose request-log capture so successful
 - inherited active scan validator language remains to be reconciled with the implemented Threat Intel scan contract
 - local metadata resolver and type lookup are fixture/static until an explicit SDE refresh is run; the fixture builder path is adversarially verified but real SDE refresh remains operator-gated
 - provider fault injection is covered by deterministic fixture-only checks; live provider failure validation remains gated behind explicit live IO authorization
-- live zKill/ESI smoke commands exist but live network runs are deferred until `AURA_SENSE_LIVE_API=1`
-- Threat Intel live zKill network run is deferred until explicitly enabled and recorded outside `verify:all`; default refusal artifacts are not live execution evidence
+- additional live zKill/ESI smoke runs remain deferred until explicitly enabled and recorded outside `verify:all`
+- Threat Intel and Passive live API smoke each have one accepted default Jita live evidence record; default refusal artifacts remain non-live evidence only
 - Threat Intel ESI killmail expansion remains deferred
 - local type metadata foundation exists with unresolved-ID fallback; full refresh remains explicit
 - no exact raw repair/healing fixtures yet; raw `combat.repair` parser support remains deferred

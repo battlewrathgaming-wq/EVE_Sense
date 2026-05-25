@@ -22,6 +22,8 @@ Do not run this smoke unless all are true:
 
 - Do not collect broad private gamelog history.
 - Do not store raw private gamelog lines in artifacts.
+- Do not store clipboard contents or raw clipboard targets in artifacts unless a future active packet explicitly authorizes the exact target.
+- Do not store full private local paths unless the operator explicitly approves that artifact shape.
 - Use future appends only after watcher start.
 - Store only sanitized status, counts, hashes where needed, timestamps, watcher state, and snapshot summaries.
 - Do not hardcode machine-specific paths in docs, scripts, or artifacts.
@@ -49,6 +51,7 @@ Future run artifacts should include:
 - hash-only rejection evidence if a line is rejected
 - Combat Witness snapshot summary fields
 - Passive Telemetry observer status, with live IO state explicit
+- Clipboard Acquisition status if manual shortcut validation is separately authorized, without raw clipboard contents by default
 - stop reason and shutdown state
 
 Artifacts must not include broad raw log contents, unrelated historical lines, screenshots of private chat/log material, or provider results unless a separate live API boundary is authorized.

@@ -1,11 +1,18 @@
 const assert = require('node:assert');
-const { COOLDOWN_MS, LISTENING_MS, createClipboardAcquisitionService } = require('../src/threat/clipboardAcquisitionService');
+const {
+  COOLDOWN_MS,
+  LISTENING_MS,
+  RECENT_CAPTURE_CACHE_MS,
+  RECENT_CAPTURE_CACHE_LIMIT,
+  createClipboardAcquisitionService
+} = require('../src/threat/clipboardAcquisitionService');
 
 async function main() {
   await verifiesRapidArmCancelAndCooldown();
   await verifiesUnchangedAndRejectedContent();
   await verifiesScanFailureSeals();
   await verifiesConcurrentArmDoesNotResetWindow();
+  await verifiesImmediateShortcutCaptureAndRecentDuplicateSuppression();
   console.log('clipboard acquisition race verified');
 }
 
@@ -116,6 +123,47 @@ async function verifiesConcurrentArmDoesNotResetWindow() {
   const captured = await service.capture();
   assert.strictEqual(captured.state, 'cooldown', 'capture after concurrent arm should still seal');
   assert.strictEqual(captured.lastCapture.targetText, 'system:Jita', 'capture after concurrent arm should use changed clipboard content');
+}
+
+async function verifiesImmediateShortcutCaptureAndRecentDuplicateSuppression() {
+  const clock = createClock();
+  let scanCalls = 0;
+  const service = createClipboardAcquisitionService({
+    now: clock.now,
+    readClipboard: () => 'baseline',
+    validateTarget: (text) => text.startsWith('system:'),
+    scan: async () => {
+      scanCalls += 1;
+      return { status: 'succeeded' };
+    }
+  });
+
+  const captured = await service.arm({ clipboardText: 'system:Jita' });
+  assert.strictEqual(captured.state, 'cooldown', 'explicit shortcut payload should capture immediately');
+  assert.strictEqual(captured.reason, 'captured', 'explicit shortcut payload should record capture');
+  assert.strictEqual(captured.lastCapture.targetText, 'system:Jita', 'captured shortcut target should be visible in active snapshot');
+  assert.strictEqual(scanCalls, 1, 'first shortcut target should scan once');
+
+  clock.advance(COOLDOWN_MS);
+  assert.strictEqual(service.tick().state, 'idle', 'service should leave cooldown before duplicate test');
+  const duplicate = await service.arm({ clipboardText: 'system:Jita' });
+  assert.strictEqual(duplicate.state, 'cooldown', 'recent duplicate should seal into cooldown');
+  assert.strictEqual(duplicate.reason, 'duplicate', 'recent duplicate should be explicit');
+  assert.strictEqual(duplicate.lastCapture, null, 'duplicate cache should not expose raw target text');
+  assert.strictEqual(scanCalls, 1, 'recent duplicate should not scan again');
+
+  clock.advance(COOLDOWN_MS);
+  service.tick();
+  for (let index = 0; index < RECENT_CAPTURE_CACHE_LIMIT + 1; index += 1) {
+    clock.advance(RECENT_CAPTURE_CACHE_MS + 1);
+    await service.arm({ clipboardText: `system:Target-${index}` });
+    clock.advance(COOLDOWN_MS);
+    service.tick();
+  }
+
+  const afterCache = await service.arm({ clipboardText: 'system:Jita' });
+  assert.strictEqual(afterCache.reason, 'captured', 'expired duplicate cache should allow capture again');
+  assert.strictEqual(scanCalls, RECENT_CAPTURE_CACHE_LIMIT + 3, 'expired/cache-limited targets should scan when allowed');
 }
 
 function createClock() {

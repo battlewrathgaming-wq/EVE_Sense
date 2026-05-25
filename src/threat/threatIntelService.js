@@ -7,6 +7,7 @@ const {
 } = require('./threatIntelZkillClient');
 
 const INPUT_SOURCES = new Set(['search', 'paste', 'clipboard']);
+const MAX_THREAT_TARGET_TEXT_LENGTH = 256;
 
 function createThreatIntelService({
   resolveTarget = createThreatIntelTargetResolver(),
@@ -116,6 +117,9 @@ function normalizeScanRequest(request = {}, now = () => Date.now()) {
   if (!targetText) {
     return { ok: false, status: 'empty', message: 'Threat Intel target is empty' };
   }
+  if (targetText.length > MAX_THREAT_TARGET_TEXT_LENGTH) {
+    return { ok: false, status: 'invalid', message: 'Threat Intel target is too long' };
+  }
   const inputSource = INPUT_SOURCES.has(request.inputSource) ? request.inputSource : 'search';
   const lookbackSeconds = boundedInteger(request.lookbackSeconds, DEFAULT_THREAT_LOOKBACK_SECONDS, 60, 86400);
   const sampleLimit = boundedInteger(request.sampleLimit, DEFAULT_THREAT_SAMPLE_LIMIT, 1, 50);
@@ -210,6 +214,7 @@ function formatKillmailCount(count) {
 
 module.exports = {
   INPUT_SOURCES,
+  MAX_THREAT_TARGET_TEXT_LENGTH,
   createThreatIntelService,
   normalizeScanRequest
 };

@@ -5,21 +5,23 @@ Date: 2026-05-22
 
 ## Purpose
 
-Provide a brief, deliberate tactical acquisition window for copied EVE names or targets, then hand the captured target to the Threat Intel search box.
+Provide a brief, deliberate tactical acquisition moment for copied EVE names or targets, then hand the captured target to the Threat Intel search box.
 
 ## User Value
 
 Supports low-interaction tactical inquiry without keeping a passive clipboard listener active.
 
-The operator should not need to focus the AURA-Sense window during fullscreen EVE use. Clipboard acquisition exists specifically to avoid breaking tactical flow with window focus changes.
+The operator should not need to focus or click the AURA-Sense window during fullscreen EVE use. Clipboard Acquisition exists specifically to avoid breaking tactical flow with window focus changes.
 
 ## Intended Interaction
 
 - The operator sees an acquisition indicator in the UI.
-- The operator presses the global acquisition shortcut or uses the HUD Arm control.
-- AURA-Sense opens a 3 second listening window.
-- If a valid target is copied during that window, AURA-Sense inserts it into the search box and runs the scoped scan.
-- Clipboard content already present before arming is ignored unless it changes during the listening window.
+- The operator manually enables I/O authority before clipboard or live-provider I/O can run.
+- The operator presses the global acquisition shortcut, currently `Control+\`. This uncommon key combination is intentional: it is the explicit permission action.
+- If the current clipboard already contains a valid target, AURA-Sense may insert it into the search box and run the scoped scan immediately.
+- If no valid current target is available, AURA-Sense opens a visible 3 second listening window.
+- In the focused/windowed arm path without a provided clipboard payload, clipboard content already present before arming is ignored unless it changes during the listening window.
+- A short in-memory rolling cache suppresses repeated captures of the same normalized target for 10 seconds. The cache stores target fingerprints only, not raw clipboard history.
 - The listener then seals and enters a 5 second cooldown.
 - If nothing valid is captured, the listener times out, seals, and enters a 5 second cooldown.
 - The cooldown applies after capture, timeout, cancellation, or rejected clipboard content.
@@ -34,7 +36,9 @@ Presentation/input workflow. Not evidence and not persistent intelligence.
 ## Must Not Do
 
 - Do not listen indefinitely.
-- Do not silently capture unrelated clipboard content.
+- Do not read clipboard when I/O authority is off.
+- Do not silently capture unrelated clipboard content outside the `Control+\` permission action or the visible short acquisition window.
+- Do not persist clipboard history.
 - Do not trigger broad background scans.
 - Do not bypass the search bar or Threat Intel boundary.
 - Do not remain armed without a visible indicator.
