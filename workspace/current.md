@@ -8,30 +8,34 @@ Owner: Overseer
 
 Active milestone: M19 - Gamelog Ingest Containment And Fan-Out Assurance
 Roadmap source: `docs/roadmap/milestone-19-gamelog-ingest-containment-and-fanout-assurance.md`
-Current runway: Review-only security/engineering assurance for gamelog ingest containment, parser normalization, and shared fan-out
+Current runway: Gamelog containment hardening implementation
 Latest closed milestone: Milestone 18 - Provider Fault-Injection Hardening
 Latest accepted closure: `workspace/OverseerHS26-m18-provider-fault-hardening-acceptance.md`
-Latest scope opening: `workspace/OverseerHS27-m19-gamelog-containment-scope.md`
-Current executor: Security/Engineering-Test reviewer
+Latest security/engineering review: `workspace/SecEngHS28-gamelog-ingest-containment-review.md`
+Latest Overseer acceptance: `workspace/OverseerHS29-m19-containment-review-acceptance.md`
+Current executor: Dev
 Current status: Open
-Expected output: `workspace/SecEngHS28-gamelog-ingest-containment-review.md`
+Expected output: `workspace/DevHS30-gamelog-containment-hardening.md`
 
 ## Purpose
 
-Run a review-only assurance pass over the AURA-Sense gamelog ingest trust boundary:
+Implement the accepted M19 gamelog containment hardening packet.
+
+The goal is to prove, with deterministic fixture-only tests, that the configured gamelog destination and files read by the file monitor cannot escape the accepted EVE gamelog structure or active folder boundary.
+
+Human path context:
 
 ```txt
-configured/pointed log destination
--> path validation and containment
--> file-monitor filesystem access
--> parser normalization
--> shared event fan-out
--> listening services
+C:\Users\Battle_wrath\Documents\EVE\logs\Gamelogs
 ```
 
-The core security question is whether any configured path, symlink, junction, traversal, rotation, replacement file, or malformed input could cause Sense to read outside the expected EVE gamelog file structure, leak raw/private file contents, or poison downstream services.
+Expected structure suffix:
 
-This packet is review-only. It does not authorize Dev work.
+```txt
+EVE\logs\Gamelogs
+```
+
+Implementation should be OS-agnostic where feasible. Do not hard-code the user profile path as the only valid location.
 
 ## Required Reading
 
@@ -47,61 +51,74 @@ Boot and coordination:
 - `workspace/critical/critical-assets.md`
 - `workspace/prompts.md`
 - `workspace/overseer.md`
-- `workspace/OverseerHS27-m19-gamelog-containment-scope.md`
 
-M19 direction:
+M19 context:
 
 - `docs/roadmap/README.md`
 - `docs/roadmap/milestone-19-gamelog-ingest-containment-and-fanout-assurance.md`
+- `workspace/OverseerHS27-m19-gamelog-containment-scope.md`
+- `workspace/SecEngHS28-gamelog-ingest-containment-review.md`
+- `workspace/OverseerHS29-m19-containment-review-acceptance.md`
 - `docs/current-state/current-implementation.md`
 - `docs/testing/aggressive-test-harness-matrix.md`
 - `package.json`
 
-Implementation and test surfaces to identify and inspect:
+Implementation surfaces:
 
-- gamelog file-monitor source files
-- combat parser source files
-- combat replay/runtime/service fan-out files
-- diagnostics policy files
-- runtime settings/log path validation files
-- service listener/subscription files
-- existing gamelog file-monitor, parser, replay, and diagnostics verification scripts
+- `src/combat/eveLogPaths.js`
+- `src/combat/eveGamelogWatcher.js`
+- `src/combat/combatLogParser.js`
+- `src/combat/lineBuffer.js`
+- `src/combat/recentEventDeduper.js`
+- `src/combat/combatWitnessRuntime.js`
+- `src/combat/combatWitnessService.js`
+- `src/passive/passiveTelemetryService.js`
+- `src/services/diagnosticsPolicy.js`
+- `src/runtime/runtimeSettingsService.js`
+- `src/main/main.js`
+- `scripts/verify-gamelog-watcher.js`
+- `scripts/verify-gamelog-watcher-chaos.js`
+- `scripts/verify-combat-parser.js`
+- `scripts/verify-combat-parser-hostile.js`
+- `scripts/verify-combat-log-replay.js`
+- `scripts/verify-diagnostics-policy.js`
 
-Use `rg` / `rg --files` to locate the exact source files before reviewing. Do not inspect outside AURA-Sense except the explicitly listed shared coordination files already referenced by project boot docs.
+## Runway
 
-## Review Tasks
-
-1. Map the ingest path from configured/pointed destination through file-monitor filesystem access.
-2. Identify path validation, normalization, and containment assumptions.
-3. Review whether selected folders/files can escape the intended EVE gamelog structure through traversal, symlink, junction, rotation, replacement, deletion, truncation, or startup-offset behavior.
-4. Review parser rejection behavior for malformed, oversized, private-content lookalike, partial-line, and near-miss lines.
-5. Review raw-line handling and diagnostics sanitization.
-6. Map the shared event fan-out channel and identify which services listen.
-7. Review listener isolation: one bad line/file/event should not poison all services.
-8. Map existing deterministic tests to the trust boundary.
-9. Identify missing deterministic adversarial tests and rank them by risk.
-10. Produce the expected review artifact with findings, risks, and recommended next bounded packet if any.
+1. Review HS28 and HS29 to confirm the accepted containment gaps.
+2. Add or refine shared gamelog path containment helpers.
+3. Encode an accepted gamelog structure policy using the Human-provided `EVE\logs\Gamelogs` suffix as input while keeping implementation OS-agnostic where feasible.
+4. Use `realpath`/`lstat`-aware checks where feasible on Windows to reject symlink/junction escapes.
+5. Re-check containment after folder/file path joins and before range reads.
+6. Add deterministic fixture-only tests for:
+   - traversal-resolved folder outside accepted structure
+   - symlink/junction directory escape where feasible in the local test environment
+   - direct `handleFile` outside-folder calls
+   - fs-watch filename values with separator/traversal-like segments
+   - symlink `.txt` file escape where feasible
+   - same-size/larger replacement identity behavior
+7. Preserve existing append, startup-offset, deletion, truncation, partial-line, parser rejection, diagnostics, and listener-isolation behavior.
+8. Update docs/testing and current-state docs if behavior or verification changes.
+9. Run required verification.
+10. Create the expected Dev handoff.
 
 ## Acceptance Criteria
 
-The review is complete when `workspace/SecEngHS28-gamelog-ingest-containment-review.md`:
+The packet is complete when:
 
-- lists files reviewed
-- maps the current ingest/fan-out path
-- identifies current path containment assumptions
-- reviews symlink/junction/traversal/rotation/replacement/deletion/truncation/startup-offset behavior
-- reviews parser rejection and diagnostics sanitization
-- identifies services listening to the shared channel
-- states whether current deterministic tests cover containment or only file-monitor/parser behavior
-- lists missing deterministic adversarial tests, if any
-- recommends one bounded next packet or says no follow-up is needed
-- does not implement code or run live/manual/private filesystem work
+- configured gamelog folder containment policy is explicit
+- the accepted root/structure policy does not hard-code `C:\Users\Battle_wrath` as the only valid path
+- path containment is checked with normalized/real paths where feasible
+- file reads are guarded so direct or event-provided paths outside the active folder are skipped/rejected before range reads
+- deterministic tests cover traversal, outside-folder `handleFile`, separator-like filenames, and same-size/larger replacement identity behavior
+- symlink/junction escape tests are added where feasible, or the Dev handoff clearly explains environment limitations
+- existing gamelog watcher/parser/replay/diagnostics behavior remains verified
+- no private operator folders, live EVE logs, live providers, manual shortcuts, real SDE refresh, Lab, adapter, renderer, IPC, payload, or UI copy work is included
 
 ## Guardrails
 
-- Do not implement code in this packet.
-- Do not edit source files, contracts, IPC, payloads, persistence, schemas, services, backend behavior, provider behavior, shortcut behavior, or UI copy.
 - Do not inspect private operator log folders.
+- Do not hard-code `C:\Users\Battle_wrath` as the only accepted path.
 - Do not manually probe outside repository/temp fixture paths.
 - Do not run live EVE log ingestion.
 - Do not run live provider smoke.
@@ -111,28 +128,21 @@ The review is complete when `workspace/SecEngHS28-gamelog-ingest-containment-rev
 - Do not implement adapter work.
 - Do not create additional Lab-facing display requests.
 - Do not change renderer behavior.
-- Treat archived docs as historical context only unless this packet explicitly references them.
+- Do not change IPC, payload schemas, service semantics, lane meanings, or UI copy unless a security defect cannot be fixed otherwise and Overseer accepts the scope.
 
 ## Stop Conditions
 
 Stop and hand off if:
 
-- the review requires private operator files or live EVE logs
-- containment behavior cannot be determined from current code/tests without manual probing outside the repo/temp fixtures
-- the review discovers a likely security defect requiring Dev scoping
+- containment policy requires product direction beyond the accepted `EVE\logs\Gamelogs` structure input
+- symlink/junction testing requires elevated privileges or filesystem changes outside repo/temp fixture paths
+- hardening requires broad runtime settings or UI changes
+- the fix would require live EVE logs or private operator folders
 - the work would require Lab repository changes
-- the work would require live provider, manual shortcut, or real SDE actions
 
 ## Required Verification
 
 Run:
-
-```powershell
-npm.cmd run verify:protected-terms
-git status --short --branch
-```
-
-Optional deterministic context checks:
 
 ```powershell
 npm.cmd run verify:gamelog-watcher
@@ -141,6 +151,9 @@ npm.cmd run verify:combat-parser
 npm.cmd run verify:combat-parser-hostile
 npm.cmd run verify:combat-replay
 npm.cmd run verify:diagnostics
+npm.cmd run verify:protected-terms
+npm.cmd run verify:all
+git status --short --branch
 ```
 
 Do not run live/manual/private filesystem validation.
@@ -150,23 +163,20 @@ Do not run live/manual/private filesystem validation.
 Create:
 
 ```txt
-workspace/SecEngHS28-gamelog-ingest-containment-review.md
+workspace/DevHS30-gamelog-containment-hardening.md
 ```
 
 The handoff should include:
 
-1. Files reviewed.
-2. Current ingest/fan-out path map.
-3. Path containment findings.
-4. Symlink/junction/traversal and rotation/replacement findings.
-5. Parser rejection and raw-line handling findings.
-6. Diagnostics sanitization findings.
-7. Shared fan-out listener map.
-8. Existing deterministic test map.
-9. Missing adversarial tests.
-10. Risks/blockers.
-11. Recommended next bounded packet, if any.
+1. Files changed.
+2. Containment policy implemented.
+3. Path/file read hardening summary.
+4. Replacement identity behavior.
+5. Symlink/junction test decision and limitations, if any.
+6. Verification commands and results.
+7. Confirmation that no live/private/manual/Lab/renderer work was included.
+8. Residual risks or follow-up recommendations.
 
 ## Overseer Review
 
-Pending. This packet is open for Security/Engineering-Test review.
+Pending. This packet is open for Dev.
