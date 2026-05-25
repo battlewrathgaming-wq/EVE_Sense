@@ -1,6 +1,6 @@
 ﻿# AURA-Sense Workspace Overview
 
-Status: Idle - M12D live smoke request-log hardening accepted
+Status: Idle - M12E Passive live API smoke accepted
 Last reviewed: 2026-05-25
 
 ## Vision Statement
@@ -22,7 +22,7 @@ It should present compact, uncertainty-aware tactical state while staying transi
 
 | Milestone | Roadmap Source | Status | Notes |
 | --- | --- | --- | --- |
-| 12 | `docs/roadmap/milestone-12-live-validation-and-tactical-calibration.md` | Active/Gated | M12D request-log/refusal-artifact hardening is accepted. Additional live providers, Passive live smoke, operator gamelog smoke, manual shortcuts, real SDE refresh, calibration, or fixture intake work require a future active packet. |
+| 12 | `docs/roadmap/milestone-12-live-validation-and-tactical-calibration.md` | Active/Gated | M12E Passive live API smoke is accepted. Additional live providers, operator gamelog smoke, manual shortcuts, real SDE refresh, calibration, or fixture intake work require a future active packet. |
 | 13 | `docs/roadmap/milestone-13-aggressive-testing-and-bug-hunting.md` | Complete | Deterministic aggressive hardening accepted; live/manual validation remains gated for later operator-validation work. |
 | 14 | `docs/roadmap/milestone-14-back-page-threat-intel-ux.md` | Complete | Back-page Threat Intel UX accepted; live/manual shortcut feel remains gated for optional later operator-validation work. |
 | 15 | `docs/roadmap/milestone-15-display-request-response-fitness.md` | Parked | Lab-facing presentation response work is parked while Lab stabilizes its side. |
@@ -35,7 +35,7 @@ It should present compact, uncertainty-aware tactical state while staying transi
 
 Milestone: M12 - Live Validation And Tactical Calibration
 Current packet: `workspace/current.md`
-Current sequence: Idle after M12D acceptance
+Current sequence: Idle after M12E acceptance
 Current executor: None
 Expected artifact: None
 Latest M12 gate trace: `workspace/OverseerHS33-m12-live-validation-gate-trace.md`
@@ -48,6 +48,7 @@ Latest M12B acceptance: `workspace/OverseerHS39-m12b-live-api-security-review-ac
 Latest M12C live smoke record: `workspace/OverseerHS40-m12c-threat-live-api-smoke.md`
 Latest M12D Dev handoff: `workspace/DevHS41-m12d-live-smoke-request-log-hardening.md`
 Latest M12D acceptance: `workspace/OverseerHS42-m12d-live-smoke-log-hardening-acceptance.md`
+Latest M12E live smoke record: `workspace/OverseerHS43-m12e-passive-live-api-smoke.md`
 Latest accepted handshake: `workspace/complete/milestone-14/OverseerHS03-milestone-14-closure.md`
 Latest accepted prototype review: `workspace/OverseerHS02-passive-telemetry-readout-prototype-review.md`
 Latest accepted face advisory: `workspace/OverseerHS03-sense-face-presentation-adoption-review.md`

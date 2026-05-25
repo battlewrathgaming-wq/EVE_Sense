@@ -9,10 +9,11 @@ Owner: Overseer
 Active milestone: M12 - Live Validation And Tactical Calibration
 Roadmap source: `docs/roadmap/milestone-12-live-validation-and-tactical-calibration.md`
 Current runway: None
-Source of intent: M12C completed the first Threat-only live zKill smoke; M12D hardened future live-smoke request metadata capture and aligned Passive refusal artifacts without additional live calls
-Latest accepted slice: M12D live smoke request-log and refusal-artifact hardening
-Latest accepted closure: `workspace/OverseerHS42-m12d-live-smoke-log-hardening-acceptance.md`
+Source of intent: M12C completed the first Threat-only live zKill smoke; M12D hardened future live-smoke request metadata capture and aligned Passive refusal artifacts; M12E completed the first Passive-only live API smoke
+Latest accepted slice: M12E Passive-only live API smoke
+Latest accepted closure: `workspace/OverseerHS43-m12e-passive-live-api-smoke.md`
 Latest Dev handoff: `workspace/DevHS41-m12d-live-smoke-request-log-hardening.md`
+Latest M12E live smoke record: `workspace/OverseerHS43-m12e-passive-live-api-smoke.md`
 Latest M12C live smoke record: `workspace/OverseerHS40-m12c-threat-live-api-smoke.md`
 Latest M12B acceptance: `workspace/OverseerHS39-m12b-live-api-security-review-acceptance.md`
 Latest M12B security/engineering handoff: `workspace/SecEngHS38-m12b-live-api-security-review.md`
@@ -21,21 +22,29 @@ Latest M12A Dev handoff: `workspace/DevHS36-m12a-live-api-smoke-transition-readi
 Latest M12 prep acceptance: `workspace/OverseerHS35-m12-live-validation-harness-prep-acceptance.md`
 Latest M12 gate trace: `workspace/OverseerHS33-m12-live-validation-gate-trace.md`
 Current executor: None
-Current status: Idle after M12D acceptance
+Current status: Idle after M12E acceptance
 Expected output: None
 
 ## Resting State
 
 M12 remains the active/gated envelope for live/manual validation and tactical calibration, but no executable work is open right now.
 
-M12D accepted:
+M12E accepted:
+
+- Passive-only live API smoke ran once under explicit Human authorization.
+- `AURA_SENSE_LIVE_API=1` was scoped to the command invocation and cleared afterward.
+- Default Passive fixture path observed a `navigation.jump` from `Perimeter` to `Jita`.
+- ESI `system_kills`, ESI `system_jumps`, and zKill Jita system context returned bounded successful request metadata.
+- The standard artifact was written to `.tmp\passive-live-api-smoke\result.json`.
+
+M12D remains accepted:
 
 - smoke-local verbose HTTP request metadata capture for future authorized live smoke artifacts
 - normal runtime diagnostics unchanged
 - Passive refusal artifact aligned with Threat refusal artifact fields
 - deterministic fake-HTTP verification of successful smoke request metadata capture
 
-M12C's first live Threat smoke remains the only authorized live provider execution so far. No additional live calls are authorized by this resting state.
+M12C's first live Threat smoke remains the only authorized Threat live provider execution so far. No additional live calls are authorized by this resting state.
 
 ## Preserved Guardrails
 
@@ -54,11 +63,10 @@ M12C's first live Threat smoke remains the only authorized live provider executi
 
 Open only by Human/Overseer decision:
 
-1. Passive-only live API smoke using smoke-local request metadata capture.
-2. Threat-only default Jita live smoke rerun only if the Human wants live confirmation of request metadata capture.
-3. Live operator gamelog smoke playbook execution.
-4. Combat Witness calibration from accepted real samples.
-5. Raw repair/healing fixture intake from accepted samples.
+1. Live operator gamelog smoke playbook execution.
+2. Combat Witness calibration from accepted real samples.
+3. Raw repair/healing fixture intake from accepted samples.
+4. Threat-only default Jita live smoke rerun only if the Human wants another live request-metadata confirmation.
 
 ## Work Record
 
@@ -67,7 +75,7 @@ Idle after Overseer acceptance.
 Accepted handoff:
 
 ```txt
-workspace/OverseerHS42-m12d-live-smoke-log-hardening-acceptance.md
+workspace/OverseerHS43-m12e-passive-live-api-smoke.md
 ```
 
 ## Handoff Requirements
