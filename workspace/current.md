@@ -1,46 +1,34 @@
 # Current Workspace Packet
 
-Status: Idle
+Status: Active
 Updated: 2026-05-25
-Owner: Overseer
+Owner: Overseer planning, UI/UX advisory execution
 
 ## Coordination State
 
-Active milestone: None - post-Milestone-14 audit-support / feature-view audit accepted
-Current runway: None
-Latest closed milestone: Milestone 14 - Back-Page Threat Intel UX
-Latest accepted closure: `workspace/complete/milestone-14/OverseerHS03-milestone-14-closure.md`
-Latest prototype acceptance: `workspace/OverseerHS10-passive-telemetry-instrument-band-prototype-review.md`
-Latest display inventory scaffold: `workspace/display_inventory.md`
-Latest display pipeline audit: `workspace/DisplayInventoryAuditHS01-ingest-transform-bridge-display.md`
-Latest qualitative companion: `workspace/DisplayInventoryQualitativeReportHS01-ingest-transform-bridge-display.md`
-Latest audit acceptance: `workspace/OverseerHS12-display-inventory-pipeline-audit-review.md`
-Latest durable display pipeline record: `docs/current-state/display-pipeline-inventory.md`
-Current executor: None
-Current status: Awaiting human direction
-Expected output: None
+Active milestone: Milestone 15 - Display Request Scoping Review
+Roadmap source: post-Milestone-14 display inventory and request workflow hardening
+Sequence: HS15
+Previous accepted handshake: `workspace/OverseerHS14-workflow-documentation-sweep.md`
+Current executor: UI/UX advisory reviewer
+Current objective: review the first Sense `request_display` pointer candidate before any Lab submission
+Expected output: `workspace/UIUXHS15-clipboard-window-request-display-review.md`
+Archive target on milestone completion: `workspace/complete/milestone-15/`
+Runway type: UIUX advisory / request-display scoping
 
 ## Purpose
 
-There is no active executable packet for AURA-Sense.
+This is the only active work packet.
 
-The Display Inventory Pipeline Audit has been accepted. It maps current user-facing information through:
-
-```txt
-Ingest -> Transformation -> Bridge -> User Display
-```
-
-The accepted audit is advisory input only. It is not implementation work, UI redesign, terminology rename work, Lab adoption, a Dev runway, a bridge contract, or a request queue.
-
-The durable display pipeline record captures Sense-owned pipeline intent and request-capture implications without creating active Lab requests.
-
-Authority split:
+The packet asks for a review-only UI/UX advisory pass on the first Sense display-request candidate:
 
 ```txt
-Sense owns internal -> Bridge meaning.
-Lab owns Bridge -> Interface presentation terminology where Sense meaning is preserved and no Human/Sense conflict exists.
-Shared spelling does not imply shared meaning.
+sense.clipboard-window
 ```
+
+The goal is to decide whether Clipboard Acquisition is ready to become a local scoped `RequestDisplayHS##-[topic].md` artifact for Sense review.
+
+This packet does not submit anything to Aura Lab. It does not authorize implementation, UI copy changes, bridge changes, IPC changes, payload changes, persistence changes, schemas, services, provider behavior, runtime behavior, or a Dev runway.
 
 ## Required Reading
 
@@ -53,106 +41,249 @@ Boot and coordination:
 - `workspace/critical/README.md`
 - `workspace/critical/critical-terms.md`
 - `workspace/critical/critical-assets.md`
-- `workspace/prompts.md`
 
-Accepted display/request workflow:
+Display/request workflow:
 
 - `workspace/display_inventory.md`
 - `workspace/request_display.md`
 - `workspace/display-request-workflow-hardening-contract.md`
-- `workspace/OverseerHS11-display-inventory-pipeline-audit-runway.md`
-- `workspace/DisplayInventoryAuditHS01-ingest-transform-bridge-display.md`
-- `workspace/DisplayInventoryQualitativeReportHS01-ingest-transform-bridge-display.md`
-- `workspace/OverseerHS12-display-inventory-pipeline-audit-review.md`
 - `docs/current-state/display-pipeline-inventory.md`
-- `workspace/OverseerHS13-display-pipeline-durable-record.md`
-- `workspace/OverseerHS14-workflow-documentation-sweep.md`
+- `F:\Projects\Docs\Aura-Project-Orchestration\known-workflows\display-request-conformity-brief.md`
+- `F:\Projects\Docs\Aura-Project-Orchestration\known-workflows\display_request.md`
+- `F:\Projects\Docs\Aura-Project-Orchestration\workflow-maps\display-request-space-to-state.md`
+- `F:\Projects\Docs\Aura-Project-Orchestration\templates\request_display-template.md`
 
-Accepted Sense direction:
+Current product context:
 
-- `workspace/OverseerHS07-sense-m19-instrument-status-band-adoption-review.md`
-- `workspace/UIUXHS03-passive-telemetry-instrument-band-advisory.md`
-- `workspace/OverseerHS08-passive-telemetry-instrument-band-advisory-review.md`
 - `docs/current-state/current-implementation.md`
-- `docs/features/vision.md`
-- `docs/schemas/hud-snapshot.md`
+- `docs/features/clipboard-acquisition.md`
 - `docs/contracts/renderer-boundary-contract.md`
-- `docs/contracts/telemetry-lane-contract.md`
+- `docs/contracts/threat-intel-contract.md`
+- `src/renderer/index.html`
+- `src/renderer/app.js`
 
-External advisory input, not Sense authority:
+Lab context, advisory only:
 
-- `F:\Projects\AURA- Lab\workspace\OverseerHS71-m19-acceptance.md`
-- `F:\Projects\AURA- Lab\workspace\DevHS68-instrument-status-band-prototype.md`
-- `F:\Projects\AURA- Lab\workspace\LabRemoteConsumerConformanceHS66.md`
+- `F:\Projects\AURA- Lab\workspace\request_display.md`
+- `F:\Projects\AURA- Lab\workspace\display-request-cooperation-contract.md`
 
-## Accepted Audit Findings
+## Advisory Request
 
-The accepted pipeline audit identifies these strongest display risks:
+Request:
 
-1. Threat latest-scan review has storage/history wording risk because current UI uses report/persistence language.
-2. Clipboard Acquisition is safety-critical and must preserve bounded authority if display work continues.
-3. Passive state/basis and provider pulse carry useful trust context but can crowd first-read tactical display.
+- Review `sense.clipboard-window` as the first Sense display-request pointer candidate.
+- Determine whether it is ready to become a local scoped request artifact named like `workspace/RequestDisplayHS##-clipboard-window.md`.
+- Keep the review bounded to Clipboard Acquisition presentation and authority-state clarity.
+- Recommend request strength: likely `pressure-test`, unless the reviewer finds `formative` or `comparative` more accurate.
+- Identify what Sense must preserve before any Lab display comparison.
+- Identify what Lab could usefully compare later, without creating the request or submitting it.
 
-Safest later Lab comparison candidates:
+Expected artifact:
 
-- `sense.threat-latest-scan-review`
-- `sense.clipboard-window`
-- `sense.provider-pulse-row`
-- `sense.passive.state-basis`
-- `sense.threat-acquisition-bar`
+```txt
+workspace/UIUXHS15-clipboard-window-request-display-review.md
+```
 
-These are candidates only. No Lab `request_display` entry is active.
+Required artifact section:
 
-Durable source record:
+```txt
+Request Received
+```
 
-- `docs/current-state/display-pipeline-inventory.md` captures lane pipeline intent, required basis/uncertainty, must-not-imply constraints, and parked request-capture implications.
+The artifact should restate this request so Overseer can trace what was answered.
 
-## Candidate Next Steps
+Breadth allowed:
 
-Human decision needed:
+- Clipboard Acquisition widget and its adjacent Threat Intel acquisition context.
+- The current `display_inventory.md` row for `sense.clipboard-window`.
+- Short lifecycle states such as `Pulling`, `Listening`, `Cooldown`, `Idle`, blocked, timeout, and rejection reasons.
+- Shortcut status and live-IO authority visibility where they affect Clipboard Acquisition presentation.
+- Narrow or overlay behavior only where it affects the bounded authority window.
 
-- Park the audit and keep Sense idle.
-- Open a Sense-local request scoping packet that drafts up to three parked `request_display` entries for Sense review only.
-- Open a UI/UX advisory pass on one candidate surface.
+Authority limits:
 
-Do not open Dev from the audit alone.
+- Do not decide Sense adoption.
+- Do not create or submit a `request_display` entry.
+- Do not write a `RequestDisplayHS##` artifact.
+- Do not treat Lab vocabulary as Sense authority.
+- Do not rename Sense terms.
+- Do not recommend backend, bridge, IPC, payload, schema, persistence, service, provider, or runtime changes.
+
+## Advisory Artifact Review
+
+Overseer checks this before writing or refreshing any next packet.
+
+Active advisory artifacts reviewed:
+
+- None yet for HS15.
+
+Relevant unresolved inactive items checked in `workspace/archive/`:
+
+- None required unless the reviewer finds Clipboard Acquisition terminology unclear from active docs.
+
+Disposition:
+
+- accepted into this packet: Clipboard Acquisition request-display scoping review
+- deferred: Threat latest-scan review, Passive state/basis, Threat acquisition bar, provider pulse row
+- rejected: none
+- escalated to human: preserve-exact versus Lab-translatable lifecycle wording, if unclear
+- promoted into durable docs: none from this packet unless Overseer later accepts a truth change
+- left inactive in archive: archived terminology audits unless explicitly reopened
+
+## Advisory Objective
+
+Produce a review-only recommendation that tells Sense whether `sense.clipboard-window` is ready for a local scoped request artifact, and what that artifact should require if opened later.
+
+The review should preserve this pipeline:
+
+```txt
+display_inventory row
+-> local RequestDisplayHS##-[topic].md
+-> submitted Lab request_display entry
+-> Lab recommendation
+-> Sense adoption review
+-> optional Sense current.md Dev runway
+```
+
+## Ordered Runway
+
+1. Read the required files and confirm the current active work is advisory review only.
+2. Inspect the current Clipboard Acquisition presentation and adjacent Threat Intel acquisition context.
+3. Map the current Clipboard Acquisition display problem against source-owned Sense terms, known fields, lifecycle states, authority states, risks, and non-goals.
+4. Decide whether `sense.clipboard-window` should be:
+   - `needs-scope`
+   - `request-ready`
+   - `parked`
+   - returned to Sense for meaning clarification
+5. If request-ready, outline the required contents for a future local `RequestDisplayHS##-clipboard-window.md` artifact without writing it.
+6. Recommend up to three display-comparison questions Lab could answer later, if Sense chooses to submit.
+7. Record risks, parked items, and required verification expectations for any later implementation packet.
+8. Create `workspace/UIUXHS15-clipboard-window-request-display-review.md`.
+
+## Acceptance Criteria
+
+HS15 can be accepted if the UI/UX artifact:
+
+- clearly states it is advisory review only
+- reviews Clipboard Acquisition as a bounded Sense-owned display problem
+- preserves the distinction between inventory row, local request artifact, submitted Lab request, accepted recommendation, and Dev authorization
+- identifies whether `sense.clipboard-window` is `needs-scope`, `request-ready`, `parked`, or needs meaning clarification
+- names the source-owned terms and lifecycle states that must be preserved or qualified
+- explains what must not be implied, especially background clipboard monitoring, persistent listener mode, hidden scan, automatic provider call, or Lab-owned runtime authority
+- recommends request strength if a future local request artifact is opened
+- lists the minimum fields, state cases, freshness/basis/authority notes, and non-goals needed in a future `RequestDisplayHS##-clipboard-window.md`
+- proposes no more than three bounded Lab comparison questions
+- does not create active Lab requests or Dev work
+- includes verification expectations only for a possible later implementation packet
+
+Reject or redirect if the artifact:
+
+- submits or drafts a Lab request directly
+- treats Lab response as adoption or implementation approval
+- renames Sense terms
+- changes product direction beyond Clipboard Acquisition presentation
+- imports Atlas-owned historical proof, storage, assessment, routine-check, or stored-record semantics
+- requires backend, bridge, IPC, payload, persistence, schema, service, provider, runtime, or shortcut behavior changes
 
 ## Guardrails
 
-- Do not implement code unless a future packet explicitly opens Dev work.
-- Do not rename terms from audit or protected-term output.
-- Do not change UI copy, contracts, IPC, payloads, persistence, schemas, services, backend behavior, provider behavior, or runtime behavior from the audit alone.
-- Do not create active Lab requests automatically.
+- Advisory review only.
+- Do not implement code.
+- Do not edit renderer copy.
+- Do not create or submit `request_display` items.
+- Do not create a Dev runway.
+- Do not modify Aura Lab.
+- Do not rename Sense contracts, bridge fields, IPC channels, CSS/test identifiers, services, payloads, or source terms.
 - Do not treat archived docs as active task queues.
-- Do not import Atlas historical proof, search-candidate, tracking, assessment, durable-output, or storage semantics into Sense.
-- Do not treat Lab vocabulary as Sense authority.
-- Do not collapse Combat Witness, Passive Telemetry, Threat Intel, and Clipboard Acquisition boundaries.
-- Do not run live provider smoke unless explicitly authorized by the Human.
-- Do not run manual shortcut validation.
-- Do not run real SDE refresh/download.
+- Do not import Atlas-owned historical proof, storage, tracking, assessment, routine-check, attention-marker, stored-record, or source-candidate semantics.
+- Do not treat Lab state grammar, fixtures, or display slots as Sense authority.
+- Preserve Clipboard Acquisition as a short visible authority window, not background monitoring.
 
-## Verification
+## Stop Conditions
 
-Latest verification:
+Return to chat before continuing if:
+
+- Clipboard Acquisition runtime meaning is unclear from current docs and renderer.
+- The review would require manual shortcut validation.
+- The review would require live provider smoke or real clipboard capture.
+- The reviewer cannot preserve the difference between short authority-window states and persistent monitoring.
+- The reviewer believes a backend, bridge, IPC, payload, persistence, schema, service, provider, runtime, or shortcut behavior change is required.
+
+## Verification Required
+
+Run after creating the UI/UX artifact:
 
 ```powershell
 npm.cmd run verify:protected-terms
+git status --short --branch
 ```
 
-Result:
+Do not run:
 
-- Passed in warning-only mode.
-- Scanned 2 changed files.
-- Reported 34 warning-only items.
-- No renames were performed.
-- No protected-word JSON updates were performed.
+- live provider smoke
+- manual shortcut validation
+- real SDE refresh or download
+- implementation verification suites unless a future packet opens Dev
 
-The warning-only items are accepted as review input from the audit artifacts. They are concentrated in current UI/risk language and presentation-boundary terms already called out by the audit.
+## Advisory Record
 
-## Audit Record
+The UI/UX reviewer updates this before handoff.
 
-Accepted. See `workspace/OverseerHS12-display-inventory-pipeline-audit-review.md`.
+Verification run:
+
+```txt
+Not yet run for this packet.
+```
+
+Files changed:
+
+```txt
+Not yet recorded.
+```
+
+Findings:
+
+```txt
+Not yet recorded.
+```
+
+Deferrals:
+
+```txt
+Not yet recorded.
+```
+
+## UI/UX Handoff
+
+UI/UX creates:
+
+```txt
+workspace/UIUXHS15-clipboard-window-request-display-review.md
+```
+
+Handoff must include:
+
+- request received
+- files reviewed
+- current-state understanding
+- Clipboard Acquisition display problem
+- source-owned terms and lifecycle states
+- state/basis/authority needs
+- must-not-imply constraints
+- recommended lifecycle status for `sense.clipboard-window`
+- recommended request strength
+- required contents for a future local `RequestDisplayHS##-clipboard-window.md`
+- up to three possible Lab comparison questions
+- risks
+- parked items
+- verification results
 
 ## Overseer Review
 
-Completed. Awaiting human direction.
+Overseer fills this in after UI/UX handoff:
+
+- accepted / redirected:
+- request readiness:
+- doctrine drift:
+- source meaning risk:
+- next packet:
