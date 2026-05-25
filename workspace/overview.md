@@ -1,6 +1,6 @@
 ﻿# AURA-Sense Workspace Overview
 
-Status: Idle
+Status: Active - M12A live API smoke transition readiness
 Last reviewed: 2026-05-25
 
 ## Vision Statement
@@ -22,6 +22,7 @@ It should present compact, uncertainty-aware tactical state while staying transi
 
 | Milestone | Roadmap Source | Status | Notes |
 | --- | --- | --- | --- |
+| 12 | `docs/roadmap/milestone-12-live-validation-and-tactical-calibration.md` | Active | M12A is open as a refusal-to-live API transition readiness packet. It must not run live providers, operator gamelog smoke, manual shortcuts, real SDE refresh, renderer, Lab, adapter, calibration, or fixture intake work. |
 | 13 | `docs/roadmap/milestone-13-aggressive-testing-and-bug-hunting.md` | Complete | Deterministic aggressive hardening accepted; live/manual validation remains gated for later operator-validation work. |
 | 14 | `docs/roadmap/milestone-14-back-page-threat-intel-ux.md` | Complete | Back-page Threat Intel UX accepted; live/manual shortcut feel remains gated for optional later operator-validation work. |
 | 15 | `docs/roadmap/milestone-15-display-request-response-fitness.md` | Parked | Lab-facing presentation response work is parked while Lab stabilizes its side. |
@@ -32,9 +33,14 @@ It should present compact, uncertainty-aware tactical state while staying transi
 
 ## Active Milestone
 
-Milestone: None
+Milestone: M12 - Live Validation And Tactical Calibration
 Current packet: `workspace/current.md`
-Current sequence: Idle after M19 closure
+Current sequence: M12A live API smoke transition readiness open
+Current executor: Dev
+Expected Dev artifact: `workspace/DevHS36-m12a-live-api-smoke-transition-readiness.md`
+Latest M12 gate trace: `workspace/OverseerHS33-m12-live-validation-gate-trace.md`
+Latest M12 Dev handoff: `workspace/DevHS34-m12-live-validation-harness-prep.md`
+Latest M12 acceptance: `workspace/OverseerHS35-m12-live-validation-harness-prep-acceptance.md`
 Latest accepted handshake: `workspace/complete/milestone-14/OverseerHS03-milestone-14-closure.md`
 Latest accepted prototype review: `workspace/OverseerHS02-passive-telemetry-readout-prototype-review.md`
 Latest accepted face advisory: `workspace/OverseerHS03-sense-face-presentation-adoption-review.md`
@@ -52,7 +58,7 @@ Latest M19 scope: `workspace/OverseerHS27-m19-gamelog-containment-scope.md`
 Latest M19 review: `workspace/SecEngHS28-gamelog-ingest-containment-review.md`
 Latest M19 Dev handoff: `workspace/DevHS30-gamelog-containment-hardening.md`
 Latest M19 acceptance: `workspace/OverseerHS31-m19-gamelog-containment-hardening-acceptance.md`
-Active runway: None
+Active runway: M12A refusal-path live API smoke transition readiness
 
 ## Authority Notes
 
@@ -112,7 +118,7 @@ AURA-Sense therefore owns its lane semantics and internal-to-Bridge mapping. Lab
 
 ## Open Questions
 
-- Which remaining live/manual validation items should move into a later operator-validation milestone?
+- After M12A, whether the next live/manual validation item should be authorized live API execution, live operator gamelog smoke, Combat Witness calibration, or raw repair/healing fixture intake.
 - Whether Atlas/Lab first-pass terminology output requires Sense-local terminology updates.
 - Whether the accepted Sense Face Refinement Pass should remain a bounded post-Milestone-14 prototype or become the first slice of a new Sense-local milestone.
 - Whether the remaining focused protected-term baseline items need a terminology classification pass.
