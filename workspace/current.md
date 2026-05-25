@@ -1,43 +1,29 @@
 # Current Workspace Packet
 
-Status: Idle
+Status: Active
 Updated: 2026-05-25
 Owner: Overseer
 
 ## Coordination State
 
 Active milestone: None - bounded post-Milestone-14 prototype
-Current runway: None - Sense Face Refinement Pass accepted
+Current runway: Passive Telemetry Instrument Band prototype
 Latest closed milestone: Milestone 14 - Back-Page Threat Intel UX
 Latest accepted closure: `workspace/complete/milestone-14/OverseerHS03-milestone-14-closure.md`
-Accepted UI/UX mapping: `workspace/SenseUIUXHS01-passive-telemetry-bridge-state-readout.md`
-Overseer review: `workspace/OverseerHS01-passive-telemetry-readout-mapping-review.md`
-Latest Dev handoff: `workspace/DevHS01-passive-telemetry-readout-prototype.md`
-Latest prototype acceptance: `workspace/OverseerHS02-passive-telemetry-readout-prototype-review.md`
-Latest face advisory: `workspace/UIUXHS02-sense-face-presentation-advisory.md`
 Latest Lab advisory input: `F:\Projects\AURA- Lab\workspace\OverseerHS71-m19-acceptance.md`
-Latest Overseer acceptance: `workspace/OverseerHS03-sense-face-presentation-adoption-review.md`
-Latest Dev handoff: `workspace/DevHS02-sense-face-refinement-pass.md`
-Latest face refinement acceptance: `workspace/OverseerHS04-sense-face-refinement-review.md`
 Latest Lab remote-consumer SLA receipt: `workspace/OverseerHS06-lab-remote-consumer-sla-review.md`
 Latest M19 adoption review: `workspace/OverseerHS07-sense-m19-instrument-status-band-adoption-review.md`
 Latest Passive band advisory: `workspace/UIUXHS03-passive-telemetry-instrument-band-advisory.md`
 Latest Passive band advisory review: `workspace/OverseerHS08-passive-telemetry-instrument-band-advisory-review.md`
-Current executor: None
-Current focus: Awaiting human decision on whether to open tiny Dev prototype, request visual-density UI/UX pass, or park
-Expected output: None
+Current executor: Dev
+Current focus: implement tiny renderer-only Passive Telemetry Instrument Band prototype
+Expected output: `workspace/DevHS03-passive-telemetry-instrument-band-prototype.md`
 
 ## Purpose
 
-There is no active executable packet for AURA-Sense.
+Implement a small renderer-only Passive Telemetry Instrument Band prototype using existing `passive.telemetry.snapshot` fields.
 
-The Passive Telemetry readout prototype has been accepted. The Sense-owned face presentation advisory has been reviewed and the renderer-only Sense Face Refinement Pass has been accepted.
-
-The accepted face pass adapts selected Lab presentation ideas through Sense-owned meaning. It is not a Lab import, not a Core adapter, not shared doctrine, not a contract rename, and not a broad redesign.
-
-Lab M19 is now closed and accepted in Lab. Sense has reviewed M19 as advisory presentation-pattern input in `workspace/OverseerHS07-sense-m19-instrument-status-band-adoption-review.md`.
-
-The Passive Telemetry Instrument Band UI/UX advisory is accepted in `workspace/OverseerHS08-passive-telemetry-instrument-band-advisory-review.md`. No Sense implementation packet is open.
+This packet adapts Lab M19 presentation grammar through Sense-owned meaning. It is not a Lab import, not a backend contract, not a provider behavior change, not a shared Aura doctrine update, and not an Atlas/Core task.
 
 Authority split:
 
@@ -60,31 +46,27 @@ Boot and coordination:
 - `workspace/critical/critical-assets.md`
 - `workspace/prompts.md`
 
-Accepted direction:
+Accepted Sense direction:
 
-- `workspace/UIUXHS02-sense-face-presentation-advisory.md`
-- `workspace/OverseerHS03-sense-face-presentation-adoption-review.md`
+- `workspace/OverseerHS07-sense-m19-instrument-status-band-adoption-review.md`
+- `workspace/UIUXHS03-passive-telemetry-instrument-band-advisory.md`
+- `workspace/OverseerHS08-passive-telemetry-instrument-band-advisory-review.md`
 - `workspace/SenseUIUXHS01-passive-telemetry-bridge-state-readout.md`
 - `workspace/OverseerHS01-passive-telemetry-readout-mapping-review.md`
-- `workspace/SenseAdoptionHS01-aura-lab-presentation-mechanics-review.md`
+- `workspace/OverseerHS02-passive-telemetry-readout-prototype-review.md`
 - `docs/current-state/current-implementation.md`
 - `docs/features/vision.md`
 - `docs/schemas/hud-snapshot.md`
 - `docs/contracts/renderer-boundary-contract.md`
 - `docs/contracts/telemetry-lane-contract.md`
-- `docs/contracts/threat-intel-contract.md`
-- `docs/contracts/combat-witness-contract.md`
 
-Implementation targets:
+Reference-only implementation facts:
 
 - `src/renderer/index.html`
 - `src/renderer/app.js`
 - `src/renderer/styles.css`
 - `src/main/main.js` only if Electron visual smoke fixture states need selector/text updates
 - `scripts/verify-renderer-shell.js`
-
-Reference-only source facts:
-
 - `src/passive/passiveTelemetryService.js`
 - `src/passive/passiveTelemetryBridge.js`
 - `src/passive/liveIoGate.js`
@@ -93,48 +75,57 @@ Reference-only source facts:
 
 External advisory input, not Sense authority:
 
-- `F:\Projects\AURA- Lab\workspace\SenseImportAdvisoryHS65-lab-presentation-adoption.md`
+- `F:\Projects\AURA- Lab\workspace\OverseerHS71-m19-acceptance.md`
+- `F:\Projects\AURA- Lab\workspace\DevHS68-instrument-status-band-prototype.md`
+- `F:\Projects\AURA- Lab\workspace\LabRemoteConsumerConformanceHS66.md`
 
 ## Runway Objective
 
-Implement a compact Sense Face Refinement Pass for Combat Witness and Passive Telemetry using existing renderer surfaces and existing backend-owned snapshot fields only.
+Make Passive Telemetry easier to scan as a compact support instrument without changing what Passive Telemetry means.
 
-The prototype should make the current Combat Witness pressure/repair readout and Passive Telemetry context easier to understand at a glance without changing backend contracts, provider behavior, bridge names, or lane meaning.
+The first read should communicate:
+
+```txt
+current system + Sense-owned Passive state + compact activity + provider/sample basis
+```
+
+The renderer must present backend-owned snapshot fields. It must not compute provider truth, fetch providers, mutate live IO policy, or create new Passive Telemetry semantics.
 
 ## Ordered Runway
 
-1. Combat Witness first-read hierarchy:
-   - keep Combat Witness as the primary lane
-   - make `Incoming DPS`, `Repair HPS`, and `Observed balance` readable as the first pressure/repair read
-   - keep observed source and observed weapon visible as compact context
-   - preserve recent/observed/rolling-window wording
-   - do not present repair balance as safe, stable, surviving, breaking, or tank state
-2. Passive Telemetry compact support:
-   - preserve the accepted Passive readout labels: `Fresh context`, `Stale context`, `Partial sample`, `Capped sample`, `Live IO blocked`, `Degraded`, and `No observation`
-   - keep Passive in the glance strip or equivalent compact support surface
-   - keep system, kills, jumps, ratio, and one concise provider/sample basis visible
-   - show `Static lookup` or `Local lookup` only when resolver/source fields support it
-   - avoid generic `NO DATA`, `CURRENT`, `AGED`, and `FALLBACK` as user-facing Passive copy
-3. Face composition:
-   - preserve the existing lane structure and overlay density
-   - do not add a large front-page card or full app redesign
-   - demote diagnostics visually without hiding source, freshness, basis, gaps, warnings, live IO, watcher, or provider state
-   - keep Threat Intel and Clipboard Acquisition mostly unchanged except for visual consistency at touch points
-   - keep Threat Intel as deliberate scan/back-page behavior and Clipboard Acquisition as a short authority window
-4. Boundary preservation:
+1. Inspect the current Passive Telemetry renderer structure before editing.
+   - Identify the current Passive compact surface, readout state, provider pulse, diagnostics, and narrow layout behavior.
+   - Prefer consolidating/refining the existing Passive compact surface over adding a large new panel.
+2. Implement the closed Passive Telemetry Instrument Band.
+   - keep `Passive Telemetry` visible as the lane label
+   - make `currentSystem.label` the primary value when present
+   - show `No observation` when no current system exists
+   - keep kills, jumps, and ratio as compact support values
+   - keep a Sense-owned state label visible and non-color-only
+   - keep basis/freshness visible in one compact line or accessible through existing detail/diagnostics
+   - show partial/capped/stale/blocked/degraded/no-observation conditions distinctly
+3. Preserve Sense-owned copy.
+   - keep `Fresh context`, `Stale context`, `Partial sample`, `Capped sample`, `Live IO blocked`, `Degraded`, and `No observation`
+   - use `Provider pending` only where existing renderer/snapshot behavior supports it
+   - show `Static lookup` or `Local lookup` only when existing resolver/source fields support it
+   - do not use Lab labels such as `CURRENT`, `UPDATING`, `AGED`, `UNAVAILABLE`, `FALLBACK`, or `NO DATA` as user-facing Passive copy
+4. Add or preserve a compact detail path.
+   - reuse existing diagnostics if that is the smallest safe path
+   - detail should explain basis, freshness, sample count, cap, partial, live IO gate, and failure without raw/private provider payloads
+   - do not add historical storage or Threat Intel scan detail
+5. Preserve boundaries.
    - do not change `passive.telemetry.snapshot` shape
-   - do not change `combat.witness.snapshot` shape
-   - do not rename bridge APIs, IPC channels, service commands, payload fields, CSS/test identifiers, provider clients, or backend state fields
-   - do not call zKill, ESI, filesystem, parser, watcher, or runtime modules from the renderer
-   - do not merge Passive Telemetry with Combat Witness, Threat Intel, or Clipboard Acquisition
-5. Verification and smoke:
-   - extend renderer shell checks for the accepted Combat Witness and Passive face expectations
-   - extend Electron visual smoke state coverage if selector/text/layout states change
+   - do not change Passive Telemetry backend, provider clients, live IO gate, cache behavior, IPC channels, service commands, payload fields, bridge APIs, or parser/watcher/runtime behavior
+   - do not call zKill, ESI, filesystem, parser, watcher, provider clients, or runtime modules from the renderer
+   - do not touch Atlas, Core, or Lab files
+6. Verification and smoke.
+   - update renderer shell checks for the new Passive band expectations
+   - update Electron visual smoke only if selectors/text/layout assertions need to reflect the changed visible surface
    - keep narrow viewport containment covered
-   - run all required verification commands
-6. Handoff:
+   - run all required verification commands below
+7. Handoff.
    - update Evidence and Dev Handoff in this packet
-   - create `workspace/DevHS02-sense-face-refinement-pass.md`
+   - create `workspace/DevHS03-passive-telemetry-instrument-band-prototype.md`
    - recommend accept/redirect and note any remaining risks
 
 ## Guardrails
@@ -142,16 +133,14 @@ The prototype should make the current Combat Witness pressure/repair readout and
 - Renderer presents; backend owns truth.
 - Passive Telemetry remains current-system context.
 - Do not turn Passive Telemetry into Threat Intel.
-- Do not turn Combat Witness into Atlas evidence, historical proof, or predictive combat assessment.
-- Do not imply complete system awareness.
-- Do not present zKill/ESI sample data as durable evidence.
-- Do not import Atlas evidence, watch, report, storage, or assessment semantics.
-- Do not import Lab fixtures or Lab product semantics.
-- Do not import Lab neutral state labels where Sense lane-specific labels are more precise.
+- Do not imply continuous monitoring, complete system awareness, verified truth, Atlas evidence, or historical storage.
+- Do not import Lab fixture semantics or Lab product semantics.
+- Do not use Lab neutral state labels as Sense backend enums or user-facing Passive state copy.
 - Do not create shared Aura doctrine.
 - Do not broaden into Combat Witness, Threat Intel, Clipboard Acquisition, Core, Atlas, or Lab work.
-- Do not run live provider smoke unless explicitly authorized by the human.
+- Do not run live provider smoke unless explicitly authorized by the Human.
 - Do not run manual shortcut validation.
+- Do not run real SDE refresh/download.
 - Do not use archived docs/gap as active queues.
 
 ## Stop Conditions
@@ -159,10 +148,11 @@ The prototype should make the current Combat Witness pressure/repair readout and
 Return to chat before continuing if:
 
 - implementation requires changing Passive Telemetry backend contracts or provider behavior
-- implementation requires changing Combat Witness backend contracts, parser behavior, or rolling-window computation
+- implementation requires changing `passive.telemetry.snapshot`
 - renderer would need to compute Passive truth instead of presenting snapshot fields
-- renderer would need to compute Combat Witness truth instead of presenting snapshot fields
-- `blocked`, `partial`, `degraded`, `unavailable`, `stale`, and `fresh` cannot remain distinct
+- renderer would need to call zKill, ESI, filesystem, provider clients, parser, watcher, or runtime modules
+- fresh, stale, partial, capped, blocked, degraded, no-observation, and pending states cannot remain distinct
+- Lab labels would become Sense bridge fields, service names, payload names, CSS/test IDs, or product state enums
 - visual changes crowd or demote Combat Witness priority
 - Lab/Core/shared doctrine decisions become necessary
 - live provider smoke appears necessary
@@ -172,9 +162,6 @@ Return to chat before continuing if:
 Run:
 
 ```powershell
-npm.cmd run verify:combat-witness
-npm.cmd run verify:combat-bridge
-npm.cmd run verify:combat-runtime
 npm.cmd run verify:passive-telemetry
 npm.cmd run verify:renderer-shell
 npm.cmd run verify:renderer-boundary
@@ -197,66 +184,44 @@ Dev updates this before handoff.
 Verification run:
 
 ```txt
-npm.cmd run verify:renderer-shell
-npm.cmd run verify:combat-witness
-npm.cmd run verify:combat-bridge
-npm.cmd run verify:combat-runtime
-npm.cmd run verify:passive-telemetry
-npm.cmd run verify:renderer-boundary
-npm.cmd run verify:renderer-boundary-adversarial
-npm.cmd run verify:protected-terms
-npm.cmd run verify:all
-npm.cmd run smoke:electron
+Pending Dev.
 ```
 
 Files changed:
 
 ```txt
-src/renderer/index.html
-src/renderer/app.js
-src/renderer/styles.css
-src/main/main.js
-scripts/verify-renderer-shell.js
-workspace/current.md
-workspace/DevHS02-sense-face-refinement-pass.md
+Pending Dev.
 ```
 
 Findings:
 
 ```txt
-Implemented renderer-only Sense face refinement.
-Combat Witness now keeps Combat Witness primary while showing Incoming DPS, Repair HPS, Observed balance, and 15s rolling observed window copy in the first read.
-Observed source and observed weapon compact context remain visible through the existing front tiles and diagnostics.
-Passive Telemetry compact support was preserved with accepted labels and basis behavior unchanged.
-Renderer shell and Electron visual smoke now assert the new Combat Witness face copy/selectors.
-The active-packet Lab advisory path was read at F:\Projects\AURA- Lab\workspace\SenseImportAdvisoryHS65-lab-presentation-adoption.md, and Lab remote-consumer conformance guidance was copied locally as workspace/LabRemoteConsumerConformanceHS66.md.
-Protected-term discovery completed in warning-only mode with 900 warnings and no renames/protected-word JSON changes after handoff files were included. The optional --quarantine sniff remains available for low-confidence Lab quarantine terms.
+Pending Dev.
 ```
 
 Deferrals:
 
 ```txt
-No live provider smoke, manual shortcut validation, or real SDE refresh/download was run.
-No backend contracts, bridge APIs, IPC channels, service commands, payload fields, provider clients, parser/watcher/runtime behavior, or snapshot shapes were changed.
+Pending Dev.
 ```
 
 ## Dev Handoff
 
 Dev fills this in when work is complete:
 
-- completed tasks: Compact Combat Witness first-read hierarchy updated; Passive Telemetry accepted compact readout preserved; face composition kept within existing overlay structure; boundary-preserving renderer-only implementation completed.
-- tests added/updated: `scripts/verify-renderer-shell.js` now checks Combat Witness rolling observed window, Incoming DPS, Repair HPS, Observed balance, signed observed balance rendering, and bounded detail copy. `src/main/main.js` Electron smoke now asserts `#pressure-window` and `#net-pressure-label` across first-light/regression/narrow states.
-- verification output: All required commands passed: `verify:combat-witness`, `verify:combat-bridge`, `verify:combat-runtime`, `verify:passive-telemetry`, `verify:renderer-shell`, `verify:renderer-boundary`, `verify:renderer-boundary-adversarial`, `verify:protected-terms`, `verify:all`, and `smoke:electron`.
-- failures found: None during final verification. Protected-term discovery remains warning-only and reported 900 warning-only items after handoff files were included; optional `--quarantine` mode remains available for low-confidence Lab quarantine terms.
-- handshake created: `workspace/DevHS02-sense-face-refinement-pass.md`
-- remaining risk: Gauge center copy is deliberately compact and smoke-covered, but future visual review may still tune exact typography. Combat Witness still inherits existing internal `is-stable` CSS class naming, intentionally not renamed because this packet protects CSS/test identifiers.
+- completed tasks:
+- tests added/updated:
+- verification output:
+- failures found:
+- handshake created:
+- remaining risk:
 
 ## Overseer Review
 
 Overseer fills this in after Dev handoff:
 
-- accepted / redirected: Accepted. Dev completed the renderer-only Sense Face Refinement Pass and produced `workspace/DevHS02-sense-face-refinement-pass.md`.
-- doctrine drift: No doctrine drift found. Combat Witness remains recent observed rolling-window state, not Atlas evidence or prediction. Passive Telemetry remains compact current-system context and was not turned into Threat Intel.
-- architecture risk: Low. Dev reports no backend contract, bridge API, IPC, service command, payload, parser, watcher, runtime, provider, or snapshot-shape changes. Renderer boundary verification and adversarial boundary verification passed.
-- state updates needed: Packet set idle with `workspace/OverseerHS04-sense-face-refinement-review.md` as acceptance record.
-- next packet: Human decision. Candidate follow-ups are UI/UX typography polish for the gauge label, terminology classification of the remaining focused baseline warnings, or durable current-state documentation cleanup.
+- accepted / redirected:
+- doctrine drift:
+- architecture risk:
+- state updates needed:
+- next packet:
