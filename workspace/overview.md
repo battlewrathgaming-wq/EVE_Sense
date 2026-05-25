@@ -87,6 +87,7 @@ AURA-Sense therefore owns its lane semantics and internal-to-Bridge mapping. Lab
 - `docs/contracts/`
 - `docs/adr/`
 - `docs/adr/ADR-0003-target-owned-presentation-adapters.md`
+- `docs/adr/ADR-0004-sense-instrument-effect-presentation-boundary.md`
 - `docs/tenets/`
 - `docs/statements/`
 - `docs/features/`
