@@ -8,11 +8,13 @@ Owner: Overseer
 
 Active milestone: M12 - Live Validation And Tactical Calibration
 Roadmap source: `docs/roadmap/milestone-12-live-validation-and-tactical-calibration.md`
-Current runway: M12F - Operator I/O readiness and gate separation review
-Source of intent: Human/Overseer agreed that the next M12 hinge is local operator I/O: Passive gamelog-driven flow should wrap the operator without disruption, while Active clipboard/search flow should remain explicitly invited, time-gated, and sealed
-Latest accepted slice: M12E Passive-only live API smoke
-Latest accepted closure: `workspace/OverseerHS43-m12e-passive-live-api-smoke.md`
+Current runway: M12G - Clipboard acquisition mode alignment and gate-separation verification
+Source of intent: M12F accepted a read-only Security/Engineering review; Human clarified global shortcut immediate clipboard capture is intended, so the next Dev packet should align docs/tests around two explicit Clipboard Acquisition modes and add gate-separation verification
+Latest accepted slice: M12F operator I/O readiness and gate separation review
+Latest accepted closure: `workspace/OverseerHS45-m12f-operator-io-readiness-review-acceptance.md`
 Latest Dev handoff: `workspace/DevHS41-m12d-live-smoke-request-log-hardening.md`
+Latest M12F review: `workspace/SecEngHS44-m12f-operator-io-readiness-gate-separation-review.md`
+Latest M12F acceptance: `workspace/OverseerHS45-m12f-operator-io-readiness-review-acceptance.md`
 Latest M12E live smoke record: `workspace/OverseerHS43-m12e-passive-live-api-smoke.md`
 Latest M12C live smoke record: `workspace/OverseerHS40-m12c-threat-live-api-smoke.md`
 Latest M12B acceptance: `workspace/OverseerHS39-m12b-live-api-security-review-acceptance.md`
@@ -21,13 +23,13 @@ Latest M12A acceptance: `workspace/OverseerHS37-m12a-live-api-transition-readine
 Latest M12A Dev handoff: `workspace/DevHS36-m12a-live-api-smoke-transition-readiness.md`
 Latest M12 prep acceptance: `workspace/OverseerHS35-m12-live-validation-harness-prep-acceptance.md`
 Latest M12 gate trace: `workspace/OverseerHS33-m12-live-validation-gate-trace.md`
-Current executor: Security/Engineering specialist
-Current status: Active review packet; no implementation or live/manual I/O execution
-Expected output: `workspace/SecEngHS44-m12f-operator-io-readiness-gate-separation-review.md`
+Current executor: Dev
+Current status: Active Dev hardening/docs packet; no live/manual I/O execution
+Expected output: `workspace/DevHS46-m12g-clipboard-mode-gate-separation-hardening.md`
 
-## Review Objective
+## Dev Objective
 
-Produce a read-only Security/Engineering review of local operator I/O readiness before any live operator gamelog smoke, clipboard manual validation, or Dev hardening.
+Align Clipboard Acquisition docs/tests with the intended two-mode behavior, and add gate-separation verification before any live/manual operator I/O smoke.
 
 Core rule:
 
@@ -39,18 +41,37 @@ They must not share the same gate.
 Shared display/fixture treatment is not assumed.
 ```
 
-The review should trace how gamelog watcher/parser events and clipboard/search acquisition enter Sense, how they are gated, what events/snapshots they emit, and what must be preserved before any future live/manual I/O smoke.
+Human design clarification:
+
+- Global shortcut immediate capture of the current clipboard is intended.
+- It is acceptable because pressing the global shortcut is an explicit operator invitation.
+- It must remain IO-gated, visible through Clipboard Acquisition state, and sealed/cooldown-bounded.
+- Focused/windowed acquisition without a provided payload remains different: it should establish a baseline, listen for a changed valid clipboard target, then seal/cool down.
+- A small rolling acquisition cache may be useful as duplicate-suppression/throttle control, but it must not become hidden clipboard history, a shared Passive gate, or a display/fixture source.
+
+Dev should not remove global shortcut immediate capture. Dev should make the intended distinction explicit in docs and deterministic checks, while preserving Passive/Active gate separation.
 
 ## Runway Shape
 
-- current packet: M12F read-only Security/Engineering review of operator I/O readiness and gate separation.
-- likely next packet if accepted: bounded Dev hardening for any concrete gate, privacy, containment, diagnostics, or verification gaps found by M12F.
-- follow-up packet if clean: deterministic/offline verification of the hardening, then Human decision on whether to authorize live/manual operator I/O smoke.
+- current packet: M12G Dev hardening/docs for Clipboard Acquisition mode alignment, gate-separation tests, and redaction-safe future smoke guidance.
+- likely next packet if accepted: Overseer review of Dev handoff and decision whether operator I/O smoke is ready to authorize.
+- follow-up packet if clean: Human decision on whether to authorize live/manual operator I/O smoke.
 - stop or Human decision point: any live/manual EVE folder use, clipboard capture, provider calls, manual shortcut validation, display/adapter convergence, or product decision about Passive/Active gate behavior.
 
-This M12F packet is one review step in a larger validation runway, not milestone completion by itself.
+This M12G packet is hardening work only. It does not authorize live/manual operator I/O smoke.
 
 ## Context To Preserve
+
+M12F accepted:
+
+- Gamelog parser events fan out through the Combat Witness runtime observer path.
+- Passive Telemetry observes `navigation.jump` events and does not depend on Clipboard Acquisition state.
+- Threat Intel scans are invoked through explicit search, Clipboard Acquisition, or service/preload calls.
+- Passive and Threat live provider gates are separate backend gate instances.
+- Parser jumps were not found to trigger Threat scans.
+- Clipboard/search was not found to be a prerequisite for Passive current-system observation.
+- Human clarified global shortcut immediate capture of existing clipboard content is intended when explicitly invoked.
+- The remaining gap is docs/tests alignment so immediate global shortcut capture and focused/windowed listening are not collapsed into one rule.
 
 M12E accepted:
 
@@ -94,6 +115,8 @@ Human discussion to preserve:
 - `docs/contracts/telemetry-lane-contract.md`
 - `docs/contracts/threat-intel-contract.md`
 - `docs/features/clipboard-acquisition.md`
+- `workspace/SecEngHS44-m12f-operator-io-readiness-gate-separation-review.md`
+- `workspace/OverseerHS45-m12f-operator-io-readiness-review-acceptance.md`
 - `src/combat/`
 - `src/passive/`
 - `src/threat/`
@@ -103,58 +126,65 @@ Human discussion to preserve:
 
 ## Ordered Runway
 
-1. Confirm cwd, repo state, and that this is a read-only review packet.
-2. Map gamelog I/O from configured folder/path policy through watcher/parser into emitted combat/navigation events.
-3. Map Passive Telemetry trigger behavior from parser-observed system jump into Passive aggregate/context update.
-4. Map Clipboard Acquisition and explicit search trigger behavior, including listening window, cooldown/seal behavior, shortcuts, and scan dispatch.
-5. Identify the shared internal observation/event channel or equivalent fanout points, if present.
-6. Confirm gate separation:
-   - Passive gamelog/jump-driven flow is hands-free and not bound to Clipboard Acquisition.
-   - Active clipboard/search flow is deliberate, time-gated, and sealed.
-   - Parser jumps do not trigger active Threat scans.
-   - Clipboard/search does not become a prerequisite for Passive aggregate/context.
-7. Review containment/privacy posture:
-   - expected `EVE/logs/Gamelogs` structure and path containment
-   - append-only/read scope
-   - no broad private log storage
-   - clipboard payload limits and no indefinite background capture
-   - sanitized diagnostics/artifact expectations
-8. Identify risks, missing tests, or Dev hardening needs before live/manual operator I/O smoke.
-9. Keep display/fixture convergence out of scope except as a risk note.
-10. Write `workspace/SecEngHS44-m12f-operator-io-readiness-gate-separation-review.md`.
+1. Confirm cwd, repo state, and active M12G packet.
+2. Preserve global shortcut immediate capture as explicit operator-invited behavior.
+3. Preserve blocked behavior: when IO authority is off, the shortcut must not read clipboard content.
+4. Preserve focused renderer acquisition behavior and the 3 second listening / 5 second cooldown lifecycle.
+5. Update existing tests that encode immediate shortcut capture if they conflict with the accepted trust boundary.
+6. Add deterministic verification for the global shortcut or an equivalent extracted seam proving:
+   - non-empty current clipboard content can be captured only through explicit shortcut invocation when IO authority allows it
+   - focused/windowed acquisition without provided payload ignores unchanged pre-arm clipboard content
+   - changed clipboard content during the focused/windowed listening window can still be captured
+   - timeout/cooldown still seals the window
+7. Add deterministic gate-separation verification proving:
+   - parser `navigation.jump` can update Passive without invoking Threat scan
+   - explicit Threat search/Clipboard Acquisition does not initialize or gate Passive current-system observation
+8. Add or update documentation for future live/manual operator I/O smoke artifact redaction:
+   - no raw private gamelog lines
+   - no raw private local paths unless explicitly approved
+   - no clipboard target text unless explicitly approved
+   - hashes/status/counts/sanitized state only by default
+9. Evaluate a small rolling Clipboard Acquisition cache for repeat-target suppression:
+   - use it only as a bounded duplicate/throttle aid
+   - avoid storing raw clipboard history beyond what is needed for the active/cooldown window
+   - do not make it a Passive gate, display fixture, or durable record
+   - implement if low-risk, otherwise document a deferred design note
+10. Evaluate whether a direct Threat scan `targetText` length limit fits cleanly. Implement if low-risk, otherwise document as deferred in the handoff.
+11. Run required offline verification.
+12. Update Evidence and Dev Handoff sections in this file.
+13. Write `workspace/DevHS46-m12g-clipboard-mode-gate-separation-hardening.md`.
 
 ## Required Output
 
 The handoff must include:
 
 1. Files reviewed.
-2. Current operator I/O model.
-3. Gamelog watcher/parser trace.
-4. Passive Telemetry trigger trace from system jump.
-5. Clipboard Acquisition/search trigger trace.
-6. Shared event-spine/fanout points, if any.
-7. Gate separation findings.
-8. Clipboard listening window and seal findings.
-9. Containment/privacy findings.
-10. Display/fixture boundary risks that are explicitly out of M12F scope.
-11. Bugs, gaps, or ambiguity.
-12. Required Dev hardening before live/manual operator I/O smoke, if any.
-13. Suggested verification for a future Dev packet.
-14. Stop conditions for future live/manual operator I/O validation.
-15. Clear recommendation: proceed to Dev hardening, proceed to live/manual smoke, pause for design decision, or park.
+2. Files changed.
+3. Description of the two intended Clipboard Acquisition modes.
+4. Gate-separation verification added or updated.
+5. Redaction/artifact documentation added or updated.
+6. Threat target length decision: implemented or deferred with reason.
+7. Rolling cache decision: implemented or deferred with reason.
+8. Verification commands and summarized results.
+9. Boundary confirmation.
+10. Residual risks and recommended next M12 move.
 
 ## Acceptance Criteria
 
-M12F review is complete when:
+M12G is complete when:
 
-- gamelog I/O, Passive jump-triggered aggregate/context, Clipboard Acquisition, and explicit search triggers are traced from code/docs
-- the review states whether Passive and Active gates are currently separated
-- the review states whether Passive remains hands-free and non-disruptive
-- the review states whether Clipboard Acquisition remains explicit, time-bounded, and sealed
-- path containment and private-content handling risks are identified
-- future live/manual operator I/O smoke boundaries are concrete enough for Overseer to open or reject the next packet
-- no code, contracts, bridge payloads, IPC channels, schemas, runtime behavior, UI copy, fixtures, displays, or Dev runway are changed by the specialist
-- no live EVE folders, clipboard content, screenshots, provider calls, manual shortcuts, or private/operator paths are inspected or captured
+- global shortcut immediate capture is documented/verified as explicit operator-invited behavior
+- global shortcut immediate capture remains IO-gated and sealed/cooldown-bounded
+- focused/windowed acquisition without payload still ignores unchanged pre-arm clipboard content
+- changed valid clipboard content during the focused/windowed listening window can still be captured
+- any rolling cache, if implemented, is bounded and used only for duplicate suppression/throttle behavior
+- IO-off global shortcut behavior still does not read clipboard content
+- Clipboard Acquisition remains explicit, time-bounded, and sealed
+- Passive jump-triggered aggregate/context remains independent from Clipboard Acquisition and Threat scan state
+- parser `navigation.jump` does not trigger Threat scan
+- explicit Threat scan/Clipboard Acquisition does not become a prerequisite for Passive observation
+- future live/manual operator smoke artifact redaction expectations are recorded
+- no live/manual/private/provider execution is performed
 
 ## Preserved Guardrails
 
@@ -174,7 +204,7 @@ M12F review is complete when:
 - Do not store raw provider bodies, private EVE gamelog lines, clipboard content, private operator paths, screenshots, renderer output, Lab/adapter output, calibration data, fixture intake, or product claims.
 - Do not promote a bounded live smoke into broad tactical/product claims.
 - Do not decide display/fixture convergence inside this packet.
-- Do not run terminology/protected-term checks unless the review discovers terminology, adapter, display-copy, bridge-facing label, source-owned meaning, or critical-asset work that requires a future packet. This packet is read-only I/O readiness review.
+- Do not run terminology/protected-term checks unless the implementation changes terminology, adapter mappings, display copy, bridge-facing labels, source-owned meanings, or critical assets beyond the active packet.
 
 ## Non-Goals
 
@@ -185,29 +215,46 @@ M12F review is complete when:
 - Do not calibrate Combat Witness metrics.
 - Do not decide Lab/adapter/display treatment.
 - Do not create a broad security review beyond operator I/O readiness.
+- Do not redesign the renderer live IO toggle unless required to complete the accepted mode-alignment work.
+- Do not make lane-specific UI controls unless explicitly opened later.
+- Do not remove global shortcut immediate capture; Human clarified it is intended.
 
 ## Stop Conditions
 
 Return to Overseer/Human if:
 
-- the code requires live/private operator folders to answer the review
+- the fix requires live/private operator folders to verify
 - clipboard content or private paths would need to be captured
 - Passive and Active gates appear coupled in a way that requires product direction
-- a shared event spine cannot be identified from code/docs
 - display/fixture assumptions are required to answer I/O safety
 - live/manual execution appears necessary
 - contract or runtime changes seem necessary before the review can be complete
+- aligning docs/tests would require changing the intended Clipboard Acquisition lifecycle
 
 ## Work Record
 
-Active review packet opened by Overseer.
+M12F accepted:
+
+```txt
+workspace/OverseerHS45-m12f-operator-io-readiness-review-acceptance.md
+```
+
+Active M12G Dev packet opened by Overseer.
 
 Expected handoff:
 
 ```txt
-workspace/SecEngHS44-m12f-operator-io-readiness-gate-separation-review.md
+workspace/DevHS46-m12g-clipboard-mode-gate-separation-hardening.md
 ```
+
+## Evidence
+
+Dev to fill.
+
+## Dev Handoff
+
+Dev to fill.
 
 ## Handoff Requirements
 
-The specialist handoff must restate the request answered and provide a recommendation for the next bounded M12 move.
+Dev handoff must restate the request answered and provide a recommendation for the next bounded M12 move.
