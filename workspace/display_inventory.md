@@ -77,10 +77,10 @@ Use this inventory before drafting a `request_display` entry.
 1. Identify a user-facing surface or field here.
 2. Confirm its Sense-owned meaning, source data, role, and state/freshness/basis needs.
 3. Mark it `needs-scope` or `request-ready` only after the display problem is bounded.
-4. Create a separate `request_display` entry only when Lab comparison would help.
+4. Compile a separate `request_display` ask only when Lab comparison would help.
 5. Keep active Lab review to five Sense requests or fewer unless the Human or Sense Overseer explicitly overrides the cap.
 
-Rows in this file are not Lab tasks. A row becomes a Lab request only after Sense writes a scoped `request_display` entry.
+Rows in this file are reasoning-layer inventory. A row becomes a Lab request only after Sense writes a scoped `request_display` artifact and submits the compiled ask.
 
 ## Audit And Terminology Classification
 
@@ -135,12 +135,12 @@ These roles are Sense-specific. Do not copy Atlas roles such as durable proof, d
 | `needs-scope` | Candidate needs a narrower display problem before any Lab request. |
 | `request-ready` | Candidate is scoped enough to draft a `request_display` entry. |
 | `submitted` | A scoped request has been sent to Lab. Counts toward active cap. |
-| `answered` | Lab response exists. |
-| `accepted` | Sense accepts the response as-is for local use. |
-| `adapted` | Sense accepts the response with Sense-specific changes. |
+| `active-review` | Lab or an assigned advisory role is reviewing the submitted ask. |
+| `answered` | Lab response exists as advisory comparison, not adoption. |
+| `discussion-needed` | Human/source-project discussion is needed for fitness, taste, flow, or action decision. |
 | `parked` | Kept for later; not active Lab review. |
-| `rejected` | Sense rejects the display direction. |
-| `implemented` | A later Sense-local Dev packet implemented the accepted/adapted direction. |
+| `implementation-packet-ready` | Source-project discussion produced a stable action that may be written into `workspace/current.md`; Dev is still not authorized until current.md opens it. |
+| `implemented` | A later Sense-local Dev packet implemented the accepted runway. |
 | `deprecated` | Surface or field is no longer relevant. |
 
 ## Initial Extraction Candidates
@@ -158,7 +158,7 @@ These are likely current user-facing surfaces or fields. They are not active Lab
 | `sense.combat-event-stream` | Recent combat event list | Diagnostics panel | Event labels such as incoming damage/repair/miss | Bounded Combat Witness event stream | `diagnostic-support` | `identified` | Parked | Useful trust detail, not a primary display candidate until scoped. |
 | `sense.threat-drawer-summary` | Threat Intel back-page summary | Collapsible drawer summary | `Threat Intel`, Gateway chip, `Back page` | Threat Intel snapshot and drawer state | `deliberate-inspection`, `authority-control` | `identified` | Possible | Keep Threat Intel deliberate and scoped; do not make it background monitoring. |
 | `sense.threat-acquisition-bar` | Threat search/display bar | Threat drawer | `Search / Display`, `Idle`, target text, manual target placeholder | Manual input, target kind, Threat snapshot | `deliberate-inspection`, `acquisition-control` | `needs-scope` | Yes | Good future Lab request if the display/search wording needs comparison. |
-| `sense.clipboard-window` | Clipboard Acquisition widget | Threat acquisition bar | `Pulling`, `Listening`, `Cooldown`, `Idle`, key chips | Clipboard Acquisition snapshot, shortcut status, live-IO state | `acquisition-control`, `authority-control`, `uncertainty-state` | `needs-scope` | Yes | Safety-critical; must remain a short visible authority window, not background clipboard monitoring. |
+| `sense.clipboard-window` | Clipboard Acquisition widget | Threat acquisition bar | `Pulling`, `Listening`, `Cooldown`, `Idle`, key chips | Clipboard Acquisition snapshot, shortcut status, live-IO state | `acquisition-control`, `authority-control`, `uncertainty-state` | `submitted` | Active ask | HS16 compiled and submitted to Lab as `workspace/RequestDisplayHS16-clipboard-window.md`; safety-critical, must remain a short visible authority window, not background clipboard monitoring. |
 | `sense.gateway-marker` | Gateway marker and slash key affordance | Threat drawer and summary | `Gateway`, `\`, `Ctrl+\` message | Threat drawer state, shortcut status | `authority-control`, `deliberate-inspection` | `needs-scope` | Possible | Sense-owned unless Human/Sense Overseer allows translation; keep separate from live IO gate. |
 | `sense.target-kind-selector` | Threat target type selector | Threat drawer | `Pilot`, `System`, `Corp`, `Al`, `Wrong type` | Threat target kind state and resolver feedback | `deliberate-inspection`, `uncertainty-state` | `identified` | Possible | Needs preserve/translate decision for abbreviations and wrong-type feedback. |
 | `sense.threat-latest-scan-review` | Latest Threat Intel scan review surface | Threat drawer | `Target`, `Status`, `Target type`, `Basis`, `Sample`, `State`, latest-scan persistence message | `threat.intel.snapshot`, target resolution, zKill sample metadata | `deliberate-inspection`, `source-basis`, `uncertainty-state` | `needs-scope` | Yes | Current visible wording has history/storage flavor; inventory treats it as latest scan review only. |
@@ -174,13 +174,13 @@ These are likely current user-facing surfaces or fields. They are not active Lab
 
 ## Request Response Tracking
 
-No active Sense `request_display` entries are opened by this inventory.
+This inventory currently has one compiled Sense `request_display` ask submitted to Lab.
 
-Use this table only after a scoped request is submitted and answered.
+Use this table only for compiled asks and Lab responses. Lab response is advisory comparison; Human/source-project discussion decides fitness before any resting/action record is needed.
 
-| Request ID | Source Inventory ID | Submitted Date | Lab Response Record | Answered Date | Candidate Methods | Sense Disposition | Adoption Notes |
+| Request ID | Source Inventory ID | Submitted Date | Lab Response Record | Answered Date | Candidate Methods | Discussion / Resting State | Notes |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| _none_ | _none_ | _n/a_ | _n/a_ | _n/a_ | _n/a_ | _n/a_ | Inventory scaffold only. |
+| `sense.clipboard-window` | `sense.clipboard-window` | 2026-05-25 | pending Lab response | _n/a_ | pending | pending Lab advisory comparison, then Human/Sense discussion | Submitted via `workspace/RequestDisplayHS16-clipboard-window.md`; no adoption or Dev authorization. |
 
 ## Request Requirement Capture
 
@@ -196,25 +196,25 @@ Each candidate should answer:
 - Which Sense-owned source terms and meanings must survive?
 - Which fields, states, freshness, basis, missing-state notes, or caution text are required?
 - What must not be implied?
-- What would Sense need to decide before adoption?
+- What would Sense need to discuss before any resting state or scoped action?
 - What verification would be needed if a later Sense-local implementation packet opens?
 
 | Candidate ID | Source Inventory ID | Current Status | Request Strength | Display Problem To Scope | Source Terms To Preserve | Required State / Basis Slots | Must Not Imply | Sense Decision Needed | Verification If Implemented |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | `sense.threat-latest-scan-review` | `sense.threat-latest-scan-review` | `needs-scope` | `comparative` | Present the latest Threat Intel scan review without storage/history flavor. | Threat Intel; No scan; Scoped sample; Partial sample; Capped sample; Live IO blocked. | target, target type, source/provider, lookback, sample count, cap, partial, blocked, failed, stale/no-scan reason. | Historical proof, durable storage, broad intelligence, complete provider view. | Whether Sense wants Lab comparison for latest-scan review wording/density. | Renderer shell and Electron smoke for state labels; protected-term check. |
-| `sense.clipboard-window` | `sense.clipboard-window` | `needs-scope` | `pressure-test` | Preserve the short visible clipboard authority window while improving boundedness and shortcut feedback. | Clipboard Acquisition; Pulling; Listening; Cooldown. | current lifecycle state, shortcut status, live IO block, capture result, cooldown/timeout/rejection reason. | Background clipboard monitoring, persistent listener mode, hidden scan. | Whether `Pulling`/`Listening`/`Cooldown` are preserve-exact or Lab-translatable. | Clipboard race verification, renderer shell/smoke if UI changes, protected-term check. |
+| `sense.clipboard-window` | `sense.clipboard-window` | `submitted` | `pressure-test` | Preserve the short visible clipboard authority window while improving boundedness and shortcut feedback. | Clipboard Acquisition; Pulling; Listening; Cooldown. | current lifecycle state, shortcut status, live IO block, capture result, cooldown/timeout/rejection reason. | Background clipboard monitoring, persistent listener mode, hidden scan. | Await Lab advisory comparison, then Human/Sense discussion on fitness and whether `Pulling`/`Listening`/`Cooldown` are preserve-exact or Lab-translatable. | Clipboard race verification, renderer shell/smoke if UI changes, protected-term check. |
 | `sense.provider-pulse-row` | `sense.provider-pulse-row` | `needs-scope` | `formative` or `comparative` | Compare calmer provider/sample status display against current pulse wording. | Passive Telemetry; Threat Intel; Partial sample; Capped sample; Live IO blocked. | source/provider, freshness/age, sample count, cap, partial, blocked, failed/degraded, no observation/no scan. | Continuous live heartbeat, complete provider view, provider truth. | Whether pulse remains user-facing or becomes source/sample state wording. | Renderer shell/smoke for Passive and Threat provider states; protected-term check. |
 | `sense.passive.state-basis` | `sense.passive.state-basis` / `sense.passive-diagnostics` | `needs-scope` | `pressure-test` | Reduce first-read density while preserving Passive state, freshness, source, cap, partial, blocked, and degraded meaning. | Passive Telemetry; Fresh context; Stale context; Partial sample; Capped sample; Live IO blocked; No observation. | current system, state, source basis, activity, sample count, age/freshness, cap, partial, blocked, degraded, no observation. | Generic absence/unavailable/current wording that hides known state; background Threat Intel. | Whether Passive needs a dedicated detail reveal beyond diagnostics. | Passive telemetry verification, renderer shell/smoke, protected-term check. |
 | `sense.threat-acquisition-bar` | `sense.threat-acquisition-bar` | `needs-scope` | `comparative` | Clarify manual and clipboard target acquisition without creating background-scan implication. | Threat Intel; target type; manual target; clipboard-acquired target; No scan. | input source, target text, target kind, resolver result, scan state, no-scan reason, blocked/failed/ambiguous/unresolved/unsupported. | Automatic target finding, hidden provider calls, target guessing, complete intelligence. | Whether search/display/acquisition grouping should be compared by Lab. | Threat Intel verification, clipboard race verification if affected, renderer shell/smoke, protected-term check. |
 
-These rows are parked request-capture candidates. They are not active Lab requests and do not count toward the five-active-request cap.
+Rows other than `sense.clipboard-window` remain parked request-capture candidates. They are not active Lab requests and do not count toward the five-active-request cap.
 
 ## Likely First Request Candidates
 
 These are not active requests. They are candidates to scope later:
 
 1. `sense.threat-latest-scan-review`: compare ways to present latest-scan review without history/storage implication.
-2. `sense.clipboard-window`: pressure-test short visible clipboard authority states and shortcut feedback.
+2. `sense.clipboard-window`: submitted as HS16 to pressure-test short visible clipboard authority states and shortcut feedback.
 3. `sense.provider-pulse-row`: compare calmer source/sample status wording versus pulse wording.
 4. `sense.passive.state-basis`: pressure-test Sense-owned Passive state/freshness/basis display after the accepted instrument band.
 5. `sense.threat-acquisition-bar`: compare display/search/acquisition grouping for the back-page Threat Intel surface.

@@ -59,8 +59,9 @@ Workflow:
 4. Label the request strength and active cap count.
 5. Mark the request `draft`, `queued`, or `request-ready` until Sense chooses to submit it.
 6. Copy or cross-write the scoped request into `F:\Projects\AURA- Lab\workspace\request_display.md` only when Sense submits it.
-7. Lab maps the request to Lab slots, display types, material sets, and up to three candidate display methods.
-8. Sense reviews any recommendation under Sense authority before adoption or implementation.
+7. Lab returns advisory Bridge -> Interface comparison options.
+8. Human/Sense discussion decides fitness, taste, flow, and whether any resting state or scoped action should be recorded.
+9. Dev work opens only if Sense later writes an executable `workspace/current.md` packet.
 
 Directionality:
 
@@ -68,8 +69,9 @@ Directionality:
 Sense-owned meaning
 -> scoped display problem
 -> Lab Bridge -> Interface comparison
--> Sense review and adoption decision
--> optional Sense-local Dev runway
+-> Human/Sense fitness discussion
+-> optional Sense resting/action record
+-> optional Sense-local current.md Dev runway
 ```
 
 Do not treat this pointer as an active Sense task queue.
@@ -79,6 +81,8 @@ Pipeline guardrail:
 ```txt
 display_inventory row != Sense RequestDisplayHS artifact
 Sense RequestDisplayHS artifact != submitted Lab request
-submitted Lab request != accepted Lab recommendation
-accepted recommendation != Sense Dev authorization
+submitted Lab request != Lab response
+Lab response != Sense adoption
+discussion interest != resting state
+resting state != Sense Dev authorization
 ```

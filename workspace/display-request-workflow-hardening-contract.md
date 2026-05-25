@@ -34,11 +34,12 @@ Sense-owned meaning
 -> local scoped RequestDisplayHS artifact
 -> submitted Lab request_display entry
 -> Lab Bridge -> Interface comparison
--> Sense review and adoption decision
--> optional Sense-local Dev runway
+-> Human/Sense fitness discussion
+-> optional Sense resting/action record
+-> optional Sense-local current.md Dev runway
 ```
 
-Lab output returns to Sense as advisory input. Sense must explicitly accept, adapt, reject, park, or route the recommendation before any implementation work begins.
+Lab output returns to Sense as advisory comparison input. Human/Sense discussion decides fitness, taste, flow, and whether any stable state or scoped action should be recorded before any implementation work begins.
 
 ## Local Request Artifact Pipeline
 
@@ -199,18 +200,20 @@ sense_boundary:
 
 Do not use this addition to create new payload fields or runtime requirements. It is a request framing aid only.
 
-## Review And Adoption
+## Response And Fitness Discussion
 
-After Lab responds, Sense should record a local review that answers:
+After Lab responds, do not turn the response into project adoption by default. Use Human/Sense discussion first to decide whether the direction feels useful, wrong, too broad, too narrow, worth refining, worth parking, or worth converting into local action.
 
-- accepted, adapted, rejected, parked, or returned-to-project
+Create a local resting/action record only if discussion produces stable state or scoped action. If a record is needed, it should answer:
+
+- useful, wrong, too broad, too narrow, worth refining, worth parking, or action-worthy
 - which Sense-owned meanings were preserved
 - which Lab display options are safe or unsafe for Sense
 - whether any missing fields are real product needs or only presentation questions
 - whether a Sense-local Dev runway is needed
 - which verification would be required if implementation later opens
 
-A Lab recommendation is not enough to begin Dev work. A Sense-local packet must exist before implementation.
+A Lab recommendation is not enough to begin Dev work. Discussion interest is not resting state. A Sense-local `workspace/current.md` packet must exist before implementation.
 
 ## Non-Goals
 
