@@ -86,9 +86,9 @@ No live/manual/private filesystem work is implied.
 
 ## Closure
 
-Accepted 2026-05-25 by `workspace/OverseerHS31-m19-gamelog-containment-hardening-acceptance.md`.
+Accepted 2026-05-25 by `workspace/complete/milestone-19/OverseerHS31-m19-gamelog-containment-hardening-acceptance.md`.
 
-Implementation handoff: `workspace/DevHS30-gamelog-containment-hardening.md`.
+Implementation handoff: `workspace/complete/milestone-19/DevHS30-gamelog-containment-hardening.md`.
 
 Closure verification:
 

@@ -57,7 +57,7 @@ M18 is complete when:
 
 ## Dependencies
 
-- `workspace/EngTestHS23-next-scope-review.md`
+- `workspace/complete/milestone-18/EngTestHS23-next-scope-review.md`
 - `docs/current-state/current-implementation.md`
 - `docs/testing/aggressive-test-harness-matrix.md`
 - `package.json`

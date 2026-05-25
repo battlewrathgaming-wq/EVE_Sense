@@ -48,16 +48,17 @@ Latest accepted face refinement: `workspace/OverseerHS04-sense-face-refinement-r
 Latest Lab M19 adoption review: `workspace/OverseerHS07-sense-m19-instrument-status-band-adoption-review.md`
 Latest Passive band advisory review: `workspace/OverseerHS08-passive-telemetry-instrument-band-advisory-review.md`
 Latest Passive band prototype acceptance: `workspace/OverseerHS10-passive-telemetry-instrument-band-prototype-review.md`
-Latest M17 Dev handoff: `workspace/DevHS21-frame-window-smoke-hardening.md`
-Latest M17 acceptance: `workspace/OverseerHS22-m17-frame-window-smoke-hardening-acceptance.md`
-Latest scope review: `workspace/EngTestHS23-next-scope-review.md`
-Latest scope acceptance: `workspace/OverseerHS24-next-scope-review-acceptance.md`
-Latest M18 Dev handoff: `workspace/DevHS25-provider-fault-injection-hardening.md`
-Latest M18 acceptance: `workspace/OverseerHS26-m18-provider-fault-hardening-acceptance.md`
-Latest M19 scope: `workspace/OverseerHS27-m19-gamelog-containment-scope.md`
-Latest M19 review: `workspace/SecEngHS28-gamelog-ingest-containment-review.md`
-Latest M19 Dev handoff: `workspace/DevHS30-gamelog-containment-hardening.md`
-Latest M19 acceptance: `workspace/OverseerHS31-m19-gamelog-containment-hardening-acceptance.md`
+Latest M17 Dev handoff: `workspace/complete/milestone-17/DevHS21-frame-window-smoke-hardening.md`
+Latest M17 acceptance: `workspace/complete/milestone-17/OverseerHS22-m17-frame-window-smoke-hardening-acceptance.md`
+Latest scope review: `workspace/complete/milestone-18/EngTestHS23-next-scope-review.md`
+Latest scope acceptance: `workspace/complete/milestone-18/OverseerHS24-next-scope-review-acceptance.md`
+Latest M18 Dev handoff: `workspace/complete/milestone-18/DevHS25-provider-fault-injection-hardening.md`
+Latest M18 acceptance: `workspace/complete/milestone-18/OverseerHS26-m18-provider-fault-hardening-acceptance.md`
+Latest M19 scope: `workspace/complete/milestone-19/OverseerHS27-m19-gamelog-containment-scope.md`
+Latest M19 review: `workspace/complete/milestone-19/SecEngHS28-gamelog-ingest-containment-review.md`
+Latest M19 Dev handoff: `workspace/complete/milestone-19/DevHS30-gamelog-containment-hardening.md`
+Latest M19 acceptance: `workspace/complete/milestone-19/OverseerHS31-m19-gamelog-containment-hardening-acceptance.md`
+Latest roadmap reconciliation: `workspace/complete/milestone-19/OverseerHS32-roadmap-state-reconciliation.md`
 Active runway: M12A refusal-path live API smoke transition readiness
 
 ## Authority Notes
