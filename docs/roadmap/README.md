@@ -13,19 +13,20 @@ Roadmap files are not executable authority. Implementation truth lives in `docs/
 
 ## Current Phase
 
-Post-Milestone-14 display/request alignment and tactical presentation refinement.
+Post-Milestone-14 renderer/frame performance assurance while Lab-facing presentation work is parked.
 
 Current resting state:
 
 - Milestone 13 aggressive hardening is complete.
 - Milestone 14 back-page Threat Intel UX is complete.
-- `sense.clipboard-window` has been submitted to Aura Lab as an advisory `request_display` pressure test.
+- `sense.clipboard-window` has been submitted to Aura Lab as an advisory `request_display` pressure test, but Lab-facing presentation work is parked until Lab stabilizes its side.
+- M16 body-to-adapter readiness is closed as a parked feature/request direction, not an executed implementation milestone.
 - No Dev runway is open.
 
 ## Near Outcomes
 
-- Evaluate Lab advisory display responses through Human/Sense fitness discussion before creating resting state or action.
-- Prove selected Sense lanes from ingest through bridge output up to the target-owned adapter boundary before fitting a Lab face.
+- Improve renderer functionality, Frame module behavior, visual smoke reliability, and performance/readiness assurance before returning to presentation adoption work.
+- Preserve Lab-facing display request and adapter context as parked direction, not active work.
 - Keep Clipboard Acquisition, Threat Intel, Passive Telemetry, and Combat Witness meanings distinct while improving presentation.
 - Preserve the display request flow without turning Lab response into adoption or Dev authorization.
 - Keep live/manual validation gated until a future operator-validation milestone explicitly opens it.
@@ -37,7 +38,8 @@ Current resting state:
 | 13 | Aggressive testing and bug hunting | Complete | `docs/roadmap/milestone-13-aggressive-testing-and-bug-hunting.md` |
 | 14 | Back-page Threat Intel UX | Complete | `docs/roadmap/milestone-14-back-page-threat-intel-ux.md` |
 | 15 | Display request response fitness and action shaping | Candidate | `docs/roadmap/milestone-15-display-request-response-fitness.md` |
-| 16 | Body-to-adapter readiness | Candidate | `docs/roadmap/milestone-16-body-to-adapter-readiness.md` |
+| 16 | Body-to-adapter readiness | Closed/Parked | `docs/roadmap/milestone-16-body-to-adapter-readiness.md` |
+| 17 | Render and Frame performance assurance | Candidate | `docs/roadmap/milestone-17-render-frame-performance-assurance.md` |
 
 ## Promotion Gates
 
@@ -67,6 +69,17 @@ Ready when:
 - Required source, transformation, bridge, and state files can be reviewed from disk.
 - Verification can remain deterministic unless live/manual work is explicitly authorized.
 
+Status: parked until Lab-facing presentation work returns.
+
+### Render And Frame Assurance Gate
+
+Ready when:
+
+- Human/Sense chooses to open a performance/render/frame assurance runway.
+- The runway can focus on Frame module, renderer shell, renderer boundary, visual smoke, or performance/readiness behavior without adopting a Lab face.
+- Required verification commands are known.
+- Environment-sensitive smoke is explicitly named if needed.
+
 ### Operator Validation Gate
 
 Ready when:
@@ -86,6 +99,8 @@ Ready when:
 - Live provider smoke.
 - Broad face redesign.
 - Lab face adoption before Sense body-to-adapter readiness is proven.
+- M16 body-to-adapter trace runway.
+- Additional Lab-facing presentation work while Lab is parked.
 
 ## Roadmap Use
 
@@ -107,5 +122,6 @@ Do not use this folder as a hidden backlog.
 - `milestone-14-back-page-threat-intel-ux.md`
 - `milestone-15-display-request-response-fitness.md`
 - `milestone-16-body-to-adapter-readiness.md`
+- `milestone-17-render-frame-performance-assurance.md`
 - `passive-telemetry-live-readiness-interlock.md`
 - `runtime-smoke-policy.md`

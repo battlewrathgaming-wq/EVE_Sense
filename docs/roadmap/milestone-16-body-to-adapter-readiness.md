@@ -1,6 +1,8 @@
 # M16 - Body-To-Adapter Readiness
 
-Status: Candidate
+Status: Closed as parked feature/request direction
+
+Closure note: 2026-05-25 - Human direction parked Lab-facing presentation work while Lab fixes workshop/export concerns. Sense keeps the target-owned adapter ADR and body-to-adapter idea as future context, but this is not the next active milestone.
 
 ## Outcome
 
@@ -106,3 +108,20 @@ For implementation or verification runways, the active `workspace/current.md` pa
 - `npm.cmd run verify:all`
 
 No live provider smoke, manual shortcut validation, or real SDE refresh/download is implied by this candidate milestone.
+
+## Closure
+
+M16 is closed as a parked feature/request direction, not as executed implementation.
+
+Keep:
+
+- target-owned adapter boundary
+- Sense body-before-face principle
+- Clipboard Acquisition and Passive Telemetry as future possible trace slices
+
+Do not keep active:
+
+- Lab face adoption
+- body-to-adapter trace runway
+- adapter implementation
+- additional display requests derived from M16

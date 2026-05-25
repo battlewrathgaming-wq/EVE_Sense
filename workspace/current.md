@@ -6,7 +6,7 @@ Owner: Overseer
 
 ## Coordination State
 
-Active milestone: None - HS16 Clipboard Acquisition display request submitted to Lab
+Active milestone: None - Lab-facing presentation work parked; M17 render/frame assurance is candidate next direction
 Current runway: None
 Latest closed milestone: Milestone 14 - Back-Page Threat Intel UX
 Latest accepted closure: `workspace/complete/milestone-14/OverseerHS03-milestone-14-closure.md`
@@ -17,8 +17,9 @@ Latest durable display pipeline record: `docs/current-state/display-pipeline-inv
 Latest UI/UX request-readiness review: `workspace/UIUXHS15-clipboard-window-request-display-review.md`
 Latest Overseer acceptance: `workspace/OverseerHS15-clipboard-window-request-display-review-acceptance.md`
 Latest submitted display request: `workspace/RequestDisplayHS16-clipboard-window.md`
+Latest resting pivot: `workspace/OverseerHS18-lab-parked-render-frame-pivot.md`
 Current executor: None
-Current status: Awaiting Lab advisory response or Human direction
+Current status: Awaiting Human direction on whether to open M17 render/frame performance assurance
 Expected output: None
 
 ## Purpose
@@ -62,6 +63,8 @@ Active Sense Lab request count:
 ```
 
 This request asks Lab to compare Bridge -> Interface display methods for the Clipboard Acquisition authority window. It is advisory only.
+
+Lab-facing presentation work is currently parked while Lab addresses its own renderer/export concerns. Sense should not wait on Lab for near-term performance/render/frame assurance work.
 
 It does not mean:
 
@@ -141,7 +144,13 @@ Must not imply:
 
 ## Candidate Next Steps
 
-Human / Sense Overseer decision after Lab responds:
+Human / Sense Overseer decision for near-term Sense work:
+
+1. Open M17 render/frame performance assurance.
+2. Keep the project idle while Lab is parked.
+3. Return later to M15/M16 display/adaptor work after Lab stabilizes.
+
+If Lab later responds:
 
 1. Accept a Lab candidate method.
 2. Adapt a Lab candidate method into Sense-owned wording.
@@ -149,11 +158,11 @@ Human / Sense Overseer decision after Lab responds:
 4. Return to Lab with a narrower request.
 5. Open a Sense-local Dev runway only after acceptance/adaptation and explicit Human/Overseer authorization.
 
-Until Lab responds, useful choices are:
+While Lab is parked, useful choices are:
 
-- Wait for Lab advisory response.
-- Scope another display candidate separately while keeping the active request cap under five.
-- Park further display requests until this pressure test returns.
+- Open a bounded M17 review or Dev runway focused on `verify:frame`, `verify:renderer-shell`, `verify:renderer-boundary`, `verify:renderer-boundary-adversarial`, and optional `smoke:electron`.
+- Keep display/adaptor work parked.
+- Do not create additional Lab-facing display requests.
 
 ## Guardrails
 
@@ -162,6 +171,7 @@ Until Lab responds, useful choices are:
 - Do not change UI copy, contracts, IPC, payloads, persistence, schemas, services, backend behavior, provider behavior, shortcut behavior, or runtime behavior from HS16 alone.
 - Do not treat the submitted request as accepted, adopted, or Dev-authorized.
 - Do not create additional active Lab requests automatically.
+- Do not treat parked Lab-facing presentation work as a blocker for Sense render/frame assurance.
 - Do not exceed five active Sense `request_display` entries.
 - Do not treat archived docs as active task queues.
 - Do not import Atlas-owned historical proof, storage, tracking, assessment, routine-check, attention-marker, stored-record, or source-candidate semantics into Sense.
@@ -177,16 +187,18 @@ Latest required verification:
 
 ```powershell
 npm.cmd run verify:protected-terms
+npm.cmd run verify:all
 git status --short --branch
 ```
 
 Result:
 
 ```txt
-npm.cmd run verify:protected-terms - PASS, warning-only; scanned 2 changed files; 0 warning-only items.
-git status --short --branch - main...origin/main with current.md modified and RequestDisplayHS16-clipboard-window.md untracked before commit.
+npm.cmd run verify:protected-terms - PASS, warning-only; one known warning from an existing artifact filename.
+npm.cmd run verify:all - PASS.
+git status --short --branch - pending commit at time of update.
 ```
 
 ## Overseer Review
 
-Completed. HS16 local request artifact created and submitted to Lab intake. Awaiting Lab advisory response or Human direction.
+Completed. Lab-facing presentation work is parked by Human direction. M16 is closed as a parked feature/request direction. M17 render/frame performance assurance is the candidate next direction, but no executable runway is open.
