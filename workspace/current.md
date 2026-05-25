@@ -1,7 +1,7 @@
 # Current Workspace Packet
 
 Status: Idle
-Updated: 2026-05-24
+Updated: 2026-05-25
 Owner: Overseer
 
 ## Coordination State
@@ -15,12 +15,14 @@ Overseer review: `workspace/OverseerHS01-passive-telemetry-readout-mapping-revie
 Latest Dev handoff: `workspace/DevHS01-passive-telemetry-readout-prototype.md`
 Latest prototype acceptance: `workspace/OverseerHS02-passive-telemetry-readout-prototype-review.md`
 Latest face advisory: `workspace/UIUXHS02-sense-face-presentation-advisory.md`
-Latest Lab advisory input: `F:\Projects\AURA- Lab\workspace\SenseImportAdvisoryHS65-lab-presentation-adoption.md`
+Latest Lab advisory input: `F:\Projects\AURA- Lab\workspace\OverseerHS71-m19-acceptance.md`
 Latest Overseer acceptance: `workspace/OverseerHS03-sense-face-presentation-adoption-review.md`
 Latest Dev handoff: `workspace/DevHS02-sense-face-refinement-pass.md`
 Latest face refinement acceptance: `workspace/OverseerHS04-sense-face-refinement-review.md`
+Latest Lab remote-consumer SLA receipt: `workspace/OverseerHS06-lab-remote-consumer-sla-review.md`
+Latest M19 adoption review: `workspace/OverseerHS07-sense-m19-instrument-status-band-adoption-review.md`
 Current executor: None
-Current focus: Awaiting human direction
+Current focus: Awaiting human decision on whether to open UI/UX advisory, tiny Dev prototype, or park
 Expected output: None
 
 ## Purpose
@@ -30,6 +32,8 @@ There is no active executable packet for AURA-Sense.
 The Passive Telemetry readout prototype has been accepted. The Sense-owned face presentation advisory has been reviewed and the renderer-only Sense Face Refinement Pass has been accepted.
 
 The accepted face pass adapts selected Lab presentation ideas through Sense-owned meaning. It is not a Lab import, not a Core adapter, not shared doctrine, not a contract rename, and not a broad redesign.
+
+Lab M19 is now closed and accepted in Lab. Sense has reviewed M19 as advisory presentation-pattern input in `workspace/OverseerHS07-sense-m19-instrument-status-band-adoption-review.md`. No Sense implementation packet is open.
 
 Authority split:
 
