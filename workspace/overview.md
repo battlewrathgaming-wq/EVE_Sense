@@ -7,11 +7,12 @@ Last reviewed: 2026-05-25
 
 AURA-Sense is a tactical viewport for recent EVE Online operational observations.
 
-It should present compact, uncertainty-aware tactical state while staying transient, backend-owned, live-gated, and distinct from AURA Atlas historical evidence storage.
+It should present compact, uncertainty-aware tactical state while staying transient, backend-owned, live-gated, and distinct from AURA Atlas historical storage.
 
 ## Coordination Model
 
 - `workspace/current.md` is the only active executable work packet.
+- `workspace/overseer.md` is the local Overseer guide for separating roadmap milestones from executable runways.
 - `docs/roadmap/` defines milestone meaning and accepted direction.
 - Handshake files in `workspace/` are active-milestone transaction notes.
 - Completed milestone handshakes move in batch to `workspace/complete/milestone-XX/`.
@@ -21,8 +22,9 @@ It should present compact, uncertainty-aware tactical state while staying transi
 
 | Milestone | Roadmap Source | Status | Notes |
 | --- | --- | --- | --- |
-| 13 | `docs/roadmap/milestone-13-aggressive-testing-and-bug-hunting.md` | Complete | Offline aggressive hardening accepted; live/manual validation remains gated for later operator-validation work. |
+| 13 | `docs/roadmap/milestone-13-aggressive-testing-and-bug-hunting.md` | Complete | Deterministic aggressive hardening accepted; live/manual validation remains gated for later operator-validation work. |
 | 14 | `docs/roadmap/milestone-14-back-page-threat-intel-ux.md` | Complete | Back-page Threat Intel UX accepted; live/manual shortcut feel remains gated for optional later operator-validation work. |
+| 15 | `docs/roadmap/milestone-15-display-request-response-fitness.md` | Candidate | Evaluate Lab advisory display responses through Human/Sense fitness discussion before resting state, action, or Dev authorization. |
 
 ## Active Milestone
 
@@ -61,6 +63,7 @@ AURA-Sense therefore owns its lane semantics and internal-to-Bridge mapping. Lab
 - `docs/roadmap/README.md`
 - `docs/roadmap/milestone-13-aggressive-testing-and-bug-hunting.md`
 - `docs/roadmap/milestone-14-back-page-threat-intel-ux.md`
+- `docs/roadmap/milestone-15-display-request-response-fitness.md`
 
 ### Contracts And Doctrine
 
@@ -93,6 +96,6 @@ AURA-Sense therefore owns its lane semantics and internal-to-Bridge mapping. Lab
 - Which remaining live/manual validation items should move into a later operator-validation milestone?
 - Whether Atlas/Lab first-pass terminology output requires Sense-local terminology updates.
 - Whether the accepted Sense Face Refinement Pass should remain a bounded post-Milestone-14 prototype or become the first slice of a new Sense-local milestone.
-- Whether the remaining focused protected-term baseline warnings need a terminology classification pass.
+- Whether the remaining focused protected-term baseline items need a terminology classification pass.
 - Whether the accepted Passive Telemetry Instrument Band should get visual-density tuning, a dedicated Passive detail reveal, or remain parked.
 - Whether the parked display pipeline candidates should become scoped `request_display` drafts for Sense review.

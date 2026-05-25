@@ -21,7 +21,7 @@ It is:
 It is not:
 
 - AURA Atlas
-- a historical evidence store
+- a historical storage system
 - a broad scraper
 - a fleet command system
 - a renderer-owned telemetry engine
@@ -57,24 +57,26 @@ Repo root:
 
 - AURA-Sense observes now; AURA Atlas remembers later.
 - Renderer presents snapshots and events; it does not own telemetry truth.
-- Combat Witness is rolling tactical telemetry, not evidence history.
+- Combat Witness is rolling tactical telemetry, not stored history.
 - Passive Telemetry must not contaminate Threat Intel.
 - Threat Intel scans are explicit and scoped.
 - Clipboard Acquisition is armed, visible, short-lived, and sealed after use.
-- Live APIs are opt-in and outside deterministic offline verification.
+- Live APIs are opt-in and outside deterministic non-live verification.
 - Local metadata is preferred for static type/system labels.
 - UI copy must not overclaim certainty.
 
 ## Current Work
 
-The current hardening lane is aggressive testing and bug hunting. Active execution is now carried by `workspace/current.md`; the former `docs/gap` task lifecycle is archived.
+The current hardening lane is complete. Active execution is now carried by `workspace/current.md`; the former `docs/gap` task lifecycle is archived.
 
 Start with:
 
 - `workspace/README.md` when the user sends `.`
 - `workspace/current.md` for the active overwriteable milestone/task packet
+- `workspace/overseer.md` before opening or refreshing a runway when fresh Overseer context is not already present
 - `docs/current-state/current-implementation.md`
 - `docs/current-state/display-pipeline-inventory.md`
+- `docs/roadmap/README.md`
 - `docs/roadmap/milestone-13-aggressive-testing-and-bug-hunting.md`
 - `docs/testing/aggressive-test-harness-matrix.md`
 - `workspace/overview.md`

@@ -17,6 +17,7 @@ Start here:
 - `workspace/overview.md`
 - `workspace/00-dot-protocol.md`
 - `workspace/current.md`
+- `workspace/overseer.md`
 - `workspace/critical/README.md`
 - `workspace/prompts.md`
 
@@ -29,7 +30,7 @@ Overseer:
 Owns continuity, milestone meaning, Dev runway shaping, handoff review, and `workspace/current.md`.
 
 Dev:
-Executes only the ordered runway in `workspace/current.md`, runs required verification, updates Evidence / Dev Handoff, and creates the expected DevHS file.
+Executes only the ordered runway in `workspace/current.md`, runs required verification, updates the verification / handoff sections, and creates the expected DevHS file.
 
 Specialists:
 Provide focused review or scoped implementation lenses. They do not own product direction.
@@ -67,7 +68,7 @@ Use the meaning for your current role.
 For every role, `.` means progress the current project context: continue the current packet when safe, complete the expected artifact when appropriate, or ask the next necessary question if safe progress is blocked. If you pause, explain the concrete reason.
 
 Dev:
-Run the current packet. Clear the runway unless blocked. Update Evidence / Dev Handoff and create the expected DevHS file.
+Run the current packet. Clear the runway unless blocked. Update the verification / handoff sections and create the expected DevHS file.
 
 Overseer:
 Review completed work and handoff. Accept, redirect, or write the next suitable runway in `workspace/current.md`.
@@ -110,7 +111,7 @@ Memory refresh expectation:
 - `workspace/current.md` is the active executable packet.
 - Handshakes are transaction notes, not task queues.
 - Durable project truth belongs in `docs/`.
-- Shared lessons are reusable operating evidence, not active project state.
+- Shared lessons are reusable operating records, not active project state.
 - Archived or deprecated workflows are historical unless `workspace/current.md` explicitly references them.
 - Do not write outside this project unless explicitly asked.
-- Do not claim verification without naming the commands or evidence.
+- Do not claim verification without naming the commands or supporting output.

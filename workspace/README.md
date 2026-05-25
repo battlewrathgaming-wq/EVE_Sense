@@ -8,6 +8,7 @@ Root `AGENTS.md` is the project bootloader for agents. Read it first when presen
 
 - `workspace/overview.md` is the project map and durable record index.
 - `workspace/current.md` is the only active executable work packet.
+- `workspace/overseer.md` is the local Overseer guide for roadmap/runway separation.
 - `workspace/00-dot-protocol.md` defines the `.` Dev execution signal.
 - `workspace/prompts.md` holds reusable Overseer and Dev prompts.
 - `workspace/complete/` stores batch-archived milestone handshakes.
@@ -41,4 +42,14 @@ Handshake files record transactions.
 Durable docs record product truth.
 
 Archived `docs/gap` files are historical context, not active task queues.
+
+## Roadmap And Runway Rule
+
+Durable milestone direction lives in `docs/roadmap/`.
+
+Use roadmap files to describe milestone-sized outcomes. Use `workspace/current.md` to describe the active executable runway.
+
+Every active runway must include acceptance criteria. The criteria should describe what makes the work complete, useful, reviewable, verified, and bounded.
+
+Use `workspace/overseer.md` before opening or refreshing a runway when the session does not already have fresh Overseer context.
 
