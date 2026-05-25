@@ -1,6 +1,8 @@
 # M17 - Render And Frame Performance Assurance
 
-Status: Active
+Status: Complete
+
+Closure note: 2026-05-25 - M17 assurance review and bounded Frame/window smoke hardening were accepted. Product-window bounds persistence is explicit, deterministic verification protects the choice, and visual smoke bounds restoration is guarded.
 
 ## Outcome
 

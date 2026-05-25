@@ -26,14 +26,14 @@ It should present compact, uncertainty-aware tactical state while staying transi
 | 14 | `docs/roadmap/milestone-14-back-page-threat-intel-ux.md` | Complete | Back-page Threat Intel UX accepted; live/manual shortcut feel remains gated for optional later operator-validation work. |
 | 15 | `docs/roadmap/milestone-15-display-request-response-fitness.md` | Parked | Lab-facing presentation response work is parked while Lab stabilizes its side. |
 | 16 | `docs/roadmap/milestone-16-body-to-adapter-readiness.md` | Closed/Parked | Closed as a feature/request direction, not executed implementation. |
-| 17 | `docs/roadmap/milestone-17-render-frame-performance-assurance.md` | Active | Review Frame module, renderer boundary/shell behavior, visual smoke reliability, and performance/readiness before returning to presentation adoption work. |
+| 17 | `docs/roadmap/milestone-17-render-frame-performance-assurance.md` | Complete | Frame/window smoke hardening accepted; product-window bounds persistence and visual smoke restoration guard are verified. |
 
 ## Active Milestone
 
-Milestone: 17 - Render and Frame performance assurance
-Roadmap source: `docs/roadmap/milestone-17-render-frame-performance-assurance.md`
+Milestone: None
+Roadmap source: None
 Current packet: `workspace/current.md`
-Current sequence: Review-only assurance packet for Frame module, renderer shell, renderer boundary, visual smoke readiness, and performance/readiness observations
+Current sequence: Idle after M17 Frame/window smoke hardening acceptance
 Latest accepted handshake: `workspace/complete/milestone-14/OverseerHS03-milestone-14-closure.md`
 Latest accepted prototype review: `workspace/OverseerHS02-passive-telemetry-readout-prototype-review.md`
 Latest accepted face advisory: `workspace/OverseerHS03-sense-face-presentation-adoption-review.md`
@@ -41,7 +41,9 @@ Latest accepted face refinement: `workspace/OverseerHS04-sense-face-refinement-r
 Latest Lab M19 adoption review: `workspace/OverseerHS07-sense-m19-instrument-status-band-adoption-review.md`
 Latest Passive band advisory review: `workspace/OverseerHS08-passive-telemetry-instrument-band-advisory-review.md`
 Latest Passive band prototype acceptance: `workspace/OverseerHS10-passive-telemetry-instrument-band-prototype-review.md`
-Active runway: `workspace/EngTestHS19-render-frame-assurance-review.md`
+Latest M17 Dev handoff: `workspace/DevHS21-frame-window-smoke-hardening.md`
+Latest M17 acceptance: `workspace/OverseerHS22-m17-frame-window-smoke-hardening-acceptance.md`
+Active runway: None
 
 ## Authority Notes
 

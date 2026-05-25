@@ -118,7 +118,8 @@ function createWindow() {
     title: APP_NAME,
     preload: path.join(__dirname, 'preload.js'),
     backgroundColor: '#f5f7f8',
-    defaultAlwaysOnTop: false
+    defaultAlwaysOnTop: false,
+    persistBounds: true
   });
 
   mainWindow = window;
@@ -844,28 +845,31 @@ async function captureVisualRegressionStates(window, outputDir) {
   ];
 
   const results = [];
-  for (const state of states) {
-    if (state.width && state.height) {
-      window.setSize(state.width, state.height);
-    } else {
-      window.setBounds(originalBounds);
+  try {
+    for (const state of states) {
+      if (state.width && state.height) {
+        window.setSize(state.width, state.height);
+      } else {
+        window.setBounds(originalBounds);
+      }
+      await delay(60);
+      const check = await applyVisualRegressionState(window, state);
+      for (const assertion of check.assertions) {
+        assertSmoke(assertion.visible, `${state.name} should keep ${assertion.selector} visible`);
+      }
+      const captureAttempts = await captureSmokeScreenshot(window, path.join(outputDir, state.screenshot));
+      results.push({
+        name: state.name,
+        screenshot: state.screenshot,
+        capture_attempts: captureAttempts,
+        viewport: check.viewport,
+        assertions: check.assertions
+      });
     }
-    await delay(60);
-    const check = await applyVisualRegressionState(window, state);
-    for (const assertion of check.assertions) {
-      assertSmoke(assertion.visible, `${state.name} should keep ${assertion.selector} visible`);
-    }
-    const captureAttempts = await captureSmokeScreenshot(window, path.join(outputDir, state.screenshot));
-    results.push({
-      name: state.name,
-      screenshot: state.screenshot,
-      capture_attempts: captureAttempts,
-      viewport: check.viewport,
-      assertions: check.assertions
-    });
+    return results;
+  } finally {
+    window.setBounds(originalBounds);
   }
-  window.setBounds(originalBounds);
-  return results;
 }
 
 function applyVisualRegressionState(window, state) {

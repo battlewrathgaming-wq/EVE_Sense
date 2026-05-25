@@ -23,6 +23,7 @@ function main() {
   assert(main.includes('captureVisualRegressionStates'), 'visual smoke should capture alternate visual state regressions');
   assert(main.includes('captureSmokeScreenshot'), 'visual smoke should use bounded screenshot capture retries');
   assert(main.includes('capture_attempts'), 'visual smoke should record screenshot capture retry counts');
+  assert(/async function captureVisualRegressionStates[\s\S]*?try\s*{[\s\S]*?finally\s*{\s*window\.setBounds\(originalBounds\);[\s\S]*?}\s*}/.test(main), 'visual smoke should restore original window bounds in a finally guard');
   assert(main.includes('state-unavailable.png'), 'visual smoke should capture unavailable state');
   assert(main.includes('state-passive-fresh.png'), 'visual smoke should capture fresh Passive readout state');
   assert(main.includes('state-stale.png'), 'visual smoke should capture stale state');

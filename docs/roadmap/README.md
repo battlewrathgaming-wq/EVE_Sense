@@ -13,7 +13,7 @@ Roadmap files are not executable authority. Implementation truth lives in `docs/
 
 ## Current Phase
 
-Post-Milestone-14 renderer/frame performance assurance while Lab-facing presentation work is parked.
+Post-Milestone-17 idle state while Lab-facing presentation work remains parked.
 
 Current resting state:
 
@@ -21,11 +21,11 @@ Current resting state:
 - Milestone 14 back-page Threat Intel UX is complete.
 - `sense.clipboard-window` has been submitted to Aura Lab as an advisory `request_display` pressure test, but Lab-facing presentation work is parked until Lab stabilizes its side.
 - M16 body-to-adapter readiness is closed as a parked feature/request direction, not an executed implementation milestone.
+- M17 render/frame performance assurance is complete.
 - No Dev runway is open.
 
 ## Near Outcomes
 
-- Improve renderer functionality, Frame module behavior, visual smoke reliability, and performance/readiness assurance before returning to presentation adoption work.
 - Preserve Lab-facing display request and adapter context as parked direction, not active work.
 - Keep Clipboard Acquisition, Threat Intel, Passive Telemetry, and Combat Witness meanings distinct while improving presentation.
 - Preserve the display request flow without turning Lab response into adoption or Dev authorization.
@@ -39,7 +39,7 @@ Current resting state:
 | 14 | Back-page Threat Intel UX | Complete | `docs/roadmap/milestone-14-back-page-threat-intel-ux.md` |
 | 15 | Display request response fitness and action shaping | Candidate | `docs/roadmap/milestone-15-display-request-response-fitness.md` |
 | 16 | Body-to-adapter readiness | Closed/Parked | `docs/roadmap/milestone-16-body-to-adapter-readiness.md` |
-| 17 | Render and Frame performance assurance | Candidate | `docs/roadmap/milestone-17-render-frame-performance-assurance.md` |
+| 17 | Render and Frame performance assurance | Complete | `docs/roadmap/milestone-17-render-frame-performance-assurance.md` |
 
 ## Promotion Gates
 

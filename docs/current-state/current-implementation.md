@@ -19,6 +19,7 @@ The current implementation includes:
 - message taxonomy utilities
 - HTTP client wrapper utilities
 - Frame module documentation for borderless and always-on-top windows
+- product-window Frame bounds persistence with validated stored bounds
 - fixture-first offline verification command
 - fixture-backed EVE combat log parser boundary
 - configurable EVE gamelog folder watcher
@@ -71,6 +72,7 @@ The current implementation includes:
 - lane-specific provider pulse chips for Passive Telemetry and Threat Intel derived from backend-owned snapshot metadata
 - Electron visual smoke assertions for integrated viewport selectors, combat metric fields, and provider basis fields
 - Electron visual state regression smoke for unavailable, stale, degraded, blocked, partial/capped, cooldown, diagnostics, settings degraded, and narrow viewport states
+- visual regression smoke bounds restoration guarded after state mutation
 - backend-owned runtime settings persistence for validated gamelog folder configuration
 - startup recovery for valid persisted gamelog settings without auto-starting watchers
 - operator-visible live IO policy control for Passive Telemetry and Threat Intel gates
