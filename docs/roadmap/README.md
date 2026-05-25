@@ -13,7 +13,7 @@ Roadmap files are not executable authority. Implementation truth lives in `docs/
 
 ## Current Phase
 
-Post-Milestone-18 idle state while Lab-facing presentation work remains parked.
+M19 gamelog ingest containment review while Lab-facing presentation work remains parked.
 
 Current resting state:
 
@@ -23,12 +23,13 @@ Current resting state:
 - M16 body-to-adapter readiness is closed as a parked feature/request direction, not an executed implementation milestone.
 - M17 render/frame performance assurance is complete.
 - M18 provider fault-injection hardening is complete.
-- No Dev runway is open.
+- M19 gamelog ingest containment and fan-out assurance is active as review-only work.
 
 ## Near Outcomes
 
 - Preserve Lab-facing display request and adapter context as parked direction, not active work.
 - Keep Clipboard Acquisition, Threat Intel, Passive Telemetry, and Combat Witness meanings distinct while improving presentation.
+- Review gamelog ingest containment and fan-out safety before opening any logger/parser Dev work.
 - Preserve the display request flow without turning Lab response into adoption or Dev authorization.
 - Keep live/manual validation gated until a future operator-validation milestone explicitly opens it.
 
@@ -42,6 +43,7 @@ Current resting state:
 | 16 | Body-to-adapter readiness | Closed/Parked | `docs/roadmap/milestone-16-body-to-adapter-readiness.md` |
 | 17 | Render and Frame performance assurance | Complete | `docs/roadmap/milestone-17-render-frame-performance-assurance.md` |
 | 18 | Provider fault-injection hardening | Complete | `docs/roadmap/milestone-18-provider-fault-injection-hardening.md` |
+| 19 | Gamelog ingest containment and fan-out assurance | Active | `docs/roadmap/milestone-19-gamelog-ingest-containment-and-fanout-assurance.md` |
 
 ## Promotion Gates
 
@@ -128,5 +130,6 @@ Do not use this folder as a hidden backlog.
 - `milestone-16-body-to-adapter-readiness.md`
 - `milestone-17-render-frame-performance-assurance.md`
 - `milestone-18-provider-fault-injection-hardening.md`
+- `milestone-19-gamelog-ingest-containment-and-fanout-assurance.md`
 - `passive-telemetry-live-readiness-interlock.md`
 - `runtime-smoke-policy.md`
