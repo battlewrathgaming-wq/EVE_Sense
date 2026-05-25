@@ -14,6 +14,20 @@ Sense-local hardening contract:
 
 Use `request_display` only when Sense wants Lab to compare Bridge -> Interface presentation options for a Sense-owned current presentation surface or use case.
 
+This file is the Sense pointer and workflow note. It is not the place to draft a scoped request.
+
+Scoped Sense requests should be created as separate local artifacts first:
+
+```txt
+workspace/RequestDisplayHS##-[topic].md
+```
+
+Only after Sense decides a scoped request is ready to submit should that request be copied or cross-written into Lab's intake file:
+
+```txt
+F:\Projects\AURA- Lab\workspace\request_display.md
+```
+
 Authority:
 
 - Sense owns internal -> Bridge meaning, lane semantics, live-IO/sample states, Passive Telemetry, Combat Witness, Threat Intel, Clipboard Acquisition, and renderer semantics.
@@ -39,12 +53,14 @@ Request guardrails:
 
 Workflow:
 
-1. Create or propose one scoped `request_display` entry using the Lab schema.
-2. Preserve Sense-owned terms and list any terms Lab must not rewrite.
-3. Label the request strength and active cap count.
-4. Send the entry to Lab for Bridge -> Interface use-case comparison only.
-5. Lab maps the request to Lab slots, display types, material sets, and up to three candidate display methods.
-6. Sense reviews any recommendation under Sense authority before adoption or implementation.
+1. Keep inventory rows in `workspace/display_inventory.md` until a bounded display problem is chosen.
+2. Create one local scoped request artifact as `workspace/RequestDisplayHS##-[topic].md`.
+3. Preserve Sense-owned terms and list any terms Lab must not rewrite.
+4. Label the request strength and active cap count.
+5. Mark the request `draft`, `queued`, or `request-ready` until Sense chooses to submit it.
+6. Copy or cross-write the scoped request into `F:\Projects\AURA- Lab\workspace\request_display.md` only when Sense submits it.
+7. Lab maps the request to Lab slots, display types, material sets, and up to three candidate display methods.
+8. Sense reviews any recommendation under Sense authority before adoption or implementation.
 
 Directionality:
 
@@ -57,3 +73,12 @@ Sense-owned meaning
 ```
 
 Do not treat this pointer as an active Sense task queue.
+
+Pipeline guardrail:
+
+```txt
+display_inventory row != Sense RequestDisplayHS artifact
+Sense RequestDisplayHS artifact != submitted Lab request
+submitted Lab request != accepted Lab recommendation
+accepted recommendation != Sense Dev authorization
+```

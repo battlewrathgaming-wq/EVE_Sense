@@ -30,13 +30,48 @@ Use this direction every time Sense sends or reviews a `request_display` entry:
 
 ```txt
 Sense-owned meaning
--> scoped display problem
+-> display inventory row
+-> local scoped RequestDisplayHS artifact
+-> submitted Lab request_display entry
 -> Lab Bridge -> Interface comparison
 -> Sense review and adoption decision
 -> optional Sense-local Dev runway
 ```
 
 Lab output returns to Sense as advisory input. Sense must explicitly accept, adapt, reject, park, or route the recommendation before any implementation work begins.
+
+## Local Request Artifact Pipeline
+
+Sense keeps three different records separate:
+
+| Record | Location | Meaning | Active Lab Request? |
+| --- | --- | --- | --- |
+| Display inventory row | `workspace/display_inventory.md` | Candidate surface, field, or display problem captured for Sense review. | No. |
+| Scoped Sense request artifact | `workspace/RequestDisplayHS##-[topic].md` | Sense-owned request draft or ready-to-submit packet. | No, unless copied to Lab with submitted status. |
+| Lab intake entry | `F:\Projects\AURA- Lab\workspace\request_display.md` | Submitted request for Lab Bridge -> Interface comparison. | Yes, if status is `submitted`, `active-review`, or `accepted-input`. |
+
+Use this naming pattern for local scoped requests:
+
+```txt
+workspace/RequestDisplayHS##-[topic].md
+```
+
+The local request artifact should include:
+
+- advisory preamble and active request count
+- source inventory ID
+- request ID
+- request strength
+- bounded surface or flow slice
+- source-owned terms to preserve
+- terms Lab must avoid or qualify
+- known fields and state cases
+- freshness, basis, warning, and gap needs
+- in-scope and out-of-scope boundaries
+- verification or review needs if Sense later adopts the result
+- explicit statement that implementation is not authorized
+
+Do not copy an inventory row directly into Lab intake. Shape it into a scoped Sense request artifact first.
 
 ## Sense Owns
 
