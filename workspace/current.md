@@ -6,53 +6,69 @@ Owner: Overseer
 
 ## Coordination State
 
-Active milestone: None - Milestone 15 display request scoping review accepted
+Active milestone: None - HS16 Clipboard Acquisition display request submitted to Lab
 Current runway: None
 Latest closed milestone: Milestone 14 - Back-Page Threat Intel UX
 Latest accepted closure: `workspace/complete/milestone-14/OverseerHS03-milestone-14-closure.md`
 Latest display/request workflow hardening: `workspace/display-request-workflow-hardening-contract.md`
 Latest request pointer: `workspace/request_display.md`
 Latest display inventory scaffold: `workspace/display_inventory.md`
-Latest display pipeline audit: `workspace/DisplayInventoryAuditHS01-ingest-transform-bridge-display.md`
 Latest durable display pipeline record: `docs/current-state/display-pipeline-inventory.md`
 Latest UI/UX request-readiness review: `workspace/UIUXHS15-clipboard-window-request-display-review.md`
 Latest Overseer acceptance: `workspace/OverseerHS15-clipboard-window-request-display-review-acceptance.md`
+Latest submitted display request: `workspace/RequestDisplayHS16-clipboard-window.md`
 Current executor: None
-Current status: Awaiting human direction
+Current status: Awaiting Lab advisory response or Human direction
 Expected output: None
 
 ## Purpose
 
 There is no active executable packet for AURA-Sense.
 
-Milestone 15 accepted a review-only UI/UX pass on the first Sense display-request pointer candidate:
+Sense has submitted one advisory `request_display` item to Aura Lab:
 
 ```txt
 sense.clipboard-window
 ```
 
-Accepted status:
+Local source artifact:
 
 ```txt
-request-ready
+workspace/RequestDisplayHS16-clipboard-window.md
 ```
 
-Accepted request strength:
+Lab intake location:
+
+```txt
+F:\Projects\AURA- Lab\workspace\request_display.md
+```
+
+Status:
+
+```txt
+submitted
+```
+
+Request strength:
 
 ```txt
 pressure-test
 ```
 
-This acceptance means Clipboard Acquisition is ready for a future local scoped request artifact if the Human chooses to open one.
+Active Sense Lab request count:
+
+```txt
+1 of 5
+```
+
+This request asks Lab to compare Bridge -> Interface display methods for the Clipboard Acquisition authority window. It is advisory only.
 
 It does not mean:
 
-- a `RequestDisplayHS##-clipboard-window.md` artifact exists
-- anything has been submitted to Aura Lab
-- Lab has recommended anything
-- Sense has adopted anything
+- Lab has accepted or answered the request
+- Sense has accepted or adopted any Lab recommendation
 - Dev is authorized
-- UI copy, runtime behavior, bridge contracts, IPC, payloads, schemas, services, provider behavior, or persistence may change
+- UI copy, runtime behavior, bridge contracts, IPC, payloads, schemas, services, provider behavior, shortcut behavior, or persistence may change
 
 ## Required Reading
 
@@ -74,6 +90,7 @@ Accepted display/request workflow:
 - `workspace/display-request-workflow-hardening-contract.md`
 - `workspace/UIUXHS15-clipboard-window-request-display-review.md`
 - `workspace/OverseerHS15-clipboard-window-request-display-review-acceptance.md`
+- `workspace/RequestDisplayHS16-clipboard-window.md`
 - `docs/current-state/display-pipeline-inventory.md`
 - `F:\Projects\Docs\Aura-Project-Orchestration\known-workflows\display-request-conformity-brief.md`
 - `F:\Projects\Docs\Aura-Project-Orchestration\known-workflows\display_request.md`
@@ -86,38 +103,29 @@ Accepted Sense direction:
 - `docs/contracts/renderer-boundary-contract.md`
 - `docs/contracts/threat-intel-contract.md`
 
-## Accepted HS15 Findings
+Lab context, advisory only:
 
-Clipboard Acquisition is request-ready because:
+- `F:\Projects\AURA- Lab\workspace\request_display.md`
+- `F:\Projects\AURA- Lab\workspace\display-request-cooperation-contract.md`
 
-- it is a bounded flow slice inside the Threat Intel acquisition surface
-- it has clear source-owned terms and lifecycle states
-- it has clear authority and basis needs
-- its main display risk is presentation wording and density, not missing runtime meaning
-- it can be pressure-tested by Lab later without requiring implementation
+## Submitted HS16 Request Summary
 
-Sense-owned terms and states to preserve or qualify in any future request:
+`sense.clipboard-window` asks Lab to compare up to three display methods for one bounded flow slice:
 
-- `Clipboard Acquisition`
-- `Threat Intel`
-- `Live IO blocked`
-- `No scan`
-- `Control+\`
-- `Control+Alt+Space`, when alternate shortcut status applies
-- `Pulling`
-- `Listening`
-- `Cooldown`
-- `Idle`
-- `clipboard.acquisition.snapshot`
+```txt
+Clipboard Acquisition widget inside the Threat Intel acquisition bar
+```
 
-Future local request artifact should preserve:
+The request preserves:
 
 - three-second active clipboard authority window
 - five-second cooldown
 - unchanged clipboard ignored after arming
 - backend-owned clipboard authority
 - renderer as presentation only
-- manual path as deliberate alternate input, not a Lab-owned alternate-truth state
+- manual path as deliberate alternate input
+- `Live IO blocked` as backend authority refusal, not provider failure
+- `No scan` as absence of deliberate Threat Intel scan
 
 Must not imply:
 
@@ -133,25 +141,28 @@ Must not imply:
 
 ## Candidate Next Steps
 
-Human decision needed:
+Human / Sense Overseer decision after Lab responds:
 
-1. Open a Sense-local request-artifact packet to draft `workspace/RequestDisplayHS16-clipboard-window.md` for Sense review only.
-2. Park Clipboard Acquisition despite being request-ready.
-3. Scope a different display candidate first:
-   - `sense.threat-latest-scan-review`
-   - `sense.passive.state-basis`
-   - `sense.threat-acquisition-bar`
-   - `sense.provider-pulse-row`
+1. Accept a Lab candidate method.
+2. Adapt a Lab candidate method into Sense-owned wording.
+3. Reject or park the Lab response.
+4. Return to Lab with a narrower request.
+5. Open a Sense-local Dev runway only after acceptance/adaptation and explicit Human/Overseer authorization.
 
-Do not submit anything to Aura Lab from this idle state.
+Until Lab responds, useful choices are:
+
+- Wait for Lab advisory response.
+- Scope another display candidate separately while keeping the active request cap under five.
+- Park further display requests until this pressure test returns.
 
 ## Guardrails
 
 - Do not implement code unless a future packet explicitly opens Dev work.
-- Do not rename terms from audit, UI/UX review, or protected-term output.
-- Do not change UI copy, contracts, IPC, payloads, persistence, schemas, services, backend behavior, provider behavior, shortcut behavior, or runtime behavior from HS15 alone.
-- Do not create active Lab requests automatically.
-- Do not treat request-ready as submitted, accepted, adopted, or Dev-authorized.
+- Do not rename terms from audit, UI/UX review, request output, Lab response, or protected-term output.
+- Do not change UI copy, contracts, IPC, payloads, persistence, schemas, services, backend behavior, provider behavior, shortcut behavior, or runtime behavior from HS16 alone.
+- Do not treat the submitted request as accepted, adopted, or Dev-authorized.
+- Do not create additional active Lab requests automatically.
+- Do not exceed five active Sense `request_display` entries.
 - Do not treat archived docs as active task queues.
 - Do not import Atlas-owned historical proof, storage, tracking, assessment, routine-check, attention-marker, stored-record, or source-candidate semantics into Sense.
 - Do not treat Lab vocabulary as Sense authority.
@@ -172,11 +183,10 @@ git status --short --branch
 Result:
 
 ```txt
-npm.cmd run verify:protected-terms - PASS, warning-only; scanned 3 changed files; 18 warning-only items.
-Warnings are confined to the accepted UI/UX review artifact and are treated as reviewed risk language, not rename instructions or new Sense meaning.
-git status --short --branch - main...origin/main with HS15 acceptance/current updates before commit.
+npm.cmd run verify:protected-terms - PASS, warning-only; scanned 2 changed files; 0 warning-only items.
+git status --short --branch - main...origin/main with current.md modified and RequestDisplayHS16-clipboard-window.md untracked before commit.
 ```
 
 ## Overseer Review
 
-Completed. HS15 accepted. Awaiting human direction.
+Completed. HS16 local request artifact created and submitted to Lab intake. Awaiting Lab advisory response or Human direction.
