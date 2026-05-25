@@ -1,6 +1,8 @@
 # M18 - Provider Fault-Injection Hardening
 
-Status: Active
+Status: Complete
+
+Closure note: 2026-05-25 - M18 deterministic provider fault-injection hardening was accepted. `verify:provider-faults` is fixture-only, included in `verify:all`, and covers Passive Telemetry and Threat Intel provider fault semantics without live network, Electron, local EVE logs, private operator state, or SDE assets.
 
 ## Outcome
 

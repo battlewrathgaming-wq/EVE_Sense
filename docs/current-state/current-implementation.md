@@ -53,6 +53,7 @@ The current implementation includes:
 - scoped Passive Telemetry zKill `pastSeconds` route
 - Passive Telemetry ESI aggregate system kills/jumps activity client
 - one-hour Passive Telemetry ESI activity cache with ETag revalidation behavior
+- fixture-only provider fault-injection verification for Passive Telemetry and Threat Intel provider failures
 - explicit opt-in Passive Telemetry live API smoke command
 - backend Threat Intel scan request and snapshot contract
 - local/static Threat Intel target resolver for systems, pilots, corporations, alliances, and copied text
@@ -175,7 +176,7 @@ Available command:
 npm run verify:all
 ```
 
-This verifies the current utilities, service rigging, Combat Witness parser/watcher/runtime foundations, hostile parser rejection fixtures, gamelog watcher chaos behavior, Combat Logging Test Suite offline checks, Passive Telemetry foundation, Threat Intel request/resolution/zKill normalization/clipboard lifecycle checks, renderer shell, renderer boundary static checks, and adversarial renderer/preload boundary checks. It does not verify full tactical viewport readiness.
+This verifies the current utilities, service rigging, Combat Witness parser/watcher/runtime foundations, hostile parser rejection fixtures, gamelog watcher chaos behavior, Combat Logging Test Suite offline checks, Passive Telemetry foundation, fixture-only Passive/Threat provider fault injection, Threat Intel request/resolution/zKill normalization/clipboard lifecycle checks, renderer shell, renderer boundary static checks, and adversarial renderer/preload boundary checks. It does not verify full tactical viewport readiness.
 
 Runtime visual smoke is implemented as a separate environment-sensitive command:
 
@@ -190,7 +191,7 @@ It writes artifacts under `.tmp\electron-visual-smoke` and is intentionally not 
 - some inherited seed service names remain below the visible product surface
 - inherited active scan validator language remains to be reconciled with the implemented Threat Intel scan contract
 - local metadata resolver and type lookup are fixture/static until an explicit SDE refresh is run; the fixture builder path is adversarially verified but real SDE refresh remains operator-gated
-- provider fault injection remains open for hostile live IO failure matrices
+- provider fault injection is covered by deterministic fixture-only checks; live provider failure validation remains gated behind explicit live IO authorization
 - live zKill/ESI smoke command exists but live network run is deferred until `AURA_SENSE_LIVE_API=1`
 - Threat Intel live zKill network run is deferred until explicitly enabled and recorded outside `verify:all`
 - Threat Intel ESI killmail expansion remains deferred

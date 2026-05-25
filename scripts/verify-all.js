@@ -20,6 +20,7 @@ const checks = [
   ['verify:services', ['node', 'scripts/verify-services.js']],
   ['verify:http', ['node', 'scripts/verify-http-client.js']],
   ['verify:passive-telemetry', ['node', 'scripts/verify-passive-telemetry.js']],
+  ['verify:provider-faults', ['node', 'scripts/verify-provider-fault-injection.js']],
   ['verify:local-type-metadata', ['node', 'scripts/verify-local-type-metadata.js']],
   ['verify:threat-intel', ['node', 'scripts/verify-threat-intel.js']],
   ['verify:clipboard-race', ['node', 'scripts/verify-clipboard-acquisition-race.js']],
