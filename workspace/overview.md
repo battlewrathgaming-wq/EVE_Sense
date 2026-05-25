@@ -1,6 +1,6 @@
 ﻿# AURA-Sense Workspace Overview
 
-Status: Idle - M12B accepted; Threat-only live API smoke is recommended but not authorized
+Status: Idle - M12C Threat-only default Jita live API smoke complete
 Last reviewed: 2026-05-25
 
 ## Vision Statement
@@ -22,7 +22,7 @@ It should present compact, uncertainty-aware tactical state while staying transi
 
 | Milestone | Roadmap Source | Status | Notes |
 | --- | --- | --- | --- |
-| 12 | `docs/roadmap/milestone-12-live-validation-and-tactical-calibration.md` | Active/Gated | M12B security review is accepted. Threat-only default Jita live API smoke is the recommended next slice, but no live providers, operator gamelog smoke, manual shortcuts, real SDE refresh, calibration, or fixture intake work is currently authorized. |
+| 12 | `docs/roadmap/milestone-12-live-validation-and-tactical-calibration.md` | Active/Gated | M12C completed one authorized Threat-only default Jita live API smoke. Additional live providers, Passive live smoke, operator gamelog smoke, manual shortcuts, real SDE refresh, calibration, or fixture intake work require a future active packet. |
 | 13 | `docs/roadmap/milestone-13-aggressive-testing-and-bug-hunting.md` | Complete | Deterministic aggressive hardening accepted; live/manual validation remains gated for later operator-validation work. |
 | 14 | `docs/roadmap/milestone-14-back-page-threat-intel-ux.md` | Complete | Back-page Threat Intel UX accepted; live/manual shortcut feel remains gated for optional later operator-validation work. |
 | 15 | `docs/roadmap/milestone-15-display-request-response-fitness.md` | Parked | Lab-facing presentation response work is parked while Lab stabilizes its side. |
@@ -35,7 +35,7 @@ It should present compact, uncertainty-aware tactical state while staying transi
 
 Milestone: M12 - Live Validation And Tactical Calibration
 Current packet: `workspace/current.md`
-Current sequence: Idle after M12B security review acceptance
+Current sequence: Idle after M12C Threat-only default Jita live API smoke
 Current executor: None
 Expected artifact: None
 Latest M12 gate trace: `workspace/OverseerHS33-m12-live-validation-gate-trace.md`
@@ -45,6 +45,7 @@ Latest M12A Dev handoff: `workspace/DevHS36-m12a-live-api-smoke-transition-readi
 Latest M12A acceptance: `workspace/OverseerHS37-m12a-live-api-transition-readiness-acceptance.md`
 Latest M12B security review: `workspace/SecEngHS38-m12b-live-api-security-review.md`
 Latest M12B acceptance: `workspace/OverseerHS39-m12b-live-api-security-review-acceptance.md`
+Latest M12C live smoke record: `workspace/OverseerHS40-m12c-threat-live-api-smoke.md`
 Latest accepted handshake: `workspace/complete/milestone-14/OverseerHS03-milestone-14-closure.md`
 Latest accepted prototype review: `workspace/OverseerHS02-passive-telemetry-readout-prototype-review.md`
 Latest accepted face advisory: `workspace/OverseerHS03-sense-face-presentation-adoption-review.md`
