@@ -37,7 +37,7 @@ Current resting state:
 | --- | --- | --- | --- |
 | 13 | Aggressive testing and bug hunting | Complete | `docs/roadmap/milestone-13-aggressive-testing-and-bug-hunting.md` |
 | 14 | Back-page Threat Intel UX | Complete | `docs/roadmap/milestone-14-back-page-threat-intel-ux.md` |
-| 15 | Display request response fitness and action shaping | Candidate | `docs/roadmap/milestone-15-display-request-response-fitness.md` |
+| 15 | Display request response fitness and action shaping | Parked | `docs/roadmap/milestone-15-display-request-response-fitness.md` |
 | 16 | Body-to-adapter readiness | Closed/Parked | `docs/roadmap/milestone-16-body-to-adapter-readiness.md` |
 | 17 | Render and Frame performance assurance | Complete | `docs/roadmap/milestone-17-render-frame-performance-assurance.md` |
 
@@ -79,6 +79,8 @@ Ready when:
 - The runway can focus on Frame module, renderer shell, renderer boundary, visual smoke, or performance/readiness behavior without adopting a Lab face.
 - Required verification commands are known.
 - Environment-sensitive smoke is explicitly named if needed.
+
+Status: complete for M17; keep this gate as the shape for any future render/frame assurance packet.
 
 ### Operator Validation Gate
 

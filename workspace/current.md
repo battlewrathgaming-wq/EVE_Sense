@@ -114,7 +114,7 @@ verify:renderer-boundary-adversarial - PASS
 verify:protected-terms - PASS, warning-only; existing renderer/smoke vocabulary noted, no protected-word changes
 verify:all - PASS
 smoke:electron - PASS
-git status --short --branch - pending commit at time of update
+git status --short --branch - clean after commit `d81084b`
 ```
 
 ## Overseer Review
