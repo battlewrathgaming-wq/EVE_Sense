@@ -9,7 +9,7 @@ Owner: Overseer
 Active milestone: M12 - Live Validation And Tactical Calibration
 Roadmap source: `docs/roadmap/milestone-12-live-validation-and-tactical-calibration.md`
 Current runway: M12G - Clipboard acquisition mode alignment and gate-separation verification
-Source of intent: M12F accepted a read-only Security/Engineering review; Human clarified global shortcut immediate clipboard capture is intended, so the next Dev packet should align docs/tests around two explicit Clipboard Acquisition modes and add gate-separation verification
+Source of intent: M12F accepted a read-only Security/Engineering review; Human clarified global shortcut immediate clipboard capture is intended, and that the operator-facing Active permission action is `Ctrl+\`, not a click-driven search-button workflow
 Latest accepted slice: M12F operator I/O readiness and gate separation review
 Latest accepted closure: `workspace/OverseerHS45-m12f-operator-io-readiness-review-acceptance.md`
 Latest Dev handoff: `workspace/DevHS41-m12d-live-smoke-request-log-hardening.md`
@@ -48,6 +48,8 @@ Human design clarification:
 - It must remain IO-gated, visible through Clipboard Acquisition state, and sealed/cooldown-bounded.
 - Focused/windowed acquisition without a provided payload remains different: it should establish a baseline, listen for a changed valid clipboard target, then seal/cool down.
 - A small rolling acquisition cache may be useful as duplicate-suppression/throttle control, but it must not become hidden clipboard history, a shared Passive gate, or a display/fixture source.
+- In this M12 operator-flow context, Active means the operator permission action currently bound to `Ctrl+\`. Do not assume a click/search-button workflow; clicking the Sense window can disrupt the primary game.
+- Search-field delivery is a result of the permission action, not a requirement for mouse-driven interaction.
 
 Dev should not remove global shortcut immediate capture. Dev should make the intended distinction explicit in docs and deterministic checks, while preserving Passive/Active gate separation.
 
@@ -66,7 +68,7 @@ M12F accepted:
 
 - Gamelog parser events fan out through the Combat Witness runtime observer path.
 - Passive Telemetry observes `navigation.jump` events and does not depend on Clipboard Acquisition state.
-- Threat Intel scans are invoked through explicit search, Clipboard Acquisition, or service/preload calls.
+- Threat Intel scans are invoked through Clipboard Acquisition/global shortcut flow, focused renderer keyboard flow, or service/preload calls. M12G should not assume a mouse search-button UX.
 - Passive and Threat live provider gates are separate backend gate instances.
 - Parser jumps were not found to trigger Threat scans.
 - Clipboard/search was not found to be a prerequisite for Passive current-system observation.
@@ -94,7 +96,7 @@ Human discussion to preserve:
 
 - Passive aggregate/context should open from parser-observed system jump.
 - Passive aggregate/context must not depend on clipboard listening or active scan state.
-- Active scan should open from Clipboard Acquisition or explicit search only.
+- Active scan should open from the operator permission action, currently `Ctrl+\`, or equivalent keyboard/service path. Do not require a mouse click.
 - Clipboard Acquisition has a listening window and seal behavior; this should be reviewed as a safety/trust boundary.
 - Both surfaces can feed the same internal observation/event channel, but their activation gates remain separate.
 - Returns must not automatically feed the same fixtures/display assumptions; this is adjacent display/adapter work and should not be decided inside M12F.
@@ -138,7 +140,7 @@ Human discussion to preserve:
    - timeout/cooldown still seals the window
 7. Add deterministic gate-separation verification proving:
    - parser `navigation.jump` can update Passive without invoking Threat scan
-   - explicit Threat search/Clipboard Acquisition does not initialize or gate Passive current-system observation
+   - Clipboard Acquisition/global shortcut or equivalent service scan does not initialize or gate Passive current-system observation
 8. Add or update documentation for future live/manual operator I/O smoke artifact redaction:
    - no raw private gamelog lines
    - no raw private local paths unless explicitly approved
@@ -182,7 +184,7 @@ M12G is complete when:
 - Clipboard Acquisition remains explicit, time-bounded, and sealed
 - Passive jump-triggered aggregate/context remains independent from Clipboard Acquisition and Threat scan state
 - parser `navigation.jump` does not trigger Threat scan
-- explicit Threat scan/Clipboard Acquisition does not become a prerequisite for Passive observation
+- Clipboard Acquisition/global shortcut or equivalent service scan does not become a prerequisite for Passive observation
 - future live/manual operator smoke artifact redaction expectations are recorded
 - no live/manual/private/provider execution is performed
 

@@ -28,7 +28,7 @@ Shared display/fixture treatment is not assumed.
 
 - Gamelog parser events fan out through the Combat Witness runtime observer path.
 - Passive Telemetry observes `navigation.jump` events from that fanout and does not depend on Clipboard Acquisition state.
-- Threat Intel scans are invoked through explicit search, Clipboard Acquisition, or service/preload calls.
+- Threat Intel scans are invoked through Clipboard Acquisition/global shortcut flow, focused renderer keyboard flow, or service/preload calls. M12G should not assume a mouse search-button UX.
 - Passive and Threat live provider gates are separate backend gate instances.
 - Parser jumps were not found to trigger Threat scans.
 - Clipboard/search was not found to be a prerequisite for Passive current-system observation.
@@ -41,12 +41,15 @@ The global shortcut path can read current clipboard content before arming and pa
 
 Human clarified this behavior is intended.
 
+Human later clarified that, for the M12 operator flow, Active means the operator permission action currently bound to `Ctrl+\`. Do not assume a click-driven search-button workflow; clicking the Sense window can disrupt the primary game. Search-field delivery is the result of the permission action, not a mouse interaction requirement.
+
 Overseer disposition:
 
 - Do not remove immediate global-shortcut capture as a bug.
 - Treat it as an intentional explicit-invitation mode: pressing the global shortcut may consume the current clipboard target immediately when IO authority allows it.
 - Preserve the focused/windowed acquisition behavior separately: arming without a provided payload should establish a baseline and ignore unchanged pre-arm content.
 - Align docs and verification so the two active acquisition modes are not mistaken for one rule.
+- Keep the operator-facing path keyboard-first and hands-free; do not introduce or require search-button interaction in M12G.
 
 ## Accepted Dev Needs
 
@@ -56,7 +59,7 @@ Proceed to Dev hardening/documentation for:
 2. Deterministic coverage that global shortcut immediate capture remains explicit, IO-gated, and sealed.
 3. Deterministic coverage that focused/windowed acquisition still ignores unchanged pre-arm clipboard content.
 4. Gate-separation coverage proving parser `navigation.jump` can update Passive without invoking Threat scan.
-5. Coverage or documentation proving Clipboard/search does not gate Passive observation.
+5. Coverage or documentation proving Clipboard Acquisition/global shortcut or equivalent service scan does not gate Passive observation.
 6. Redaction-safe future operator smoke artifact expectations.
 7. Evaluation of a small rolling Clipboard Acquisition cache as duplicate-suppression/throttle control, without creating hidden clipboard history or display/fixture semantics.
 
