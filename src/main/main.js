@@ -600,6 +600,7 @@ async function runVisualSmoke(window, outputDir) {
   assertSmoke(checks.hasCombatSurface, 'renderer should contain Combat Witness surface');
   assertSmoke(checks.hasIntegratedViewport, 'renderer should contain integrated viewport root');
   assertSmoke(checks.hasGlanceStrip, 'renderer should contain compact glance strip');
+  assertSmoke(checks.hasPassiveBand, 'renderer should contain Passive Telemetry instrument band');
   assertSmoke(checks.hasSystemContext, 'renderer should contain system kills/jumps context');
   assertSmoke(checks.hasPassiveReadout, 'renderer should contain Passive Telemetry readout state');
   assertSmoke(checks.hasProviderPulse, 'renderer should contain lane-specific provider pulse chips');
@@ -640,7 +641,7 @@ async function captureVisualRegressionStates(window, outputDir) {
     {
       name: 'unavailable',
       screenshot: 'state-unavailable.png',
-      assertions: ['#pressure-title', '#pressure-window', '#net-pressure-label', '#watcher-indicator', '#incoming-pressure', '#repair-throughput', '#passive-readout-state', '#passive-readout-basis'],
+      assertions: ['#pressure-title', '#pressure-window', '#net-pressure-label', '#watcher-indicator', '#incoming-pressure', '#repair-throughput', '#passive-band-label', '#passive-system', '#passive-band-gap', '#passive-readout-state', '#passive-readout-basis'],
       script: `
         resetViewportState();
         setText('#combat-summary', 'Combat Witness bridge unavailable.');
@@ -675,7 +676,7 @@ async function captureVisualRegressionStates(window, outputDir) {
     {
       name: 'stale',
       screenshot: 'state-stale.png',
-      assertions: ['#pressure-title', '#pressure-window', '#net-pressure-label', '#passive-system', '#system-shipkills', '#front-threat-provider', '#passive-readout-state', '#passive-readout-basis'],
+      assertions: ['#pressure-title', '#pressure-window', '#net-pressure-label', '#passive-band-label', '#passive-system', '#system-shipkills', '#front-threat-provider', '#passive-readout-state', '#passive-readout-basis', '#passive-band-gap'],
       script: `
         resetViewportState();
         setText('#combat-summary', 'No recent combat observed.');
@@ -684,14 +685,16 @@ async function captureVisualRegressionStates(window, outputDir) {
         setText('#passive-freshness', 'Stale context');
         setText('#passive-readout-state', 'Stale context');
         setText('#passive-readout-basis', 'zKill 4 + ESI 8 / 55 - Partial sample');
+        setText('#passive-band-gap', 'Stale context');
         document.querySelector('#passive-readout-state')?.classList.add('is-stale');
+        document.querySelector('#passive-band')?.classList.add('is-stale');
         setText('#threat-basis', 'Cached provider context');
       `
     },
     {
       name: 'degraded',
       screenshot: 'state-degraded.png',
-      assertions: ['#watcher-indicator', '#pressure-title', '#pressure-window', '#incoming-pressure', '#repair-throughput', '#passive-readout-state'],
+      assertions: ['#watcher-indicator', '#pressure-title', '#pressure-window', '#incoming-pressure', '#repair-throughput', '#passive-band-label', '#passive-band-gap', '#passive-readout-state'],
       script: `
         resetViewportState();
         setText('#watcher-state', 'Degraded');
@@ -699,14 +702,16 @@ async function captureVisualRegressionStates(window, outputDir) {
         setText('#combat-summary', 'Combat Witness degraded, latest snapshot retained.');
         setText('#passive-readout-state', 'Degraded');
         setText('#passive-readout-basis', 'Current system observed; system ID unresolved');
+        setText('#passive-band-gap', 'Degraded');
         document.querySelector('#passive-readout-state')?.classList.add('is-degraded');
+        document.querySelector('#passive-band')?.classList.add('is-degraded');
         document.querySelector('#watcher-indicator')?.classList.add('is-degraded');
       `
     },
     {
       name: 'blocked',
       screenshot: 'state-blocked.png',
-      assertions: ['#top-live-io-toggle', '#pressure-title', '#net-pressure-label', '#incoming-pressure', '#front-observed-source', '#passive-readout-state'],
+      assertions: ['#top-live-io-toggle', '#pressure-title', '#net-pressure-label', '#incoming-pressure', '#front-observed-source', '#passive-band-label', '#passive-band-gap', '#passive-readout-state'],
       script: `
         resetViewportState();
         document.querySelector('#integrated-viewport')?.classList.add('io-off');
@@ -715,19 +720,23 @@ async function captureVisualRegressionStates(window, outputDir) {
         setText('#front-observed-source', 'No source observed');
         setText('#passive-readout-state', 'Live IO blocked');
         setText('#passive-readout-basis', 'Live IO blocked');
+        setText('#passive-band-gap', 'Live IO blocked');
         document.querySelector('#passive-readout-state')?.classList.add('is-blocked');
+        document.querySelector('#passive-band')?.classList.add('is-blocked');
         document.querySelector('#top-live-io-toggle')?.classList.remove('is-on');
       `
     },
     {
       name: 'partial-capped',
       screenshot: 'state-partial-capped.png',
-      assertions: ['#threat-drawer', '#threat-acquisition-bar', '#threat-report', '#threat-report-type', '#threat-report-state', '#threat-pulse', '#threat-message', '#threat-target-label', '#passive-readout-state', '#passive-readout-basis'],
+      assertions: ['#threat-drawer', '#threat-acquisition-bar', '#threat-report', '#threat-report-type', '#threat-report-state', '#threat-pulse', '#threat-message', '#threat-target-label', '#passive-band-label', '#passive-band-gap', '#passive-readout-state', '#passive-readout-basis'],
       script: `
         resetViewportState();
         setText('#passive-readout-state', 'Capped sample');
         setText('#passive-readout-basis', 'zKill 10 + ESI 3 / 21 + Static lookup - Capped sample');
+        setText('#passive-band-gap', 'Capped sample');
         document.querySelector('#passive-readout-state')?.classList.add('is-capped');
+        document.querySelector('#passive-band')?.classList.add('is-capped');
         document.querySelector('#threat-drawer').open = true;
         document.querySelector('#threat-acquisition-bar')?.classList.add('is-idle');
         setText('#threat-state', 'Partial');
@@ -823,7 +832,7 @@ async function captureVisualRegressionStates(window, outputDir) {
       screenshot: 'state-narrow-viewport.png',
       width: 420,
       height: 520,
-      assertions: ['#integrated-viewport', '#pressure-title', '#pressure-window', '#net-pressure-label', '#incoming-pressure', '#repair-throughput', '#front-context-value'],
+      assertions: ['#integrated-viewport', '#pressure-title', '#pressure-window', '#net-pressure-label', '#passive-band-label', '#passive-system', '#passive-band-gap', '#incoming-pressure', '#repair-throughput', '#front-context-value'],
       script: `
         resetViewportState();
         setText('#combat-summary', 'Narrow viewport smoke state.');
@@ -877,6 +886,8 @@ function applyVisualRegressionState(window, state) {
         document.querySelector('#threat-drawer')?.classList.remove('is-gateway-active');
         const passiveReadoutState = document.querySelector('#passive-readout-state');
         if (passiveReadoutState) passiveReadoutState.className = 'readout-state';
+        const passiveBand = document.querySelector('#passive-band');
+        if (passiveBand) passiveBand.className = 'passive-band';
         document.querySelector('#clipboard-listen')?.classList.remove('is-listening', 'is-cooldown', 'is-unsupported');
         document.querySelector('#clipboard-key-ctrl')?.classList.remove('is-active', 'is-authority', 'is-cooldown');
         document.querySelector('#clipboard-key-slash')?.classList.remove('is-active', 'is-authority', 'is-cooldown');
@@ -975,6 +986,7 @@ function smokeChecks(window) {
       noElectronGlobal: typeof window.ipcRenderer === 'undefined' && typeof window.BrowserWindow === 'undefined',
       hasIntegratedViewport: Boolean(document.querySelector('#integrated-viewport')),
       hasGlanceStrip: Boolean(document.querySelector('.glance-strip')),
+      hasPassiveBand: Boolean(document.querySelector('#passive-band') && document.querySelector('#passive-band-label') && document.querySelector('#passive-band-gap')),
       hasSystemContext: Boolean(document.querySelector('#system-shipkills') && document.querySelector('#system-jumps') && document.querySelector('#system-ratio')),
       hasPassiveReadout: Boolean(document.querySelector('#passive-readout-state') && document.querySelector('#passive-readout-basis')),
       hasProviderPulse: Boolean(document.querySelector('#passive-provider-pulse') && document.querySelector('#threat-provider-pulse') && document.querySelector('#passive-pulse-detail') && document.querySelector('#threat-pulse-detail')),
@@ -1002,6 +1014,8 @@ function smokeChecks(window) {
       incomingPressureText: document.querySelector('#incoming-pressure')?.textContent || null,
       repairBalanceText: document.querySelector('#repair-balance')?.textContent || null,
       passiveBasisText: document.querySelector('#passive-basis')?.textContent || null,
+      passiveBandLabelText: document.querySelector('#passive-band-label')?.textContent || null,
+      passiveBandGapText: document.querySelector('#passive-band-gap')?.textContent || null,
       passiveReadoutStateText: document.querySelector('#passive-readout-state')?.textContent || null,
       passiveReadoutBasisText: document.querySelector('#passive-readout-basis')?.textContent || null,
       threatBasisText: document.querySelector('#threat-basis')?.textContent || null,

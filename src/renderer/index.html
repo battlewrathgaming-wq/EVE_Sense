@@ -24,27 +24,33 @@
     </header>
     <main id="integrated-viewport" class="viewport" aria-label="AURA-Sense compact combat overlay">
       <section class="glance-strip combat-mode" aria-label="Five second combat glance">
-        <div class="system-glance">
-          <span class="label">System</span>
-          <strong id="passive-system">--</strong>
-        </div>
-        <div class="signal-row" aria-label="System activity">
-          <span class="signal-chip">
-            <span>Kills</span>
-            <strong id="system-shipkills">--</strong>
-          </span>
-          <span class="signal-chip">
-            <span>Jumps</span>
-            <strong id="system-jumps">--</strong>
-          </span>
-          <span class="signal-chip quiet">
-            <span>Ratio</span>
-            <strong id="system-ratio">--</strong>
-          </span>
-        </div>
-        <div class="passive-readout" aria-label="Passive Telemetry readout">
-          <span id="passive-readout-state" class="readout-state is-unavailable">No observation</span>
-          <strong id="passive-readout-basis">No provider sample yet</strong>
+        <div id="passive-band" class="passive-band is-unavailable" aria-label="Passive Telemetry instrument band">
+          <div class="passive-band-header">
+            <span id="passive-band-label" class="label">Passive Telemetry</span>
+            <span id="passive-band-gap" class="band-gap">No observation</span>
+          </div>
+          <div class="system-glance">
+            <span class="label">Current system</span>
+            <strong id="passive-system">No observation</strong>
+          </div>
+          <div class="signal-row" aria-label="System activity">
+            <span class="signal-chip">
+              <span>Kills</span>
+              <strong id="system-shipkills">--</strong>
+            </span>
+            <span class="signal-chip">
+              <span>Jumps</span>
+              <strong id="system-jumps">--</strong>
+            </span>
+            <span class="signal-chip quiet">
+              <span>Ratio</span>
+              <strong id="system-ratio">--</strong>
+            </span>
+          </div>
+          <div class="passive-readout" aria-label="Passive Telemetry readout">
+            <span id="passive-readout-state" class="readout-state is-unavailable">No observation</span>
+            <strong id="passive-readout-basis">No provider sample yet</strong>
+          </div>
         </div>
         <div class="provider-pulse-row" aria-label="Provider pulse">
           <span id="passive-provider-pulse" class="provider-pulse is-unavailable" title="Passive provider pulse">Passive --</span>

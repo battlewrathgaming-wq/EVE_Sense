@@ -388,7 +388,7 @@ function renderPassiveTelemetry(snapshot) {
   const passiveReadout = passiveReadoutFromSnapshot(snapshot);
 
   setText('passive-state', passiveStateLabel(status));
-  setText('passive-system', snapshot?.currentSystem?.label || '--');
+  setText('passive-system', snapshot?.currentSystem?.label || 'No observation');
   setText('system-shipkills', hasSystem ? formatNumber(shipKills) : '--');
   setText('system-jumps', hasSystem ? formatNumber(jumps) : '--');
   setText('system-ratio', hasSystem ? formatRatio(shipKills, jumps) : '--');
@@ -397,7 +397,9 @@ function renderPassiveTelemetry(snapshot) {
   setText('passive-freshness', passiveStateLabel(snapshot?.freshness?.status || status));
   setText('passive-basis', passiveBasis(snapshot));
   setText('passive-age', passiveAgeLabel(snapshot));
-  setText('passive-gap', passiveGapLabel(snapshot));
+  const gap = passiveGapLabel(snapshot);
+  setText('passive-gap', gap);
+  setText('passive-band-gap', gap);
   renderPassiveReadout(passiveReadout);
   renderProviderPulse('passive', providerPulseFromPassive(snapshot));
   setText('passive-message', passiveMessage(snapshot));
@@ -961,6 +963,7 @@ function passiveStateLabel(status) {
   if (status === 'degraded') return 'Degraded';
   if (status === 'blocked') return 'Live IO blocked';
   if (status === 'pending') return 'Provider pending';
+  if (status === 'cached') return 'Fresh context';
   return 'No observation';
 }
 
@@ -1049,7 +1052,7 @@ function passiveReadoutFromSnapshot(snapshot) {
   return {
     state,
     label: passiveStateLabel(state),
-    basis: passiveBasis(snapshot)
+    basis: passiveBandBasis(snapshot)
   };
 }
 
@@ -1071,10 +1074,19 @@ function passiveReadoutState(snapshot) {
 function renderPassiveReadout(readout) {
   const stateClass = `is-${readout.state || 'unavailable'}`;
   const chip = byId('passive-readout-state');
+  const band = byId('passive-band');
   chip.className = `readout-state ${stateClass}`;
+  band.className = `passive-band ${stateClass}`;
   chip.textContent = readout.label;
   setText('passive-readout-basis', readout.basis);
   byId('passive-readout-basis').setAttribute('title', readout.basis);
+}
+
+function passiveBandBasis(snapshot) {
+  const basis = passiveBasis(snapshot);
+  const age = passiveAgeLabel(snapshot);
+  if (age === 'No age') return basis;
+  return `${basis} | ${age}`;
 }
 
 function passiveAgeLabel(snapshot) {
@@ -1092,7 +1104,9 @@ function passiveGapLabel(snapshot) {
   if (snapshot.zkill?.capped) return 'Capped sample';
   if (snapshot.zkill?.partial || snapshot.activity?.partial || snapshot.status === 'partial') return 'Partial sample';
   if (!snapshot.zkill && !snapshot.activity) return 'No provider sample yet';
-  return snapshot.currentSystem?.resolverSource === 'local-static' ? 'Static lookup' : 'None';
+  return snapshot.currentSystem?.resolverSource === 'local-static'
+    ? 'Static lookup'
+    : passiveStateLabel(passiveReadoutState(snapshot));
 }
 
 function threatBasis(snapshot) {

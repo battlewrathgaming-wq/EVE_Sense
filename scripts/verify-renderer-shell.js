@@ -63,6 +63,11 @@ function main() {
   assert(html.includes('system-shipkills'), 'renderer should include system ship kills target');
   assert(html.includes('system-jumps'), 'renderer should include system jumps target');
   assert(html.includes('system-ratio'), 'renderer should include system ratio target');
+  assert(html.includes('passive-band'), 'renderer should include Passive Telemetry instrument band');
+  assert(html.includes('passive-band-label'), 'renderer should include Passive Telemetry band lane label');
+  assert(html.includes('Passive Telemetry'), 'renderer should keep Passive Telemetry visible in the band');
+  assert(html.includes('passive-band-gap'), 'renderer should include Passive Telemetry band gap marker');
+  assert(html.includes('Current system'), 'renderer should label the Passive primary value as current system');
   assert(html.includes('passive-provider-pulse'), 'renderer should include Passive provider pulse chip');
   assert(html.includes('passive-readout-state'), 'renderer should include Passive readout state chip');
   assert(html.includes('passive-readout-basis'), 'renderer should include Passive readout basis copy');
@@ -162,9 +167,14 @@ function main() {
   assert(app.includes('passiveReadoutFromSnapshot'), 'renderer should derive Passive readout copy from existing snapshot fields');
   assert(app.includes('passiveReadoutState'), 'renderer should keep Passive readout state mapping explicit');
   assert(app.includes('renderPassiveReadout'), 'renderer should render compact Passive readout state and basis');
+  assert(app.includes("setText('passive-system', snapshot?.currentSystem?.label || 'No observation')"), 'renderer should show No observation as the Passive primary value when no current system exists');
+  assert(app.includes('passiveBandBasis'), 'renderer should keep Passive band basis/freshness mapping explicit');
+  assert(app.includes("setText('passive-band-gap', gap)"), 'renderer should render a compact Passive gap marker');
+  assert(app.includes("band.className = `passive-band ${stateClass}`"), 'renderer should expose Passive band state without color-only meaning');
   assert(app.includes('passiveAgeLabel'), 'renderer should expose Passive age from freshness cache age');
   assert(app.includes('passiveGapLabel'), 'renderer should expose Passive gap details without changing the snapshot contract');
   assert(app.includes("'Fresh context'"), 'renderer should map fresh Passive state to Fresh context');
+  assert(app.includes("if (status === 'cached') return 'Fresh context'"), 'renderer should not expose cached activity as a separate Passive state label');
   assert(app.includes("'Stale context'"), 'renderer should map stale Passive state to Stale context');
   assert(app.includes("'Partial sample'"), 'renderer should map partial Passive state to Partial sample');
   assert(app.includes("'Live IO blocked'"), 'renderer should preserve Live IO blocked copy');

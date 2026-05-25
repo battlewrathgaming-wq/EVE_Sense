@@ -202,12 +202,89 @@ body.presentation-paused .viewport {
   padding: 6px;
 }
 
+.passive-band,
 .system-glance,
 .signal-row,
 .status-chip {
   border: 1px solid var(--line);
   border-radius: 8px;
   background: var(--panel-strong);
+}
+
+.passive-band {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(112px, 0.8fr);
+  gap: 5px;
+  padding: 5px;
+  position: relative;
+  overflow: hidden;
+}
+
+.passive-band::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 3px;
+  background: var(--muted);
+  opacity: 0.55;
+}
+
+.passive-band.is-fresh,
+.passive-band.is-cached {
+  border-color: rgba(84, 215, 216, 0.52);
+}
+
+.passive-band.is-fresh::before,
+.passive-band.is-cached::before {
+  background: var(--accent);
+}
+
+.passive-band.is-stale,
+.passive-band.is-partial,
+.passive-band.is-capped,
+.passive-band.is-pending {
+  border-color: rgba(216, 177, 74, 0.58);
+}
+
+.passive-band.is-stale::before,
+.passive-band.is-partial::before,
+.passive-band.is-capped::before,
+.passive-band.is-pending::before {
+  background: var(--warning);
+  opacity: 0.82;
+}
+
+.passive-band.is-blocked,
+.passive-band.is-degraded {
+  border-color: rgba(214, 110, 99, 0.62);
+}
+
+.passive-band.is-blocked::before,
+.passive-band.is-degraded::before {
+  background: var(--danger);
+  opacity: 0.9;
+}
+
+.passive-band-header {
+  grid-column: 1 / -1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  padding-left: 5px;
+}
+
+.band-gap {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--muted);
+  font-size: 0.58rem;
+  font-weight: 800;
+  text-transform: uppercase;
 }
 
 .system-glance {
@@ -254,6 +331,7 @@ dt {
 }
 
 .passive-readout {
+  grid-column: 1 / -1;
   min-width: 0;
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
@@ -1396,6 +1474,17 @@ dd {
   .passive-readout {
     grid-template-columns: 1fr;
     gap: 3px;
+  }
+
+  .passive-band {
+    grid-template-columns: 1fr;
+    gap: 4px;
+    padding: 5px 5px 5px 7px;
+  }
+
+  .passive-band-header {
+    display: grid;
+    gap: 2px;
   }
 
   .passive-readout strong {
