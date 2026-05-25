@@ -29,12 +29,13 @@ It should present compact, uncertainty-aware tactical state while staying transi
 Milestone: None
 Roadmap source: None
 Current packet: `workspace/current.md`
-Current sequence: Idle after accepted Sense Face Refinement Pass, durable docs cleanup, and Lab M19 adoption review
+Current sequence: Idle after accepted Sense Face Refinement Pass, durable docs cleanup, Lab M19 adoption review, and Passive band UI/UX advisory
 Latest accepted handshake: `workspace/complete/milestone-14/OverseerHS03-milestone-14-closure.md`
 Latest accepted prototype: `workspace/OverseerHS02-passive-telemetry-readout-prototype-review.md`
 Latest accepted face advisory: `workspace/OverseerHS03-sense-face-presentation-adoption-review.md`
 Latest accepted face refinement: `workspace/OverseerHS04-sense-face-refinement-review.md`
 Latest Lab M19 adoption review: `workspace/OverseerHS07-sense-m19-instrument-status-band-adoption-review.md`
+Latest Passive band advisory review: `workspace/OverseerHS08-passive-telemetry-instrument-band-advisory-review.md`
 Active runway: None
 
 ## Authority Notes
@@ -91,4 +92,4 @@ AURA-Sense therefore owns its lane semantics and internal-to-Bridge mapping. Lab
 - Whether Atlas/Lab first-pass terminology output requires Sense-local terminology updates.
 - Whether the accepted Sense Face Refinement Pass should remain a bounded post-Milestone-14 prototype or become the first slice of a new Sense-local milestone.
 - Whether the remaining focused protected-term baseline warnings need a terminology classification pass.
-- Whether Lab M19 should proceed to a Sense UI/UX advisory, a tiny Passive Telemetry renderer prototype, or remain parked.
+- Whether the accepted Passive Telemetry Instrument Band advisory should proceed to a tiny renderer-only Dev prototype, get one more visual-density pass, or remain parked.

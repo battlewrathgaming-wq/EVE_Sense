@@ -21,8 +21,10 @@ Latest Dev handoff: `workspace/DevHS02-sense-face-refinement-pass.md`
 Latest face refinement acceptance: `workspace/OverseerHS04-sense-face-refinement-review.md`
 Latest Lab remote-consumer SLA receipt: `workspace/OverseerHS06-lab-remote-consumer-sla-review.md`
 Latest M19 adoption review: `workspace/OverseerHS07-sense-m19-instrument-status-band-adoption-review.md`
+Latest Passive band advisory: `workspace/UIUXHS03-passive-telemetry-instrument-band-advisory.md`
+Latest Passive band advisory review: `workspace/OverseerHS08-passive-telemetry-instrument-band-advisory-review.md`
 Current executor: None
-Current focus: Awaiting human decision on whether to open UI/UX advisory, tiny Dev prototype, or park
+Current focus: Awaiting human decision on whether to open tiny Dev prototype, request visual-density UI/UX pass, or park
 Expected output: None
 
 ## Purpose
@@ -33,7 +35,9 @@ The Passive Telemetry readout prototype has been accepted. The Sense-owned face 
 
 The accepted face pass adapts selected Lab presentation ideas through Sense-owned meaning. It is not a Lab import, not a Core adapter, not shared doctrine, not a contract rename, and not a broad redesign.
 
-Lab M19 is now closed and accepted in Lab. Sense has reviewed M19 as advisory presentation-pattern input in `workspace/OverseerHS07-sense-m19-instrument-status-band-adoption-review.md`. No Sense implementation packet is open.
+Lab M19 is now closed and accepted in Lab. Sense has reviewed M19 as advisory presentation-pattern input in `workspace/OverseerHS07-sense-m19-instrument-status-band-adoption-review.md`.
+
+The Passive Telemetry Instrument Band UI/UX advisory is accepted in `workspace/OverseerHS08-passive-telemetry-instrument-band-advisory-review.md`. No Sense implementation packet is open.
 
 Authority split:
 
