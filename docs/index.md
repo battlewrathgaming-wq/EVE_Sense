@@ -2,7 +2,7 @@
 
 This folder records AURA-Sense product rules, contracts, current state, failures, and future work.
 
-The authoritative implementation truth lives in `docs/current-state/current-implementation.md`. Audit files are dated review records and should remain intact.
+The authoritative implementation truth lives in `docs/current-state/current-implementation.md`. The display pipeline current-state map lives in `docs/current-state/display-pipeline-inventory.md`. Audit files are dated review records and should remain intact.
 
 ## Product Summary
 
@@ -30,7 +30,7 @@ It is not:
 
 | Folder | Role |
 | --- | --- |
-| `current-state/` | What the implementation currently does. |
+| `current-state/` | What the implementation currently does, including durable pipeline/display records. |
 | `audits/` | Dated reviews and handovers. Do not rewrite as product copy. |
 | `tenets/` | Stable project rules. |
 | `contracts/` | Service, renderer, telemetry, and lane contracts. |
@@ -74,6 +74,7 @@ Start with:
 - `workspace/README.md` when the user sends `.`
 - `workspace/current.md` for the active overwriteable milestone/task packet
 - `docs/current-state/current-implementation.md`
+- `docs/current-state/display-pipeline-inventory.md`
 - `docs/roadmap/milestone-13-aggressive-testing-and-bug-hunting.md`
 - `docs/testing/aggressive-test-harness-matrix.md`
 - `workspace/overview.md`

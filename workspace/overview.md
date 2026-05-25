@@ -54,6 +54,7 @@ AURA-Sense therefore owns its lane semantics and internal-to-Bridge mapping. Lab
 ### Current State
 
 - `docs/current-state/current-implementation.md`
+- `docs/current-state/display-pipeline-inventory.md`
 
 ### Roadmap
 
@@ -94,3 +95,4 @@ AURA-Sense therefore owns its lane semantics and internal-to-Bridge mapping. Lab
 - Whether the accepted Sense Face Refinement Pass should remain a bounded post-Milestone-14 prototype or become the first slice of a new Sense-local milestone.
 - Whether the remaining focused protected-term baseline warnings need a terminology classification pass.
 - Whether the accepted Passive Telemetry Instrument Band should get visual-density tuning, a dedicated Passive detail reveal, or remain parked.
+- Whether the parked display pipeline candidates should become scoped `request_display` drafts for Sense review.

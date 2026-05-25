@@ -65,6 +65,8 @@ Accepted display/request workflow:
 - `workspace/DisplayInventoryQualitativeReportHS01-ingest-transform-bridge-display.md`
 - `workspace/OverseerHS12-display-inventory-pipeline-audit-review.md`
 - `docs/current-state/display-pipeline-inventory.md`
+- `workspace/OverseerHS13-display-pipeline-durable-record.md`
+- `workspace/OverseerHS14-workflow-documentation-sweep.md`
 
 Accepted Sense direction:
 

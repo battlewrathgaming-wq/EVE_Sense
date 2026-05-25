@@ -75,6 +75,7 @@ The current implementation includes:
 - startup recovery for valid persisted gamelog settings without auto-starting watchers
 - operator-visible live IO policy control for Passive Telemetry and Threat Intel gates
 - compact diagnostics review surface backed by sanitized runtime diagnostics
+- durable display pipeline inventory for current Ingest -> Transformation -> Bridge -> User Display intent
 - runtime smoke policy documentation and Electron capture failure record
 - ADR documenting Atlas handoff as deferred
 - explicit SDE source-bundle staging/cleanup utility for local metadata refreshes
@@ -203,6 +204,7 @@ It writes artifacts under `.tmp\electron-visual-smoke` and is intentionally not 
 
 ## Related Documents
 
+- `docs/current-state/display-pipeline-inventory.md`
 - `docs/current-state/seed-current-state.md`
 - `docs/audits/audit-2026-05-22-aura-sense-scope-alignment.md`
 - `docs/audits/engineering_audit_contribution.md`
