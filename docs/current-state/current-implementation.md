@@ -199,6 +199,8 @@ npm.cmd run smoke:threat-live-api
 
 Without `AURA_SENSE_LIVE_API=1`, these commands refuse and write default-safe artifacts under `.tmp\passive-live-api-smoke\result.json` and `.tmp\threat-live-api-smoke\result.json`.
 
+The transition map for a future authorized live API run is documented in `docs/testing/live-api-smoke-transition-readiness.md`.
+
 ## Known Gaps
 
 - some inherited seed service names remain below the visible product surface
@@ -216,6 +218,7 @@ Without `AURA_SENSE_LIVE_API=1`, these commands refuse and write default-safe ar
 - live validation/calibration is now scoped as a future milestone, not yet implemented
 - aggressive testing and bug hunting are complete for the offline Milestone 13 scope; live/manual validation remains gated for later operator-validation work
 - live operator gamelog smoke has a scaffold at `docs/testing/live-operator-gamelog-smoke-playbook.md`, but it is not execution authorization
+- live API smoke transition readiness has a map at `docs/testing/live-api-smoke-transition-readiness.md`, but it is not execution authorization
 - real SDE refresh/download artifacts must remain explicit and should not be staged by default
 - concept and research docs are AURA-Sense product doctrine or local review notes; older audit records may still describe past cleanup work
 

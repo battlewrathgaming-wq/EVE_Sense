@@ -30,6 +30,8 @@ npm.cmd run smoke:threat-live-api
 
 Live API smoke must stay explicit, opt-in, and outside `verify:all`. These commands write refusal artifacts by default when `AURA_SENSE_LIVE_API` is not `1`; refusal records are not live execution evidence.
 
+The readiness map for moving from refusal records to a future authorized live API run lives at `docs/testing/live-api-smoke-transition-readiness.md`. It records provider routes, target bounds, artifact classification, authorization wording, and stop conditions; it is not live execution authorization by itself.
+
 Live operator smoke:
 
 Manual live operator smoke belongs to a future explicitly opened M12/operator-validation packet and must not collect broad private history. The scaffold lives at `docs/testing/live-operator-gamelog-smoke-playbook.md`; it is not active authorization by itself. Historical playbook references under `docs/gap/*` are not active authorization by themselves.

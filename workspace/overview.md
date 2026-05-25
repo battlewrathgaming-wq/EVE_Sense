@@ -1,6 +1,6 @@
 ﻿# AURA-Sense Workspace Overview
 
-Status: Active - M12A live API smoke transition readiness
+Status: Idle - M12A accepted; M12 live/manual validation remains gated
 Last reviewed: 2026-05-25
 
 ## Vision Statement
@@ -22,7 +22,7 @@ It should present compact, uncertainty-aware tactical state while staying transi
 
 | Milestone | Roadmap Source | Status | Notes |
 | --- | --- | --- | --- |
-| 12 | `docs/roadmap/milestone-12-live-validation-and-tactical-calibration.md` | Active | M12A is open as a refusal-to-live API transition readiness packet. It must not run live providers, operator gamelog smoke, manual shortcuts, real SDE refresh, renderer, Lab, adapter, calibration, or fixture intake work. |
+| 12 | `docs/roadmap/milestone-12-live-validation-and-tactical-calibration.md` | Active/Gated | M12A refusal-to-live API transition readiness is accepted. Any live provider, operator gamelog smoke, manual shortcut, real SDE refresh, calibration, or fixture intake work still requires a future active packet and explicit Human authorization. |
 | 13 | `docs/roadmap/milestone-13-aggressive-testing-and-bug-hunting.md` | Complete | Deterministic aggressive hardening accepted; live/manual validation remains gated for later operator-validation work. |
 | 14 | `docs/roadmap/milestone-14-back-page-threat-intel-ux.md` | Complete | Back-page Threat Intel UX accepted; live/manual shortcut feel remains gated for optional later operator-validation work. |
 | 15 | `docs/roadmap/milestone-15-display-request-response-fitness.md` | Parked | Lab-facing presentation response work is parked while Lab stabilizes its side. |
@@ -35,12 +35,14 @@ It should present compact, uncertainty-aware tactical state while staying transi
 
 Milestone: M12 - Live Validation And Tactical Calibration
 Current packet: `workspace/current.md`
-Current sequence: M12A live API smoke transition readiness open
-Current executor: Dev
-Expected Dev artifact: `workspace/DevHS36-m12a-live-api-smoke-transition-readiness.md`
+Current sequence: Idle after M12A acceptance
+Current executor: None
+Expected Dev artifact: None
 Latest M12 gate trace: `workspace/OverseerHS33-m12-live-validation-gate-trace.md`
-Latest M12 Dev handoff: `workspace/DevHS34-m12-live-validation-harness-prep.md`
-Latest M12 acceptance: `workspace/OverseerHS35-m12-live-validation-harness-prep-acceptance.md`
+Latest M12 prep Dev handoff: `workspace/DevHS34-m12-live-validation-harness-prep.md`
+Latest M12 prep acceptance: `workspace/OverseerHS35-m12-live-validation-harness-prep-acceptance.md`
+Latest M12A Dev handoff: `workspace/DevHS36-m12a-live-api-smoke-transition-readiness.md`
+Latest M12A acceptance: `workspace/OverseerHS37-m12a-live-api-transition-readiness-acceptance.md`
 Latest accepted handshake: `workspace/complete/milestone-14/OverseerHS03-milestone-14-closure.md`
 Latest accepted prototype review: `workspace/OverseerHS02-passive-telemetry-readout-prototype-review.md`
 Latest accepted face advisory: `workspace/OverseerHS03-sense-face-presentation-adoption-review.md`
@@ -59,7 +61,7 @@ Latest M19 review: `workspace/complete/milestone-19/SecEngHS28-gamelog-ingest-co
 Latest M19 Dev handoff: `workspace/complete/milestone-19/DevHS30-gamelog-containment-hardening.md`
 Latest M19 acceptance: `workspace/complete/milestone-19/OverseerHS31-m19-gamelog-containment-hardening-acceptance.md`
 Latest roadmap reconciliation: `workspace/complete/milestone-19/OverseerHS32-roadmap-state-reconciliation.md`
-Active runway: M12A refusal-path live API smoke transition readiness
+Active runway: None
 
 ## Authority Notes
 
