@@ -6,6 +6,8 @@ Owner: Overseer direction, Dev execution
 
 Current note: M12 is not an active milestone. It remains the appropriate future envelope for operator-machine validation, live API smoke evidence, real-data calibration, and accepted raw fixture intake. It must be explicitly opened by the Human/Overseer before any live, manual, private-folder, or operator-environment work runs.
 
+Gate trace: `workspace/OverseerHS33-m12-live-validation-gate-trace.md` records how the current M12 gate is hooked through roadmap policy, runtime smoke policy, `AURA_SENSE_LIVE_API`, backend live IO gates, provider services, and the future live operator smoke boundary.
+
 ## Vision Setting
 
 Milestone 12 would prove AURA-Sense against real operator conditions without turning live use into uncontrolled collection.
