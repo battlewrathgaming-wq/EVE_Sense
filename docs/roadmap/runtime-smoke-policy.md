@@ -31,7 +31,7 @@ Live API smoke must stay explicit, opt-in, and outside `verify:all`.
 
 Live operator smoke:
 
-Manual live operator smoke is governed by `docs/gap/to-do/live-operator-smoke-playbook.md` and must not collect broad private history.
+Manual live operator smoke belongs to a future explicitly opened M12/operator-validation packet and must not collect broad private history. Historical playbook references under `docs/gap/*` are not active authorization by themselves.
 
 ## Artifact Policy
 

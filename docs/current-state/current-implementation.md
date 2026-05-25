@@ -1,7 +1,7 @@
 # Current State: AURA-Sense Implementation
 
-Date: 2026-05-24
-Status: Operational hardening complete; Milestone 13 and Milestone 14 complete; post-Milestone-14 Sense face refinement accepted
+Date: 2026-05-25
+Status: Idle after M19; deterministic hardening complete through gamelog containment and provider fault-injection; live/manual validation remains gated
 
 ## What Exists
 
@@ -209,6 +209,8 @@ It writes artifacts under `.tmp\electron-visual-smoke` and is intentionally not 
 - concept and research docs are AURA-Sense product doctrine or local review notes; older audit records may still describe past cleanup work
 
 ## Related Documents
+
+The historical `docs/gap/*` paths listed here are reference/evidence paths from the deprecated gap workflow. They are not active task queues unless `workspace/current.md` explicitly opens one through a current milestone/runway.
 
 - `docs/current-state/display-pipeline-inventory.md`
 - `docs/current-state/seed-current-state.md`

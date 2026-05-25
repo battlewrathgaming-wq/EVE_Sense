@@ -1,8 +1,10 @@
 # Architecture Needs Review: Post Combat Witness Loop
 
-Status: Active
+Status: Historical review - superseded by later milestones
 Date: 2026-05-22
 Owner: Overseer direction, Dev execution
+
+Current note: This review captured the architecture needs before Passive Telemetry expansion. Its major needs were addressed by later Passive Telemetry, Combat Witness fan-out, renderer boundary, provider fault-injection, and M19 gamelog containment work. Use it as historical rationale, not an active work packet.
 
 ## Current Baseline
 
@@ -15,7 +17,7 @@ AURA-Sense now has:
 - backend service registry and validation helpers
 - zKill/search feature doctrine clarified, with ESI expansion deferred
 
-The project is ready to expand from one proven lane into the next feature lane, but it should pause long enough to avoid accidental coupling.
+At the time, the project was ready to expand from one proven lane into the next feature lane, but needed to pause long enough to avoid accidental coupling. That expansion has since occurred through the milestone sequence recorded in `docs/roadmap/README.md` and `docs/current-state/current-implementation.md`.
 
 ## Architectural Needs Before Passive Telemetry
 

@@ -1,14 +1,16 @@
 # Milestone 12: Live Validation And Tactical Calibration
 
-Status: Planned - After Milestone 11
+Status: Future candidate - live/manual gated
 Date: 2026-05-22
 Owner: Overseer direction, Dev execution
 
+Current note: M12 is not an active milestone. It remains the appropriate future envelope for operator-machine validation, live API smoke evidence, real-data calibration, and accepted raw fixture intake. It must be explicitly opened by the Human/Overseer before any live, manual, private-folder, or operator-environment work runs.
+
 ## Vision Setting
 
-Milestone 12 proves AURA-Sense against real operator conditions without turning live use into uncontrolled collection.
+Milestone 12 would prove AURA-Sense against real operator conditions without turning live use into uncontrolled collection.
 
-By this point, the viewport and runtime controls should be stable enough to test against live gamelog append behavior, live-gated provider calls, and curated real combat datasets. The goal is not to add more features. The goal is to calibrate trust.
+The viewport, runtime controls, provider gates, parser, watcher containment, and deterministic hardening are now stable enough to make this a plausible future candidate. The goal is not to add more features. The goal is to calibrate trust under an explicitly authorized live/manual packet.
 
 This milestone converts "works in fixtures" into "behaves honestly in the field."
 
@@ -37,6 +39,8 @@ AURA-Sense has recorded live/manual smoke evidence, calibrated Combat Witness me
 
 Task packet: `docs/gap/to-do/live-operator-smoke-playbook.md`.
 
+Current state: candidate only. Do not execute without a fresh active `workspace/current.md` packet.
+
 ### P0 Task 2: Live API Smoke Evidence
 
 - Run explicit live-gated Passive Telemetry and Threat Intel smoke only when `AURA_SENSE_LIVE_API=1` is intentionally enabled.
@@ -45,6 +49,8 @@ Task packet: `docs/gap/to-do/live-operator-smoke-playbook.md`.
 - Do not run live API smoke inside offline verification.
 
 Task packet: `docs/gap/to-do/live-api-smoke-evidence.md`.
+
+Current state: candidate only. Live provider smoke remains opt-in and outside `verify:all`.
 
 ### P1 Task 3: Combat Metric Calibration
 

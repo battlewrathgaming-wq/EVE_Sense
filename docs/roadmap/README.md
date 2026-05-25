@@ -108,6 +108,7 @@ Ready when:
 - M16 body-to-adapter trace runway.
 - Additional Lab-facing presentation work while Lab is parked.
 - Future operator-environment gamelog validation unless explicitly opened as a live/manual packet.
+- Roadmap state reconciliation completed after M19 so legacy planning docs read as historical/candidate context, not active authority.
 
 ## Roadmap Use
 

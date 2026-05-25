@@ -1,8 +1,10 @@
 # Feature-Aligned Milestones
 
-Status: Active
+Status: Historical feature-aligned scaffold
 Date: 2026-05-22
 Owner: Overseer direction, Dev execution
+
+Current note: This file records the feature-aligned milestone sequence that got AURA-Sense to its current verified baseline. Use `docs/roadmap/README.md`, the active candidate milestone file, and `workspace/current.md` for current authority before opening new work.
 
 ## Purpose
 
@@ -37,13 +39,13 @@ Each milestone should define:
 
 Task chains are intentionally multi-step. They give Dev room to implement the feature slice without requiring the user to approve every small move.
 
-## Active Sequence
+## Feature Sequence
 
 ### Interlock: Passive Telemetry Live Readiness
 
-Status: Active in `docs/roadmap/passive-telemetry-live-readiness-interlock.md`.
+Status: Complete with live network smoke deferred in `docs/roadmap/passive-telemetry-live-readiness-interlock.md`.
 
-This interlock must clear before Passive Telemetry is treated as live-usable. It addresses real system resolution, ESI system kills/jumps activity, one-hour ETag-aware activity cache records, bounded zKill `pastSeconds` routes, live IO gating, request observability, and freshness honesty.
+This interlock cleared the live-safe Passive Telemetry boundary: real system resolution, ESI system kills/jumps activity, one-hour ETag-aware activity cache records, bounded zKill `pastSeconds` routes, live IO gating, request observability, and freshness honesty.
 
 The interlock is intentionally narrow. It must not add Threat Intel search, Clipboard Acquisition, ESI killmail expansion, Atlas persistence, or renderer network calls.
 
@@ -378,7 +380,7 @@ AURA-Sense visual smoke passed: F:\Projects\AURA-Sense\.tmp\electron-visual-smok
 
 ### Milestone 12: Live Validation And Tactical Calibration
 
-Status: Planned - After Milestone 11 in `docs/roadmap/milestone-12-live-validation-and-tactical-calibration.md`.
+Status: Future candidate / live-manual gated in `docs/roadmap/milestone-12-live-validation-and-tactical-calibration.md`.
 
 Feature anchors:
 
@@ -415,7 +417,7 @@ AURA-Sense has live/manual evidence and calibration decisions recorded without w
 
 ### Milestone 13: Aggressive Testing And Bug Hunting
 
-Status: Planned / Parallel Hardening Runway in `docs/roadmap/milestone-13-aggressive-testing-and-bug-hunting.md`.
+Status: Complete in `docs/roadmap/milestone-13-aggressive-testing-and-bug-hunting.md`.
 
 Feature anchors:
 

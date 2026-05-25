@@ -1,14 +1,16 @@
 # Interlock: Passive Telemetry Live Readiness
 
-Status: Active - Must Clear Before Live Passive Use
+Status: Complete - Live network smoke deferred
 Date: 2026-05-22
 Owner: Overseer direction, Dev execution
 
+Closure note: The interlock was completed through the Passive Telemetry live-safe readiness work. Passive Telemetry now has local/static system resolution, bounded zKill `pastSeconds` context, ESI aggregate activity with one-hour cache/ETag behavior, a backend-owned live IO gate, request observability, and freshness honesty. Live network smoke remains explicitly gated and deferred.
+
 ## Vision Setting
 
-Passive Telemetry is structurally wired, but it is not ready for live operator use while real systems remain unresolved, system activity pulls are missing, zKill requests are broad, and live external IO is not visibly gated.
+Passive Telemetry was structurally wired, but needed a live-safety interlock before operator-facing live work could be trusted. The accepted implementation resolved the known readiness gaps without making live network calls part of offline verification.
 
-This interlock sits ahead of further operator-facing live work. It is intentionally smaller than a product milestone and larger than a bug ticket: Dev should clear the live-use boundary in one coherent slice, then return to the Combat Logging Test Suite or Threat Intel sequence.
+This interlock now remains as historical and acceptance context for the live-safe Passive Telemetry boundary. Future live/manual validation still requires a separate active packet.
 
 ## Source Patterns Reviewed
 
@@ -126,3 +128,16 @@ The interlock is complete when:
 - partial context expires honestly
 - offline verification passes
 - no renderer network calls, Threat Intel search, ESI killmail expansion, Atlas persistence, or broad polling were added
+
+## Completion Record
+
+Completed as part of Passive Telemetry live-safe readiness and preserved in:
+
+- `docs/roadmap/milestone-08-passive-telemetry-live-safe-readiness.md`
+- `docs/current-state/current-implementation.md`
+- `docs/testing/aggressive-test-harness-matrix.md`
+
+Current deferred boundary:
+
+- live Passive Telemetry API smoke is opt-in only and remains outside `verify:all`
+- operator/live validation belongs to a future live/manual packet

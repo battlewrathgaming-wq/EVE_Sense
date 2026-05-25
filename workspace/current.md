@@ -12,6 +12,7 @@ Current runway: None
 Latest closed milestone: Milestone 19 - Gamelog Ingest Containment And Fan-Out Assurance
 Latest accepted closure: `workspace/OverseerHS31-m19-gamelog-containment-hardening-acceptance.md`
 Latest Dev handoff: `workspace/DevHS30-gamelog-containment-hardening.md`
+Latest documentation sweep: `workspace/OverseerHS32-roadmap-state-reconciliation.md`
 Current executor: None
 Current status: Idle after accepted M19 closure
 Expected output: None
