@@ -25,6 +25,7 @@ Current resting state:
 ## Near Outcomes
 
 - Evaluate Lab advisory display responses through Human/Sense fitness discussion before creating resting state or action.
+- Prove selected Sense lanes from ingest through bridge output up to the target-owned adapter boundary before fitting a Lab face.
 - Keep Clipboard Acquisition, Threat Intel, Passive Telemetry, and Combat Witness meanings distinct while improving presentation.
 - Preserve the display request flow without turning Lab response into adoption or Dev authorization.
 - Keep live/manual validation gated until a future operator-validation milestone explicitly opens it.
@@ -36,6 +37,7 @@ Current resting state:
 | 13 | Aggressive testing and bug hunting | Complete | `docs/roadmap/milestone-13-aggressive-testing-and-bug-hunting.md` |
 | 14 | Back-page Threat Intel UX | Complete | `docs/roadmap/milestone-14-back-page-threat-intel-ux.md` |
 | 15 | Display request response fitness and action shaping | Candidate | `docs/roadmap/milestone-15-display-request-response-fitness.md` |
+| 16 | Body-to-adapter readiness | Candidate | `docs/roadmap/milestone-16-body-to-adapter-readiness.md` |
 
 ## Promotion Gates
 
@@ -56,6 +58,15 @@ Ready when:
 - Required verification commands are known.
 - Scope does not require backend, bridge, IPC, payload, persistence, schema, service, provider, shortcut, or runtime changes unless explicitly authorized.
 
+### Body-To-Adapter Readiness Gate
+
+Ready when:
+
+- Human/Sense chooses a first lane to trace.
+- The trace can stop at the target-owned adapter boundary without adopting a Lab face.
+- Required source, transformation, bridge, and state files can be reviewed from disk.
+- Verification can remain deterministic unless live/manual work is explicitly authorized.
+
 ### Operator Validation Gate
 
 Ready when:
@@ -74,6 +85,7 @@ Ready when:
 - Manual shortcut validation.
 - Live provider smoke.
 - Broad face redesign.
+- Lab face adoption before Sense body-to-adapter readiness is proven.
 
 ## Roadmap Use
 
@@ -94,5 +106,6 @@ Do not use this folder as a hidden backlog.
 - `milestone-13-aggressive-testing-and-bug-hunting.md`
 - `milestone-14-back-page-threat-intel-ux.md`
 - `milestone-15-display-request-response-fitness.md`
+- `milestone-16-body-to-adapter-readiness.md`
 - `passive-telemetry-live-readiness-interlock.md`
 - `runtime-smoke-policy.md`

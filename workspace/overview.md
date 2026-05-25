@@ -25,6 +25,7 @@ It should present compact, uncertainty-aware tactical state while staying transi
 | 13 | `docs/roadmap/milestone-13-aggressive-testing-and-bug-hunting.md` | Complete | Deterministic aggressive hardening accepted; live/manual validation remains gated for later operator-validation work. |
 | 14 | `docs/roadmap/milestone-14-back-page-threat-intel-ux.md` | Complete | Back-page Threat Intel UX accepted; live/manual shortcut feel remains gated for optional later operator-validation work. |
 | 15 | `docs/roadmap/milestone-15-display-request-response-fitness.md` | Candidate | Evaluate Lab advisory display responses through Human/Sense fitness discussion before resting state, action, or Dev authorization. |
+| 16 | `docs/roadmap/milestone-16-body-to-adapter-readiness.md` | Candidate | Prove selected Sense lanes from ingest through bridge output up to the target-owned adapter boundary before fitting a Lab face. |
 
 ## Active Milestone
 
@@ -64,6 +65,7 @@ AURA-Sense therefore owns its lane semantics and internal-to-Bridge mapping. Lab
 - `docs/roadmap/milestone-13-aggressive-testing-and-bug-hunting.md`
 - `docs/roadmap/milestone-14-back-page-threat-intel-ux.md`
 - `docs/roadmap/milestone-15-display-request-response-fitness.md`
+- `docs/roadmap/milestone-16-body-to-adapter-readiness.md`
 
 ### Contracts And Doctrine
 
@@ -100,3 +102,4 @@ AURA-Sense therefore owns its lane semantics and internal-to-Bridge mapping. Lab
 - Whether the remaining focused protected-term baseline items need a terminology classification pass.
 - Whether the accepted Passive Telemetry Instrument Band should get visual-density tuning, a dedicated Passive detail reveal, or remain parked.
 - Whether the parked display pipeline candidates should become scoped `request_display` drafts for Sense review.
+- Which first lane should prove body-to-adapter readiness: Clipboard Acquisition for bounded authority-window behavior, or Passive Telemetry for harder state-pressure.
