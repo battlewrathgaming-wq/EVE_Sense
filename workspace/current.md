@@ -1,79 +1,152 @@
 # Current Workspace Packet
 
-Status: Idle
+Status: Active
 Updated: 2026-05-25
 Owner: Overseer
 
 ## Coordination State
 
-Active milestone: None
-Roadmap source: None
-Current runway: None
+Active milestone: M12 - Live Validation And Tactical Calibration
+Roadmap source: `docs/roadmap/milestone-12-live-validation-and-tactical-calibration.md`
+Current runway: Live validation harness preparation
+Source of intent: Human accepted the M12 gate trace and asked whether Dev should inspect the gap before live validation
 Latest closed milestone: Milestone 19 - Gamelog Ingest Containment And Fan-Out Assurance
 Latest accepted closure: `workspace/OverseerHS31-m19-gamelog-containment-hardening-acceptance.md`
-Latest Dev handoff: `workspace/DevHS30-gamelog-containment-hardening.md`
-Latest documentation sweep: `workspace/OverseerHS32-roadmap-state-reconciliation.md`
 Latest M12 gate trace: `workspace/OverseerHS33-m12-live-validation-gate-trace.md`
-Current executor: None
-Current status: Idle after accepted M19 closure
-Expected output: None
+Current executor: Dev
+Current status: Open
+Expected output: `workspace/DevHS34-m12-live-validation-harness-prep.md`
 
-## Resting State
+## Purpose
 
-M19 is complete.
+Prepare the M12 live/manual validation airlock without crossing the live/manual boundary.
 
-Accepted outcome:
+The goal is to give future operator validation a safe harness shape:
 
-- configured gamelog folders now use a shared structure policy ending in `EVE/logs/Gamelogs`
-- the policy does not hard-code `C:\Users\Battle_wrath` as the only valid location
-- runtime settings validation and watcher startup use the shared gamelog folder validator
-- active-folder file containment is checked before stat/range reads
-- `fs.watch` separator/traversal-like filenames are skipped before path joins
-- symlink `.txt` files are skipped where filesystem support exposes them as links
-- same-size/larger file replacement is treated as a new identity and seeded rather than replayed from an old offset
-- parser rejection, diagnostics sanitization, replay, runtime, and witness behavior remain verified
+- Passive already has `smoke:passive-live-api`
+- Threat Intel needs a matching refusal-first live smoke command
+- live operator gamelog smoke needs a playbook/scaffold before any operator-machine run
+- all live/manual/private actions remain gated until explicitly opened later
 
-## Latest Verification
+This packet must not run live providers, inspect private EVE logs, validate manual shortcuts, or touch operator folders.
 
-Overseer reran:
+## Required Reading
+
+- `AGENTS.md`
+- `workspace/README.md`
+- `workspace/overview.md`
+- `workspace/current.md`
+- `workspace/00-dot-protocol.md`
+- `workspace/critical/README.md`
+- `workspace/critical/critical-terms.md`
+- `workspace/critical/critical-assets.md`
+- `workspace/overseer.md`
+- `docs/roadmap/README.md`
+- `docs/roadmap/milestone-12-live-validation-and-tactical-calibration.md`
+- `docs/roadmap/runtime-smoke-policy.md`
+- `workspace/OverseerHS33-m12-live-validation-gate-trace.md`
+- `docs/current-state/current-implementation.md`
+- `docs/testing/aggressive-test-harness-matrix.md`
+- `package.json`
+
+Implementation surfaces likely needed:
+
+- `scripts/smoke-passive-live-api.js`
+- `src/passive/liveIoGate.js`
+- `src/threat/threatIntelService.js`
+- `src/threat/threatIntelZkillClient.js`
+- `src/threat/threatIntelTargetResolver.js`
+- `src/services/httpClient.js`
+- `src/main/main.js`
+- `src/main/preload.js`
+- `scripts/verify-provider-fault-injection.js`
+
+## Runway
+
+1. Review the M12 gate trace and existing Passive live smoke refusal path.
+2. Add a Threat Intel live smoke command that refuses unless `AURA_SENSE_LIVE_API=1`.
+3. Ensure the Threat live smoke refusal path writes a deterministic artifact under `.tmp`, similar to Passive.
+4. If `AURA_SENSE_LIVE_API=1` is set in a future authorized run, the command should be scoped and respectful: one deliberate target, bounded lookback/sample, backend Threat Intel service, request logs, and artifact output.
+5. Add a live operator gamelog smoke playbook/scaffold in docs, with privacy rules, artifact expectations, stop conditions, and explicit Human authorization requirements.
+6. Update `package.json` with the new smoke command.
+7. Update runtime smoke policy and current-state/testing docs as needed so the refusal-first harness is discoverable.
+8. Run refusal-path smoke only, without setting `AURA_SENSE_LIVE_API`.
+9. Run required verification.
+10. Create the expected Dev handoff.
+
+## Acceptance Criteria
+
+The packet is complete when:
+
+- `npm.cmd run smoke:threat-live-api` or equivalent exists
+- the new Threat live smoke command refuses by default when `AURA_SENSE_LIVE_API` is not `1`
+- the refusal path writes a deterministic artifact under `.tmp`
+- the command is outside `verify:all`
+- future enabled behavior is scoped to a single deliberate Threat Intel target and bounded provider query
+- no live network call occurs during this packet
+- no operator/private EVE log folder is inspected
+- no manual shortcut validation is run
+- a live operator gamelog smoke playbook/scaffold exists and does not authorize execution by itself
+- docs clearly separate refusal-path records from live execution records
+- `verify:all` remains offline and passing
+
+## Guardrails
+
+- Do not set `AURA_SENSE_LIVE_API=1`.
+- Do not run live zKill or ESI calls.
+- Do not run live EVE log ingestion.
+- Do not inspect `C:\Users\Battle_wrath\Documents\EVE\logs\Gamelogs` or any private/operator gamelog folder.
+- Do not run manual shortcut validation.
+- Do not run real SDE refresh/download.
+- Do not change provider semantics except what is required for a smoke harness.
+- Do not add ESI killmail expansion.
+- Do not add Atlas persistence, report storage, watch semantics, or Atlas-owned Evidence semantics.
+- Do not change renderer UI/face behavior.
+- Do not create Lab/adaptor/display work.
+- Do not promote live behavior into product claims.
+
+## Stop Conditions
+
+Stop and hand off if:
+
+- live provider execution appears necessary to implement the refusal path
+- a playbook needs private operator paths or real sample content
+- Threat live smoke needs product direction for target choice beyond a safe documented placeholder/default
+- changes would affect bridge contracts, IPC payload semantics, or renderer behavior
+- `verify:all` would need live network, Electron, private logs, or operator state
+
+## Required Verification
+
+Run:
 
 ```powershell
-npm.cmd run verify:gamelog-watcher
-npm.cmd run verify:gamelog-watcher-chaos
-npm.cmd run verify:combat-parser
-npm.cmd run verify:combat-parser-hostile
-npm.cmd run verify:combat-replay
-npm.cmd run verify:diagnostics
+npm.cmd run smoke:passive-live-api
+npm.cmd run smoke:threat-live-api
 npm.cmd run verify:protected-terms
 npm.cmd run verify:all
 git status --short --branch
 ```
 
-Results:
+Do not set `AURA_SENSE_LIVE_API=1`. Both live smoke commands should record refusal/default-safe artifacts.
 
-- all deterministic checks passed
-- `verify:protected-terms` remained warning-only and made no protected-word JSON or rename changes
+## Evidence
 
-## Parked / Gated Work
+Pending Dev.
 
-- live EVE log ingestion remains gated
-- private operator folders remain off-limits unless explicitly authorized
-- manual filesystem probing outside repository/temp fixture paths remains gated
-- live provider smoke remains gated
-- manual shortcut validation remains gated
-- real SDE refresh/download remains gated
-- Lab face, adapter, display request, renderer, IPC, payload, lane meaning, and UI copy work remain out of scope until Human opens a new packet
-- operator-environment gamelog validation would require a future live/manual packet
+## Handoff Requirements
 
-## Next Action
+Create:
 
-No Dev runway is open.
+```txt
+workspace/DevHS34-m12-live-validation-harness-prep.md
+```
 
-If the Human opens new work, Overseer should read:
+The handoff should include:
 
-- `workspace/overseer.md`
-- `workspace/overview.md`
-- `docs/roadmap/README.md`
-- the relevant candidate milestone file
-
-Then write a bounded `workspace/current.md` runway with acceptance criteria before assigning Dev work.
+1. Files changed.
+2. New Threat live smoke command and default refusal behavior.
+3. Artifact paths written by refusal-path smoke.
+4. Live operator gamelog playbook/scaffold path.
+5. Verification commands and results.
+6. Confirmation that no live providers, private folders, manual shortcuts, real SDE, renderer, Lab, or adapter work was run.
+7. Residual risks and next recommended M12 packet.
