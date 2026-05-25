@@ -15,6 +15,7 @@ Latest display inventory scaffold: `workspace/display_inventory.md`
 Latest display pipeline audit: `workspace/DisplayInventoryAuditHS01-ingest-transform-bridge-display.md`
 Latest qualitative companion: `workspace/DisplayInventoryQualitativeReportHS01-ingest-transform-bridge-display.md`
 Latest audit acceptance: `workspace/OverseerHS12-display-inventory-pipeline-audit-review.md`
+Latest durable display pipeline record: `docs/current-state/display-pipeline-inventory.md`
 Current executor: None
 Current status: Awaiting human direction
 Expected output: None
@@ -30,6 +31,8 @@ Ingest -> Transformation -> Bridge -> User Display
 ```
 
 The accepted audit is advisory input only. It is not implementation work, UI redesign, terminology rename work, Lab adoption, a Dev runway, a bridge contract, or a request queue.
+
+The durable display pipeline record captures Sense-owned pipeline intent and request-capture implications without creating active Lab requests.
 
 Authority split:
 
@@ -61,6 +64,7 @@ Accepted display/request workflow:
 - `workspace/DisplayInventoryAuditHS01-ingest-transform-bridge-display.md`
 - `workspace/DisplayInventoryQualitativeReportHS01-ingest-transform-bridge-display.md`
 - `workspace/OverseerHS12-display-inventory-pipeline-audit-review.md`
+- `docs/current-state/display-pipeline-inventory.md`
 
 Accepted Sense direction:
 
@@ -96,6 +100,10 @@ Safest later Lab comparison candidates:
 - `sense.threat-acquisition-bar`
 
 These are candidates only. No Lab `request_display` entry is active.
+
+Durable source record:
+
+- `docs/current-state/display-pipeline-inventory.md` captures lane pipeline intent, required basis/uncertainty, must-not-imply constraints, and parked request-capture implications.
 
 ## Candidate Next Steps
 

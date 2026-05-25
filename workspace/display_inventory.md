@@ -182,6 +182,33 @@ Use this table only after a scoped request is submitted and answered.
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | _none_ | _none_ | _n/a_ | _n/a_ | _n/a_ | _n/a_ | _n/a_ | Inventory scaffold only. |
 
+## Request Requirement Capture
+
+Use this section to qualify candidate `request_display` intent before anything is submitted to Lab.
+
+The durable source reference is:
+
+`docs/current-state/display-pipeline-inventory.md`
+
+Each candidate should answer:
+
+- What display problem is Sense asking Lab to compare?
+- Which Sense-owned source terms and meanings must survive?
+- Which fields, states, freshness, basis, missing-state notes, or caution text are required?
+- What must not be implied?
+- What would Sense need to decide before adoption?
+- What verification would be needed if a later Sense-local implementation packet opens?
+
+| Candidate ID | Source Inventory ID | Current Status | Request Strength | Display Problem To Scope | Source Terms To Preserve | Required State / Basis Slots | Must Not Imply | Sense Decision Needed | Verification If Implemented |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `sense.threat-latest-scan-review` | `sense.threat-latest-scan-review` | `needs-scope` | `comparative` | Present the latest Threat Intel scan review without storage/history flavor. | Threat Intel; No scan; Scoped sample; Partial sample; Capped sample; Live IO blocked. | target, target type, source/provider, lookback, sample count, cap, partial, blocked, failed, stale/no-scan reason. | Historical proof, durable storage, broad intelligence, complete provider view. | Whether Sense wants Lab comparison for latest-scan review wording/density. | Renderer shell and Electron smoke for state labels; protected-term check. |
+| `sense.clipboard-window` | `sense.clipboard-window` | `needs-scope` | `pressure-test` | Preserve the short visible clipboard authority window while improving boundedness and shortcut feedback. | Clipboard Acquisition; Pulling; Listening; Cooldown. | current lifecycle state, shortcut status, live IO block, capture result, cooldown/timeout/rejection reason. | Background clipboard monitoring, persistent listener mode, hidden scan. | Whether `Pulling`/`Listening`/`Cooldown` are preserve-exact or Lab-translatable. | Clipboard race verification, renderer shell/smoke if UI changes, protected-term check. |
+| `sense.provider-pulse-row` | `sense.provider-pulse-row` | `needs-scope` | `formative` or `comparative` | Compare calmer provider/sample status display against current pulse wording. | Passive Telemetry; Threat Intel; Partial sample; Capped sample; Live IO blocked. | source/provider, freshness/age, sample count, cap, partial, blocked, failed/degraded, no observation/no scan. | Continuous live heartbeat, complete provider view, provider truth. | Whether pulse remains user-facing or becomes source/sample state wording. | Renderer shell/smoke for Passive and Threat provider states; protected-term check. |
+| `sense.passive.state-basis` | `sense.passive.state-basis` / `sense.passive-diagnostics` | `needs-scope` | `pressure-test` | Reduce first-read density while preserving Passive state, freshness, source, cap, partial, blocked, and degraded meaning. | Passive Telemetry; Fresh context; Stale context; Partial sample; Capped sample; Live IO blocked; No observation. | current system, state, source basis, activity, sample count, age/freshness, cap, partial, blocked, degraded, no observation. | Generic absence/unavailable/current wording that hides known state; background Threat Intel. | Whether Passive needs a dedicated detail reveal beyond diagnostics. | Passive telemetry verification, renderer shell/smoke, protected-term check. |
+| `sense.threat-acquisition-bar` | `sense.threat-acquisition-bar` | `needs-scope` | `comparative` | Clarify manual and clipboard target acquisition without creating background-scan implication. | Threat Intel; target type; manual target; clipboard-acquired target; No scan. | input source, target text, target kind, resolver result, scan state, no-scan reason, blocked/failed/ambiguous/unresolved/unsupported. | Automatic target finding, hidden provider calls, target guessing, complete intelligence. | Whether search/display/acquisition grouping should be compared by Lab. | Threat Intel verification, clipboard race verification if affected, renderer shell/smoke, protected-term check. |
+
+These rows are parked request-capture candidates. They are not active Lab requests and do not count toward the five-active-request cap.
+
 ## Likely First Request Candidates
 
 These are not active requests. They are candidates to scope later:
