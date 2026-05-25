@@ -12,8 +12,8 @@ try {
   const settings = createRuntimeSettingsService({ settingsPath, now: () => '2026-05-22T00:00:00.000Z' });
   assert.strictEqual(settings.load().status, 'missing', 'missing runtime settings should be explicit');
 
-  const gamelogFolder = path.join(tempRoot, 'Gamelogs');
-  fs.mkdirSync(gamelogFolder);
+  const gamelogFolder = path.join(tempRoot, 'EVE', 'logs', 'Gamelogs');
+  fs.mkdirSync(gamelogFolder, { recursive: true });
   const saved = settings.save({ gamelogFolder });
   assert.strictEqual(saved.status, 'ready', 'valid runtime settings should save as ready');
   assert.strictEqual(saved.settings.gamelogFolder, gamelogFolder, 'saved settings should retain validated gamelog path');

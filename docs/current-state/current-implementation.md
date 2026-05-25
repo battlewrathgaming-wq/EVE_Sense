@@ -23,6 +23,9 @@ The current implementation includes:
 - fixture-first offline verification command
 - fixture-backed EVE combat log parser boundary
 - configurable EVE gamelog folder watcher
+- explicit EVE `logs/Gamelogs` structure validation for configured gamelog folders
+- normalized/realpath active-folder containment checks before gamelog file range reads
+- gamelog symlink-file skip and same-size/larger replacement identity seeding in deterministic watcher tests
 - 15 second rolling Combat Witness damage/repair metrics
 - strict EVE timestamp validation for parsed log envelopes
 - watcher parser/listener failure isolation
@@ -94,7 +97,7 @@ The current implementation includes:
 - aggressive test harness matrix that maps invariants to offline, Electron, live, and manual command classes
 - hostile combat parser fixture verification for malformed envelopes, timestamp edges, near-misses, private-content lookalikes, and oversized lines
 - adversarial renderer/preload boundary verification for hostile patterns, preload command allowlist, and subscription cleanup
-- gamelog watcher chaos verification for append-only seeding, polling fallback, truncation/replacement, deletion, partial lines, duplicate TTL, and failure isolation
+- gamelog watcher chaos verification for append-only seeding, polling fallback, path containment, symlink-file skips where feasible, same-size/larger replacement identity, truncation/replacement, deletion, partial lines, duplicate TTL, and failure isolation
 
 ## What Does Not Yet Exist
 
@@ -176,7 +179,7 @@ Available command:
 npm run verify:all
 ```
 
-This verifies the current utilities, service rigging, Combat Witness parser/watcher/runtime foundations, hostile parser rejection fixtures, gamelog watcher chaos behavior, Combat Logging Test Suite offline checks, Passive Telemetry foundation, fixture-only Passive/Threat provider fault injection, Threat Intel request/resolution/zKill normalization/clipboard lifecycle checks, renderer shell, renderer boundary static checks, and adversarial renderer/preload boundary checks. It does not verify full tactical viewport readiness.
+This verifies the current utilities, service rigging, Combat Witness parser/watcher/runtime foundations, hostile parser rejection fixtures, gamelog watcher containment/chaos behavior, Combat Logging Test Suite offline checks, Passive Telemetry foundation, fixture-only Passive/Threat provider fault injection, Threat Intel request/resolution/zKill normalization/clipboard lifecycle checks, renderer shell, renderer boundary static checks, and adversarial renderer/preload boundary checks. It does not verify full tactical viewport readiness.
 
 Runtime visual smoke is implemented as a separate environment-sensitive command:
 

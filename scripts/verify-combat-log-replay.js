@@ -104,7 +104,7 @@ function verifySemanticReplay() {
 function verifyWatcherPathReplay() {
   const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'aura-sense-combat-replay-'));
   try {
-    const folder = path.join(tempRoot, 'Gamelogs');
+    const folder = path.join(tempRoot, 'EVE', 'logs', 'Gamelogs');
     fs.mkdirSync(folder, { recursive: true });
     const logPath = path.join(folder, '20260522_010101_123.txt');
     fs.writeFileSync(logPath, `${fixtureRow(dataset.watcherReplay.seedRawLineHash).raw}\n`);

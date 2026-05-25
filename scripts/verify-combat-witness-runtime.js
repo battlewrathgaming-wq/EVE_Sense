@@ -15,7 +15,7 @@ assert.strictEqual(statusSnapshots.at(-1).operational.watcher.state, 'unavailabl
 
 const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'aura-sense-runtime-'));
 try {
-  const folder = path.join(tempRoot, 'Gamelogs');
+  const folder = path.join(tempRoot, 'EVE', 'logs', 'Gamelogs');
   fs.mkdirSync(folder, { recursive: true });
   const logPath = path.join(folder, '20260522_010101_123.txt');
   fs.writeFileSync(logPath, '[ 2026.05.22 01:01:01 ] (None) Jumping from Old to Seeded\n');

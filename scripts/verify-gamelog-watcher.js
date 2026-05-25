@@ -15,9 +15,20 @@ try {
   );
   assert.strictEqual(normalizeGamelogFolder(''), null, 'blank folder path should normalize to null');
   assert.strictEqual(validateGamelogFolder(path.join(tempRoot, 'missing')).state, 'missing', 'missing path should fail validation');
+  const outsideStructure = path.join(tempRoot, 'outside');
+  fs.mkdirSync(outsideStructure, { recursive: true });
+  assert.strictEqual(validateGamelogFolder(outsideStructure).state, 'invalid', 'folder outside EVE/logs/Gamelogs should fail validation');
 
-  const folder = path.join(tempRoot, 'Gamelogs');
+  const folder = path.join(tempRoot, 'EVE', 'logs', 'Gamelogs');
   fs.mkdirSync(folder, { recursive: true });
+  assert.strictEqual(validateGamelogFolder(folder).ok, true, 'expected EVE/logs/Gamelogs folder structure should validate');
+  assert.strictEqual(
+    validateGamelogFolder(path.join(folder, '..', '..', '..', 'outside')).state,
+    'invalid',
+    'traversal-resolved folder outside expected structure should fail validation'
+  );
+  verifySymlinkDirectoryPolicy(tempRoot, outsideStructure);
+
   const logPath = path.join(folder, '20260522_010101_123.txt');
   fs.writeFileSync(logPath, '[ 2026.05.22 01:01:01 ] (None) Jumping from Old to Seeded\n');
 
@@ -128,4 +139,16 @@ try {
 
 function append(filePath, text) {
   fs.appendFileSync(filePath, text);
+}
+
+function verifySymlinkDirectoryPolicy(root, target) {
+  const linkParent = path.join(root, 'linked', 'EVE', 'logs');
+  const linkPath = path.join(linkParent, 'Gamelogs');
+  fs.mkdirSync(linkParent, { recursive: true });
+  try {
+    fs.symlinkSync(target, linkPath, 'junction');
+  } catch {
+    return;
+  }
+  assert.strictEqual(validateGamelogFolder(linkPath).state, 'invalid', 'linked Gamelogs directory should fail validation');
 }

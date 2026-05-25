@@ -1,4 +1,5 @@
 const fs = require('node:fs');
+const { validateGamelogFolder } = require('../combat/eveLogPaths');
 
 const MAX_SCAN_QUERY_LENGTH = 128;
 const MAX_USER_AGENT_LENGTH = 180;
@@ -108,15 +109,17 @@ function validateLogPathForWatcher(inputPath) {
   if (!value) {
     return validationError('SETTINGS_LOG_PATH_EMPTY', 'EVE gamelog folder path is required before watcher restart');
   }
-  try {
-    const stats = fs.statSync(value);
-    if (!stats.isDirectory()) {
-      return validationError('SETTINGS_LOG_PATH_NOT_DIRECTORY', 'EVE gamelog path must be a folder');
+  const validation = validateGamelogFolder(value, { fsImpl: fs });
+  if (!validation.ok) {
+    if (validation.code === 'GAMELOG_PATH_NOT_DIRECTORY') {
+      return validationError('SETTINGS_LOG_PATH_NOT_DIRECTORY', validation.message);
     }
-    return { ok: true, value };
-  } catch {
-    return validationError('SETTINGS_LOG_PATH_MISSING', 'EVE gamelog folder does not exist');
+    if (validation.state === 'missing') {
+      return validationError('SETTINGS_LOG_PATH_MISSING', validation.message);
+    }
+    return validationError('SETTINGS_LOG_PATH_OUTSIDE_EXPECTED_STRUCTURE', validation.message);
   }
+  return { ok: true, value: validation.value };
 }
 
 function validationError(code, message) {

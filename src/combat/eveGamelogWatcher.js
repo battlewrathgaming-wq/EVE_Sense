@@ -4,7 +4,7 @@ const crypto = require('node:crypto');
 const { collectCompleteLines } = require('./lineBuffer');
 const { parseEveLogLine } = require('./combatLogParser');
 const { RecentEventDeduper } = require('./recentEventDeduper');
-const { normalizeGamelogFolder } = require('./eveLogPaths');
+const { normalizeGamelogFolder, validateGamelogFolder } = require('./eveLogPaths');
 const { defaultDiagnosticsPolicy } = require('../services/diagnosticsPolicy');
 
 class EveGamelogWatcher {
@@ -34,10 +34,12 @@ class EveGamelogWatcher {
     this.clearIntervalFn = clearIntervalFn;
     this.readRange = readRange;
     this.folderPath = null;
+    this.folderRealPath = null;
     this.watcher = null;
     this.poller = null;
     this.activeStrategy = null;
     this.offsets = new Map();
+    this.fileIdentities = new Map();
     this.partials = new Map();
   }
 
@@ -53,9 +55,10 @@ class EveGamelogWatcher {
       return this.setStatus(validation.state, folderPath, validation.message);
     }
 
-    this.folderPath = folderPath;
-    this.seedOffsets(folderPath);
-    this.startStrategy(folderPath);
+    this.folderPath = validation.value || folderPath;
+    this.folderRealPath = validation.realPath || realpath(this.folderPath);
+    this.seedOffsets(this.folderPath);
+    this.startStrategy(this.folderPath);
 
     return this.setStatus('watching', folderPath, `Watching EVE gamelogs via ${this.activeStrategy}`);
   }
@@ -71,7 +74,9 @@ class EveGamelogWatcher {
     this.poller = null;
     this.activeStrategy = null;
     this.folderPath = null;
+    this.folderRealPath = null;
     this.offsets.clear();
+    this.fileIdentities.clear();
     this.partials.clear();
     this.deduper.clear?.();
   }
@@ -82,8 +87,13 @@ class EveGamelogWatcher {
         continue;
       }
 
-      const filePath = path.join(folderPath, entry.name);
-      this.offsets.set(filePath, fs.statSync(filePath).size);
+      const validation = this.validateContainedFile(path.join(folderPath, entry.name));
+      if (!validation.ok) {
+        this.trace('file_skipped_outside_containment', { filePath: validation.filePath || path.join(folderPath, entry.name), reason: validation.reason });
+        continue;
+      }
+      this.offsets.set(validation.filePath, validation.stats.size);
+      this.fileIdentities.set(validation.filePath, validation.identity);
     }
 
     this.trace('offsets_seeded', { folderPath, files: this.offsets.size });
@@ -112,11 +122,17 @@ class EveGamelogWatcher {
 
   startFsWatch(folderPath) {
     this.watcher = fs.watch(folderPath, { persistent: true }, (eventType, filename) => {
-      if (!filename || !isTextLog(filename)) {
+      const filePath = containedFilenamePath(folderPath, filename);
+      if (!filePath || !isTextLog(filePath)) {
+        if (filename) {
+          this.trace('file_skipped_outside_containment', {
+            filePath: path.join(folderPath, filename.toString()),
+            reason: 'unsafe_filename'
+          });
+        }
         return;
       }
 
-      const filePath = path.join(folderPath, filename.toString());
       this.handleFile(filePath);
       this.trace('file_event', { eventType, filePath, strategy: this.activeStrategy });
     });
@@ -171,25 +187,41 @@ class EveGamelogWatcher {
       return [];
     }
 
-    let stats;
-    try {
-      stats = fs.statSync(filePath);
-    } catch (error) {
-      this.setStatus('error', this.folderPath, error.message);
+    const validation = this.validateContainedFile(filePath);
+    if (!validation.ok) {
+      this.trace('file_skipped_outside_containment', {
+        filePath: validation.filePath || filePath,
+        reason: validation.reason
+      });
+      return [];
+    }
+    const containedPath = validation.filePath;
+    const stats = validation.stats;
+
+    const previousOffset = this.offsets.get(containedPath);
+    if (previousOffset == null) {
+      this.offsets.set(containedPath, stats.size);
+      this.fileIdentities.set(containedPath, validation.identity);
+      this.trace('file_seeded', { filePath: containedPath, size: stats.size });
       return [];
     }
 
-    const previousOffset = this.offsets.get(filePath);
-    if (previousOffset == null) {
-      this.offsets.set(filePath, stats.size);
-      this.trace('file_seeded', { filePath, size: stats.size });
+    const previousIdentity = this.fileIdentities.get(containedPath);
+    if (previousIdentity && previousIdentity !== validation.identity) {
+      this.offsets.set(containedPath, stats.size);
+      this.fileIdentities.set(containedPath, validation.identity);
+      this.partials.delete(containedPath);
+      this.trace('file_replaced', { filePath: containedPath, previousOffset, size: stats.size });
       return [];
+    }
+    if (!previousIdentity) {
+      this.fileIdentities.set(containedPath, validation.identity);
     }
 
     if (stats.size < previousOffset) {
-      this.offsets.set(filePath, stats.size);
-      this.partials.delete(filePath);
-      this.trace('file_truncated', { filePath, previousOffset, size: stats.size });
+      this.offsets.set(containedPath, stats.size);
+      this.partials.delete(containedPath);
+      this.trace('file_truncated', { filePath: containedPath, previousOffset, size: stats.size });
       return [];
     }
 
@@ -200,31 +232,31 @@ class EveGamelogWatcher {
 
     let text;
     try {
-      text = this.readRange(filePath, start, stats.size);
+      text = this.readRange(containedPath, start, stats.size);
     } catch (error) {
       this.setStatus('error', this.folderPath, error.message);
       this.trace('tail_read_failed', {
-        filePath,
+        filePath: containedPath,
         start,
         end: stats.size,
         message: error.message
       });
       return [];
     }
-    this.offsets.set(filePath, stats.size);
+    this.offsets.set(containedPath, stats.size);
     const complete = collectCompleteLines({
       chunk: text,
-      partial: this.partials.get(filePath) || ''
+      partial: this.partials.get(containedPath) || ''
     });
 
     if (complete.partial) {
-      this.partials.set(filePath, complete.partial);
+      this.partials.set(containedPath, complete.partial);
     } else {
-      this.partials.delete(filePath);
+      this.partials.delete(containedPath);
     }
 
     if (complete.partialDropped) {
-      this.trace('partial_line_dropped', { filePath });
+      this.trace('partial_line_dropped', { filePath: containedPath });
     }
 
     const events = [];
@@ -234,7 +266,7 @@ class EveGamelogWatcher {
         event = this.parseLine(line);
       } catch (error) {
         this.reportRejectedLine({
-          filePath,
+          filePath: containedPath,
           line,
           reason: 'parser_error',
           message: error.message
@@ -243,11 +275,11 @@ class EveGamelogWatcher {
       }
 
       if (!event) {
-        this.reportRejectedLine({ filePath, line, reason: 'unparsed' });
+        this.reportRejectedLine({ filePath: containedPath, line, reason: 'unparsed' });
         continue;
       }
       if (this.deduper.isDuplicate(event)) {
-        this.trace('duplicate_suppressed', { filePath, id: event.id });
+        this.trace('duplicate_suppressed', { filePath: containedPath, id: event.id });
         continue;
       }
       events.push(event);
@@ -255,7 +287,7 @@ class EveGamelogWatcher {
         this.onEvent(event);
       } catch (error) {
         this.trace('listener_error', {
-          filePath,
+          filePath: containedPath,
           eventId: event.id,
           rawLineHash: event.rawLineHash,
           message: error.message
@@ -263,8 +295,47 @@ class EveGamelogWatcher {
       }
     }
 
-    this.trace('tail_read', { filePath, start, end: stats.size, lines: complete.lines.length, events: events.length });
+    this.trace('tail_read', { filePath: containedPath, start, end: stats.size, lines: complete.lines.length, events: events.length });
     return events;
+  }
+
+  validateContainedFile(filePath) {
+    const resolved = path.resolve(String(filePath || ''));
+    const folderPath = this.folderPath ? path.resolve(this.folderPath) : path.dirname(resolved);
+    const folderRealPath = this.folderRealPath || realpathIfExists(folderPath) || folderPath;
+
+    if (this.folderPath && !isDirectChildPath(resolved, folderPath)) {
+      return { ok: false, filePath: resolved, reason: 'outside_active_folder' };
+    }
+
+    let linkStats;
+    let stats;
+    try {
+      linkStats = fs.lstatSync(resolved);
+      if (linkStats.isSymbolicLink()) {
+        return { ok: false, filePath: resolved, reason: 'link_file' };
+      }
+      stats = fs.statSync(resolved);
+    } catch {
+      return { ok: false, filePath: resolved, reason: 'missing' };
+    }
+
+    if (!stats.isFile()) {
+      return { ok: false, filePath: resolved, reason: 'not_file' };
+    }
+
+    const realPath = realpath(resolved);
+    if (!isPathInsideOrEqual(realPath, folderRealPath)) {
+      return { ok: false, filePath: resolved, reason: 'realpath_outside_active_folder' };
+    }
+
+    return {
+      ok: true,
+      filePath: resolved,
+      realPath,
+      stats,
+      identity: fileIdentity(linkStats, stats)
+    };
   }
 
   setStatus(state, folderPath, message) {
@@ -291,16 +362,47 @@ class EveGamelogWatcher {
   }
 }
 
-function validateGamelogFolder(folderPath) {
-  try {
-    const stats = fs.statSync(folderPath);
-    if (!stats.isDirectory()) {
-      return { ok: false, state: 'invalid', message: 'EVE gamelog path is not a folder' };
-    }
-    return { ok: true };
-  } catch (error) {
-    return { ok: false, state: 'missing', message: 'EVE gamelog folder not found' };
+function containedFilenamePath(folderPath, filename) {
+  if (!filename) {
+    return null;
   }
+  const name = filename.toString();
+  if (name.includes('/') || name.includes('\\') || name === '.' || name === '..' || name.includes('..')) {
+    return null;
+  }
+  return path.join(folderPath, name);
+}
+
+function isDirectChildPath(filePath, folderPath) {
+  const relative = path.relative(path.resolve(folderPath), path.resolve(filePath));
+  return Boolean(relative) && !relative.startsWith('..') && !path.isAbsolute(relative) && !relative.includes(path.sep);
+}
+
+function isPathInsideOrEqual(childPath, parentPath) {
+  const relative = path.relative(path.resolve(parentPath), path.resolve(childPath));
+  return relative === '' || (Boolean(relative) && !relative.startsWith('..') && !path.isAbsolute(relative));
+}
+
+function realpath(filePath) {
+  return typeof fs.realpathSync.native === 'function'
+    ? fs.realpathSync.native(filePath)
+    : fs.realpathSync(filePath);
+}
+
+function realpathIfExists(filePath) {
+  try {
+    return realpath(filePath);
+  } catch {
+    return null;
+  }
+}
+
+function fileIdentity(linkStats, stats) {
+  return [
+    stats.dev,
+    stats.ino,
+    Math.trunc(linkStats.birthtimeMs || stats.birthtimeMs || 0)
+  ].join(':');
 }
 
 function readUtf8Range(filePath, start, endExclusive) {

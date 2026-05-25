@@ -3,6 +3,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { EveGamelogWatcher } = require('../src/combat/eveGamelogWatcher');
 const { RecentEventDeduper } = require('../src/combat/recentEventDeduper');
+const { createDiagnosticsPolicy } = require('../src/services/diagnosticsPolicy');
 const { projectRoot } = require('../src/util/tempPaths');
 
 const tempBase = path.join(projectRoot(), '.tmp', 'verify-gamelog-watcher-chaos');
@@ -12,6 +13,7 @@ const tempRoot = fs.mkdtempSync(path.join(tempBase, 'run-'));
 
 try {
   verifyOffsetSeedingAndAppendOnly();
+  verifyContainmentGuards();
   verifyPollingFallbackAndTick();
   verifyDuplicateTtlBursts();
   verifyTailReadFailureDoesNotAdvanceOffset();
@@ -44,6 +46,12 @@ function verifyOffsetSeedingAndAppendOnly() {
 
   append(oldA, jumpLine('SeedA', 'FutureA'));
   assert.strictEqual(watcher.handleFile(oldA).length, 1, 'future append should parse from seeded offset');
+  const offsetBeforeReplacement = watcher.offsets.get(path.resolve(oldA));
+  replaceFileWith(oldA, `${'x'.repeat(offsetBeforeReplacement)}${jumpLine('Replacement', 'ShouldNotRead')}`);
+  assert.strictEqual(watcher.handleFile(oldA).length, 0, 'same-size or larger replacement should seed new identity without replaying replacement tail');
+  assert.ok(traces.some((entry) => entry.event === 'file_replaced'), 'same-size or larger replacement should be observable');
+  append(oldA, jumpLine('ShouldNotRead', 'FutureAfterIdentityChange'));
+  assert.strictEqual(watcher.handleFile(oldA).length, 1, 'future append after identity replacement should parse');
 
   const newFile = writeLog(folder, '20260523_020000_NEW.txt', jumpLine('OldNew', 'SeedNew'));
   assert.strictEqual(watcher.handleFile(newFile).length, 0, 'newly discovered file should seed current content');
@@ -70,6 +78,73 @@ function verifyOffsetSeedingAndAppendOnly() {
   assert.strictEqual(rejected[0].line, undefined, 'unparsed rejection should not retain raw line text');
   assert.doesNotMatch(JSON.stringify(rejected[0]), /private line/, 'rejection evidence should not leak raw line content');
 
+  watcher.stop();
+}
+
+function verifyContainmentGuards() {
+  const folder = makeFolder('containment');
+  const outside = path.join(tempRoot, 'outside-containment.txt');
+  writeLog(folder, '20260523_021000_A.txt', '');
+  fs.writeFileSync(outside, jumpLine('Outside', 'ShouldNotRead'));
+  const traces = [];
+  const events = [];
+  const watcher = new EveGamelogWatcher({
+    watcherStrategy: 'polling',
+    onEvent: (event) => events.push(event),
+    trace: (event, payload) => traces.push({ event, payload }),
+    setIntervalFn: () => 1,
+    clearIntervalFn: () => {}
+  });
+  watcher.start(folder);
+
+  assert.deepStrictEqual(watcher.handleFile(outside), [], 'direct handleFile outside active folder should be skipped');
+  assert.ok(
+    traces.some((entry) => entry.event === 'file_skipped_outside_containment' && entry.payload.reason === 'outside_active_folder'),
+    'outside direct handleFile should be observable without reading'
+  );
+
+  const separatorLike = path.join(folder, '..', 'escape.txt');
+  fs.writeFileSync(separatorLike, jumpLine('Separator', 'ShouldNotRead'));
+  assert.deepStrictEqual(watcher.handleFile(separatorLike), [], 'separator/traversal-like path should be skipped before read');
+
+  const symlinkTarget = path.join(tempRoot, 'symlink-target.txt');
+  fs.writeFileSync(symlinkTarget, jumpLine('LinkTarget', 'ShouldNotRead'));
+  const symlinkPath = path.join(folder, '20260523_021001_LINK.txt');
+  const symlinkCreated = tryCreateFileSymlink(symlinkTarget, symlinkPath);
+  if (symlinkCreated) {
+    assert.deepStrictEqual(watcher.handleFile(symlinkPath), [], 'symlink log file should be skipped before read');
+    assert.ok(
+      traces.some((entry) => entry.event === 'file_skipped_outside_containment' && entry.payload.reason === 'link_file'),
+      'symlink log file skip should be observable'
+    );
+  }
+
+  let fsWatchCallback = null;
+  const originalWatch = fs.watch;
+  fs.watch = (_folderPath, _options, callback) => {
+    fsWatchCallback = callback;
+    return { on: () => {}, close: () => {} };
+  };
+  try {
+    const watchTraces = [];
+    const fsWatcher = new EveGamelogWatcher({
+      watcherStrategy: 'fs-watch',
+      diagnosticsPolicy: createDiagnosticsPolicy({ mode: 'verbose' }),
+      trace: (event, payload) => watchTraces.push({ event, payload })
+    });
+    fsWatcher.start(folder);
+    fsWatchCallback('rename', '..\\escape.txt');
+    fsWatchCallback('rename', '../escape.txt');
+    assert.ok(
+      watchTraces.some((entry) => entry.event === 'file_skipped_outside_containment' && entry.payload.reason === 'unsafe_filename'),
+      'fs-watch separator-like filenames should be skipped before path join reads'
+    );
+    fsWatcher.stop();
+  } finally {
+    fs.watch = originalWatch;
+  }
+
+  assert.strictEqual(events.length, 0, 'containment skips should emit no parsed events');
   watcher.stop();
 }
 
@@ -193,7 +268,7 @@ function verifyFailureIsolationAndSanitization() {
 }
 
 function makeFolder(name) {
-  const folder = path.join(tempRoot, name);
+  const folder = path.join(tempRoot, name, 'EVE', 'logs', 'Gamelogs');
   fs.mkdirSync(folder, { recursive: true });
   return folder;
 }
@@ -206,6 +281,22 @@ function writeLog(folder, name, text) {
 
 function append(filePath, text) {
   fs.appendFileSync(filePath, text, 'utf8');
+}
+
+function replaceFileWith(filePath, text) {
+  const replacementPath = `${filePath}.replacement`;
+  fs.writeFileSync(replacementPath, text, 'utf8');
+  fs.rmSync(filePath, { force: true });
+  fs.renameSync(replacementPath, filePath);
+}
+
+function tryCreateFileSymlink(target, linkPath) {
+  try {
+    fs.symlinkSync(target, linkPath, 'file');
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 function jumpLine(from, to) {
