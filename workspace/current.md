@@ -41,6 +41,15 @@ Shared display/fixture treatment is not assumed.
 
 The review should trace how gamelog watcher/parser events and clipboard/search acquisition enter Sense, how they are gated, what events/snapshots they emit, and what must be preserved before any future live/manual I/O smoke.
 
+## Runway Shape
+
+- current packet: M12F read-only Security/Engineering review of operator I/O readiness and gate separation.
+- likely next packet if accepted: bounded Dev hardening for any concrete gate, privacy, containment, diagnostics, or verification gaps found by M12F.
+- follow-up packet if clean: deterministic/offline verification of the hardening, then Human decision on whether to authorize live/manual operator I/O smoke.
+- stop or Human decision point: any live/manual EVE folder use, clipboard capture, provider calls, manual shortcut validation, display/adapter convergence, or product decision about Passive/Active gate behavior.
+
+This M12F packet is one review step in a larger validation runway, not milestone completion by itself.
+
 ## Context To Preserve
 
 M12E accepted:
@@ -165,6 +174,7 @@ M12F review is complete when:
 - Do not store raw provider bodies, private EVE gamelog lines, clipboard content, private operator paths, screenshots, renderer output, Lab/adapter output, calibration data, fixture intake, or product claims.
 - Do not promote a bounded live smoke into broad tactical/product claims.
 - Do not decide display/fixture convergence inside this packet.
+- Do not run terminology/protected-term checks unless the review discovers terminology, adapter, display-copy, bridge-facing label, source-owned meaning, or critical-asset work that requires a future packet. This packet is read-only I/O readiness review.
 
 ## Non-Goals
 
