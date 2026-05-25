@@ -1,7 +1,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const { createLiveIoGate } = require('../src/passive/liveIoGate');
-const { HttpClient } = require('../src/services/httpClient');
+const { createLiveSmokeHttpClient } = require('../src/services/liveSmokeHttpClient');
 const { createThreatIntelService } = require('../src/threat/threatIntelService');
 const { createThreatIntelTargetResolver } = require('../src/threat/threatIntelTargetResolver');
 const { ThreatIntelZkillClient } = require('../src/threat/threatIntelZkillClient');
@@ -35,9 +35,7 @@ async function main() {
   }
 
   const requestLogs = [];
-  const httpClient = new HttpClient({
-    timeoutMs: 10000,
-    maxAttempts: 2,
+  const httpClient = createLiveSmokeHttpClient({
     onRequestLog: (entry) => requestLogs.push(entry)
   });
   const service = createThreatIntelService({

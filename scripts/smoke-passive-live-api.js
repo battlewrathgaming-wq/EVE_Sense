@@ -5,7 +5,7 @@ const { createLiveIoGate } = require('../src/passive/liveIoGate');
 const { createLocalSystemResolver } = require('../src/passive/localSystemResolver');
 const { createPassiveTelemetryService } = require('../src/passive/passiveTelemetryService');
 const { ZKillSystemContextClient } = require('../src/passive/zKillSystemContextClient');
-const { HttpClient } = require('../src/services/httpClient');
+const { createLiveSmokeHttpClient } = require('../src/services/liveSmokeHttpClient');
 
 const outputDir = path.join(__dirname, '..', '.tmp', 'passive-live-api-smoke');
 const outputPath = path.join(outputDir, 'result.json');
@@ -17,6 +17,9 @@ async function main() {
       status: 'refused',
       checked_at: new Date().toISOString(),
       reason: 'Set AURA_SENSE_LIVE_API=1 to run live Passive Telemetry API smoke',
+      live_io_enabled: false,
+      no_live_call: true,
+      requestLogs: [],
       output_path: outputPath
     };
     fs.writeFileSync(outputPath, `${JSON.stringify(result, null, 2)}\n`);
@@ -25,9 +28,7 @@ async function main() {
   }
 
   const requestLogs = [];
-  const httpClient = new HttpClient({
-    timeoutMs: 10000,
-    maxAttempts: 2,
+  const httpClient = createLiveSmokeHttpClient({
     onRequestLog: (entry) => requestLogs.push(entry)
   });
   const service = createPassiveTelemetryService({

@@ -201,6 +201,8 @@ Without `AURA_SENSE_LIVE_API=1`, these commands refuse and write default-safe ar
 
 The transition map for a future authorized live API run is documented in `docs/testing/live-api-smoke-transition-readiness.md`.
 
+Live API smoke scripts use smoke-local verbose request-log capture so successful live HTTP metadata can be written to the smoke artifact. This does not change normal runtime diagnostics, which continue to suppress low-value HTTP successes by default.
+
 ## Known Gaps
 
 - some inherited seed service names remain below the visible product surface

@@ -29,7 +29,7 @@ Refusal records prove:
 - the default gate refuses live API execution
 - the refusal artifact path is writable
 - the smoke remains outside `verify:all`
-- for Threat Intel, the refusal record explicitly shows `no_live_call: true` and empty `requestLogs`
+- Passive Telemetry and Threat Intel refusal records explicitly show `no_live_call: true` and empty `requestLogs`
 
 Refusal records do not prove:
 
@@ -87,7 +87,7 @@ Expected live artifact fields:
 - `snapshot.failure`
 - `requestLogs`
 
-Expected request log fields come from the shared HTTP client diagnostics policy and may include:
+Expected request log fields come from the smoke-local verbose HTTP diagnostics policy and may include:
 
 - `requested_at`
 - `provider`
@@ -99,6 +99,8 @@ Expected request log fields come from the shared HTTP client diagnostics policy 
 - `cached`
 - `rateLimited`
 - `errorMessage`
+
+The smoke-local clients intentionally capture successful HTTP request metadata in artifacts. Normal runtime diagnostics still suppress low-value HTTP successes by default.
 
 ## Future Threat Live Path
 
@@ -154,6 +156,8 @@ Expected live artifact fields:
 - `snapshot.zkill`
 - `snapshot.failure`
 - `requestLogs`
+
+The smoke-local clients intentionally capture successful HTTP request metadata in artifacts. Normal runtime diagnostics still suppress low-value HTTP successes by default.
 
 ## Artifact Classification
 

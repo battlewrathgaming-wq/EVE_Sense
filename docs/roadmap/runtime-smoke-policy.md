@@ -42,6 +42,7 @@ Manual live operator smoke belongs to a future explicitly opened M12/operator-va
 - Durable smoke evidence belongs in an audit note, not hidden runtime state.
 - Refusal-path smoke artifacts record default-safe blocking only.
 - Live execution artifacts require explicit opt-in records and must identify the authorized boundary.
+- Live API smoke artifacts may capture smoke-local successful request metadata for auditability; normal runtime diagnostics still suppress low-value HTTP successes by default.
 - Private gamelog content must not be stored as a smoke artifact.
 - Scripts must not hardcode machine-specific paths.
 

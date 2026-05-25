@@ -1,6 +1,6 @@
 ﻿# AURA-Sense Workspace Overview
 
-Status: Active - M12D live smoke request-log hardening
+Status: Idle - M12D live smoke request-log hardening accepted
 Last reviewed: 2026-05-25
 
 ## Vision Statement
@@ -22,7 +22,7 @@ It should present compact, uncertainty-aware tactical state while staying transi
 
 | Milestone | Roadmap Source | Status | Notes |
 | --- | --- | --- | --- |
-| 12 | `docs/roadmap/milestone-12-live-validation-and-tactical-calibration.md` | Active/Gated | M12D is open for non-live request-log/refusal-artifact hardening after the first Threat live smoke. No additional live providers, Passive live smoke, operator gamelog smoke, manual shortcuts, real SDE refresh, calibration, or fixture intake work is authorized. |
+| 12 | `docs/roadmap/milestone-12-live-validation-and-tactical-calibration.md` | Active/Gated | M12D request-log/refusal-artifact hardening is accepted. Additional live providers, Passive live smoke, operator gamelog smoke, manual shortcuts, real SDE refresh, calibration, or fixture intake work require a future active packet. |
 | 13 | `docs/roadmap/milestone-13-aggressive-testing-and-bug-hunting.md` | Complete | Deterministic aggressive hardening accepted; live/manual validation remains gated for later operator-validation work. |
 | 14 | `docs/roadmap/milestone-14-back-page-threat-intel-ux.md` | Complete | Back-page Threat Intel UX accepted; live/manual shortcut feel remains gated for optional later operator-validation work. |
 | 15 | `docs/roadmap/milestone-15-display-request-response-fitness.md` | Parked | Lab-facing presentation response work is parked while Lab stabilizes its side. |
@@ -35,9 +35,9 @@ It should present compact, uncertainty-aware tactical state while staying transi
 
 Milestone: M12 - Live Validation And Tactical Calibration
 Current packet: `workspace/current.md`
-Current sequence: M12D live smoke request-log and refusal-artifact hardening open
-Current executor: Dev
-Expected artifact: `workspace/DevHS41-m12d-live-smoke-request-log-hardening.md`
+Current sequence: Idle after M12D acceptance
+Current executor: None
+Expected artifact: None
 Latest M12 gate trace: `workspace/OverseerHS33-m12-live-validation-gate-trace.md`
 Latest M12 prep Dev handoff: `workspace/DevHS34-m12-live-validation-harness-prep.md`
 Latest M12 prep acceptance: `workspace/OverseerHS35-m12-live-validation-harness-prep-acceptance.md`
@@ -46,6 +46,8 @@ Latest M12A acceptance: `workspace/OverseerHS37-m12a-live-api-transition-readine
 Latest M12B security review: `workspace/SecEngHS38-m12b-live-api-security-review.md`
 Latest M12B acceptance: `workspace/OverseerHS39-m12b-live-api-security-review-acceptance.md`
 Latest M12C live smoke record: `workspace/OverseerHS40-m12c-threat-live-api-smoke.md`
+Latest M12D Dev handoff: `workspace/DevHS41-m12d-live-smoke-request-log-hardening.md`
+Latest M12D acceptance: `workspace/OverseerHS42-m12d-live-smoke-log-hardening-acceptance.md`
 Latest accepted handshake: `workspace/complete/milestone-14/OverseerHS03-milestone-14-closure.md`
 Latest accepted prototype review: `workspace/OverseerHS02-passive-telemetry-readout-prototype-review.md`
 Latest accepted face advisory: `workspace/OverseerHS03-sense-face-presentation-adoption-review.md`
@@ -64,7 +66,7 @@ Latest M19 review: `workspace/complete/milestone-19/SecEngHS28-gamelog-ingest-co
 Latest M19 Dev handoff: `workspace/complete/milestone-19/DevHS30-gamelog-containment-hardening.md`
 Latest M19 acceptance: `workspace/complete/milestone-19/OverseerHS31-m19-gamelog-containment-hardening-acceptance.md`
 Latest roadmap reconciliation: `workspace/complete/milestone-19/OverseerHS32-roadmap-state-reconciliation.md`
-Active runway: M12D live smoke request-log and refusal-artifact hardening
+Active runway: None
 
 ## Authority Notes
 
