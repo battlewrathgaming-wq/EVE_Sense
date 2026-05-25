@@ -131,7 +131,65 @@ Do not set `AURA_SENSE_LIVE_API=1`. Both live smoke commands should record refus
 
 ## Evidence
 
-Pending Dev.
+Dev completed the M12 live validation harness prep without crossing the live/manual boundary.
+
+Files changed:
+
+- `scripts/smoke-threat-live-api.js`
+- `package.json`
+- `docs/testing/live-operator-gamelog-smoke-playbook.md`
+- `docs/roadmap/runtime-smoke-policy.md`
+- `docs/current-state/current-implementation.md`
+- `docs/testing/aggressive-test-harness-matrix.md`
+- `workspace/DevHS34-m12-live-validation-harness-prep.md`
+- `workspace/current.md`
+
+Threat live API smoke:
+
+- Added `npm.cmd run smoke:threat-live-api`.
+- Refuses by default unless `AURA_SENSE_LIVE_API=1`.
+- Refusal artifact path: `.tmp\threat-live-api-smoke\result.json`.
+- Refusal artifact records `status: refused`, `live_io_enabled: false`, `no_live_call: true`, and empty `requestLogs`.
+- Future enabled behavior is limited to one deliberate target (`AURA_SENSE_THREAT_LIVE_TARGET` or default `system:Jita`), 3600 second lookback, 5 ref sample limit, backend Threat Intel service, zKill request logs, and artifact output.
+- Command remains outside `verify:all`.
+
+Passive refusal artifact:
+
+- `npm.cmd run smoke:passive-live-api` wrote `.tmp\passive-live-api-smoke\result.json`.
+
+Live operator gamelog scaffold:
+
+- Added `docs/testing/live-operator-gamelog-smoke-playbook.md`.
+- The scaffold includes authorization gate, privacy rules, artifact expectations, stop conditions, and non-goals.
+- The scaffold explicitly does not authorize execution by itself.
+
+Verification run without setting `AURA_SENSE_LIVE_API=1`:
+
+```powershell
+npm.cmd run smoke:passive-live-api
+npm.cmd run smoke:threat-live-api
+npm.cmd run verify:protected-terms
+npm.cmd run verify:all
+git status --short --branch
+```
+
+Results:
+
+- `smoke:passive-live-api` exited 0; refused and wrote `.tmp\passive-live-api-smoke\result.json`.
+- `smoke:threat-live-api` exited 0; refused and wrote `.tmp\threat-live-api-smoke\result.json`.
+- `verify:protected-terms` exited 0 in working-set mode; warning-only protected-term findings reported; no protected-word JSON updates or renames performed.
+- `verify:all` exited 0; all offline checks verified.
+- Initial post-verification `git status --short --branch` showed the expected modified/new files for this packet.
+
+Boundary confirmation:
+
+- Did not set `AURA_SENSE_LIVE_API=1`.
+- Did not run live zKill or ESI calls.
+- Did not inspect `C:\Users\Battle_wrath\Documents\EVE\logs\Gamelogs` or any private/operator gamelog folder.
+- Did not run live EVE log ingestion.
+- Did not run manual shortcut validation.
+- Did not run real SDE refresh/download.
+- Did not change renderer UI/face behavior, Lab/adaptor/display work, bridge contracts, or IPC payload semantics.
 
 ## Handoff Requirements
 
@@ -150,3 +208,9 @@ The handoff should include:
 5. Verification commands and results.
 6. Confirmation that no live providers, private folders, manual shortcuts, real SDE, renderer, Lab, or adapter work was run.
 7. Residual risks and next recommended M12 packet.
+
+Dev handoff created:
+
+```txt
+workspace/DevHS34-m12-live-validation-harness-prep.md
+```

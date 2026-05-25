@@ -14,8 +14,8 @@ This matrix maps AURA-Sense invariants to verification commands so aggressive te
 | Offline confidence | `npm.cmd run verify:all` | Node, deterministic fixtures, `.tmp` scratch output | live network, Electron, local EVE logs, large SDE assets, private operator state |
 | Focused offline verify | `npm.cmd run verify:<area>` | Node, deterministic fixtures, `.tmp` scratch output | live network unless the command name explicitly says smoke/live |
 | Electron smoke | `npm.cmd run smoke:electron` | Electron, smoke-mode fixture state, `.tmp` visual artifacts | live network, local EVE logs, private operator state |
-| Live API smoke | `npm.cmd run smoke:passive-live-api` and future live-gated smoke | explicit operator opt-in, `AURA_SENSE_LIVE_API=1` for live calls | inclusion in `verify:all`, broad polling, persistence |
-| Live operator smoke | documented manual playbooks | explicit operator action and recorded evidence | automated private-log collection, broad history ingestion |
+| Live API smoke | `npm.cmd run smoke:passive-live-api`, `npm.cmd run smoke:threat-live-api` | explicit operator opt-in, `AURA_SENSE_LIVE_API=1` for live calls; default refusal artifacts under `.tmp` | inclusion in `verify:all`, broad polling, persistence |
+| Live operator smoke | `docs/testing/live-operator-gamelog-smoke-playbook.md` | explicit operator action and recorded evidence under an active authorized M12 packet | automated private-log collection, broad history ingestion |
 | Manual bug hunt | audit/failure records | scoped exploratory steps and findings | hidden product claims, unrecorded accepted failures |
 
 ## Invariant Coverage

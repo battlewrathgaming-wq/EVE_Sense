@@ -58,6 +58,7 @@ The current implementation includes:
 - one-hour Passive Telemetry ESI activity cache with ETag revalidation behavior
 - fixture-only provider fault-injection verification for Passive Telemetry and Threat Intel provider failures
 - explicit opt-in Passive Telemetry live API smoke command
+- explicit opt-in Threat Intel live API smoke command with default refusal artifact
 - backend Threat Intel scan request and snapshot contract
 - local/static Threat Intel target resolver for systems, pilots, corporations, alliances, and copied text
 - backend-only scoped Threat Intel zKill `pastSeconds` probe
@@ -189,14 +190,23 @@ npm.cmd run smoke:electron
 
 It writes artifacts under `.tmp\electron-visual-smoke` and is intentionally not included in `verify:all`.
 
+Live API smoke commands are separate from offline verification:
+
+```powershell
+npm.cmd run smoke:passive-live-api
+npm.cmd run smoke:threat-live-api
+```
+
+Without `AURA_SENSE_LIVE_API=1`, these commands refuse and write default-safe artifacts under `.tmp\passive-live-api-smoke\result.json` and `.tmp\threat-live-api-smoke\result.json`.
+
 ## Known Gaps
 
 - some inherited seed service names remain below the visible product surface
 - inherited active scan validator language remains to be reconciled with the implemented Threat Intel scan contract
 - local metadata resolver and type lookup are fixture/static until an explicit SDE refresh is run; the fixture builder path is adversarially verified but real SDE refresh remains operator-gated
 - provider fault injection is covered by deterministic fixture-only checks; live provider failure validation remains gated behind explicit live IO authorization
-- live zKill/ESI smoke command exists but live network run is deferred until `AURA_SENSE_LIVE_API=1`
-- Threat Intel live zKill network run is deferred until explicitly enabled and recorded outside `verify:all`
+- live zKill/ESI smoke commands exist but live network runs are deferred until `AURA_SENSE_LIVE_API=1`
+- Threat Intel live zKill network run is deferred until explicitly enabled and recorded outside `verify:all`; default refusal artifacts are not live execution evidence
 - Threat Intel ESI killmail expansion remains deferred
 - local type metadata foundation exists with unresolved-ID fallback; full refresh remains explicit
 - no exact raw repair/healing fixtures yet; raw `combat.repair` parser support remains deferred
@@ -205,6 +215,7 @@ It writes artifacts under `.tmp\electron-visual-smoke` and is intentionally not 
 - integrated viewport does not display damage spike outliers yet; calibration remains open
 - live validation/calibration is now scoped as a future milestone, not yet implemented
 - aggressive testing and bug hunting are complete for the offline Milestone 13 scope; live/manual validation remains gated for later operator-validation work
+- live operator gamelog smoke has a scaffold at `docs/testing/live-operator-gamelog-smoke-playbook.md`, but it is not execution authorization
 - real SDE refresh/download artifacts must remain explicit and should not be staged by default
 - concept and research docs are AURA-Sense product doctrine or local review notes; older audit records may still describe past cleanup work
 

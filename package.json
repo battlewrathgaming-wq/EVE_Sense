@@ -8,6 +8,7 @@
     "start": "electron .",
     "smoke:electron": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/electron-visual-smoke.ps1",
     "smoke:passive-live-api": "node scripts/smoke-passive-live-api.js",
+    "smoke:threat-live-api": "node scripts/smoke-threat-live-api.js",
     "metadata:build-types": "node scripts/build-local-type-metadata.js",
     "verify:all": "node scripts/verify-all.js",
     "verify:combat-parser": "node scripts/verify-combat-parser.js",
