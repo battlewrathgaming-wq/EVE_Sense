@@ -1,6 +1,6 @@
 # M17 - Render And Frame Performance Assurance
 
-Status: Candidate
+Status: Active
 
 ## Outcome
 

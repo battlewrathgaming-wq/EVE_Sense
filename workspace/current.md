@@ -1,77 +1,38 @@
 # Current Workspace Packet
 
-Status: Idle
+Status: Active
 Updated: 2026-05-25
 Owner: Overseer
 
 ## Coordination State
 
-Active milestone: None - Lab-facing presentation work parked; M17 render/frame assurance is candidate next direction
-Current runway: None
+Active milestone: M17 - Render and Frame performance assurance
+Roadmap source: `docs/roadmap/milestone-17-render-frame-performance-assurance.md`
+Current runway: Review-only assurance packet for Frame module, renderer shell, renderer boundary, visual smoke readiness, and performance/readiness observations
 Latest closed milestone: Milestone 14 - Back-Page Threat Intel UX
-Latest accepted closure: `workspace/complete/milestone-14/OverseerHS03-milestone-14-closure.md`
-Latest display/request workflow hardening: `workspace/display-request-workflow-hardening-contract.md`
-Latest request pointer: `workspace/request_display.md`
-Latest display inventory scaffold: `workspace/display_inventory.md`
-Latest durable display pipeline record: `docs/current-state/display-pipeline-inventory.md`
-Latest UI/UX request-readiness review: `workspace/UIUXHS15-clipboard-window-request-display-review.md`
-Latest Overseer acceptance: `workspace/OverseerHS15-clipboard-window-request-display-review-acceptance.md`
-Latest submitted display request: `workspace/RequestDisplayHS16-clipboard-window.md`
 Latest resting pivot: `workspace/OverseerHS18-lab-parked-render-frame-pivot.md`
-Current executor: None
-Current status: Awaiting Human direction on whether to open M17 render/frame performance assurance
-Expected output: None
+Current executor: Engineering/Test assurance reviewer
+Current status: Open
+Expected output: `workspace/EngTestHS19-render-frame-assurance-review.md`
 
 ## Purpose
 
-There is no active executable packet for AURA-Sense.
+Run a bounded assurance review of the AURA-Sense renderer and Frame foundations before any future presentation/adaptor work resumes.
 
-Sense has submitted one advisory `request_display` item to Aura Lab:
+This is not a UI redesign, Lab face adoption, adapter implementation, or product direction change.
 
-```txt
-sense.clipboard-window
-```
-
-Local source artifact:
+Primary focus:
 
 ```txt
-workspace/RequestDisplayHS16-clipboard-window.md
+Frame module
+-> Electron window behavior
+-> renderer boundary
+-> renderer shell behavior
+-> visual smoke and regression checks
+-> performance/readiness observations
 ```
 
-Lab intake location:
-
-```txt
-F:\Projects\AURA- Lab\workspace\request_display.md
-```
-
-Status:
-
-```txt
-submitted
-```
-
-Request strength:
-
-```txt
-pressure-test
-```
-
-Active Sense Lab request count:
-
-```txt
-1 of 5
-```
-
-This request asks Lab to compare Bridge -> Interface display methods for the Clipboard Acquisition authority window. It is advisory only.
-
-Lab-facing presentation work is currently parked while Lab addresses its own renderer/export concerns. Sense should not wait on Lab for near-term performance/render/frame assurance work.
-
-It does not mean:
-
-- Lab has accepted or answered the request
-- Sense has accepted or adopted any Lab recommendation
-- Dev is authorized
-- UI copy, runtime behavior, bridge contracts, IPC, payloads, schemas, services, provider behavior, shortcut behavior, or persistence may change
+Lab-facing presentation work remains parked. The submitted `sense.clipboard-window` request remains advisory and does not authorize implementation.
 
 ## Required Reading
 
@@ -85,120 +46,126 @@ Boot and coordination:
 - `workspace/critical/critical-terms.md`
 - `workspace/critical/critical-assets.md`
 - `workspace/prompts.md`
+- `workspace/overseer.md`
+- `workspace/OverseerHS18-lab-parked-render-frame-pivot.md`
 
-Accepted display/request workflow:
+M17 direction:
 
-- `workspace/display_inventory.md`
-- `workspace/request_display.md`
-- `workspace/display-request-workflow-hardening-contract.md`
-- `workspace/UIUXHS15-clipboard-window-request-display-review.md`
-- `workspace/OverseerHS15-clipboard-window-request-display-review-acceptance.md`
-- `workspace/RequestDisplayHS16-clipboard-window.md`
-- `docs/current-state/display-pipeline-inventory.md`
-- `F:\Projects\Docs\Aura-Project-Orchestration\known-workflows\display-request-conformity-brief.md`
-- `F:\Projects\Docs\Aura-Project-Orchestration\known-workflows\display_request.md`
-- `F:\Projects\Docs\Aura-Project-Orchestration\workflow-maps\display-request-space-to-state.md`
-
-Accepted Sense direction:
-
+- `docs/roadmap/README.md`
+- `docs/roadmap/milestone-17-render-frame-performance-assurance.md`
 - `docs/current-state/current-implementation.md`
-- `docs/features/clipboard-acquisition.md`
 - `docs/contracts/renderer-boundary-contract.md`
-- `docs/contracts/threat-intel-contract.md`
+- `docs/testing/aggressive-test-harness-matrix.md`
 
-Lab context, advisory only:
+Implementation surfaces to inspect:
 
-- `F:\Projects\AURA- Lab\workspace\request_display.md`
-- `F:\Projects\AURA- Lab\workspace\display-request-cooperation-contract.md`
+- `src/modules/Frame/`
+- `src/main/main.js`
+- `src/main/preload.js`
+- `src/renderer/`
+- `scripts/verify-frame-module.js`
+- `scripts/verify-renderer-shell.js`
+- `scripts/verify-renderer-boundary.js`
+- `scripts/verify-renderer-boundary-adversarial.js`
+- `scripts/electron-visual-smoke.ps1`
+- `package.json`
 
-## Submitted HS16 Request Summary
+## Runway
 
-`sense.clipboard-window` asks Lab to compare up to three display methods for one bounded flow slice:
+1. Review the Frame module for bounds persistence, always-on-top state, minimize/close controls, invalid stored state handling, and IPC handler safety.
+2. Review main-process window behavior in `src/main/main.js`, including presentation pause during move/resize, visual smoke hooks, screenshot capture, and restoration of bounds after smoke states.
+3. Review preload and renderer boundary rules to confirm the renderer remains presentation-only and cannot take backend ownership.
+4. Review renderer shell checks and visual smoke state checks for functional readiness, narrow bounds, resize behavior, diagnostics takeover, and screenshot reliability.
+5. Identify performance/readiness risks that are visible from current code and tests, such as timer churn, unnecessary renderer work, repeated DOM pressure, window resize instability, screenshot timing fragility, or stale state during window manipulation.
+6. Run deterministic verification commands listed below.
+7. Run `npm.cmd run smoke:electron` only if the reviewer believes environment-sensitive runtime smoke is necessary for this assurance pass. If skipped, state why.
+8. Write the expected handoff artifact with findings, risk level, verification results, and recommended next packet if any.
 
-```txt
-Clipboard Acquisition widget inside the Threat Intel acquisition bar
-```
+## Acceptance Criteria
 
-The request preserves:
+The packet is complete when `workspace/EngTestHS19-render-frame-assurance-review.md`:
 
-- three-second active clipboard authority window
-- five-second cooldown
-- unchanged clipboard ignored after arming
-- backend-owned clipboard authority
-- renderer as presentation only
-- manual path as deliberate alternate input
-- `Live IO blocked` as backend authority refusal, not provider failure
-- `No scan` as absence of deliberate Threat Intel scan
-
-Must not imply:
-
-- background clipboard monitoring
-- persistent listener mode
-- hidden scan
-- scan on focus alone
-- automatic provider calls
-- broad target identification
-- guessed target identity
-- Lab-owned runtime authority
-- Atlas-owned historical proof, storage, assessment, routine-check, or stored-record semantics
-
-## Candidate Next Steps
-
-Human / Sense Overseer decision for near-term Sense work:
-
-1. Open M17 render/frame performance assurance.
-2. Keep the project idle while Lab is parked.
-3. Return later to M15/M16 display/adaptor work after Lab stabilizes.
-
-If Lab later responds:
-
-1. Accept a Lab candidate method.
-2. Adapt a Lab candidate method into Sense-owned wording.
-3. Reject or park the Lab response.
-4. Return to Lab with a narrower request.
-5. Open a Sense-local Dev runway only after acceptance/adaptation and explicit Human/Overseer authorization.
-
-While Lab is parked, useful choices are:
-
-- Open a bounded M17 review or Dev runway focused on `verify:frame`, `verify:renderer-shell`, `verify:renderer-boundary`, `verify:renderer-boundary-adversarial`, and optional `smoke:electron`.
-- Keep display/adaptor work parked.
-- Do not create additional Lab-facing display requests.
+- lists files reviewed
+- describes current Frame and renderer assurance posture
+- identifies any bugs, missing checks, flaky smoke risks, or performance/readiness risks with file/line references where possible
+- distinguishes review findings from implementation recommendations
+- confirms renderer-presented, backend-owned truth remains protected
+- states whether `smoke:electron` was run or intentionally skipped
+- records exact verification commands and outcomes
+- recommends one bounded next packet if work is needed, or says no follow-up is needed
+- does not authorize UI redesign, Lab face adoption, adapter implementation, or live/manual validation
 
 ## Guardrails
 
-- Do not implement code unless a future packet explicitly opens Dev work.
-- Do not rename terms from audit, UI/UX review, request output, Lab response, or protected-term output.
-- Do not change UI copy, contracts, IPC, payloads, persistence, schemas, services, backend behavior, provider behavior, shortcut behavior, or runtime behavior from HS16 alone.
-- Do not treat the submitted request as accepted, adopted, or Dev-authorized.
-- Do not create additional active Lab requests automatically.
-- Do not treat parked Lab-facing presentation work as a blocker for Sense render/frame assurance.
-- Do not exceed five active Sense `request_display` entries.
-- Do not treat archived docs as active task queues.
-- Do not import Atlas-owned historical proof, storage, tracking, assessment, routine-check, attention-marker, stored-record, or source-candidate semantics into Sense.
-- Do not treat Lab vocabulary as Sense authority.
-- Do not collapse Combat Witness, Passive Telemetry, Threat Intel, and Clipboard Acquisition boundaries.
+- Do not implement code in this packet.
+- Do not edit source files, contracts, IPC, payloads, persistence, schemas, services, backend behavior, provider behavior, shortcut behavior, or UI copy.
+- Do not adopt or tune a Lab face.
+- Do not create or implement a Sense adapter.
+- Do not create additional Lab-facing display requests.
+- Do not remove or repair Lab SmokeFlash from Sense.
+- Do not weaken renderer boundary rules to simplify testing.
 - Do not run live provider smoke unless explicitly authorized by the Human.
 - Do not run manual shortcut validation.
 - Do not run real SDE refresh/download.
+- Treat archived docs as historical context only unless this packet explicitly references them.
 
-## Verification
+## Stop Conditions
 
-Latest required verification:
+Stop and hand off if:
+
+- deterministic verification fails in a way that needs source edits
+- runtime smoke would require environment setup or interactive action not already available
+- the review discovers a boundary issue that needs Human/Overseer scoping before Dev
+- the work would need Lab repository changes
+- the work would require live provider, manual shortcut, or real SDE actions
+
+## Required Verification
+
+Run:
 
 ```powershell
+npm.cmd run verify:frame
+npm.cmd run verify:renderer-shell
+npm.cmd run verify:renderer-boundary
+npm.cmd run verify:renderer-boundary-adversarial
 npm.cmd run verify:protected-terms
-npm.cmd run verify:all
 git status --short --branch
 ```
 
-Result:
+Run if the reviewer chooses to include full deterministic assurance:
+
+```powershell
+npm.cmd run verify:all
+```
+
+Optional environment-sensitive runtime smoke:
+
+```powershell
+npm.cmd run smoke:electron
+```
+
+If `smoke:electron` is skipped, the handoff must explain whether it was skipped because this is review-only, because no renderer-visible/window-behavior changes were made, or because the environment was not appropriate.
+
+## Handoff Requirements
+
+Create:
 
 ```txt
-npm.cmd run verify:protected-terms - PASS, warning-only; one known warning from an existing artifact filename.
-npm.cmd run verify:all - PASS.
-git status --short --branch - pending commit at time of update.
+workspace/EngTestHS19-render-frame-assurance-review.md
 ```
+
+The handoff should include:
+
+1. Files reviewed.
+2. Commands run and results.
+3. Frame module findings.
+4. Main-process window and smoke findings.
+5. Renderer boundary and shell findings.
+6. Performance/readiness observations.
+7. Environment-sensitive smoke decision.
+8. Risks and blockers.
+9. Recommended next bounded packet, if any.
 
 ## Overseer Review
 
-Completed. Lab-facing presentation work is parked by Human direction. M16 is closed as a parked feature/request direction. M17 render/frame performance assurance is the candidate next direction, but no executable runway is open.
+Pending. This packet is open for an Engineering/Test assurance reviewer.
