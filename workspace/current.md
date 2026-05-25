@@ -1,31 +1,33 @@
 # Current Workspace Packet
 
-Status: Idle
+Status: Active
 Updated: 2026-05-25
 Owner: Overseer
 
 ## Coordination State
 
-Active milestone: None - bounded post-Milestone-14 prototype
-Current runway: None - Passive Telemetry Instrument Band prototype accepted
+Active milestone: None - post-Milestone-14 audit-support / feature-view audit
+Current runway: Display Inventory Pipeline Audit
+Current runway packet: `workspace/OverseerHS11-display-inventory-pipeline-audit-runway.md`
 Latest closed milestone: Milestone 14 - Back-Page Threat Intel UX
 Latest accepted closure: `workspace/complete/milestone-14/OverseerHS03-milestone-14-closure.md`
-Latest Lab advisory input: `F:\Projects\AURA- Lab\workspace\OverseerHS71-m19-acceptance.md`
-Latest Lab remote-consumer SLA receipt: `workspace/OverseerHS06-lab-remote-consumer-sla-review.md`
-Latest M19 adoption review: `workspace/OverseerHS07-sense-m19-instrument-status-band-adoption-review.md`
-Latest Passive band advisory: `workspace/UIUXHS03-passive-telemetry-instrument-band-advisory.md`
-Latest Passive band advisory review: `workspace/OverseerHS08-passive-telemetry-instrument-band-advisory-review.md`
-Latest Dev handoff: `workspace/DevHS03-passive-telemetry-instrument-band-prototype.md`
 Latest prototype acceptance: `workspace/OverseerHS10-passive-telemetry-instrument-band-prototype-review.md`
-Current executor: None
-Current focus: Awaiting human direction
-Expected output: None
+Latest display inventory scaffold: `workspace/display_inventory.md`
+Current executor: Product development systems auditor
+Current audit focus: Read-only Ingest -> Transformation -> Bridge -> User Display audit
+Expected output: `workspace/DisplayInventoryAuditHS01-ingest-transform-bridge-display.md`
 
 ## Purpose
 
-There is no active executable packet for AURA-Sense.
+Open a bounded, read-only audit that maps currently user-facing Sense information from the start of the pipeline through display:
 
-The Passive Telemetry Instrument Band prototype has been accepted. It adapts Lab M19 presentation grammar through Sense-owned meaning. It is not a Lab import, not a backend contract, not a provider behavior change, not a shared Aura doctrine update, and not an Atlas/Core task.
+```txt
+Ingest -> Transformation -> Bridge -> User Display
+```
+
+This packet exists so Sense can decide what should remain visible, collapse, move, hide, or become a later scoped Lab `request_display` candidate.
+
+This is not implementation work, UI redesign, terminology rename work, Lab adoption, a Dev runway, a bridge contract, or a request queue.
 
 Authority split:
 
@@ -37,218 +39,146 @@ Shared spelling does not imply shared meaning.
 
 ## Required Reading
 
-Boot and coordination:
-
 - `AGENTS.md`
-- `workspace/README.md`
+- `workspace/current.md`
 - `workspace/overview.md`
-- `workspace/00-dot-protocol.md`
+- `workspace/display_inventory.md`
+- `workspace/request_display.md`
+- `workspace/display-request-workflow-hardening-contract.md`
 - `workspace/critical/README.md`
 - `workspace/critical/critical-terms.md`
 - `workspace/critical/critical-assets.md`
-- `workspace/prompts.md`
-
-Accepted Sense direction:
-
-- `workspace/OverseerHS07-sense-m19-instrument-status-band-adoption-review.md`
-- `workspace/UIUXHS03-passive-telemetry-instrument-band-advisory.md`
-- `workspace/OverseerHS08-passive-telemetry-instrument-band-advisory-review.md`
-- `workspace/SenseUIUXHS01-passive-telemetry-bridge-state-readout.md`
-- `workspace/OverseerHS01-passive-telemetry-readout-mapping-review.md`
-- `workspace/OverseerHS02-passive-telemetry-readout-prototype-review.md`
+- `workspace/OverseerHS11-display-inventory-pipeline-audit-runway.md`
 - `docs/current-state/current-implementation.md`
-- `docs/features/vision.md`
 - `docs/schemas/hud-snapshot.md`
 - `docs/contracts/renderer-boundary-contract.md`
 - `docs/contracts/telemetry-lane-contract.md`
-
-Reference-only implementation facts:
-
+- `docs/contracts/combat-witness-contract.md`
+- `docs/contracts/threat-intel-contract.md`
+- `docs/features/clipboard-acquisition.md`
 - `src/renderer/index.html`
 - `src/renderer/app.js`
-- `src/renderer/styles.css`
-- `src/main/main.js` only if Electron visual smoke fixture states need selector/text updates
-- `scripts/verify-renderer-shell.js`
-- `src/passive/passiveTelemetryService.js`
-- `src/passive/passiveTelemetryBridge.js`
-- `src/passive/liveIoGate.js`
-- `scripts/verify-passive-telemetry.js`
 - `src/main/preload.js`
+- `src/main/main.js`
+- `src/services/serviceRegistry.js`
+- `src/services/taskRunner.js`
+- `src/combat/`
+- `src/passive/`
+- `src/threat/`
+- `src/runtime/`
 
-External advisory input, not Sense authority:
+Optional review context, not active task queues:
 
-- `F:\Projects\AURA- Lab\workspace\OverseerHS71-m19-acceptance.md`
-- `F:\Projects\AURA- Lab\workspace\DevHS68-instrument-status-band-prototype.md`
-- `F:\Projects\AURA- Lab\workspace\LabRemoteConsumerConformanceHS66.md`
-
-## Runway Objective
-
-Accepted.
-
-Make Passive Telemetry easier to scan as a compact support instrument without changing what Passive Telemetry means.
-
-The first read should communicate:
-
-```txt
-current system + Sense-owned Passive state + compact activity + provider/sample basis
-```
-
-The renderer must present backend-owned snapshot fields. It must not compute provider truth, fetch providers, mutate live IO policy, or create new Passive Telemetry semantics.
+- `workspace/archive/SenseTerminologyStateBridgeAudit-2026-05-24.md`
+- `workspace/OverseerHS05-sense-terminology-alignment-review.md`
+- `workspace/SYSADHS01-protected-terms-sniffer-tune.md`
+- `docs/audits/` only when needed to explain current visible wording
 
 ## Ordered Runway
 
-Completed.
-
-1. Inspect the current Passive Telemetry renderer structure before editing.
-   - Identify the current Passive compact surface, readout state, provider pulse, diagnostics, and narrow layout behavior.
-   - Prefer consolidating/refining the existing Passive compact surface over adding a large new panel.
-2. Implement the closed Passive Telemetry Instrument Band.
-   - keep `Passive Telemetry` visible as the lane label
-   - make `currentSystem.label` the primary value when present
-   - show `No observation` when no current system exists
-   - keep kills, jumps, and ratio as compact support values
-   - keep a Sense-owned state label visible and non-color-only
-   - keep basis/freshness visible in one compact line or accessible through existing detail/diagnostics
-   - show partial/capped/stale/blocked/degraded/no-observation conditions distinctly
-3. Preserve Sense-owned copy.
-   - keep `Fresh context`, `Stale context`, `Partial sample`, `Capped sample`, `Live IO blocked`, `Degraded`, and `No observation`
-   - use `Provider pending` only where existing renderer/snapshot behavior supports it
-   - show `Static lookup` or `Local lookup` only when existing resolver/source fields support it
-   - do not use Lab labels such as `CURRENT`, `UPDATING`, `AGED`, `UNAVAILABLE`, `FALLBACK`, or `NO DATA` as user-facing Passive copy
-4. Add or preserve a compact detail path.
-   - reuse existing diagnostics if that is the smallest safe path
-   - detail should explain basis, freshness, sample count, cap, partial, live IO gate, and failure without raw/private provider payloads
-   - do not add historical storage or Threat Intel scan detail
-5. Preserve boundaries.
-   - do not change `passive.telemetry.snapshot` shape
-   - do not change Passive Telemetry backend, provider clients, live IO gate, cache behavior, IPC channels, service commands, payload fields, bridge APIs, or parser/watcher/runtime behavior
-   - do not call zKill, ESI, filesystem, parser, watcher, provider clients, or runtime modules from the renderer
-   - do not touch Atlas, Core, or Lab files
-6. Verification and smoke.
-   - update renderer shell checks for the new Passive band expectations
-   - update Electron visual smoke only if selectors/text/layout assertions need to reflect the changed visible surface
-   - keep narrow viewport containment covered
-   - run all required verification commands below
-7. Handoff.
-   - update Evidence and Dev Handoff in this packet
-   - create `workspace/DevHS03-passive-telemetry-instrument-band-prototype.md`
-   - recommend accept/redirect and note any remaining risks
+1. Read the required files and confirm Sense ownership of internal -> Bridge meaning, source terms, data meaning, lane/state semantics, runtime behavior, and final adoption.
+2. Confirm Lab's role is Bridge -> Interface display comparison only, with no ownership of Sense terms, backend behavior, contracts, payloads, or adoption.
+3. Trace each lane separately where applicable:
+   - Combat Witness
+   - Passive Telemetry
+   - Threat Intel
+   - Clipboard Acquisition
+   - Runtime diagnostics / settings
+4. For each currently user-facing surface or target-like concept, map:
+   - Ingest
+   - Transformation
+   - Bridge
+   - User Display
+   - Source Terms
+   - Display Role
+   - Visibility Decision
+   - Risks / Notes
+   - Candidate `request_display?`
+5. Pay special attention to:
+   - observed source
+   - observed weapon
+   - current system
+   - manual Threat Intel target
+   - clipboard-acquired target
+   - target type
+   - provider sample target
+   - local/static resolver match
+6. Write the expected artifact:
+   - `workspace/DisplayInventoryAuditHS01-ingest-transform-bridge-display.md`
+7. Include both:
+   - the required Markdown audit table
+   - a qualitative audit summary with top overload causes, safest Lab candidates, preserved terms, Sense-owned surfaces, metadata leaks, better-display-not-deletion items, risks, parked items, and recommended next bounded action
+8. Run warning-only terminology verification:
+   - `npm.cmd run verify:protected-terms`
+9. Report a limited response with artifact path, files reviewed count, table row count, top 3 risks, and verification status.
 
 ## Guardrails
 
-- Renderer presents; backend owns truth.
-- Passive Telemetry remains current-system context.
-- Do not turn Passive Telemetry into Threat Intel.
-- Do not imply continuous monitoring, complete system awareness, verified truth, Atlas evidence, or historical storage.
-- Do not import Lab fixture semantics or Lab product semantics.
-- Do not use Lab neutral state labels as Sense backend enums or user-facing Passive state copy.
-- Do not create shared Aura doctrine.
-- Do not broaden into Combat Witness, Threat Intel, Clipboard Acquisition, Core, Atlas, or Lab work.
-- Do not run live provider smoke unless explicitly authorized by the Human.
+- Do not implement code.
+- Do not edit files other than the expected audit artifact unless Human/Overseer explicitly redirects.
+- Do not rename terms.
+- Do not change UI copy.
+- Do not change contracts, IPC, payloads, persistence, schemas, services, backend behavior, provider behavior, or runtime behavior.
+- Do not create a Dev runway.
+- Do not send Lab requests automatically.
+- Do not treat archived docs as active task queues.
+- Do not import Atlas historical proof, search-candidate, tracking, assessment, durable-output, or storage semantics into Sense.
+- Do not treat Lab vocabulary as Sense authority.
+- Do not collapse Combat Witness, Passive Telemetry, Threat Intel, and Clipboard Acquisition boundaries.
+- Do not run live provider smoke.
 - Do not run manual shortcut validation.
 - Do not run real SDE refresh/download.
-- Do not use archived docs/gap as active queues.
 
 ## Stop Conditions
 
-Return to chat before continuing if:
+Return to the Human / Overseer before continuing if:
 
-- implementation requires changing Passive Telemetry backend contracts or provider behavior
-- implementation requires changing `passive.telemetry.snapshot`
-- renderer would need to compute Passive truth instead of presenting snapshot fields
-- renderer would need to call zKill, ESI, filesystem, provider clients, parser, watcher, or runtime modules
-- fresh, stale, partial, capped, blocked, degraded, no-observation, and pending states cannot remain distinct
-- Lab labels would become Sense bridge fields, service names, payload names, CSS/test IDs, or product state enums
-- visual changes crowd or demote Combat Witness priority
-- Lab/Core/shared doctrine decisions become necessary
-- live provider smoke appears necessary
+- the audit requires product direction beyond display inventory mapping
+- a finding appears to require code, UI copy, bridge, IPC, payload, schema, service, persistence, provider, or runtime behavior changes
+- a Lab request would need to be submitted to continue
+- more than inventory/request-display scoping is needed
+- lane boundaries cannot be preserved
+- archived docs would have to be treated as active work
+- Atlas or Lab semantics are needed to define Sense meaning
 
 ## Verification Required
 
 Run:
 
 ```powershell
-npm.cmd run verify:passive-telemetry
-npm.cmd run verify:renderer-shell
-npm.cmd run verify:renderer-boundary
-npm.cmd run verify:renderer-boundary-adversarial
 npm.cmd run verify:protected-terms
-npm.cmd run verify:all
-npm.cmd run smoke:electron
 ```
 
-Do not run by default:
+This is warning-only review input. Do not rename terms or update protected-word JSON from the output.
 
-- live provider smoke
-- manual operator shortcut validation
-- real SDE refresh/download
+## Expected Output
 
-## Evidence
-
-Dev updates this before handoff.
-
-Verification run:
+Create:
 
 ```txt
-npm.cmd run verify:passive-telemetry
-npm.cmd run verify:renderer-shell
-npm.cmd run verify:renderer-boundary
-npm.cmd run verify:renderer-boundary-adversarial
-npm.cmd run verify:protected-terms
-npm.cmd run verify:all
-npm.cmd run smoke:electron
+workspace/DisplayInventoryAuditHS01-ingest-transform-bridge-display.md
 ```
 
-Files changed:
+The artifact should include:
 
-```txt
-src/renderer/index.html
-src/renderer/app.js
-src/renderer/styles.css
-src/main/main.js
-scripts/verify-renderer-shell.js
-workspace/current.md
-workspace/DevHS03-passive-telemetry-instrument-band-prototype.md
-```
+- files reviewed
+- audit table
+- qualitative audit summary
+- top 5 display overload causes
+- top 5 safest future Lab `request_display` candidates
+- source-owned terms that must be preserved
+- surfaces that must stay Sense-owned
+- backend/runtime metadata currently visible in primary UI
+- information that needs better display, not deletion
+- terminology or ownership risks
+- parked or unknown items
+- recommended next bounded action
+- verification result
 
-Findings:
+## Audit Support
 
-```txt
-Implemented a renderer-only closed Passive Telemetry instrument band inside the existing glance strip.
-The band keeps `Passive Telemetry` visible, uses current system as the primary value, shows `No observation` when no current system exists, keeps kills/jumps/ratio as compact support values, and keeps Sense-owned state text visible.
-The band adds a compact gap marker and appends freshness age to the existing provider/sample basis line when freshness age exists.
-Existing diagnostics remain the detail path for Passive state, sample, activity, freshness, age, basis, gap, and pulse detail.
-Renderer shell and Electron visual smoke now assert the Passive band label, primary value, gap marker, state chip, basis line, and narrow viewport visibility.
-Protected-term discovery completed in warning-only mode with 126 warnings after review files were included; no renames or protected-word JSON changes were performed.
-Overseer review corrected one cached-state display edge so cached Passive activity remains under `Fresh context` rather than surfacing as a separate user-facing state or `No observation`; verification was rerun after correction.
-```
-
-Deferrals:
-
-```txt
-No live provider smoke, manual shortcut validation, or real SDE refresh/download was run.
-No backend contracts, snapshot shapes, provider behavior, bridge APIs, IPC channels, service commands, payload fields, parser/watcher/runtime behavior, Atlas/Core/Lab files, or shared doctrine were changed.
-```
-
-## Dev Handoff
-
-Dev fills this in when work is complete:
-
-- completed tasks: Closed Passive Telemetry instrument band implemented in the existing compact support surface; current system, Sense-owned state, compact activity, basis/freshness, and gap marker are visible without adding a large panel.
-- tests added/updated: `scripts/verify-renderer-shell.js` now checks Passive band structure and renderer mappings. `src/main/main.js` Electron smoke now asserts Passive band label/system/gap visibility across unavailable, stale, degraded, blocked, partial/capped, and narrow states.
-- verification output: All required commands passed: `verify:passive-telemetry`, `verify:renderer-shell`, `verify:renderer-boundary`, `verify:renderer-boundary-adversarial`, `verify:protected-terms`, `verify:all`, and `smoke:electron`.
-- failures found: None during final required verification. Protected-term discovery remains warning-only and reported 117 warning-only items after handoff files were included.
-- handshake created: `workspace/DevHS03-passive-telemetry-instrument-band-prototype.md`
-- remaining risk: The band uses existing diagnostics as the detail reveal instead of adding a new Passive-only drawer; if Human wants a separate reveal affordance, that should be a new UI/UX/Dev packet. The visible `Instrument band` wording is kept out of product copy; it appears only in local aria/test/development identifiers.
+Auditor fills this after completion.
 
 ## Overseer Review
 
-Overseer fills this in after Dev handoff:
-
-- accepted / redirected: Accepted. Dev completed the renderer-only Passive Telemetry Instrument Band prototype and produced `workspace/DevHS03-passive-telemetry-instrument-band-prototype.md`.
-- doctrine drift: No doctrine drift found. Passive Telemetry remains current-system context, not Threat Intel, Atlas evidence, complete awareness, or historical storage. Lab labels were not imported as Sense user-facing state copy.
-- architecture risk: Low. No backend contract, snapshot shape, provider behavior, bridge API, IPC channel, service command, payload field, parser/watcher/runtime behavior, Atlas/Core/Lab file, or shared doctrine change was introduced.
-- review-time correction: Overseer corrected cached Passive activity display so it maps to `Fresh context` and does not show a literal no-observation/generic cached state in the first-glance band. The no-gap marker now falls back to a Sense state label instead of `None`.
-- verification: Overseer reran `verify:passive-telemetry`, `verify:renderer-shell`, `verify:renderer-boundary`, `verify:renderer-boundary-adversarial`, `verify:protected-terms`, `verify:all`, and `smoke:electron`; all passed. Protected-term discovery remains warning-only with 126 items while these files are modified.
-- state updates needed: Packet set idle with `workspace/OverseerHS10-passive-telemetry-instrument-band-prototype-review.md` as acceptance record.
-- next packet: Human decision. Candidate follow-ups are visual-density tuning, a dedicated Passive detail reveal, or parking Sense until the next post-Milestone-14 direction.
+Overseer fills this after audit handoff.
