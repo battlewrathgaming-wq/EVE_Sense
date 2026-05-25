@@ -13,7 +13,7 @@ Roadmap files are not executable authority. Implementation truth lives in `docs/
 
 ## Current Phase
 
-Post-Milestone-17 idle state while Lab-facing presentation work remains parked.
+M18 deterministic provider fault-injection hardening while Lab-facing presentation work remains parked.
 
 Current resting state:
 
@@ -22,11 +22,12 @@ Current resting state:
 - `sense.clipboard-window` has been submitted to Aura Lab as an advisory `request_display` pressure test, but Lab-facing presentation work is parked until Lab stabilizes its side.
 - M16 body-to-adapter readiness is closed as a parked feature/request direction, not an executed implementation milestone.
 - M17 render/frame performance assurance is complete.
-- No Dev runway is open.
+- M18 provider fault-injection hardening is active.
 
 ## Near Outcomes
 
 - Preserve Lab-facing display request and adapter context as parked direction, not active work.
+- Add deterministic provider fault-injection checks for Passive Telemetry and Threat Intel.
 - Keep Clipboard Acquisition, Threat Intel, Passive Telemetry, and Combat Witness meanings distinct while improving presentation.
 - Preserve the display request flow without turning Lab response into adoption or Dev authorization.
 - Keep live/manual validation gated until a future operator-validation milestone explicitly opens it.
@@ -40,6 +41,7 @@ Current resting state:
 | 15 | Display request response fitness and action shaping | Parked | `docs/roadmap/milestone-15-display-request-response-fitness.md` |
 | 16 | Body-to-adapter readiness | Closed/Parked | `docs/roadmap/milestone-16-body-to-adapter-readiness.md` |
 | 17 | Render and Frame performance assurance | Complete | `docs/roadmap/milestone-17-render-frame-performance-assurance.md` |
+| 18 | Provider fault-injection hardening | Active | `docs/roadmap/milestone-18-provider-fault-injection-hardening.md` |
 
 ## Promotion Gates
 
@@ -125,5 +127,6 @@ Do not use this folder as a hidden backlog.
 - `milestone-15-display-request-response-fitness.md`
 - `milestone-16-body-to-adapter-readiness.md`
 - `milestone-17-render-frame-performance-assurance.md`
+- `milestone-18-provider-fault-injection-hardening.md`
 - `passive-telemetry-live-readiness-interlock.md`
 - `runtime-smoke-policy.md`
