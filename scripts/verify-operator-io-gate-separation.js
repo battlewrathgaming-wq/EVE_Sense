@@ -4,6 +4,7 @@ const { createLiveIoGate } = require('../src/passive/liveIoGate');
 const { createPassiveTelemetryService } = require('../src/passive/passiveTelemetryService');
 const { normalizeEsiSystemActivity } = require('../src/passive/esiSystemActivityClient');
 const { normalizeZKillSystemContext } = require('../src/passive/zKillSystemContextClient');
+const { runClipboardAcquisitionWithGate } = require('../src/threat/clipboardAcquisitionGate');
 const { createClipboardAcquisitionService } = require('../src/threat/clipboardAcquisitionService');
 const { createThreatIntelService } = require('../src/threat/threatIntelService');
 const { createThreatIntelTargetResolver } = require('../src/threat/threatIntelTargetResolver');
@@ -12,6 +13,7 @@ const { normalizeThreatZkillRefs } = require('../src/threat/threatIntelZkillClie
 async function main() {
   await verifiesParserJumpFeedsPassiveWithoutThreatScan();
   await verifiesClipboardAndThreatScanDoNotGatePassiveObservation();
+  await verifiesClipboardServiceCommandsDoNotReadWhenThreatIoIsOff();
   console.log('operator IO gate separation verified');
 }
 
@@ -144,6 +146,52 @@ async function verifiesClipboardAndThreatScanDoNotGatePassiveObservation() {
   });
   assert.strictEqual(passive.snapshot().currentSystem.label, 'Jita', 'Passive should still open from parser-observed jump');
   assert.strictEqual(threatScans, 1, 'Passive jump should not trigger another Threat scan');
+}
+
+async function verifiesClipboardServiceCommandsDoNotReadWhenThreatIoIsOff() {
+  let clipboardReads = 0;
+  let threatScans = 0;
+  const threatGate = createLiveIoGate({
+    enabled: false,
+    reason: 'Threat Intel live IO is disabled',
+    blockedCode: 'THREAT_LIVE_IO_BLOCKED'
+  });
+  const clipboard = createClipboardAcquisitionService({
+    readClipboard: () => {
+      clipboardReads += 1;
+      return 'system:Jita';
+    },
+    validateTarget: (text) => text === 'system:Jita',
+    scan: async () => {
+      threatScans += 1;
+      return { status: 'succeeded' };
+    }
+  });
+  const gatedCommand = (action) => runClipboardAcquisitionWithGate({
+    liveIoStatus: () => threatGate.status(),
+    action
+  });
+
+  const blockedArm = await gatedCommand(() => clipboard.arm());
+  assert.strictEqual(blockedArm.state, 'blocked', 'service-command arm should return blocked when Threat IO is off');
+  assert.strictEqual(blockedArm.reason, 'io-disabled', 'blocked service-command arm should use compatible blocked reason');
+  assert.strictEqual(blockedArm.lastCapture, null, 'blocked service-command arm should not expose capture data');
+  assert.strictEqual(clipboardReads, 0, 'service-command arm should not read clipboard when Threat IO is off');
+
+  const blockedCapture = await gatedCommand(() => clipboard.capture());
+  assert.strictEqual(blockedCapture.state, 'blocked', 'service-command capture should return blocked when Threat IO is off');
+  assert.strictEqual(blockedCapture.reason, 'io-disabled', 'blocked service-command capture should use compatible blocked reason');
+  assert.strictEqual(clipboardReads, 0, 'service-command capture should not read clipboard when Threat IO is off');
+  assert.strictEqual(threatScans, 0, 'blocked clipboard service commands should not scan Threat Intel');
+
+  threatGate.setEnabled(true, 'test enables Threat Intel live IO');
+  const listening = await gatedCommand(() => clipboard.arm());
+  assert.strictEqual(listening.state, 'listening', 'service-command arm should still baseline when Threat IO is on');
+  assert.strictEqual(clipboardReads, 1, 'service-command arm should read one baseline only after Threat IO is on');
+  const unchanged = await gatedCommand(() => clipboard.capture());
+  assert.strictEqual(unchanged.state, 'listening', 'service-command capture should ignore unchanged baseline when Threat IO is on');
+  assert.strictEqual(clipboardReads, 2, 'service-command capture should read current clipboard only after Threat IO is on');
+  assert.strictEqual(threatScans, 0, 'unchanged clipboard should not scan Threat Intel');
 }
 
 main().catch((error) => {

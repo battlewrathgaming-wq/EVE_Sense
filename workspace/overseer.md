@@ -109,6 +109,20 @@ Presentation adapter boundary:
 - A Lab response or presentation head does not create Sense adapter requirements.
 - If there is conflict between Lab presentation mechanics and Sense bridge meaning, preserve Sense meaning and return to Human/Sense discussion before writing resting state or action.
 
+## Cooperative Keyword Note
+
+If a key word, protected term, bridge-facing label, adapter label, or presentation phrase is unclear, treat the uncertainty as advisory and cooperative first.
+
+Use this shared working index as a navigation aid:
+
+`F:\Projects\Docs\Aura-Project-Orchestration\terminology\protected-term-working-index.md`
+
+Using or updating a keyword note does not infer ownership, accept shared doctrine, rename source meaning, update protected-word JSON, or authorize Dev work. Sense still owns Sense internal and Project -> Bridge meaning. Lab owns Bridge -> Interface presentation only after preserving Sense meaning.
+
+If the meaning, owner, layer, or preserve/translate decision is unclear, stop and ask the Human or the relevant project Overseer before writing a runway or presenting the term as accepted.
+
+Overseer only: when the Human gives authority, the project Overseer may update the local critical terms or resting-state record so future agents can find the decision from disk. Specialists, Dev, and advisory workers should flag the issue in their handoff instead of updating authority surfaces themselves.
+
 ## Stop And Ask
 
 Stop and ask the Human if:

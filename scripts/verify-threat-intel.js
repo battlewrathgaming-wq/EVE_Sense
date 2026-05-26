@@ -62,7 +62,11 @@ const { ThreatIntelZkillClient, normalizeThreatZkillRefs } = require('../src/thr
 
   let blockedCalls = 0;
   const blockedService = createThreatIntelService({
-    liveIoGate: createLiveIoGate({ enabled: false }),
+    liveIoGate: createLiveIoGate({
+      enabled: false,
+      reason: 'Threat Intel live IO is disabled',
+      blockedCode: 'THREAT_LIVE_IO_BLOCKED'
+    }),
     resolveTarget: resolver,
     zkillClient: {
       fetchTargetRefs: async () => {
@@ -72,7 +76,7 @@ const { ThreatIntelZkillClient, normalizeThreatZkillRefs } = require('../src/thr
   });
   const blocked = await blockedService.scan({ targetText: 'system:Jita', inputSource: 'search' });
   assert.strictEqual(blocked.status, 'blocked', 'disabled live IO should block Threat Intel scans');
-  assert.strictEqual(blocked.failure.code, 'PASSIVE_LIVE_IO_BLOCKED', 'blocked scan should expose gate code');
+  assert.strictEqual(blocked.failure.code, 'THREAT_LIVE_IO_BLOCKED', 'blocked scan should expose Threat gate code');
   assert.strictEqual(blockedCalls, 0, 'blocked scan should not call zKill');
 
   const blockedClipboard = await blockedService.scan({ targetText: 'system:Jita', inputSource: 'clipboard' });

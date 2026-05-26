@@ -43,6 +43,14 @@ Durable docs record product truth.
 
 Archived `docs/gap` files are historical context, not active task queues.
 
+## Keyword Authority Note
+
+If a key word, protected term, bridge-facing label, adapter label, or presentation phrase is unclear, use `F:\Projects\Docs\Aura-Project-Orchestration\terminology\protected-term-working-index.md` as a navigation aid only.
+
+This does not infer ownership, accept shared doctrine, rename Sense meaning, update protected-word JSON, or authorize Dev work. If the owner, layer, or preserve/translate decision is unclear, stop and ask the Human or project Overseer.
+
+Overseer only: when the Human gives authority, the project Overseer may update `workspace/critical/` or another accepted local resting-state record. Specialists, Dev, and advisory workers should flag the issue in handoff instead of updating authority surfaces themselves.
+
 ## Roadmap And Runway Rule
 
 Durable milestone direction lives in `docs/roadmap/`.

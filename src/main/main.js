@@ -13,6 +13,10 @@ const { ZKillSystemContextClient } = require('../passive/zKillSystemContextClien
 const { HttpClient } = require('../services/httpClient');
 const { createDefaultRegistry, registerElectronServiceHandlers } = require('../services/serviceRegistry');
 const { TASK_CLASSIFICATIONS } = require('../services/taskRunner');
+const {
+  createClipboardBlockedSnapshot,
+  runClipboardAcquisitionWithGate
+} = require('../threat/clipboardAcquisitionGate');
 const { createClipboardAcquisitionService } = require('../threat/clipboardAcquisitionService');
 const { createThreatIntelService } = require('../threat/threatIntelService');
 const { createThreatIntelTargetResolver } = require('../threat/threatIntelTargetResolver');
@@ -344,12 +348,18 @@ function registerThreatIntelCommands(serviceRegistry, service, acquisition) {
     .register('threat.clipboard.arm', {
       classification: TASK_CLASSIFICATIONS.LOCAL_MUTATION,
       description: 'Arm Clipboard Acquisition for one target capture',
-      handler: (payload = {}) => acquisition.arm(payload)
+      handler: (payload = {}) => runClipboardAcquisitionWithGate({
+        liveIoStatus: () => service.liveIoStatus(),
+        action: () => acquisition.arm(payload)
+      })
     })
     .register('threat.clipboard.capture', {
       classification: TASK_CLASSIFICATIONS.LOCAL_MUTATION,
       description: 'Capture current clipboard text through Clipboard Acquisition',
-      handler: (payload = {}) => acquisition.capture(payload)
+      handler: (payload = {}) => runClipboardAcquisitionWithGate({
+        liveIoStatus: () => service.liveIoStatus(),
+        action: () => acquisition.capture(payload)
+      })
     })
     .register('threat.clipboard.cancel', {
       classification: TASK_CLASSIFICATIONS.LOCAL_MUTATION,
@@ -472,15 +482,7 @@ function emitTargetKindToggle() {
 
 function armClipboardFromShortcut() {
   if (!threatLiveIoGate.status().enabled) {
-    emitClipboardSnapshot({
-      kind: 'clipboard.acquisition.snapshot',
-      state: 'blocked',
-      message: 'IO authority is off; clipboard scan was not started',
-      reason: 'io-disabled',
-      listeningUntilMs: null,
-      cooldownUntilMs: null,
-      lastCapture: null
-    });
+    emitClipboardSnapshot(createClipboardBlockedSnapshot());
     traceRuntimeDiagnostic('clipboard_acquisition_io_blocked', {
       message: 'IO authority is off; clipboard was not read'
     });

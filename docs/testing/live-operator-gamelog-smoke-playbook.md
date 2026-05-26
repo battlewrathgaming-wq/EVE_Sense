@@ -56,6 +56,51 @@ Future run artifacts should include:
 
 Artifacts must not include broad raw log contents, unrelated historical lines, screenshots of private chat/log material, or provider results unless a separate live API boundary is authorized.
 
+## Redaction-Safe Operator I/O Artifact Shape
+
+Use this shape for any future authorized operator I/O smoke artifact unless that active packet explicitly narrows or expands it:
+
+```json
+{
+  "status": "passed | failed | blocked",
+  "checked_at": "ISO-8601 timestamp",
+  "authorization_ref": "workspace/current.md packet or handoff id",
+  "io_policy": {
+    "passive_enabled": false,
+    "threat_enabled": false,
+    "live_provider_calls_authorized": false,
+    "clipboard_shortcut_authorized": false
+  },
+  "operator_inputs": {
+    "gamelog_folder": {
+      "structure": "accepted | rejected | not-run",
+      "path_redaction": "private-path-omitted",
+      "path_fingerprint": "sha256-or-null"
+    },
+    "clipboard": {
+      "state": "not-run | blocked | listening | captured | cooldown",
+      "target_redaction": "raw-target-omitted",
+      "target_fingerprint": "sha256-or-null",
+      "duplicate_suppressed": 0
+    }
+  },
+  "events": {
+    "future_appends_observed": 0,
+    "accepted": 0,
+    "rejected": 0,
+    "rejection_fingerprints": []
+  },
+  "snapshots": {
+    "combat_witness_summary": {},
+    "passive_summary": {},
+    "threat_summary": {}
+  },
+  "stop_reason": "bounded reason without private raw content"
+}
+```
+
+The artifact must omit raw private paths, raw gamelog lines, raw clipboard targets, screenshots, renderer output, Lab/adaptor output, calibration data, fixture intake, product claims, and raw provider bodies unless a future active packet explicitly authorizes that exact field.
+
 ## Stop Conditions
 
 Stop immediately and record the reason if:
