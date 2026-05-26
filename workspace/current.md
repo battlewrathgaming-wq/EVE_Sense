@@ -1,16 +1,18 @@
 # Current Workspace Packet
 
-Status: Idle
-Updated: 2026-05-25
+Status: Active
+Updated: 2026-05-26
 Owner: Overseer
 
 ## Coordination State
 
 Active milestone: M12 - Live Validation And Tactical Calibration
 Roadmap source: `docs/roadmap/milestone-12-live-validation-and-tactical-calibration.md`
-Current runway: None
-Source of intent: M12G accepted Clipboard Acquisition mode alignment, rolling duplicate suppression, and operator I/O gate-separation verification
+Current runway: M12H - Clipboard service-command I/O gate hardening
+Source of intent: `workspace/SecEngHS48-m12-operator-io-ingestion-assurance-review.md` accepted by `workspace/OverseerHS49-m12h-operator-io-ingestion-assurance-acceptance.md`
 Latest accepted slice: M12G Clipboard Acquisition mode and gate-separation hardening
+Latest review input: `workspace/SecEngHS48-m12-operator-io-ingestion-assurance-review.md`
+Latest Overseer acceptance: `workspace/OverseerHS49-m12h-operator-io-ingestion-assurance-acceptance.md`
 Latest accepted closure: `workspace/OverseerHS47-m12g-clipboard-gate-separation-acceptance.md`
 Latest Dev handoff: `workspace/DevHS46-m12g-clipboard-mode-gate-separation-hardening.md`
 Latest M12G acceptance: `workspace/OverseerHS47-m12g-clipboard-gate-separation-acceptance.md`
@@ -24,13 +26,20 @@ Latest M12A acceptance: `workspace/OverseerHS37-m12a-live-api-transition-readine
 Latest M12A Dev handoff: `workspace/DevHS36-m12a-live-api-smoke-transition-readiness.md`
 Latest M12 prep acceptance: `workspace/OverseerHS35-m12-live-validation-harness-prep-acceptance.md`
 Latest M12 gate trace: `workspace/OverseerHS33-m12-live-validation-gate-trace.md`
-Current executor: None
-Current status: Idle after M12G acceptance
-Expected output: None
+Current executor: Dev
+Current status: Open for narrow hardening before any live/manual operator I/O smoke
+Expected output: `workspace/DevHS50-m12h-clipboard-service-io-gate-hardening.md`
 
-## Resting State
+## Active Runway
 
-M12 remains the active/gated envelope for live/manual validation and tactical calibration, but no executable work is open right now.
+M12 remains the active/gated envelope for live/manual validation and tactical calibration. M12H is a pre-live hardening packet only. It does not authorize live/manual smoke.
+
+Problem to fix:
+
+- The global `Control+\` shortcut path blocks before reading clipboard content when Threat I/O is off.
+- The exposed `threat.clipboard.arm` and `threat.clipboard.capture` service-command paths currently call Clipboard Acquisition directly.
+- Clipboard Acquisition can read clipboard content internally when arm/capture are invoked without explicit text.
+- Because those commands are reachable through preload, backend I/O authority must be enforced before those service-command paths can read clipboard content.
 
 Core rule:
 
@@ -63,9 +72,68 @@ M12G accepted:
 
 ## Runway Shape
 
-At idle, M12 can move next toward operator I/O smoke, Combat calibration, or fixture intake only by Human/Overseer decision.
+Ordered Dev runway:
 
-Any future live/manual EVE folder use, real clipboard capture, provider calls, manual shortcut validation, display/adapter convergence, or product decision about Passive/Active gate behavior requires a future active packet.
+1. Read the accepted review and acceptance:
+   - `workspace/SecEngHS48-m12-operator-io-ingestion-assurance-review.md`
+   - `workspace/OverseerHS49-m12h-operator-io-ingestion-assurance-acceptance.md`
+2. Trace current Clipboard Acquisition command paths:
+   - global shortcut path
+   - `threat.clipboard.arm`
+   - `threat.clipboard.capture`
+   - preload exposure
+   - `readClipboard` injection
+3. Enforce Threat I/O gate checks on all Clipboard Acquisition service-command paths before any clipboard read.
+4. Return the existing blocked Clipboard Acquisition snapshot shape, or an equivalent compatible blocked shape, when Threat I/O is off.
+5. Preserve accepted I/O-on behavior:
+   - global `Control+\` may immediately capture current valid clipboard content
+   - focused/windowed acquisition without payload baselines, listens briefly, ignores unchanged pre-arm content, seals, and cools down
+   - duplicate suppression remains fingerprint-only, 10 seconds, 5 entries
+6. Add deterministic verification proving service-command `arm` and `capture` do not call clipboard read while Threat I/O is off.
+7. Align primary Threat blocked-code verification with production Threat gate behavior, or explicitly make the primary Threat verifier lane-agnostic while preserving provider-fault verification as the lane-code oracle.
+8. Add or clarify a redaction-safe operator I/O smoke artifact shape before any future live/manual operator smoke.
+9. Run required verification and write the Dev handoff.
+
+## Acceptance Criteria
+
+M12H is complete when:
+
+- Clipboard service-command `arm` and `capture` paths cannot read clipboard content while Threat I/O is off.
+- The blocked service-command result is compatible with existing Clipboard Acquisition blocked state handling.
+- Global shortcut I/O-off behavior remains no-read.
+- Global shortcut I/O-on immediate capture remains supported.
+- Focused/windowed no-payload acquisition still baselines and ignores unchanged pre-arm clipboard content.
+- Seal/cooldown behavior is unchanged.
+- Duplicate suppression remains fingerprint-only and bounded.
+- Threat blocked-code verification no longer implies Passive gate ownership in the primary Threat verifier.
+- Future operator I/O smoke has a redaction-safe artifact shape or documentation that avoids raw private paths, raw gamelog lines, raw clipboard targets, screenshots, renderer output, Lab/adaptor output, calibration data, fixture intake, product claims, and raw provider bodies unless a future packet explicitly authorizes them.
+- The Dev handoff names exact files changed, behavior changed, verification run, and any residual risk.
+
+## Required Verification
+
+Run:
+
+```powershell
+npm.cmd run verify:threat-intel
+npm.cmd run verify:clipboard-race
+npm.cmd run verify:operator-io-gates
+npm.cmd run verify:provider-faults
+npm.cmd run verify:all
+```
+
+If any verification fails, stop and record the failure in the Dev handoff. Do not run live/manual fallback checks.
+
+## Stop Conditions
+
+Stop and return to Overseer/Human if:
+
+- the fix requires reading real clipboard content
+- the fix requires live/manual smoke
+- the fix requires changing bridge names, IPC names, payload names, persistence, schemas, or lane ownership
+- the fix would merge Passive and Threat gates
+- the fix would weaken global shortcut immediate capture while I/O is on
+- the fix would store raw clipboard history
+- verification reveals unrelated behavioral drift outside the M12H scope
 
 ## Context To Preserve
 
@@ -127,7 +195,7 @@ Human discussion to preserve:
 
 ## Candidate Next M12 Slices
 
-Open only by Human/Overseer decision:
+Parked while M12H is active:
 
 1. Live/manual operator I/O smoke with redacted artifacts and explicit Human authorization.
 2. Manual shortcut feel/OS accelerator validation, only if explicitly authorized.
@@ -136,14 +204,28 @@ Open only by Human/Overseer decision:
 
 ## Work Record
 
-Idle after Overseer acceptance.
+M12H opened after security/engineering review found a pre-live authority-boundary gap.
 
 Accepted handoff:
 
 ```txt
-workspace/OverseerHS47-m12g-clipboard-gate-separation-acceptance.md
+workspace/SecEngHS48-m12-operator-io-ingestion-assurance-review.md
+workspace/OverseerHS49-m12h-operator-io-ingestion-assurance-acceptance.md
 ```
 
 ## Handoff Requirements
 
-None while idle.
+Dev must create:
+
+```txt
+workspace/DevHS50-m12h-clipboard-service-io-gate-hardening.md
+```
+
+The handoff must include:
+
+- files changed
+- service-command gate trace
+- clipboard read/no-read proof
+- behavior preserved
+- verification commands and results
+- residual risks, if any
