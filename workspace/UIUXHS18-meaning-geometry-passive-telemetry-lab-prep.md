@@ -113,6 +113,61 @@ Out of scope:
 - No manual shortcut validation.
 - No contract, IPC, payload, CSS/test ID, or service rename.
 
+## 3A. Slim Surface Reference Index
+
+These references are for Lab spatial guide discussion only. They are pointer labels, not new UI copy, source terms, payload fields, adapter keys, or shared terminology.
+
+Use the slim `#NN` reference when pointing to a surface-facing part in a guide. Preserve the Sense-owned meaning from the rest of this artifact.
+
+| Ref | Surface-facing part | Meaning owner / layer | Current visible wording or value | Slot | Reference guidance |
+| --- | --- | --- | --- | --- | --- |
+| `#01` | Passive lane anchor | Sense / lane meaning | `Passive Telemetry` | `context-anchor` | Use when pointing to the lane label or the lane identity. Do not rename to generic telemetry or intel. |
+| `#02` | Current-system label | Sense / display label | `Current system` | `context-anchor` | Use when pointing to the subject label. Keep attached to Passive lane context. |
+| `#03` | Current-system value | Sense / observed value | system label, or `No observation` | `context-anchor` | Use when pointing to the displayed system name/value. Do not imply complete location truth. |
+| `#04` | State qualifier | Sense / lane state | `Fresh context`, `Stale context`, `No observation`, etc. | `usability-cue` | Use for the primary freshness/usability state near the current-system read. |
+| `#05` | Kills value | Sense / activity texture | `Kills` value | `activity-texture` | Use when pointing to aggregate activity texture. Do not style as a risk score. |
+| `#06` | Jumps value | Sense / activity texture | `Jumps` value | `activity-texture` | Use when pointing to aggregate movement/activity texture. Do not imply completeness. |
+| `#07` | Ratio value | Sense / derived activity texture | `Ratio` value | `activity-texture` | Use when pointing to the derived texture. Keep quieter than raw kills/jumps unless later accepted. |
+| `#08` | Sample/completeness marker | Sense / sample limit state | `Partial sample`, `Capped sample`, `No provider sample yet`, `Provider pending` | `completeness-cue` | Use for visible sample limits. Do not collapse with stale, blocked, degraded, or no observation. |
+| `#09` | Live IO authority marker | Sense / runtime authority | `Live IO blocked` | `authority-cue` | Use when pointing to authority-blocked provider access. Do not translate to provider failure. |
+| `#10` | Degraded marker | Sense / impairment cue | `Degraded` | `impairment-cue` | Use when pointing to runtime/provider/resolution impairment. Do not style as tactical danger. |
+| `#11` | Basis/freshness line | Sense / support detail | source, basis, freshness, age, static lookup, sample count | `source-detail-reveal` | Use for compact support copy or reveal handle. Keep near active gaps/warnings when needed. |
+| `#12` | Detail/diagnostics reveal | Sense / diagnostics support | Passive state, sample, activity, gate, freshness, failure detail | `source-detail-reveal` | Use for collapsed inspection space. Do not make it first-read by default. |
+| `#13` | Boundary marker | Sense / adjacent lane separation | `Threat Intel`, `No scan`, `Combat Witness`, `Clipboard Acquisition`, `Live IO` as shadow context | `boundary-marker` | Use only as shadow/context. Do not import adjacent lane terms into Passive focus copy. |
+
+First-read reference cluster:
+
+```txt
+#01 Passive lane anchor
+-> #02 Current-system label
+-> #03 Current-system value
+-> #04 State qualifier
+```
+
+Activity texture cluster:
+
+```txt
+#05 Kills
+-> #06 Jumps
+-> #07 Ratio
+-> #08 Sample/completeness marker when active
+```
+
+Trust/limit cluster:
+
+```txt
+#09 Live IO authority marker
+-> #10 Degraded marker
+-> #11 Basis/freshness line
+-> #12 Detail/diagnostics reveal
+```
+
+Boundary context:
+
+```txt
+#13 Boundary marker
+```
+
 ## 4. Human Meaning Summary
 
 Plain-language readback:
