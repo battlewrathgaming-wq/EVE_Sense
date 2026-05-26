@@ -65,7 +65,7 @@ The current implementation includes:
 - local/static Threat Intel target resolver for systems, pilots, corporations, alliances, and copied text
 - backend-only scoped Threat Intel zKill `pastSeconds` probe
 - Threat Intel live IO gate with visible blocked state when live calls are disabled
-- compact Threat Intel search surface that scans only on explicit submit
+- compact Threat Intel acquisition/search surface that scans only on explicit permission action or renderer/service request
 - overlay-native back-page Threat Intel foundation with display-first acquisition bar, gateway marker, local target type controls, and persistent last-scan report
 - Clipboard Acquisition service with global-shortcut immediate capture, focused/windowed listening, recent duplicate suppression, and sealed/cooldown lifecycle
 - Clipboard Acquisition race verification for rapid arm/cancel/capture, unchanged content, rejection, timeout, scan failure, cooldown, and concurrent arm semantics

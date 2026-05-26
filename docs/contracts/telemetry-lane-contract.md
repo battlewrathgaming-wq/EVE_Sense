@@ -29,8 +29,9 @@ Operator-initiated tactical inspection backed by a scoped zKillmail query in the
 
 Examples:
 
-- search-bar target scan
-- armed clipboard target scan
+- keyboard-first Clipboard Acquisition target scan
+- focused/windowed Clipboard Acquisition target scan
+- explicit renderer/service target scan
 - system scan
 - pilot/corp/alliance scan
 - recent aggressors
@@ -58,10 +59,12 @@ Examples:
 - Each lane should expose its own freshness/staleness state.
 - Passive Telemetry must consume backend snapshots, not renderer log events.
 - Passive Telemetry live zKill/ESI calls must be backend-gated and scoped.
+- Passive current-system context must not depend on Clipboard Acquisition, Threat scan state, or active permission-action state.
 
 ## Must Not Do
 
 - Do not merge lane state into one ambiguous global threat object.
 - Do not allow one lane's stale state to masquerade as another lane's current state.
 - Do not let UI mode changes affect collection authority.
+- Do not treat Active I/O permission actions as background monitoring.
 

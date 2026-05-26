@@ -75,9 +75,9 @@ It must not:
 
 Threat Intel starts from an operator action:
 
-- typed search
-- explicit scan submit
-- valid armed clipboard capture
+- explicit renderer/service scan request
+- keyboard-first Clipboard Acquisition
+- focused/windowed Clipboard Acquisition
 
 Current Threat Intel uses scoped zKill-backed samples with sample/cap/freshness metadata.
 
@@ -87,7 +87,8 @@ ESI killmail expansion is deferred unless a future milestone or ADR authorizes i
 
 Clipboard Acquisition is:
 
-- armed deliberately
+- gated by I/O authority
+- invoked deliberately through the operator permission action, currently `Control+\`
 - visibly active
 - short-lived
 - sealed after capture, timeout, cancellation, or rejection

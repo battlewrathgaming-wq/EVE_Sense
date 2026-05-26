@@ -10,7 +10,7 @@ Defines how AURA-Sense performs scoped tactical threat inspection.
 ## Flow
 
 ```txt
-typed search or armed clipboard acquisition
+keyboard-first Clipboard Acquisition or explicit renderer/service scan request
 -> local/static resolution where possible
 -> scoped zKillmail query
 -> sample/cap/failure/freshness metadata
@@ -20,7 +20,7 @@ typed search or armed clipboard acquisition
 
 ## Request Shape
 
-The backend Threat Intel service accepts one deliberate scan request shape for typed, pasted, and clipboard-acquired targets:
+The backend Threat Intel service accepts one deliberate scan request shape for renderer/service requests and clipboard-acquired targets:
 
 ```txt
 {
@@ -58,15 +58,22 @@ The `zkill` section includes provider, endpoint family, scoped target route, loo
 
 ## Clipboard Acquisition
 
-Clipboard Acquisition is an input workflow feeding the same scan contract. It has visible `idle`, `listening`, and `cooldown` states, opens a 3 second listening window, ignores unchanged clipboard content from before arming, seals after capture/rejection/timeout/cancel, and enforces a 5 second cooldown before re-arming.
+Clipboard Acquisition is an input workflow feeding the same scan contract. It is gated by backend I/O authority. When I/O is off, the shortcut path must not read clipboard content.
 
-The implemented preferred global shortcut is `Control+\`. If that chord cannot be registered, Electron reports fallback status and attempts `Control+Alt+Space`. Focused overlay controls also support local keyboard affordances. The scan field remains available for manual operation.
+The implemented preferred global shortcut is `Control+\`. That chord is the explicit operator permission action. If the current clipboard contains a valid target, the global shortcut may capture and scan it immediately. If no valid current target is available, or when the focused/windowed path arms without a provided clipboard payload, Clipboard Acquisition opens a visible 3 second listening window, ignores unchanged content from before arming, seals after capture/rejection/timeout/cancel, and enforces a 5 second cooldown before re-arming.
+
+Clipboard Acquisition keeps only short-lived in-memory state. Duplicate suppression uses a small fingerprint-only rolling cache, currently 10 seconds and 5 entries. It is not a clipboard history.
+
+If `Control+\` cannot be registered, Electron reports fallback status and attempts `Control+Alt+Space`. Focused overlay controls also support local keyboard affordances. The renderer/service scan request path remains available for deliberate operation.
 
 ## Invariants
 
 - Search is operator-initiated.
 - Search focus alone must not scan.
-- zKillmail is the first scoped evidence source.
+- `Control+\` is an explicit permission action, not continuous clipboard monitoring.
+- I/O off must prevent clipboard reads and live provider calls.
+- Duplicate suppression must not store raw clipboard history.
+- zKillmail is the first scoped provider source.
 - zKillmail results require visible sample, cap, failure, and freshness metadata.
 - Live zKill calls are blocked unless the backend live IO gate is enabled.
 - ESI expansion is deferred until explicitly authorized by a future milestone or ADR.
@@ -79,6 +86,7 @@ The implemented preferred global shortcut is `Control+\`. If that chord cannot b
 - Do not store zKill summaries as tactical truth.
 - Do not imply complete coverage.
 - Do not run broad background discovery without user/session intent.
-- Do not add default ESI expansion inside the first search-bar scan.
+- Do not add default ESI expansion inside the first scoped Threat Intel scan.
+- Do not keep Clipboard Acquisition listening continuously or read clipboard content while I/O authority is off.
 - Do not turn AURA-Sense into Atlas.
 

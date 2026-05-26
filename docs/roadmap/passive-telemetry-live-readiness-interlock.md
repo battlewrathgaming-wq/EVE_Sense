@@ -56,7 +56,7 @@ Search focus alone is not enough to justify a live request.
 Allowed live request triggers:
 
 - explicit search submit from the AURA-Sense UI
-- valid clipboard acquisition through the visible Ctrl+Shift armed listener
+- valid Clipboard Acquisition through the visible I/O-gated permission action/window
 - optional stable typed input debounce in a future Threat Intel milestone, if it remains visible and cancellable
 
 Clipboard acquisition is the preferred hands-free path for fullscreen play. It may populate the search box and trigger the scoped scan after a valid captured target, then must seal and enter a 5 second cooldown.

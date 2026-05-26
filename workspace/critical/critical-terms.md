@@ -26,7 +26,7 @@ Until that arrives, treat this file as Sense-local authority for current meaning
 | `Combat Witness` | Rolling recent combat-log observations and computed tactical summaries. | Not Atlas evidence, not complete history, and not perfect truth. | Lab may present compactly, but should preserve witnessed/recent/observed intent. |
 | `Passive Telemetry` | Low-frequency current-system context lane. | Must not imply background Threat Intel scanning or complete system awareness. | Keep lane isolation visible. |
 | `Threat Intel` | Deliberate scoped operator-initiated inspection. | Must not imply continuous monitoring, complete intelligence, or durable Atlas assessment. | Keep sample/cap/failure/freshness visible. |
-| `Clipboard Acquisition` | Short visible clipboard authority window. | Safety/trust-critical; not background clipboard monitoring. | Avoid generic watching/listening language unless contextualized. |
+| `Clipboard Acquisition` | I/O-gated clipboard authority workflow. `Control+\` is the explicit permission action; focused/windowed mode uses a short visible listening window. | Safety/trust-critical; not background or continuous clipboard monitoring. | Preserve I/O-off no-read behavior, immediate valid-target capture, short window/seal/cooldown, and no hidden clipboard history. |
 | `Gateway` | Sense back-page Threat Intel context marker and interaction model. | Sense-owned UI/context term. | Preserve unless Human/Sense Overseer allows Lab override. |
 | `Live IO blocked` | Backend gate intentionally prevented live provider or clipboard IO. | Different from provider failure, unavailable bridge, or no data. | Do not soften to offline without preserving authority meaning. |
 | `Partial sample` / `Capped sample` | Provider response was incomplete or display/sample capped. | Prevents samples from being read as complete truth. | Must remain visible near provider/sample displays. |
@@ -42,16 +42,17 @@ Until that arrives, treat this file as Sense-local authority for current meaning
 | `combat.witness.snapshot` | Backend-owned Combat Witness snapshot. | Lane payload with observedAt, rolling windows, events, freshness, and watcher state. |
 | `passive.telemetry.snapshot` | Backend-owned Passive Telemetry snapshot. | Current-system, activity, zKill, freshness, gate, provider status, and failure metadata. |
 | `threat.intel.snapshot` | Backend-owned latest Threat Intel scan snapshot. | Request, target, status, live IO, zKill sample, failure, and freshness. |
-| `clipboard.acquisition.snapshot` | Clipboard Acquisition lifecycle snapshot. | Idle/listening/cooldown/blocked states tied to authority window. |
+| `clipboard.acquisition.snapshot` | Clipboard Acquisition lifecycle snapshot. | Idle/listening/cooldown/blocked states tied to the I/O-gated permission action and short authority window. |
 | `runtime.live-io.snapshot` | Backend live IO policy state. | Live IO is authority state, not provider health. |
 | `auraCombatWitness` / `auraPassiveTelemetry` / `auraThreatIntel` | Preload bridge APIs for Sense lanes. | Bridge-facing JavaScript APIs. |
 | `fresh` / `recent` / `stale` | Lane-specific freshness states. | Not a shared freshness enum. |
 | `empty` / `No scan` | No deliberate Threat Intel scan or no observed events depending on lane. | Do not collapse with failed/degraded/blocked. |
 | `failed` / `degraded` | Provider/runtime impairment. | Different from authority block and no data. |
-| `Pulling` / `Listening` / `Cooldown` | Clipboard Acquisition lifecycle states. | Short visible authority lifecycle, not background monitoring. |
+| `Pulling` / `Listening` / `Cooldown` | Clipboard Acquisition lifecycle states. | Short visible authority lifecycle. `Pulling` may be immediate permission-action capture; `Listening` is only the bounded window. |
 | `Provider pulse` | Provider/sample status language. | Can imply continuous provider heartbeat; needs presentation care. |
 | `seed.readiness` | Inherited/runtime readiness service command. | Active bridge term, not product doctrine. |
-| `Control+\\`, `Alt+\\`, `\\` | Shortcut model. | Current implementation includes fallback behavior; docs/UI/runtime must match. |
+| `Control+\\`, `Alt+\\`, `\\` | Shortcut model. | `Control+\` is the explicit Clipboard Acquisition permission action; `Alt+\` cycles target kind; fallback behavior, docs, UI, and runtime must match. |
+| `Active` / `Active I/O` | In M12 operator I/O context, an operator permission action such as `Control+\` or an explicit service/request scan. | Does not mean background clipboard monitoring. |
 
 ## Translation Caution
 
@@ -63,7 +64,7 @@ Until that arrives, treat this file as Sense-local authority for current meaning
 | `Fallback` | manual fallback / local only / static lookup | Can sound like alternate truth source. | Use explicit authority/source labels. |
 | `No data` | No scan / No provider / No observation | One phrase hides distinct states. | Use lane-specific absence language. |
 | `Watch` / `Watcher` | Log Watcher / Watching | Collides with Atlas Watch and clipboard authority. | Reserve watcher for gamelog watcher unless Sense accepts otherwise. |
-| `Listening` | Pulling / Listening | Can imply ongoing clipboard monitoring. | Only for the short visible acquisition state. |
+| `Listening` | Pulling / Listening | Can imply ongoing clipboard monitoring. | Only for the short visible acquisition state. The global permission action may capture current valid clipboard content immediately without becoming background monitoring. |
 | `Gateway` vs `gate` | Gateway / Live IO gate | UI context marker vs backend authority gate. | Keep distinct. |
 | `Provider pulse` | provider state / sample state | Pulse may imply continuous provider heartbeat. | Needs Lab/Human presentation choice. |
 | `Sample` | scoped sample | Can imply representative/complete coverage. | Keep count/cap/partial nearby. |

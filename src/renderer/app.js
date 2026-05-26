@@ -653,7 +653,7 @@ function renderClipboardState(snapshot) {
 function renderShortcutStatus(status) {
   if (queuePresentationUpdate('shortcutStatus', status, renderShortcutStatus)) return;
   const shortcutLabel = status?.registered ? 'Ctrl+\\' : (status?.fallbackRegistered ? 'Ctrl+Alt+Space' : 'Manual');
-  setText('shortcut-message', status?.message || 'Ctrl+\\ opens a 3 second clipboard scan window, then listening stops.');
+  setText('shortcut-message', status?.message || 'Ctrl+\\ captures current clipboard or opens a 3 second scan window.');
   setText('clipboard-key-ctrl', shortcutLabel.startsWith('Ctrl') ? 'Ctrl' : 'Scan');
   setText('clipboard-key-slash', status?.fallbackRegistered ? 'Alt+Space' : '\\');
   byId('clipboard-listen').classList.toggle('is-unsupported', status?.registered === false);

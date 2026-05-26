@@ -95,7 +95,7 @@ Current state:
 - scan request/snapshot contract exists
 - local/static target resolver exists
 - scoped zKill probe exists
-- compact search surface exists
+- compact acquisition/search surface exists
 - live zKill smoke remains deferred until explicitly gated and recorded
 - ESI expansion remains deferred
 
@@ -114,15 +114,18 @@ Let the operator deliberately acquire a copied EVE target for a short Threat Int
 
 Current state:
 
-- armed/listening/sealed/cooldown lifecycle exists
+- I/O-gated `Control+\` permission action exists
+- focused/windowed listening/sealed/cooldown lifecycle exists
+- recent duplicate suppression exists
 - preferred global shortcut is `Control+\` with fallback status reporting
-- UI Arm control remains available
+- focused overlay keyboard affordance remains available
 
 Must not:
 
 - monitor clipboard indefinitely
 - hide listener state
 - bypass Threat Intel scan boundaries
+- store raw clipboard history
 - re-arm during cooldown
 
 ## Element 6: Diagnostics And Degraded State

@@ -422,9 +422,9 @@ function registerClipboardGlobalShortcut() {
       kindToggleRegistered,
       supported: registered || fallbackRegistered,
       message: registered
-        ? 'Ctrl+\\ opens a 3 second clipboard scan window'
+        ? 'Ctrl+\\ captures current clipboard or opens a 3 second scan window'
         : (fallbackRegistered
-            ? 'Ctrl+\\ could not be registered; Ctrl+Alt+Space opens a 3 second clipboard scan window'
+            ? 'Ctrl+\\ could not be registered; Ctrl+Alt+Space captures current clipboard or opens a 3 second scan window'
             : 'Ctrl+\\ could not be registered; use the Threat Intel scan field')
     };
     traceRuntimeDiagnostic('clipboard_acquisition_global_shortcut', {
@@ -452,7 +452,7 @@ function registerClipboardGlobalShortcut() {
       kindToggleRegistered,
       supported: fallbackRegistered,
       message: fallbackRegistered
-        ? 'Ctrl+\\ shortcut failed; Ctrl+Alt+Space opens a 3 second clipboard scan window'
+        ? 'Ctrl+\\ shortcut failed; Ctrl+Alt+Space captures current clipboard or opens a 3 second scan window'
         : `Ctrl+\\ shortcut failed: ${error.message}; use the Threat Intel scan field`
     };
     traceRuntimeDiagnostic('clipboard_acquisition_global_shortcut_error', { message: error.message });

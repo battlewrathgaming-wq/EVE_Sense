@@ -234,7 +234,7 @@ Feature anchors:
 
 Operational outcome:
 
-Threat Intel supports deliberate scoped scans from explicit search submit or armed clipboard capture, with explicit evidence basis, sample limits, freshness, and failure language.
+Threat Intel supports deliberate scoped scans from explicit renderer/service requests or Clipboard Acquisition, with explicit provider/source basis, sample limits, freshness, and failure language.
 
 Implementation note:
 
@@ -243,7 +243,7 @@ Electron global shortcut registration uses `Control+\` as the preferred chord wi
 Task chain:
 
 1. Define search target acquisition and scan request contract.
-2. Implement or adapt clipboard acquisition as a Ctrl+Shift armed, visible, hands-free temporary input workflow with timeout and cooldown.
+2. Implement or adapt clipboard acquisition as an I/O-gated `Control+\` permission action with focused/windowed temporary input behavior, timeout, duplicate suppression, and cooldown.
 3. Insert valid clipboard captures into the search box and auto-run the scoped scan.
 4. Add zKillmail query/ref normalization for the requested target.
 5. Add sample, cap, failed-fetch, and freshness metadata.
@@ -261,7 +261,7 @@ Dev may not scan on search focus alone, keep clipboard listening indefinitely, r
 
 Acceptance gate:
 
-Explicit search submit or armed clipboard scan returns a tactical zKillmail-backed snapshot with visible evidence basis and no broad background scraping, no focus-triggered API calls, no Atlas persistence, no default ESI expansion, and no renderer API calls.
+Explicit renderer/service scan request or Clipboard Acquisition returns a tactical zKillmail-backed snapshot with visible provider/source basis and no broad background scraping, no focus-triggered API calls, no Atlas persistence, no default ESI expansion, and no renderer API calls.
 
 Completion signal:
 

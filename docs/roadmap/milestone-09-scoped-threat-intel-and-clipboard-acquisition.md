@@ -8,7 +8,7 @@ Owner: Overseer direction, Dev execution
 
 Milestone 09 gives the operator a deliberate tactical scan lane without turning AURA-Sense into a background intelligence collector.
 
-The search box is the Threat Intel boundary. Clipboard Acquisition is the hands-free input path for fullscreen EVE use. Both paths must produce the same scoped Threat Intel request shape and the same evidence-basis language.
+The search box is the Threat Intel boundary. Clipboard Acquisition is the hands-free input path for fullscreen EVE use. Both paths must produce the same scoped Threat Intel request shape and the same provider/source-basis language.
 
 Do not start this milestone until Passive Telemetry live-safe readiness has cleared, unless Overseer explicitly narrows the work to non-live UI preparation.
 
@@ -23,7 +23,7 @@ Do not start this milestone until Passive Telemetry live-safe readiness has clea
 
 ## Operational Outcome
 
-The operator can run a scoped zKill-backed tactical probe by submitting a search target or by using armed clipboard acquisition. The result shows target, scope, provider, lookback, sample cap, freshness, failure/cap/partial state, and no false certainty.
+The operator can run a scoped zKill-backed tactical probe through an explicit renderer/service scan request or Clipboard Acquisition. The result shows target, scope, provider, lookback, sample cap, freshness, failure/cap/partial state, and no false certainty.
 
 Implementation note: Electron global shortcut registration uses `Control+\` as the preferred chord with `Control+Alt+Space` fallback status reporting rather than a bare Ctrl+Shift chord. Focused overlay keyboard affordances remain available.
 
@@ -78,8 +78,11 @@ Task packet: `docs/gap/complete/threat-intel-search-ui-surface.md`.
 - Status: Complete with shortcut caveat above.
 - Implement hands-free acquisition without requiring AURA-Sense window focus.
 - Show visible armed, listening, sealed, and cooldown state.
-- Open a 3 second clipboard listening window.
+- Use `Control+\` as the explicit I/O-gated permission action for global acquisition.
+- Capture a current valid target immediately from the global permission action when available.
+- Open a 3 second clipboard listening window for focused/windowed acquisition or when no valid current target is available.
 - Insert a valid captured target into the search box and run the scoped scan.
+- Suppress recent duplicate clipboard fingerprints without storing raw clipboard history.
 - Seal after capture, timeout, cancellation, or rejected content.
 - Enforce a 5 second cooldown after seal before re-arming.
 
@@ -133,6 +136,8 @@ Dev may not:
 - add ESI killmail expansion by default
 - add Atlas persistence, queues, reports, watch execution, or evidence stores
 - keep clipboard listening after the short armed window
+- read clipboard content while I/O authority is off
+- store raw clipboard history
 - scan on focus alone
 - make zKill summaries sound complete
 
@@ -140,7 +145,7 @@ Dev may not:
 
 Milestone 09 is complete when:
 
-- explicit search submit can run a scoped zKill-backed probe through backend services
+- explicit renderer/service scan request can run a scoped zKill-backed probe through backend services
 - valid clipboard acquisition can populate search and run the same scoped scan
 - listener arms, listens, seals, and enters a 5 second cooldown visibly
 - live IO disabled state blocks external calls

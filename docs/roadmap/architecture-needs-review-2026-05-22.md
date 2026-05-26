@@ -132,7 +132,7 @@ Passive Telemetry and Threat Intel must remain separate even if both use zKillma
 Difference:
 
 - Passive Telemetry: automatic current-system context from local log observation and freshness policy.
-- Threat Intel: operator-initiated search bar or armed clipboard scan.
+- Threat Intel: operator-initiated scan request or Clipboard Acquisition.
 
 Guardrail:
 
