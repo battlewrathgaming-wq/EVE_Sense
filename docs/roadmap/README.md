@@ -1,7 +1,7 @@
 # AURA-Sense Roadmap
 
 Status: Durable roadmap scaffold
-Last reviewed: 2026-05-25
+Last reviewed: 2026-05-26
 
 ## Purpose
 
@@ -13,7 +13,7 @@ Roadmap files are not executable authority. Implementation truth lives in `docs/
 
 ## Current Phase
 
-Idle after M19 gamelog ingest containment hardening while Lab-facing presentation work remains parked.
+Idle after M12H Clipboard service-command I/O gate hardening while Lab-facing presentation work remains parked and live/manual validation remains gated.
 
 Current resting state:
 
@@ -24,6 +24,7 @@ Current resting state:
 - M17 render/frame performance assurance is complete.
 - M18 provider fault-injection hardening is complete.
 - M19 gamelog ingest containment and fan-out assurance is complete.
+- M12H Clipboard service-command I/O gate hardening is complete as a pre-live M12 slice; no live/manual operator smoke is open.
 
 ## Near Outcomes
 
@@ -31,7 +32,8 @@ Current resting state:
 - Keep Clipboard Acquisition, Threat Intel, Passive Telemetry, and Combat Witness meanings distinct while improving presentation.
 - Keep the accepted gamelog containment/fan-out hardening as the current baseline before any future logger/parser work.
 - Preserve the display request flow without turning Lab response into adoption or Dev authorization.
-- Keep live/manual validation gated until a future operator-validation milestone explicitly opens it.
+- Keep live/manual validation gated until a future operator-validation packet explicitly opens it.
+- Preserve M12H as the current pre-live safety baseline for Clipboard Acquisition service-command paths.
 
 ## Candidate Milestones
 
@@ -44,6 +46,7 @@ Current resting state:
 | 17 | Render and Frame performance assurance | Complete | `docs/roadmap/milestone-17-render-frame-performance-assurance.md` |
 | 18 | Provider fault-injection hardening | Complete | `docs/roadmap/milestone-18-provider-fault-injection-hardening.md` |
 | 19 | Gamelog ingest containment and fan-out assurance | Complete | `docs/roadmap/milestone-19-gamelog-ingest-containment-and-fanout-assurance.md` |
+| 12 | Live validation and tactical calibration | Active envelope / idle after M12H pre-live hardening | `docs/roadmap/milestone-12-live-validation-and-tactical-calibration.md` |
 
 ## Promotion Gates
 
@@ -103,12 +106,13 @@ Ready when:
 - Full Threat acquisition bar comparison.
 - Manual shortcut validation.
 - Live provider smoke.
+- Live/manual operator I/O smoke.
 - Broad face redesign.
 - Lab face adoption before Sense body-to-adapter readiness is proven.
 - M16 body-to-adapter trace runway.
 - Additional Lab-facing presentation work while Lab is parked.
 - Future operator-environment gamelog validation unless explicitly opened as a live/manual packet.
-- Roadmap state reconciliation completed after M19 so legacy planning docs read as historical/candidate context, not active authority.
+- Further roadmap state reconciliation after future M12 slices.
 
 ## Roadmap Use
 

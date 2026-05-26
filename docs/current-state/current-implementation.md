@@ -1,7 +1,7 @@
 # Current State: AURA-Sense Implementation
 
-Date: 2026-05-25
-Status: Active M12 live/manual validation; Threat and Passive live API smokes have bounded evidence; operator I/O smoke remains gated
+Date: 2026-05-26
+Status: Idle after M12H pre-live Clipboard Acquisition service-command gate hardening; Threat and Passive live API smokes have bounded evidence; operator I/O smoke remains gated
 
 ## What Exists
 
@@ -68,8 +68,10 @@ The current implementation includes:
 - compact Threat Intel acquisition/search surface that scans only on explicit permission action or renderer/service request
 - overlay-native back-page Threat Intel foundation with display-first acquisition bar, gateway marker, local target type controls, and persistent last-scan report
 - Clipboard Acquisition service with global-shortcut immediate capture, focused/windowed listening, recent duplicate suppression, and sealed/cooldown lifecycle
+- Clipboard Acquisition service-command I/O gate helper that blocks renderer-reachable arm/capture service commands before clipboard reads while Threat I/O is off
 - Clipboard Acquisition race verification for rapid arm/cancel/capture, unchanged content, rejection, timeout, scan failure, cooldown, and concurrent arm semantics
 - operator I/O gate-separation verification for parser-jump Passive updates independent from Clipboard Acquisition and Threat scan state
+- operator I/O gate verification proving Clipboard Acquisition service-command arm/capture paths do not read clipboard or scan Threat Intel while Threat I/O is off
 - global clipboard arming shortcut using `Control+\` where available with fallback shortcut status reporting
 - Threat Intel preload bridge with no renderer-owned provider calls
 - integrated tactical viewport layout with lane overview and separate Combat Witness, Passive Telemetry, and Threat Intel surfaces
@@ -214,6 +216,7 @@ Live API smoke scripts use smoke-local verbose request-log capture so successful
 - Threat Intel and Passive live API smoke each have one accepted default Jita live evidence record; default refusal artifacts remain non-live evidence only
 - Threat Intel ESI killmail expansion remains deferred
 - local type metadata foundation exists with unresolved-ID fallback; full refresh remains explicit
+- live/manual operator I/O smoke remains gated after M12H; the redaction-safe artifact shape exists but is not execution authorization
 - no exact raw repair/healing fixtures yet; raw `combat.repair` parser support remains deferred
 - Combat Witness damage spike detection is lightweight and still needs real dataset calibration before strong HUD emphasis
 - Combat Witness repair balance is observed HPS minus DPS only; it is not survival, stability, or tank-state evidence

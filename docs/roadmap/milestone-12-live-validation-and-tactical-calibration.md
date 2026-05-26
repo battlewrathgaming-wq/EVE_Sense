@@ -1,12 +1,14 @@
 # Milestone 12: Live Validation And Tactical Calibration
 
-Status: Future candidate - live/manual gated
+Status: Active envelope - idle after M12H pre-live hardening; live/manual gated
 Date: 2026-05-22
 Owner: Overseer direction, Dev execution
 
-Current note: M12 is not an active milestone. It remains the appropriate future envelope for operator-machine validation, live API smoke evidence, real-data calibration, and accepted raw fixture intake. It must be explicitly opened by the Human/Overseer before any live, manual, private-folder, or operator-environment work runs.
+Current note: M12 is the current gated envelope for live/manual validation and tactical calibration, but no executable runway is open while `workspace/current.md` is idle. M12 has completed preparatory live/API and operator I/O hardening slices through M12H. Any live, manual, private-folder, real-clipboard, provider, or operator-environment work still requires a fresh active `workspace/current.md` packet and explicit Human authorization.
 
 Gate trace: `workspace/OverseerHS33-m12-live-validation-gate-trace.md` records how the current M12 gate is hooked through roadmap policy, runtime smoke policy, `AURA_SENSE_LIVE_API`, backend live IO gates, provider services, and the future live operator smoke boundary.
+
+Latest accepted M12 slice: `workspace/OverseerHS51-m12h-clipboard-service-gate-acceptance.md` records Clipboard service-command I/O gate hardening. It ensures renderer-reachable Clipboard Acquisition service commands check Threat I/O before clipboard reads. It did not run live/manual smoke.
 
 ## Vision Setting
 
@@ -31,6 +33,21 @@ This milestone converts "works in fixtures" into "behaves honestly in the field.
 AURA-Sense has recorded live/manual smoke evidence, calibrated Combat Witness metric language, and promoted only proven real-data behavior into product claims.
 
 ## Priority Task Chain
+
+### P0 Task 0: Pre-Live Operator I/O Gate Hardening
+
+- Status: Complete through M12H.
+- Review and harden Clipboard Acquisition authority before live/manual operator I/O smoke.
+- Ensure `threat.clipboard.arm` and `threat.clipboard.capture` cannot read clipboard content while Threat I/O is off.
+- Preserve `Control+\` immediate capture when I/O is on, focused/windowed listening behavior, seal/cooldown, and fingerprint-only duplicate suppression.
+- Add deterministic no-read verification and redaction-safe future operator I/O artifact shape.
+
+Records:
+
+- `workspace/SecEngHS48-m12-operator-io-ingestion-assurance-review.md`
+- `workspace/OverseerHS49-m12h-operator-io-ingestion-assurance-acceptance.md`
+- `workspace/DevHS50-m12h-clipboard-service-io-gate-hardening.md`
+- `workspace/OverseerHS51-m12h-clipboard-service-gate-acceptance.md`
 
 ### P0 Task 1: Live Operator Smoke Playbook
 
@@ -117,6 +134,7 @@ Dev may not:
 
 Milestone 12 is complete when:
 
+- pre-live operator I/O gate hardening has been accepted
 - live operator smoke has a written playbook and recorded result
 - live API smoke has explicit opt-in evidence or a recorded refusal path
 - Combat Witness metric calibration has a documented decision
