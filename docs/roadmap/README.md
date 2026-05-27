@@ -111,6 +111,7 @@ Ready when:
 - Lab face adoption before Sense body-to-adapter readiness is proven.
 - M16 body-to-adapter trace runway.
 - Additional Lab-facing presentation work while Lab is parked.
+- Passive Telemetry Shape See / Pane Board plate-plus-stack proof until Project UX reviews it as advisory material.
 - Future operator-environment gamelog validation unless explicitly opened as a live/manual packet.
 - Further roadmap state reconciliation after future M12 slices.
 

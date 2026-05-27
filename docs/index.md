@@ -2,7 +2,7 @@
 
 This folder records AURA-Sense product rules, contracts, current state, failures, and future work.
 
-The authoritative implementation truth lives in `docs/current-state/current-implementation.md`. The display pipeline current-state map lives in `docs/current-state/display-pipeline-inventory.md`. Audit files are dated review records and should remain intact.
+The authoritative implementation truth lives in `docs/current-state/current-implementation.md`. The display pipeline current-state map lives in `docs/current-state/display-pipeline-inventory.md`. The current meaning-geometry workflow note lives in `docs/current-state/display-meaning-geometry-workflow.md`. Audit files are dated review records and should remain intact.
 
 ## Product Summary
 
@@ -77,6 +77,7 @@ Start with:
 - `workspace/overseer.md` before opening or refreshing a runway when fresh Overseer context is not already present
 - `docs/current-state/current-implementation.md`
 - `docs/current-state/display-pipeline-inventory.md`
+- `docs/current-state/display-meaning-geometry-workflow.md`
 - `docs/roadmap/README.md`
 - `docs/roadmap/milestone-13-aggressive-testing-and-bug-hunting.md`
 - `docs/testing/aggressive-test-harness-matrix.md`

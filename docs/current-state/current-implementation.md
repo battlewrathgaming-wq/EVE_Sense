@@ -88,6 +88,7 @@ The current implementation includes:
 - operator-visible live IO policy control for Passive Telemetry and Threat Intel gates
 - compact diagnostics review surface backed by sanitized runtime diagnostics
 - durable display pipeline inventory for current Ingest -> Transformation -> Bridge -> User Display intent
+- durable display meaning-geometry workflow note for slim `#NN` reference handles and Lab spatial proof review boundaries
 - runtime smoke policy documentation and Electron capture failure record
 - ADR documenting Atlas handoff as deferred
 - explicit SDE source-bundle staging/cleanup utility for local metadata refreshes
@@ -233,6 +234,7 @@ Live API smoke scripts use smoke-local verbose request-log capture so successful
 The historical `docs/gap/*` paths listed here are reference/evidence paths from the deprecated gap workflow. They are not active task queues unless `workspace/current.md` explicitly opens one through a current milestone/runway.
 
 - `docs/current-state/display-pipeline-inventory.md`
+- `docs/current-state/display-meaning-geometry-workflow.md`
 - `docs/current-state/seed-current-state.md`
 - `docs/audits/audit-2026-05-22-aura-sense-scope-alignment.md`
 - `docs/audits/engineering_audit_contribution.md`

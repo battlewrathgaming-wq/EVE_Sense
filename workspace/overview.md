@@ -1,7 +1,7 @@
 ﻿# AURA-Sense Workspace Overview
 
-Status: Idle - M12G clipboard mode and gate-separation hardening accepted
-Last reviewed: 2026-05-25
+Status: Idle - M12H clipboard service-command I/O gate hardening accepted
+Last reviewed: 2026-05-27
 
 ## Vision Statement
 
@@ -22,7 +22,7 @@ It should present compact, uncertainty-aware tactical state while staying transi
 
 | Milestone | Roadmap Source | Status | Notes |
 | --- | --- | --- | --- |
-| 12 | `docs/roadmap/milestone-12-live-validation-and-tactical-calibration.md` | Active/Gated | M12G Clipboard Acquisition mode alignment and gate-separation verification is accepted. Live/manual operator I/O execution remains gated. |
+| 12 | `docs/roadmap/milestone-12-live-validation-and-tactical-calibration.md` | Active/Gated | M12H Clipboard service-command I/O gate hardening is accepted. Live/manual operator I/O execution remains gated. |
 | 13 | `docs/roadmap/milestone-13-aggressive-testing-and-bug-hunting.md` | Complete | Deterministic aggressive hardening accepted; live/manual validation remains gated for later operator-validation work. |
 | 14 | `docs/roadmap/milestone-14-back-page-threat-intel-ux.md` | Complete | Back-page Threat Intel UX accepted; live/manual shortcut feel remains gated for optional later operator-validation work. |
 | 15 | `docs/roadmap/milestone-15-display-request-response-fitness.md` | Parked | Lab-facing presentation response work is parked while Lab stabilizes its side. |
@@ -35,7 +35,7 @@ It should present compact, uncertainty-aware tactical state while staying transi
 
 Milestone: M12 - Live Validation And Tactical Calibration
 Current packet: `workspace/current.md`
-Current sequence: Idle after M12G acceptance
+Current sequence: Idle after M12H acceptance
 Current executor: None
 Expected artifact: None
 Latest M12 gate trace: `workspace/OverseerHS33-m12-live-validation-gate-trace.md`
@@ -89,6 +89,7 @@ AURA-Sense therefore owns its lane semantics and internal-to-Bridge mapping. Lab
 
 - `docs/current-state/current-implementation.md`
 - `docs/current-state/display-pipeline-inventory.md`
+- `docs/current-state/display-meaning-geometry-workflow.md`
 
 ### Roadmap
 
@@ -136,5 +137,6 @@ AURA-Sense therefore owns its lane semantics and internal-to-Bridge mapping. Lab
 - Whether the accepted Sense Face Refinement Pass should remain a bounded post-Milestone-14 prototype or become the first slice of a new Sense-local milestone.
 - Whether the remaining focused protected-term baseline items need a terminology classification pass.
 - Whether the accepted Passive Telemetry Instrument Band should get visual-density tuning, a dedicated Passive detail reveal, or remain parked.
+- Whether Project UX accepts, adapts, parks, or rejects the Lab sandpit Passive Telemetry plate-plus-stack Shape See proof.
 - Whether a future Sense-local hardening packet should focus on operator validation, performance follow-up, or remain parked while Lab stabilizes.
 - Whether future operator-environment gamelog validation should be opened as a live/manual packet.
