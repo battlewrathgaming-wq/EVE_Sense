@@ -71,6 +71,10 @@ Latest M19 review: `workspace/complete/milestone-19/SecEngHS28-gamelog-ingest-co
 Latest M19 Dev handoff: `workspace/complete/milestone-19/DevHS30-gamelog-containment-hardening.md`
 Latest M19 acceptance: `workspace/complete/milestone-19/OverseerHS31-m19-gamelog-containment-hardening-acceptance.md`
 Latest roadmap reconciliation: `workspace/complete/milestone-19/OverseerHS32-roadmap-state-reconciliation.md`
+Latest ADR-0008 reconciliation audit: `workspace/SecEngHS52-io-authority-reconciliation-audit.md`
+Latest gamelog event spine trace: `workspace/EngTraceHS53-gamelog-event-spine-trace.md`
+Latest ingest posture audit: `workspace/SecEngHS54-ingest-source-defensive-posture-audit.md`
+Latest I/O gate placement map: `workspace/EngMapHS55-io-authority-state-and-gate-placement.md`
 Active runway: None
 
 ## Authority Notes

@@ -10,6 +10,8 @@ Gate trace: `workspace/OverseerHS33-m12-live-validation-gate-trace.md` records h
 
 Latest accepted M12 slice: `workspace/OverseerHS51-m12h-clipboard-service-gate-acceptance.md` records Clipboard service-command I/O gate hardening. It ensures renderer-reachable Clipboard Acquisition service commands check Threat I/O before clipboard reads. It did not run live/manual smoke.
 
+ADR-0008 follow-up: later review established a broader target trust model: `I/O off means no ingest`. Current implementation has not yet fully reconciled local gamelog parser/file ingest to this model. Future M12 work should treat ADR-0008 reconciliation as a pre-live trust-hardening candidate before live operator gamelog smoke.
+
 ## Vision Setting
 
 Milestone 12 would prove AURA-Sense against real operator conditions without turning live use into uncontrolled collection.
@@ -55,6 +57,7 @@ Records:
 - Prove watcher start, append-only line handling, future jump observation, Combat Witness updates, and clean shutdown.
 - Record artifacts without storing broad private logs.
 - Keep live smoke separate from `verify:all`.
+- Before execution, reconcile or explicitly account for ADR-0008 so I/O authority controls local gamelog ingest.
 
 Task packet: `docs/gap/to-do/live-operator-smoke-playbook.md`.
 
@@ -155,3 +158,33 @@ Dev handover should include:
 - metadata consumer decisions
 - failures found and records added
 - current-state updates
+
+## Parked Pre-Live Trust-Hardening Candidate
+
+### ADR-0008 I/O Authority Reconciliation
+
+Status: Candidate for future bounded Dev runway; not open while `workspace/current.md` is idle.
+
+Accepted target:
+
+```txt
+I/O authority is enforced at ingest boundaries.
+Internal computation remains pure over admitted events and existing state.
+```
+
+Likely scope:
+
+- block `combat.witness.start` while I/O is off
+- stop or pause active local gamelog ingest when I/O turns off
+- add a no-read guard before local gamelog tail reads, especially before `readRange`
+- add defense-in-depth at file-ingest start/callback/handleFile and runtime event admission
+- preserve provider and Clipboard Acquisition gates
+- update UI copy and docs so I/O off means no ingest, not only network/clipboard blocked
+- add deterministic no-read/no-mutation tests for Combat Witness and Passive Telemetry while I/O is off
+
+Supporting records:
+
+- `workspace/SecEngHS52-io-authority-reconciliation-audit.md`
+- `workspace/EngTraceHS53-gamelog-event-spine-trace.md`
+- `workspace/SecEngHS54-ingest-source-defensive-posture-audit.md`
+- `workspace/EngMapHS55-io-authority-state-and-gate-placement.md`

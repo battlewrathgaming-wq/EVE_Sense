@@ -2,7 +2,7 @@
 
 This folder records AURA-Sense product rules, contracts, current state, failures, and future work.
 
-The authoritative implementation truth lives in `docs/current-state/current-implementation.md`. The display pipeline current-state map lives in `docs/current-state/display-pipeline-inventory.md`. The current meaning-geometry workflow note lives in `docs/current-state/display-meaning-geometry-workflow.md`. Audit files are dated review records and should remain intact.
+The authoritative implementation truth lives in `docs/current-state/current-implementation.md`. That file also records the current ADR-0008 reconciliation state for I/O ingest authority. The display pipeline current-state map lives in `docs/current-state/display-pipeline-inventory.md`. The current meaning-geometry workflow note lives in `docs/current-state/display-meaning-geometry-workflow.md`. Audit files are dated review records and should remain intact.
 
 ## Product Summary
 

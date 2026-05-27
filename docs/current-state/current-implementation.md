@@ -230,6 +230,58 @@ Live API smoke scripts use smoke-local verbose request-log capture so successful
 - concept and research docs are AURA-Sense product doctrine or local review notes; older audit records may still describe past cleanup work
 - ADR-0008 broadens the accepted I/O trust model to `I/O off means no ingest`; current parser/file-ingest/provider/clipboard behavior and docs still need a bounded reconciliation pass before the implementation can be claimed fully aligned
 
+## ADR-0008 Reconciliation State
+
+ADR-0008 changes the accepted target trust model:
+
+```txt
+I/O off means Sense is not allowed to ingest.
+```
+
+Current implementation is not yet fully aligned with that target. The accepted security/engineering review material identifies local gamelog ingest as the main reconciliation gap.
+
+Current verified posture:
+
+- Provider calls and Clipboard Acquisition reads have strong existing gates and no-call/no-read tests.
+- Gamelog folder/path validation and local ingest containment are strong, but path containment is not I/O authority.
+- Renderer/preload boundaries prevent renderer-owned ingest and direct provider/filesystem/parser access.
+- Static app-owned metadata lookup is support-only in the current code; SDE refresh remains an explicit non-runtime command.
+
+Known ADR-0008 gaps:
+
+- `combat.witness.start` can currently start local gamelog ingest while I/O is off.
+- Turning I/O off does not yet stop or pause active gamelog file ingest.
+- File tail reads and parser event emission are not yet guarded by the runtime I/O authority.
+- Combat Witness and Passive Telemetry can still mutate from admitted parser events if local log events reach the runtime.
+- Passive current-system observation can happen before provider gates block ESI/zKill calls.
+- UI copy and docs still contain narrower "network and clipboard" or provider-only I/O language.
+
+Event-spine trace:
+
+```txt
+EveGamelogWatcher parsed event
+-> combatWitnessRuntime.observeEvent(event)
+-> CombatWitnessService.addEvent(event)
+-> combatWitnessRuntime.notifyObservers(event)
+-> passiveTelemetryService.observeEvent(event)
+```
+
+Future implementation should enforce I/O authority at ingest boundaries:
+
+- primary gate: `combat.witness.start` / `combatWitnessRuntime.start`
+- lifecycle gate: stop or pause active local gamelog ingest when I/O turns off
+- no-read guard: before local gamelog tail reads, especially before `readRange`
+- defense-in-depth: file-ingest start/callback/handleFile and `combatWitnessRuntime.observeEvent`
+
+Avoid making internal computation modules own I/O policy. Combat Witness and Passive computations should remain pure over admitted events and existing state.
+
+Durable review sources:
+
+- `workspace/SecEngHS52-io-authority-reconciliation-audit.md`
+- `workspace/EngTraceHS53-gamelog-event-spine-trace.md`
+- `workspace/SecEngHS54-ingest-source-defensive-posture-audit.md`
+- `workspace/EngMapHS55-io-authority-state-and-gate-placement.md`
+
 ## Related Documents
 
 The historical `docs/gap/*` paths listed here are reference/evidence paths from the deprecated gap workflow. They are not active task queues unless `workspace/current.md` explicitly opens one through a current milestone/runway.
@@ -237,6 +289,10 @@ The historical `docs/gap/*` paths listed here are reference/evidence paths from 
 - `docs/current-state/display-pipeline-inventory.md`
 - `docs/current-state/display-meaning-geometry-workflow.md`
 - `docs/adr/ADR-0008-io-off-means-no-ingest.md`
+- `workspace/SecEngHS52-io-authority-reconciliation-audit.md`
+- `workspace/EngTraceHS53-gamelog-event-spine-trace.md`
+- `workspace/SecEngHS54-ingest-source-defensive-posture-audit.md`
+- `workspace/EngMapHS55-io-authority-state-and-gate-placement.md`
 - `docs/current-state/seed-current-state.md`
 - `docs/audits/audit-2026-05-22-aura-sense-scope-alignment.md`
 - `docs/audits/engineering_audit_contribution.md`
