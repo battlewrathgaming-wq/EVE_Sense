@@ -1,7 +1,7 @@
 # AURA-Sense Roadmap
 
 Status: Durable roadmap scaffold
-Last reviewed: 2026-05-26
+Last reviewed: 2026-05-27
 
 ## Purpose
 
@@ -13,7 +13,7 @@ Roadmap files are not executable authority. Implementation truth lives in `docs/
 
 ## Current Phase
 
-Idle after M12H Clipboard service-command I/O gate hardening while Lab-facing presentation work remains parked and live/manual validation remains gated.
+Idle after M12I ADR-0008 I/O authority reconciliation while Lab-facing presentation work remains parked and live/manual validation remains gated.
 
 Current resting state:
 
@@ -24,7 +24,8 @@ Current resting state:
 - M17 render/frame performance assurance is complete.
 - M18 provider fault-injection hardening is complete.
 - M19 gamelog ingest containment and fan-out assurance is complete.
-- M12H Clipboard service-command I/O gate hardening is complete as a pre-live M12 slice; no live/manual operator smoke is open.
+- M12H Clipboard service-command I/O gate hardening is complete as a pre-live M12 slice.
+- M12I ADR-0008 I/O authority reconciliation is complete for the current local gamelog ingest path; no live/manual operator smoke is open.
 
 ## Near Outcomes
 
@@ -33,7 +34,7 @@ Current resting state:
 - Keep the accepted gamelog containment/fan-out hardening as the current baseline before any future logger/parser work.
 - Preserve the display request flow without turning Lab response into adoption or Dev authorization.
 - Keep live/manual validation gated until a future operator-validation packet explicitly opens it.
-- Preserve M12H as the current pre-live safety baseline for Clipboard Acquisition service-command paths.
+- Preserve M12I as the current pre-live safety baseline for local gamelog ingest authority, while preserving M12H Clipboard Acquisition service-command gates.
 
 ## Candidate Milestones
 
@@ -46,7 +47,7 @@ Current resting state:
 | 17 | Render and Frame performance assurance | Complete | `docs/roadmap/milestone-17-render-frame-performance-assurance.md` |
 | 18 | Provider fault-injection hardening | Complete | `docs/roadmap/milestone-18-provider-fault-injection-hardening.md` |
 | 19 | Gamelog ingest containment and fan-out assurance | Complete | `docs/roadmap/milestone-19-gamelog-ingest-containment-and-fanout-assurance.md` |
-| 12 | Live validation and tactical calibration | Active envelope / idle after M12H pre-live hardening | `docs/roadmap/milestone-12-live-validation-and-tactical-calibration.md` |
+| 12 | Live validation and tactical calibration | Active envelope / idle after M12I pre-live hardening | `docs/roadmap/milestone-12-live-validation-and-tactical-calibration.md` |
 
 ## Promotion Gates
 

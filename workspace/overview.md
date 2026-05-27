@@ -1,6 +1,6 @@
 ﻿# AURA-Sense Workspace Overview
 
-Status: Idle - M12H clipboard service-command I/O gate hardening accepted
+Status: Idle - M12I ADR-0008 I/O authority reconciliation accepted
 Last reviewed: 2026-05-27
 
 ## Vision Statement
@@ -22,7 +22,7 @@ It should present compact, uncertainty-aware tactical state while staying transi
 
 | Milestone | Roadmap Source | Status | Notes |
 | --- | --- | --- | --- |
-| 12 | `docs/roadmap/milestone-12-live-validation-and-tactical-calibration.md` | Active/Gated | M12H Clipboard service-command I/O gate hardening is accepted. Live/manual operator I/O execution remains gated. |
+| 12 | `docs/roadmap/milestone-12-live-validation-and-tactical-calibration.md` | Active/Gated | M12I I/O authority reconciliation is accepted. Live/manual operator I/O execution remains gated. |
 | 13 | `docs/roadmap/milestone-13-aggressive-testing-and-bug-hunting.md` | Complete | Deterministic aggressive hardening accepted; live/manual validation remains gated for later operator-validation work. |
 | 14 | `docs/roadmap/milestone-14-back-page-threat-intel-ux.md` | Complete | Back-page Threat Intel UX accepted; live/manual shortcut feel remains gated for optional later operator-validation work. |
 | 15 | `docs/roadmap/milestone-15-display-request-response-fitness.md` | Parked | Lab-facing presentation response work is parked while Lab stabilizes its side. |
@@ -35,7 +35,7 @@ It should present compact, uncertainty-aware tactical state while staying transi
 
 Milestone: M12 - Live Validation And Tactical Calibration
 Current packet: `workspace/current.md`
-Current sequence: Idle after M12H acceptance
+Current sequence: Idle after M12I acceptance
 Current executor: None
 Expected artifact: None
 Latest M12 gate trace: `workspace/OverseerHS33-m12-live-validation-gate-trace.md`
@@ -53,6 +53,10 @@ Latest M12F review: `workspace/SecEngHS44-m12f-operator-io-readiness-gate-separa
 Latest M12F acceptance: `workspace/OverseerHS45-m12f-operator-io-readiness-review-acceptance.md`
 Latest M12G Dev handoff: `workspace/DevHS46-m12g-clipboard-mode-gate-separation-hardening.md`
 Latest M12G acceptance: `workspace/OverseerHS47-m12g-clipboard-gate-separation-acceptance.md`
+Latest M12H review: `workspace/SecEngHS48-m12-operator-io-ingestion-assurance-review.md`
+Latest M12H runway acceptance: `workspace/OverseerHS49-m12h-operator-io-ingestion-assurance-acceptance.md`
+Latest M12H Dev handoff: `workspace/DevHS50-m12h-clipboard-service-io-gate-hardening.md`
+Latest M12H acceptance: `workspace/OverseerHS51-m12h-clipboard-service-gate-acceptance.md`
 Latest accepted handshake: `workspace/complete/milestone-14/OverseerHS03-milestone-14-closure.md`
 Latest accepted prototype review: `workspace/OverseerHS02-passive-telemetry-readout-prototype-review.md`
 Latest accepted face advisory: `workspace/OverseerHS03-sense-face-presentation-adoption-review.md`
@@ -75,6 +79,8 @@ Latest ADR-0008 reconciliation audit: `workspace/SecEngHS52-io-authority-reconci
 Latest gamelog event spine trace: `workspace/EngTraceHS53-gamelog-event-spine-trace.md`
 Latest ingest posture audit: `workspace/SecEngHS54-ingest-source-defensive-posture-audit.md`
 Latest I/O gate placement map: `workspace/EngMapHS55-io-authority-state-and-gate-placement.md`
+Latest M12I Dev handoff: `workspace/DevHS56-m12i-io-authority-reconciliation.md`
+Latest M12I acceptance: `workspace/OverseerHS57-m12i-io-authority-reconciliation-acceptance.md`
 Active runway: None
 
 ## Authority Notes
@@ -140,12 +146,11 @@ AURA-Sense therefore owns its lane semantics and internal-to-Bridge mapping. Lab
 
 ## Open Questions
 
-- After M12A, whether the next live/manual validation item should be authorized live API execution, live operator gamelog smoke, Combat Witness calibration, or raw repair/healing fixture intake.
+- After M12I, whether the next live/manual validation item should be authorized live API execution, live operator gamelog smoke, Combat Witness calibration, or raw repair/healing fixture intake.
 - Whether Atlas/Lab first-pass terminology output requires Sense-local terminology updates.
 - Whether the accepted Sense Face Refinement Pass should remain a bounded post-Milestone-14 prototype or become the first slice of a new Sense-local milestone.
 - Whether the remaining focused protected-term baseline items need a terminology classification pass.
 - Whether the accepted Passive Telemetry Instrument Band should get visual-density tuning, a dedicated Passive detail reveal, or remain parked.
 - Whether Project UX accepts, adapts, parks, or rejects the Lab sandpit Passive Telemetry plate-plus-stack Shape See proof.
 - Whether a future Sense-local hardening packet should focus on operator validation, performance follow-up, or remain parked while Lab stabilizes.
-- How to reconcile current parser/file-ingest/provider/clipboard behavior and docs with ADR-0008's broader `I/O off means no ingest` trust model.
 - Whether future operator-environment gamelog validation should be opened as a live/manual packet.

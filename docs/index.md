@@ -64,7 +64,7 @@ Repo root:
 - Passive Telemetry must not contaminate Threat Intel.
 - Threat Intel scans are explicit and scoped.
 - Clipboard Acquisition is armed, visible, short-lived, and sealed after use.
-- I/O off means Sense is not allowed to ingest; older narrower gate decisions require reconciliation where applicable.
+- I/O off means Sense is not allowed to ingest; M12I reconciled the current local gamelog ingest path, and future ingest sources must preserve that boundary.
 - Live APIs are opt-in and outside deterministic non-live verification.
 - Local metadata is preferred for static type/system labels.
 - UI copy must not overclaim certainty.

@@ -219,7 +219,7 @@ Live API smoke scripts use smoke-local verbose request-log capture so successful
 - Threat Intel and Passive live API smoke each have one accepted default Jita live evidence record; default refusal artifacts remain non-live evidence only
 - Threat Intel ESI killmail expansion remains deferred
 - local type metadata foundation exists with unresolved-ID fallback; full refresh remains explicit
-- live/manual operator I/O smoke remains gated after M12H; the redaction-safe artifact shape exists but is not execution authorization
+- live/manual operator I/O smoke remains gated after M12I; the redaction-safe artifact shape exists but is not execution authorization
 - no exact raw repair/healing fixtures yet; raw `combat.repair` parser support remains deferred
 - Combat Witness damage spike detection is lightweight and still needs real dataset calibration before strong HUD emphasis
 - Combat Witness repair balance is observed HPS minus DPS only; it is not survival, stability, or tank-state evidence
@@ -230,7 +230,7 @@ Live API smoke scripts use smoke-local verbose request-log capture so successful
 - live API smoke transition readiness has a map at `docs/testing/live-api-smoke-transition-readiness.md`, but it is not execution authorization
 - real SDE refresh/download artifacts must remain explicit and should not be staged by default
 - concept and research docs are AURA-Sense product doctrine or local review notes; older audit records may still describe past cleanup work
-- ADR-0008 broadens the accepted I/O trust model to `I/O off means no ingest`; current parser/file-ingest/provider/clipboard behavior and docs still need a bounded reconciliation pass before the implementation can be claimed fully aligned
+- ADR-0008 broadens the accepted I/O trust model to `I/O off means no ingest`; M12I reconciled the current local gamelog ingest path, while live/manual operator behavior and provider in-flight cancellation policy remain future questions
 
 ## ADR-0008 Reconciliation State
 

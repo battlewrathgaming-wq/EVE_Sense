@@ -1,16 +1,18 @@
 # Milestone 12: Live Validation And Tactical Calibration
 
-Status: Active envelope - idle after M12H pre-live hardening; live/manual gated
+Status: Active envelope - idle after M12I pre-live hardening; live/manual gated
 Date: 2026-05-22
 Owner: Overseer direction, Dev execution
 
-Current note: M12 is the current gated envelope for live/manual validation and tactical calibration, but no executable runway is open while `workspace/current.md` is idle. M12 has completed preparatory live/API and operator I/O hardening slices through M12H. Any live, manual, private-folder, real-clipboard, provider, or operator-environment work still requires a fresh active `workspace/current.md` packet and explicit Human authorization.
+Current note: M12 is the current gated envelope for live/manual validation and tactical calibration, but no executable runway is open while `workspace/current.md` is idle. M12 has completed preparatory live/API and operator I/O hardening slices through M12I. Any live, manual, private-folder, real-clipboard, provider, or operator-environment work still requires a fresh active `workspace/current.md` packet and explicit Human authorization.
 
 Gate trace: `workspace/OverseerHS33-m12-live-validation-gate-trace.md` records how the current M12 gate is hooked through roadmap policy, runtime smoke policy, `AURA_SENSE_LIVE_API`, backend live IO gates, provider services, and the future live operator smoke boundary.
 
 Latest accepted M12 slice: `workspace/OverseerHS51-m12h-clipboard-service-gate-acceptance.md` records Clipboard service-command I/O gate hardening. It ensures renderer-reachable Clipboard Acquisition service commands check Threat I/O before clipboard reads. It did not run live/manual smoke.
 
-ADR-0008 follow-up: later review established a broader target trust model: `I/O off means no ingest`. Current implementation has not yet fully reconciled local gamelog parser/file ingest to this model. Future M12 work should treat ADR-0008 reconciliation as a pre-live trust-hardening candidate before live operator gamelog smoke.
+Latest accepted M12I slice: `workspace/OverseerHS57-m12i-io-authority-reconciliation-acceptance.md` records ADR-0008 I/O authority reconciliation for the current local gamelog ingest path. It did not run live/manual smoke.
+
+ADR-0008 follow-up: later review established a broader target trust model: `I/O off means no ingest`. M12I reconciled the current local gamelog parser/file ingest path to this model. Future M12 live/manual work should preserve this pre-live trust-hardening baseline before operator gamelog smoke.
 
 ## Vision Setting
 
@@ -38,7 +40,7 @@ AURA-Sense has recorded live/manual smoke evidence, calibrated Combat Witness me
 
 ### P0 Task 0: Pre-Live Operator I/O Gate Hardening
 
-- Status: Complete through M12H.
+- Status: Complete through M12I.
 - Review and harden Clipboard Acquisition authority before live/manual operator I/O smoke.
 - Ensure `threat.clipboard.arm` and `threat.clipboard.capture` cannot read clipboard content while Threat I/O is off.
 - Preserve `Control+\` immediate capture when I/O is on, focused/windowed listening behavior, seal/cooldown, and fingerprint-only duplicate suppression.
@@ -50,6 +52,8 @@ Records:
 - `workspace/OverseerHS49-m12h-operator-io-ingestion-assurance-acceptance.md`
 - `workspace/DevHS50-m12h-clipboard-service-io-gate-hardening.md`
 - `workspace/OverseerHS51-m12h-clipboard-service-gate-acceptance.md`
+- `workspace/DevHS56-m12i-io-authority-reconciliation.md`
+- `workspace/OverseerHS57-m12i-io-authority-reconciliation-acceptance.md`
 
 ### P0 Task 1: Live Operator Smoke Playbook
 
@@ -57,7 +61,7 @@ Records:
 - Prove watcher start, append-only line handling, future jump observation, Combat Witness updates, and clean shutdown.
 - Record artifacts without storing broad private logs.
 - Keep live smoke separate from `verify:all`.
-- Before execution, reconcile or explicitly account for ADR-0008 so I/O authority controls local gamelog ingest.
+- Before execution, preserve the accepted ADR-0008/M12I boundary so I/O authority controls local gamelog ingest.
 
 Task packet: `docs/gap/to-do/live-operator-smoke-playbook.md`.
 
@@ -159,11 +163,11 @@ Dev handover should include:
 - failures found and records added
 - current-state updates
 
-## Parked Pre-Live Trust-Hardening Candidate
+## Completed Pre-Live Trust-Hardening Slice
 
 ### ADR-0008 I/O Authority Reconciliation
 
-Status: Candidate for future bounded Dev runway; not open while `workspace/current.md` is idle.
+Status: Complete for the current local gamelog ingest path through M12I; no live/manual smoke was run.
 
 Accepted target:
 
@@ -172,7 +176,7 @@ I/O authority is enforced at ingest boundaries.
 Internal computation remains pure over admitted events and existing state.
 ```
 
-Likely scope:
+Accepted implementation shape:
 
 - block `combat.witness.start` while I/O is off
 - stop or pause active local gamelog ingest when I/O turns off
