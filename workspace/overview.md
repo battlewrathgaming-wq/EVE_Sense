@@ -5,9 +5,9 @@ Last reviewed: 2026-05-27
 
 ## Vision Statement
 
-AURA-Sense is a tactical viewport for recent EVE Online operational observations.
+AURA-Sense is a tactical viewport and gameplay companion for recent EVE Online operational observations.
 
-It should present compact, uncertainty-aware tactical state while staying transient, backend-owned, live-gated, and distinct from AURA Atlas historical storage.
+It should present compact, uncertainty-aware tactical state while staying transient, backend-owned, live-gated, hands-free where possible, and distinct from AURA Atlas historical storage.
 
 ## Coordination Model
 
@@ -108,6 +108,8 @@ AURA-Sense therefore owns its lane semantics and internal-to-Bridge mapping. Lab
 - `docs/adr/`
 - `docs/adr/ADR-0003-target-owned-presentation-adapters.md`
 - `docs/adr/ADR-0004-sense-instrument-effect-presentation-boundary.md`
+- `docs/adr/ADR-0005-clipboard-acquisition-authority-and-cache.md`
+- `docs/adr/ADR-0006-sense-is-gameplay-companion.md`
 - `docs/tenets/`
 - `docs/statements/`
 - `docs/features/`

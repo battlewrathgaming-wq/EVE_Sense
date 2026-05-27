@@ -34,7 +34,7 @@ It is not:
 | `audits/` | Dated reviews and handovers. Do not rewrite as product copy. |
 | `tenets/` | Stable project rules. |
 | `contracts/` | Service, renderer, telemetry, and lane contracts. |
-| `adr/` | Accepted architecture decisions, including tactical scope, target-owned presentation adapter ownership, Sense instrument-effect presentation boundaries, and Clipboard Acquisition authority. |
+| `adr/` | Accepted architecture decisions, including tactical scope, target-owned presentation adapter ownership, Sense instrument-effect presentation boundaries, Clipboard Acquisition authority, and gameplay-companion interaction. |
 | `features/` | Product capability goalposts. |
 | `terms/` | Plain-language vocabulary. |
 | `schemas/` | Data structures and snapshot/event shapes. |
@@ -57,6 +57,7 @@ Repo root:
 ## Core Rules
 
 - AURA-Sense observes now; AURA Atlas remembers later.
+- AURA-Sense is a companion for existing EVE gameplay, not a second app loop.
 - Renderer presents snapshots and events; it does not own telemetry truth.
 - Combat Witness is rolling tactical telemetry, not stored history.
 - Passive Telemetry must not contaminate Threat Intel.

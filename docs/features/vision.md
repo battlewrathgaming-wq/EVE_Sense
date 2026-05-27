@@ -9,6 +9,8 @@ This document defines the product elements AURA-Sense is building toward. It is 
 
 AURA-Sense is a tactical viewport for recent, scoped, operationally useful EVE observations.
 
+It is a companion for existing EVE gameplay. It should wrap around natural player flow rather than become a separate app the player has to operate.
+
 It should answer:
 
 ```text
@@ -23,6 +25,7 @@ It should not become:
 - a historical intelligence warehouse
 - a fleet command suite
 - a recommendation engine
+- a second cockpit or mouse-driven workflow
 - a renderer-owned telemetry engine
 
 ## Element 1: Tactical HUD Shell
@@ -30,6 +33,8 @@ It should not become:
 Goal:
 
 Present current tactical state in a compact, stable, low-cognitive-load viewport.
+
+Primary interaction should remain hands-free, keyboard-first, event-driven, or explicitly invited by the operator because panel interaction can disrupt the game.
 
 Current state:
 
@@ -48,6 +53,8 @@ Must not:
 Goal:
 
 Convert local EVE gamelog observations into short-window tactical awareness.
+
+Combat Witness should expose observed facts and computed hints that help the player infer useful tactical adjustments without claiming full ship-system truth.
 
 Current state:
 
