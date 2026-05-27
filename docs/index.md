@@ -34,7 +34,7 @@ It is not:
 | `audits/` | Dated reviews and handovers. Do not rewrite as product copy. |
 | `tenets/` | Stable project rules. |
 | `contracts/` | Service, renderer, telemetry, and lane contracts. |
-| `adr/` | Accepted architecture decisions, including tactical scope, target-owned presentation adapter ownership, Sense instrument-effect presentation boundaries, Clipboard Acquisition authority, and gameplay-companion interaction. |
+| `adr/` | Accepted architecture decisions, including tactical scope, target-owned presentation adapter ownership, Sense instrument-effect presentation boundaries, Clipboard Acquisition authority, gameplay-companion interaction, Combat Witness inference boundaries, and I/O ingest authority. |
 | `features/` | Product capability goalposts. |
 | `terms/` | Plain-language vocabulary. |
 | `schemas/` | Data structures and snapshot/event shapes. |
@@ -64,6 +64,7 @@ Repo root:
 - Passive Telemetry must not contaminate Threat Intel.
 - Threat Intel scans are explicit and scoped.
 - Clipboard Acquisition is armed, visible, short-lived, and sealed after use.
+- I/O off means Sense is not allowed to ingest; older narrower gate decisions require reconciliation where applicable.
 - Live APIs are opt-in and outside deterministic non-live verification.
 - Local metadata is preferred for static type/system labels.
 - UI copy must not overclaim certainty.

@@ -42,7 +42,9 @@ Sense may use a small rolling in-memory cache for duplicate suppression:
 
 ## Authority Model
 
-I/O is the absolute manual authority gate.
+I/O is the absolute manual authority gate for Clipboard Acquisition.
+
+ADR-0008 later broadens the project trust model: I/O off means Sense must not ingest from logs, clipboard, providers, or other machine-local/input sources. This ADR remains accepted for Clipboard Acquisition behavior, but future reconciliation should align its narrower provider/clipboard language with the broader ingest authority model.
 
 When I/O is off:
 
@@ -104,6 +106,7 @@ These checks verify Clipboard Acquisition lifecycle, duplicate suppression, Thre
 - `workspace/OverseerHS45-m12f-operator-io-readiness-review-acceptance.md`
 - `workspace/DevHS46-m12g-clipboard-mode-gate-separation-hardening.md`
 - `workspace/OverseerHS47-m12g-clipboard-gate-separation-acceptance.md`
+- `docs/adr/ADR-0008-io-off-means-no-ingest.md`
 - `docs/features/clipboard-acquisition.md`
 - `docs/testing/live-operator-gamelog-smoke-playbook.md`
 - `docs/contracts/threat-intel-contract.md`

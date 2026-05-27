@@ -228,6 +228,7 @@ Live API smoke scripts use smoke-local verbose request-log capture so successful
 - live API smoke transition readiness has a map at `docs/testing/live-api-smoke-transition-readiness.md`, but it is not execution authorization
 - real SDE refresh/download artifacts must remain explicit and should not be staged by default
 - concept and research docs are AURA-Sense product doctrine or local review notes; older audit records may still describe past cleanup work
+- ADR-0008 broadens the accepted I/O trust model to `I/O off means no ingest`; current parser/file-ingest/provider/clipboard behavior and docs still need a bounded reconciliation pass before the implementation can be claimed fully aligned
 
 ## Related Documents
 
@@ -235,6 +236,7 @@ The historical `docs/gap/*` paths listed here are reference/evidence paths from 
 
 - `docs/current-state/display-pipeline-inventory.md`
 - `docs/current-state/display-meaning-geometry-workflow.md`
+- `docs/adr/ADR-0008-io-off-means-no-ingest.md`
 - `docs/current-state/seed-current-state.md`
 - `docs/audits/audit-2026-05-22-aura-sense-scope-alignment.md`
 - `docs/audits/engineering_audit_contribution.md`

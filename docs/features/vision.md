@@ -161,6 +161,8 @@ Goal:
 
 Let the operator configure runtime paths and live IO policy without invalid service state.
 
+The I/O control is the user's authority over ingest behavior. Future work should align runtime settings, parser/file-ingest behavior, clipboard reads, and provider calls with ADR-0008: I/O off means Sense does not ingest.
+
 Current state:
 
 - validated gamelog folder settings exist
@@ -171,6 +173,7 @@ Must not:
 
 - accept invalid paths silently
 - auto-start watchers just because settings exist
+- keep ingesting while I/O authority is off
 - expose internal toggles as product controls
 
 ## Element 8: Local Metadata

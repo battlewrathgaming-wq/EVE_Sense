@@ -111,6 +111,7 @@ AURA-Sense therefore owns its lane semantics and internal-to-Bridge mapping. Lab
 - `docs/adr/ADR-0005-clipboard-acquisition-authority-and-cache.md`
 - `docs/adr/ADR-0006-sense-is-gameplay-companion.md`
 - `docs/adr/ADR-0007-combat-witness-is-log-derived-not-ship-state.md`
+- `docs/adr/ADR-0008-io-off-means-no-ingest.md`
 - `docs/tenets/`
 - `docs/statements/`
 - `docs/features/`
@@ -142,4 +143,5 @@ AURA-Sense therefore owns its lane semantics and internal-to-Bridge mapping. Lab
 - Whether the accepted Passive Telemetry Instrument Band should get visual-density tuning, a dedicated Passive detail reveal, or remain parked.
 - Whether Project UX accepts, adapts, parks, or rejects the Lab sandpit Passive Telemetry plate-plus-stack Shape See proof.
 - Whether a future Sense-local hardening packet should focus on operator validation, performance follow-up, or remain parked while Lab stabilizes.
+- How to reconcile current parser/file-ingest/provider/clipboard behavior and docs with ADR-0008's broader `I/O off means no ingest` trust model.
 - Whether future operator-environment gamelog validation should be opened as a live/manual packet.
