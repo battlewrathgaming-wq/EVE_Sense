@@ -21,6 +21,10 @@ Start here:
 - `workspace/critical/README.md`
 - `workspace/prompts.md`
 
+Human context refresher:
+
+- `HUMAN.md` is optional context for understanding Human communication style when conversation, compaction, product vision, or operator-experience discussion could otherwise be misread. It is not project authority or Dev authorization.
+
 ## Role Summary
 
 Human:
@@ -78,6 +82,22 @@ If your role is unclear, stop and ask.
 Do not infer your role solely from the existence of Dev and Overseer instructions.
 
 `workspace/current.md` may identify the expected executor, but you must still confirm that this chat/session is intended to act as that executor before executing `.`.
+
+## Context Attention Command
+
+When the user sends only:
+
+```text
+#
+```
+
+toggle Context Attention Mode.
+
+Use `#` to hold messy but useful Human discussion as context for later classification. Treat following discussion as intentional context; listen for developing intent, preferences, constraints, metaphors, examples, reactions, and decisions.
+
+When `#` closes, classify the discussion into accepted direction, advisory context, parked ideas, unresolved questions, and whether any file update or Dev runway is recommended.
+
+`#` is not Dev authorization, does not override `workspace/current.md`, does not make advisory input doctrine, does not permit live/private/destructive actions, and does not authorize file edits unless the Human explicitly asks after the capture.
 
 ## Context Reload
 

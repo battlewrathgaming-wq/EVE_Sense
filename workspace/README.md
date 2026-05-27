@@ -51,6 +51,24 @@ This does not infer ownership, accept shared doctrine, rename Sense meaning, upd
 
 Overseer only: when the Human gives authority, the project Overseer may update `workspace/critical/` or another accepted local resting-state record. Specialists, Dev, and advisory workers should flag the issue in handoff instead of updating authority surfaces themselves.
 
+## Shared Checkpoint Lookup
+
+If a term, workflow, authority boundary, specialist artifact, shared offer, or cross-project concern cannot be resolved from this project root, consult:
+
+`F:\Projects\Docs\Aura-Project-Orchestration\shared-checkpoints\README.md`
+
+Use shared checkpoints as navigation only. They may point, compare, question, and suggest; they do not override Sense `AGENTS.md`, `workspace/current.md`, `workspace/critical/`, accepted handoffs, or durable docs.
+
+After lookup, return to this project root before acting. Dev should consult shared checkpoints only when the active packet or a stop condition requires it.
+
+Sense-specific cautions:
+
+- Sense owns Combat Witness, Passive Telemetry, Threat Intel, Clipboard Acquisition, Gateway, Live IO blocked, provider/sample states, and Project -> Bridge meanings.
+- M12I / ADR-0008 means I/O off blocks ingest for the current local gamelog path; do not generalize that into universal Aura doctrine.
+- Lab presentation checkpoints may inform display, but do not rename Sense contracts, lane meanings, bridge payloads, or adapter behavior.
+- Atlas terms like Evidence, Watch, Discovery, Assessment, and durable history must not leak into Sense meaning.
+- Recent UI/UX discovery notes are advisory pointers, not accepted product changes or Dev work.
+
 ## Roadmap And Runway Rule
 
 Durable milestone direction lives in `docs/roadmap/`.
