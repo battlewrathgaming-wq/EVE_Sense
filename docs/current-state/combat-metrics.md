@@ -15,6 +15,13 @@ Combat Witness is a short-window view of what the local EVE gamelog has recently
 
 It is not a full combat report, a prediction, a survival model, or an Atlas-style evidence record.
 
+ADR-0007 records the durable product boundary:
+
+```txt
+Combat Witness is a log-derived inference aid, not a ship-state instrument panel.
+It displays observed combat values and computations from ingested events. The player infers tactical meaning.
+```
+
 The current pipeline is:
 
 ```txt
@@ -31,6 +38,12 @@ The most important product distinction:
 - Computed means AURA-Sense counted or summarized recent normalized events.
 - Displayed means the current UI shows it.
 - Interpreted means a human or later system has decided what it means. Combat Witness should avoid interpretation by default.
+
+Presentation rule:
+
+- Descriptions should stay factual, even boring.
+- Interface richness may come from layout, emphasis, motion, rhythm, and contrast.
+- Wording should not become tactical advice or tacti-cool claim language.
 
 ## What The Log Parser Captures
 
@@ -545,6 +558,7 @@ Better label:
 
 - `Damage outlier`
 - `Observed spike`
+- `Peak damage` for the largest observed damage amount in the current window
 
 Avoid:
 
@@ -651,6 +665,7 @@ These are safe for the main HUD when displayed with observed-language:
 - observed weapon
 - outgoing DPS
 - most frequent outgoing hit quality
+- peak damage, if framed as the largest logged amount in the current window
 
 ## Metrics Better Suited To Diagnostics
 
@@ -929,6 +944,7 @@ Replay status, when implemented
 
 ## Related Documents
 
+- `docs/adr/ADR-0007-combat-witness-is-log-derived-not-ship-state.md`
 - `docs/contracts/combat-witness-contract.md`
 - `docs/schemas/hud-snapshot.md`
 - `docs/schemas/combat-event.md`

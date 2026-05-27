@@ -110,6 +110,7 @@ AURA-Sense therefore owns its lane semantics and internal-to-Bridge mapping. Lab
 - `docs/adr/ADR-0004-sense-instrument-effect-presentation-boundary.md`
 - `docs/adr/ADR-0005-clipboard-acquisition-authority-and-cache.md`
 - `docs/adr/ADR-0006-sense-is-gameplay-companion.md`
+- `docs/adr/ADR-0007-combat-witness-is-log-derived-not-ship-state.md`
 - `docs/tenets/`
 - `docs/statements/`
 - `docs/features/`

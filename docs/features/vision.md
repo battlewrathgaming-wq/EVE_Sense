@@ -54,7 +54,7 @@ Goal:
 
 Convert local EVE gamelog observations into short-window tactical awareness.
 
-Combat Witness should expose observed facts and computed hints that help the player infer useful tactical adjustments without claiming full ship-system truth.
+Combat Witness should expose observed facts and computed values that help the player infer useful tactical adjustments without claiming full ship-system truth. Sense displays logged/computed values; the player decides what they mean.
 
 Current state:
 
@@ -69,6 +69,7 @@ Must not:
 - become historical combat storage
 - infer unseen state
 - present repair balance as survival truth
+- tell the player what tactic is correct
 
 ## Element 3: Passive Telemetry
 

@@ -60,6 +60,7 @@ Repo root:
 - AURA-Sense is a companion for existing EVE gameplay, not a second app loop.
 - Renderer presents snapshots and events; it does not own telemetry truth.
 - Combat Witness is rolling tactical telemetry, not stored history.
+- Combat Witness displays log-derived observations and computations; the player infers tactical meaning.
 - Passive Telemetry must not contaminate Threat Intel.
 - Threat Intel scans are explicit and scoped.
 - Clipboard Acquisition is armed, visible, short-lived, and sealed after use.
