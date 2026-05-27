@@ -794,10 +794,10 @@ function renderRuntimeSettings(snapshot) {
 }
 
 function renderLiveIoPolicy(snapshot) {
-  const enabled = Boolean(snapshot?.passive?.enabled || snapshot?.threat?.enabled);
+  const enabled = Boolean(snapshot?.local?.enabled && snapshot?.passive?.enabled && snapshot?.threat?.enabled);
   state.liveIoEnabled = enabled;
   byId('integrated-viewport').classList.toggle('io-off', !enabled);
-  setText('live-io-state', enabled ? 'On - network and clipboard enabled' : 'Off - network and clipboard blocked');
+  setText('live-io-state', enabled ? 'On - ingest enabled' : 'Off - ingest blocked');
   setText('live-io-toggle', enabled ? 'Disable IO' : 'Enable IO');
   setText('top-live-io-toggle', enabled ? 'IO' : 'IO');
   byId('live-io-toggle').classList.toggle('is-on', enabled);
@@ -920,7 +920,8 @@ function statusFromSnapshot(snapshot) {
   if (!snapshot) return 'unavailable';
   const watcherState = snapshot?.operational?.watcher?.state;
   if (watcherState === 'degraded') return 'degraded';
-  if (watcherState === 'unavailable' || watcherState === 'blocked') return 'unavailable';
+  if (watcherState === 'blocked') return 'blocked';
+  if (watcherState === 'unavailable') return 'unavailable';
   return snapshot?.freshness?.status || 'empty';
 }
 
@@ -928,6 +929,7 @@ function signalLabel(status) {
   if (status === 'recent') return 'Recent';
   if (status === 'witnessed') return 'Witnessed';
   if (status === 'degraded') return 'Degraded';
+  if (status === 'blocked') return 'Blocked';
   if (status === 'stale') return 'Stale';
   if (status === 'empty') return 'Empty';
   return 'Unavailable';
@@ -936,6 +938,7 @@ function signalLabel(status) {
 function compactCombatTitle(status) {
   if (status === 'recent' || status === 'witnessed') return 'Activity';
   if (status === 'degraded') return 'Degraded';
+  if (status === 'blocked') return 'Blocked';
   if (status === 'stale') return 'Stale';
   return 'Quiet';
 }
@@ -943,6 +946,7 @@ function compactCombatTitle(status) {
 function summaryForStatus(status) {
   if (status === 'recent' || status === 'witnessed') return 'Combat activity witnessed recently.';
   if (status === 'degraded') return 'Log Watcher is degraded.';
+  if (status === 'blocked') return 'I/O authority is off; gamelog ingest is blocked.';
   if (status === 'stale') return 'Last witnessed activity is stale.';
   if (status === 'empty') return 'No combat activity witnessed yet.';
   return 'Combat Witness snapshot is unavailable.';

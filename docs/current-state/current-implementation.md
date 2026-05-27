@@ -1,7 +1,7 @@
 # Current State: AURA-Sense Implementation
 
-Date: 2026-05-26
-Status: Idle after M12H pre-live Clipboard Acquisition service-command gate hardening; Threat and Passive live API smokes have bounded evidence; operator I/O smoke remains gated
+Date: 2026-05-27
+Status: Idle after M12I ADR-0008 I/O authority reconciliation; Threat and Passive live API smokes have bounded evidence; operator I/O smoke remains gated
 
 ## What Exists
 
@@ -45,6 +45,8 @@ The current implementation includes:
 - session-scoped Combat Witness gamelog path control
 - native gamelog folder picker routed through the main-process service boundary
 - backend-owned Combat Witness watcher lifecycle
+- I/O-authority-gated Combat Witness watcher start and runtime event admission
+- no-read watcher guard for local gamelog tail handling while I/O authority is off
 - Combat Witness HUD watcher unavailable/degraded/watching status
 - Passive Telemetry backend snapshot lane
 - backend zKill system-context normalization boundary
@@ -71,7 +73,7 @@ The current implementation includes:
 - Clipboard Acquisition service-command I/O gate helper that blocks renderer-reachable arm/capture service commands before clipboard reads while Threat I/O is off
 - Clipboard Acquisition race verification for rapid arm/cancel/capture, unchanged content, rejection, timeout, scan failure, cooldown, and concurrent arm semantics
 - operator I/O gate-separation verification for parser-jump Passive updates independent from Clipboard Acquisition and Threat scan state
-- operator I/O gate verification proving Clipboard Acquisition service-command arm/capture paths do not read clipboard or scan Threat Intel while Threat I/O is off
+- operator I/O gate verification proving local gamelog start/read/admission/mutation is blocked while I/O is off, and Clipboard Acquisition service-command arm/capture paths do not read clipboard or scan Threat Intel while Threat I/O is off
 - global clipboard arming shortcut using `Control+\` where available with fallback shortcut status reporting
 - Threat Intel preload bridge with no renderer-owned provider calls
 - integrated tactical viewport layout with lane overview and separate Combat Witness, Passive Telemetry, and Threat Intel surfaces
@@ -224,7 +226,7 @@ Live API smoke scripts use smoke-local verbose request-log capture so successful
 - integrated viewport does not display damage spike outliers yet; calibration remains open
 - live validation/calibration is now scoped as a future milestone, not yet implemented
 - aggressive testing and bug hunting are complete for the offline Milestone 13 scope; live/manual validation remains gated for later operator-validation work
-- live operator gamelog smoke has a scaffold at `docs/testing/live-operator-gamelog-smoke-playbook.md`, but it is not execution authorization
+- live operator gamelog smoke has a scaffold at `docs/testing/live-operator-gamelog-smoke-playbook.md`, but it is not execution authorization and requires I/O authority on before local gamelog ingest
 - live API smoke transition readiness has a map at `docs/testing/live-api-smoke-transition-readiness.md`, but it is not execution authorization
 - real SDE refresh/download artifacts must remain explicit and should not be staged by default
 - concept and research docs are AURA-Sense product doctrine or local review notes; older audit records may still describe past cleanup work
@@ -238,23 +240,25 @@ ADR-0008 changes the accepted target trust model:
 I/O off means Sense is not allowed to ingest.
 ```
 
-Current implementation is not yet fully aligned with that target. The accepted security/engineering review material identifies local gamelog ingest as the main reconciliation gap.
+M12I reconciled the local gamelog ingest gap for the current runtime path. The accepted security/engineering review material remains the durable trace for why the boundary exists.
 
 Current verified posture:
 
 - Provider calls and Clipboard Acquisition reads have strong existing gates and no-call/no-read tests.
-- Gamelog folder/path validation and local ingest containment are strong, but path containment is not I/O authority.
+- `combat.witness.start` refuses local gamelog ingest while I/O authority is off.
+- Turning runtime I/O authority off stops the active Combat Witness watcher and leaves it configured but blocked.
+- The watcher has no-read guards before polling/handleFile tail reads, including the path before `readRange`.
+- Runtime event admission rejects parser/local events while I/O authority is off, preventing Combat Witness and Passive Telemetry mutation from new parser events.
+- Gamelog folder/path validation and local ingest containment remain support/containment checks, not substitutes for I/O authority.
 - Renderer/preload boundaries prevent renderer-owned ingest and direct provider/filesystem/parser access.
 - Static app-owned metadata lookup is support-only in the current code; SDE refresh remains an explicit non-runtime command.
 
-Known ADR-0008 gaps:
+Known ADR-0008 follow-ups:
 
-- `combat.witness.start` can currently start local gamelog ingest while I/O is off.
-- Turning I/O off does not yet stop or pause active gamelog file ingest.
-- File tail reads and parser event emission are not yet guarded by the runtime I/O authority.
-- Combat Witness and Passive Telemetry can still mutate from admitted parser events if local log events reach the runtime.
-- Passive current-system observation can happen before provider gates block ESI/zKill calls.
-- UI copy and docs still contain narrower "network and clipboard" or provider-only I/O language.
+- Live/manual operator smoke remains explicitly gated and was not run for M12I.
+- Manual OS accelerator and live EVE gamelog behavior remain unverified in real operator conditions.
+- Provider requests already in flight when I/O is turned off remain a future policy question; existing provider gates still prevent new calls while off.
+- Static metadata lookup remains support-only in the current code; future arbitrary metadata sources or SDE refreshes still need explicit authorization.
 
 Event-spine trace:
 
@@ -266,7 +270,7 @@ EveGamelogWatcher parsed event
 -> passiveTelemetryService.observeEvent(event)
 ```
 
-Future implementation should enforce I/O authority at ingest boundaries:
+Implemented M12I gate placement:
 
 - primary gate: `combat.witness.start` / `combatWitnessRuntime.start`
 - lifecycle gate: stop or pause active local gamelog ingest when I/O turns off

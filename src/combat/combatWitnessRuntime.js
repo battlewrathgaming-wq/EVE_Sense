@@ -6,6 +6,7 @@ function createCombatWitnessRuntime({
   service = new CombatWitnessService(),
   watcher = null,
   observers = [],
+  ingestEnabled = true,
   now = () => new Date().toISOString(),
   trace = () => {}
 } = {}) {
@@ -15,6 +16,10 @@ function createCombatWitnessRuntime({
 
   const runtime = {
     configuredPath: null,
+    ingestAuthority: {
+      enabled: ingestEnabled === true,
+      message: ingestEnabled === true ? 'I/O authority is on' : 'I/O authority is off; gamelog ingest is blocked'
+    },
     observers: new Set(observers.filter((observer) => typeof observer === 'function')),
     watcherStatus: {
       state: 'unavailable',
@@ -27,6 +32,7 @@ function createCombatWitnessRuntime({
 
   const activeWatcher = watcher || new EveGamelogWatcher({
     watcherStrategy: 'auto',
+    isIngestAllowed: () => ingestIoStatus().enabled,
     onEvent: (event) => {
       observeEvent(event);
     },
@@ -84,6 +90,19 @@ function createCombatWitnessRuntime({
       return status();
     }
 
+    if (!ingestIoStatus().enabled) {
+      if (typeof activeWatcher.stop === 'function') {
+        activeWatcher.stop();
+      }
+      runtime.watcherStatus = blockedWatcherStatus(runtime.configuredPath, now());
+      trace('combat_witness_ingest_blocked', {
+        reason: 'io-disabled',
+        stage: 'start'
+      });
+      emitOperationalSnapshot();
+      return status();
+    }
+
     runtime.watcherStatus = normalizeWatcherStatus(activeWatcher.start(runtime.configuredPath), now());
     emitOperationalSnapshot();
     return status();
@@ -100,6 +119,29 @@ function createCombatWitnessRuntime({
     };
     emitOperationalSnapshot();
     return status();
+  }
+
+  function setIngestEnabled(enabled, reason = null) {
+    runtime.ingestAuthority = {
+      enabled: enabled === true,
+      message: reason || (enabled === true ? 'I/O authority is on' : 'I/O authority is off; gamelog ingest is blocked')
+    };
+    if (!runtime.ingestAuthority.enabled) {
+      if (typeof activeWatcher.stop === 'function') {
+        activeWatcher.stop();
+      }
+      runtime.watcherStatus = blockedWatcherStatus(runtime.configuredPath, now());
+      trace('combat_witness_ingest_blocked', {
+        reason: 'io-disabled',
+        stage: 'authority-change'
+      });
+      emitOperationalSnapshot();
+    }
+    return status();
+  }
+
+  function ingestIoStatus() {
+    return { ...runtime.ingestAuthority };
   }
 
   function status() {
@@ -128,6 +170,13 @@ function createCombatWitnessRuntime({
   }
 
   function observeEvent(event) {
+    if (!ingestIoStatus().enabled) {
+      trace('combat_witness_event_ignored_io_disabled', {
+        eventId: event?.id || null,
+        kind: event?.kind || null
+      });
+      return service.snapshot();
+    }
     const snapshot = service.addEvent(event);
     notifyObservers(event);
     return snapshot;
@@ -158,6 +207,8 @@ function createCombatWitnessRuntime({
   return {
     configure,
     service,
+    setIngestEnabled,
+    ingestIoStatus,
     snapshot,
     start,
     status,
@@ -171,12 +222,24 @@ function createCombatWitnessRuntime({
 function normalizeWatcherStatus(status = {}, updatedAt) {
   const state = status.state === 'watching'
     ? 'watching'
-    : (status.state === 'error' || status.state === 'invalid' ? 'degraded' : 'unavailable');
+    : (status.state === 'blocked'
+        ? 'blocked'
+        : (status.state === 'error' || status.state === 'invalid' ? 'degraded' : 'unavailable'));
   return {
     state,
     path: status.path || null,
     message: status.message || 'Combat Witness watcher unavailable',
     strategy: status.strategy || null,
+    updatedAt
+  };
+}
+
+function blockedWatcherStatus(configuredPath, updatedAt) {
+  return {
+    state: 'blocked',
+    path: configuredPath || null,
+    message: 'I/O authority is off; gamelog ingest is blocked',
+    strategy: null,
     updatedAt
   };
 }

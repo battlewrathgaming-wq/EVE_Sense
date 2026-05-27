@@ -69,6 +69,7 @@ const clipboardAcquisitionService = createClipboardAcquisitionService({
   trace: traceRuntimeDiagnostic
 });
 const combatWitnessRuntime = createCombatWitnessRuntime({
+  ingestEnabled: false,
   observers: [(event) => {
     passiveTelemetryService.observeEvent(event).catch((error) => {
       traceRuntimeDiagnostic('passive_observer_error', { message: error.message });
@@ -279,12 +280,12 @@ function registerRuntimeControlCommands(serviceRegistry, settingsService, diagno
     })
     .register('runtime.live-io.snapshot', {
       classification: TASK_CLASSIFICATIONS.READ_ONLY,
-      description: 'Return live IO policy state for provider lanes',
+      description: 'Return runtime IO authority state for ingest lanes',
       handler: () => liveIoPolicySnapshot()
     })
     .register('runtime.live-io.set-enabled', {
       classification: TASK_CLASSIFICATIONS.LOCAL_MUTATION,
-      description: 'Enable or disable backend live IO gates for provider lanes',
+      description: 'Enable or disable backend IO authority for ingest lanes',
       handler: (payload = {}) => setLiveIoPolicy(payload)
     })
     .register('runtime.diagnostics.snapshot', {
@@ -392,9 +393,10 @@ function recoverRuntimeSettings() {
 function liveIoPolicySnapshot() {
   return {
     kind: 'runtime.live-io.snapshot',
+    local: combatWitnessRuntime.ingestIoStatus(),
     passive: passiveTelemetryService.liveIoStatus(),
     threat: threatIntelService.liveIoStatus(),
-    message: 'Live IO is backend gated and disabled by default'
+    message: 'I/O authority is backend gated and disabled by default'
   };
 }
 
@@ -402,6 +404,9 @@ function setLiveIoPolicy(payload = {}) {
   const lane = payload.lane === 'passive' || payload.lane === 'threat' ? payload.lane : 'all';
   const enabled = payload.enabled === true;
   const reason = payload.reason || (enabled ? 'Operator enabled live IO' : 'Operator disabled live IO');
+  if (lane === 'all') {
+    combatWitnessRuntime.setIngestEnabled(enabled, reason);
+  }
   if (lane === 'all' || lane === 'passive') {
     passiveTelemetryService.setLiveIoEnabled(enabled, reason);
   }
@@ -718,8 +723,8 @@ async function captureVisualRegressionStates(window, outputDir) {
       script: `
         resetViewportState();
         document.querySelector('#integrated-viewport')?.classList.add('io-off');
-        setText('#live-io-state', 'Off - network and clipboard blocked');
-        setText('#combat-summary', 'Combat Witness remains local while live IO is blocked.');
+        setText('#live-io-state', 'Off - ingest blocked');
+        setText('#combat-summary', 'I/O authority is off; gamelog ingest is blocked.');
         setText('#front-observed-source', 'No source observed');
         setText('#passive-readout-state', 'Live IO blocked');
         setText('#passive-readout-basis', 'Live IO blocked');

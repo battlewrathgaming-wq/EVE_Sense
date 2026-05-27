@@ -20,6 +20,7 @@ class EveGamelogWatcher {
     setIntervalFn = setInterval,
     clearIntervalFn = clearInterval,
     readRange = readUtf8Range,
+    isIngestAllowed = () => true,
     diagnosticsPolicy = defaultDiagnosticsPolicy
   } = {}) {
     this.parseLine = parseLine;
@@ -33,6 +34,7 @@ class EveGamelogWatcher {
     this.setIntervalFn = setIntervalFn;
     this.clearIntervalFn = clearIntervalFn;
     this.readRange = readRange;
+    this.isIngestAllowed = isIngestAllowed;
     this.folderPath = null;
     this.folderRealPath = null;
     this.watcher = null;
@@ -48,6 +50,9 @@ class EveGamelogWatcher {
     const folderPath = normalizeGamelogFolder(inputPath);
     if (!folderPath) {
       return this.setStatus('missing', null, 'EVE gamelog folder is not configured');
+    }
+    if (!this.canIngest()) {
+      return this.setStatus('blocked', folderPath, 'I/O authority is off; gamelog ingest was not started');
     }
 
     const validation = validateGamelogFolder(folderPath);
@@ -122,6 +127,10 @@ class EveGamelogWatcher {
 
   startFsWatch(folderPath) {
     this.watcher = fs.watch(folderPath, { persistent: true }, (eventType, filename) => {
+      if (!this.canIngest()) {
+        this.setStatus('blocked', folderPath, 'I/O authority is off; gamelog ingest is paused');
+        return;
+      }
       const filePath = containedFilenamePath(folderPath, filename);
       if (!filePath || !isTextLog(filePath)) {
         if (filename) {
@@ -161,6 +170,10 @@ class EveGamelogWatcher {
     if (!this.folderPath) {
       return [];
     }
+    if (!this.canIngest()) {
+      this.setStatus('blocked', this.folderPath, 'I/O authority is off; gamelog ingest is paused');
+      return [];
+    }
 
     const events = [];
     let entries;
@@ -183,6 +196,10 @@ class EveGamelogWatcher {
   }
 
   handleFile(filePath) {
+    if (!this.canIngest()) {
+      this.setStatus('blocked', this.folderPath || path.dirname(path.resolve(String(filePath || ''))), 'I/O authority is off; gamelog ingest is paused');
+      return [];
+    }
     if (!isTextLog(filePath) || !fs.existsSync(filePath)) {
       return [];
     }
@@ -227,6 +244,10 @@ class EveGamelogWatcher {
 
     const start = previousOffset;
     if (stats.size <= start) {
+      return [];
+    }
+    if (!this.canIngest()) {
+      this.setStatus('blocked', this.folderPath, 'I/O authority is off; gamelog ingest is paused');
       return [];
     }
 
@@ -359,6 +380,15 @@ class EveGamelogWatcher {
       reason,
       message
     });
+  }
+
+  canIngest() {
+    try {
+      return this.isIngestAllowed() === true;
+    } catch (error) {
+      this.trace('ingest_authority_check_failed', { message: error.message });
+      return false;
+    }
   }
 }
 

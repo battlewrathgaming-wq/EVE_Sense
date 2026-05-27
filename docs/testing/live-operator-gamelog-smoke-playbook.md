@@ -16,6 +16,7 @@ Do not run this smoke unless all are true:
 - the Human explicitly authorizes live operator gamelog smoke
 - `workspace/current.md` names the smoke as the active runway
 - the operator confirms the selected folder is the intended EVE `logs/Gamelogs` folder
+- AURA-Sense I/O authority is on before watcher start or any local gamelog ingest is attempted
 - the run records artifact paths and stop conditions before starting
 
 ## Privacy Rules
@@ -33,10 +34,11 @@ Do not run this smoke unless all are true:
 1. Confirm authorization and artifact destination under `.tmp`.
 2. Start AURA-Sense without enabling live providers unless the active packet separately authorizes that boundary.
 3. Select the operator-confirmed EVE `logs/Gamelogs` folder through the existing runtime picker or configured path flow.
-4. Start Combat Witness watching.
-5. Produce or wait for future EVE gamelog appends only.
-6. Confirm watcher state, append-only ingestion, Combat Witness snapshot update, Passive observer behavior, and clean shutdown.
-7. Stop the watcher and record sanitized result metadata.
+4. Enable AURA-Sense I/O authority for the authorized ingest window.
+5. Start Combat Witness watching.
+6. Produce or wait for future EVE gamelog appends only.
+7. Confirm watcher state, append-only ingestion, Combat Witness snapshot update, Passive observer behavior, and clean shutdown.
+8. Stop the watcher and record sanitized result metadata.
 
 ## Artifact Expectations
 
@@ -106,6 +108,7 @@ The artifact must omit raw private paths, raw gamelog lines, raw clipboard targe
 Stop immediately and record the reason if:
 
 - the selected folder fails the EVE `logs/Gamelogs` structure check
+- I/O authority is off when watcher start or local gamelog ingest is attempted
 - the watcher tries to read outside the configured active folder
 - historical files are being replayed beyond append-only startup seeding
 - private raw lines would need to be copied into an artifact
