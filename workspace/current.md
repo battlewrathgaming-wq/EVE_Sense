@@ -1,167 +1,143 @@
 # Current Workspace Packet
 
-Status: Idle
-Updated: 2026-05-26
+Status: Active
+Updated: 2026-05-27
 Owner: Overseer
 
 ## Coordination State
 
 Active milestone: M12 - Live Validation And Tactical Calibration
 Roadmap source: `docs/roadmap/milestone-12-live-validation-and-tactical-calibration.md`
-Current runway: None
-Source of intent: `workspace/SecEngHS48-m12-operator-io-ingestion-assurance-review.md` accepted by `workspace/OverseerHS49-m12h-operator-io-ingestion-assurance-acceptance.md`
-Latest accepted slice: M12H Clipboard service-command I/O gate hardening
-Latest review input: `workspace/SecEngHS48-m12-operator-io-ingestion-assurance-review.md`
-Latest Dev handoff: `workspace/DevHS50-m12h-clipboard-service-io-gate-hardening.md`
-Latest Overseer acceptance: `workspace/OverseerHS51-m12h-clipboard-service-gate-acceptance.md`
-Latest M12H acceptance: `workspace/OverseerHS51-m12h-clipboard-service-gate-acceptance.md`
-M12H runway acceptance input: `workspace/OverseerHS49-m12h-operator-io-ingestion-assurance-acceptance.md`
-Latest accepted closure: `workspace/OverseerHS47-m12g-clipboard-gate-separation-acceptance.md`
-Latest M12G Dev handoff: `workspace/DevHS46-m12g-clipboard-mode-gate-separation-hardening.md`
-Latest M12G acceptance: `workspace/OverseerHS47-m12g-clipboard-gate-separation-acceptance.md`
-Latest M12F review: `workspace/SecEngHS44-m12f-operator-io-readiness-gate-separation-review.md`
-Latest M12F acceptance: `workspace/OverseerHS45-m12f-operator-io-readiness-review-acceptance.md`
-Latest M12E live smoke record: `workspace/OverseerHS43-m12e-passive-live-api-smoke.md`
-Latest M12C live smoke record: `workspace/OverseerHS40-m12c-threat-live-api-smoke.md`
-Latest M12B acceptance: `workspace/OverseerHS39-m12b-live-api-security-review-acceptance.md`
-Latest M12B security/engineering handoff: `workspace/SecEngHS38-m12b-live-api-security-review.md`
-Latest M12A acceptance: `workspace/OverseerHS37-m12a-live-api-transition-readiness-acceptance.md`
-Latest M12A Dev handoff: `workspace/DevHS36-m12a-live-api-smoke-transition-readiness.md`
-Latest M12 prep acceptance: `workspace/OverseerHS35-m12-live-validation-harness-prep-acceptance.md`
-Latest M12 gate trace: `workspace/OverseerHS33-m12-live-validation-gate-trace.md`
-Current executor: None
-Current status: Idle after M12H acceptance
-Expected output: None
+Current runway: M12I - ADR-0008 I/O Authority Reconciliation
+Source of intent:
 
-## Resting State
+- Human direction: proceed with the pre-live I/O authority hardening path.
+- ADR source: `docs/adr/ADR-0008-io-off-means-no-ingest.md`
+- Current-state source: `docs/current-state/current-implementation.md`
+- Supporting audit/trace sources:
+  - `workspace/SecEngHS52-io-authority-reconciliation-audit.md`
+  - `workspace/EngTraceHS53-gamelog-event-spine-trace.md`
+  - `workspace/SecEngHS54-ingest-source-defensive-posture-audit.md`
+  - `workspace/EngMapHS55-io-authority-state-and-gate-placement.md`
 
-M12 remains the active/gated envelope for live/manual validation and tactical calibration, but no executable work is open right now.
+Current executor: Dev
+Current status: Ready for Dev
+Expected output: `workspace/DevHS56-m12i-io-authority-reconciliation.md`
 
-M12H accepted:
+## Objective
 
-- `threat.clipboard.arm` and `threat.clipboard.capture` now check Threat live I/O status before Clipboard Acquisition can read clipboard content.
-- Blocked service-command paths return the existing blocked Clipboard Acquisition snapshot shape and do not call injected clipboard reads or Threat scans.
-- The global `Control+\` I/O-off path reuses the same blocked snapshot shape.
-- I/O-on behavior remains preserved: global shortcut immediate capture, focused/windowed baseline/listen behavior, seal/cooldown, and fingerprint-only duplicate suppression remain intact.
-- Primary Threat blocked-code verification now asserts `THREAT_LIVE_IO_BLOCKED`.
-- Future operator I/O smoke has a redaction-safe artifact shape documented in `docs/testing/live-operator-gamelog-smoke-playbook.md`.
-- No live/manual/private I/O was run.
-
-Core rule:
+Bring local gamelog/file ingest into alignment with ADR-0008:
 
 ```txt
-Passive I/O wraps the operator flow.
-Active I/O is explicitly invited.
-Both may feed the same event spine.
-They must not share the same gate.
-Shared display/fixture treatment is not assumed.
+I/O off means Sense is not allowed to ingest.
 ```
 
-Human design clarification:
+The goal is to enforce I/O authority at the boundary where new outside information enters Sense, while keeping Combat Witness, Passive Telemetry, and other internal computation modules pure over admitted events and existing state.
 
-- Global shortcut immediate capture of the current clipboard is intended.
-- It is acceptable because pressing the global shortcut is an explicit operator invitation.
-- It must remain IO-gated, visible through Clipboard Acquisition state, and sealed/cooldown-bounded.
-- Focused/windowed acquisition without a provided payload remains different: it should establish a baseline, listen for a changed valid clipboard target, then seal/cool down.
-- A small rolling acquisition cache may be useful as duplicate-suppression/throttle control, but it must not become hidden clipboard history, a shared Passive gate, or a display/fixture source.
-- In this M12 operator-flow context, Active means the operator permission action currently bound to `Ctrl+\`. Do not assume a click/search-button workflow; clicking the Sense window can disrupt the primary game.
-- Search-field delivery is a result of the permission action, not a requirement for mouse-driven interaction.
+This is pre-live trust hardening. It is not live/manual smoke, presentation work, adapter work, Combat calibration, or product expansion.
 
-M12G accepted:
+## Ordered Runway
 
-- Global shortcut immediate capture is documented/verified as explicit operator-invited behavior.
-- Focused/windowed acquisition without payload still ignores unchanged pre-arm clipboard content.
-- A 10 second / 5 entry in-memory fingerprint cache suppresses recent duplicate captures without storing raw clipboard history.
-- Operator I/O gate-separation verification now proves Passive jump-triggered context remains independent from Clipboard Acquisition and Threat scan state.
-- Future live/manual operator smoke artifact redaction expectations are documented.
-- Threat Intel target text is capped at 256 characters.
+1. Read the required sources:
+   - `AGENTS.md`
+   - `workspace/current.md`
+   - `docs/current-state/current-implementation.md`
+   - `docs/adr/ADR-0008-io-off-means-no-ingest.md`
+   - `docs/roadmap/milestone-12-live-validation-and-tactical-calibration.md`
+   - `workspace/SecEngHS52-io-authority-reconciliation-audit.md`
+   - `workspace/EngTraceHS53-gamelog-event-spine-trace.md`
+   - `workspace/SecEngHS54-ingest-source-defensive-posture-audit.md`
+   - `workspace/EngMapHS55-io-authority-state-and-gate-placement.md`
+2. Trace the current local gamelog/file-ingest start, read, parser admission, Combat Witness, and Passive Telemetry mutation path from code before editing.
+3. Implement boundary enforcement so `combat.witness.start` / `combatWitnessRuntime.start` cannot start local gamelog ingest while runtime I/O authority is off.
+4. Ensure turning I/O off stops or pauses active local gamelog/file ingest before additional file reads can be admitted.
+5. Add a no-read or no-admit guard at the local tail/read boundary, with special attention to the path around `readRange`.
+6. Add defense-in-depth at runtime event admission so new parser events cannot mutate Combat Witness or Passive Telemetry while I/O is off.
+7. Preserve existing provider and Clipboard Acquisition gates, including M12H service-command behavior and I/O-off snapshot shape.
+8. Update UI copy and docs only where needed so I/O off is described as no ingest, not only network/clipboard blocked.
+9. Add or update deterministic tests proving no-start/no-read/no-mutation behavior while I/O is off.
+10. Run required verification and write the expected Dev handoff artifact.
 
-## Runway Shape
+## Acceptance Criteria
 
-At idle, M12 can move next toward operator I/O smoke, manual shortcut feel validation, Combat calibration, or fixture intake only by Human/Overseer decision.
+M12I is complete when:
 
-Any future live/manual EVE folder use, real clipboard capture, provider calls, manual shortcut validation, display/adapter convergence, or product decision about Passive/Active gate behavior requires a future active packet.
+- `combat.witness.start` is blocked or safely refused while I/O authority is off.
+- Active local gamelog/file ingest is stopped or paused when I/O authority turns off.
+- No new local gamelog tail reads are admitted after I/O authority is off.
+- New parser events cannot mutate Combat Witness state while I/O authority is off.
+- New parser events cannot mutate Passive Telemetry current-system observation while I/O authority is off.
+- Provider live gates and Clipboard Acquisition gates remain intact.
+- Internal Combat Witness and Passive Telemetry computations remain pure over already-admitted events and existing state; they do not become owners of I/O policy.
+- Renderer/preload boundaries still prevent renderer-owned ingest and direct provider/filesystem/parser access.
+- UI/docs wording no longer implies I/O off only blocks network or clipboard behavior where that would mislead the operator.
+- Deterministic tests cover the I/O-off start/read/admission/mutation cases without using private logs, real clipboard content, live providers, screenshots, or manual operator actions.
+- `npm.cmd run verify:all` passes offline, unless a failure is unrelated and clearly documented.
+- The Dev handoff records files changed, verification commands/results, remaining risks, and any parked follow-up.
 
-## Context To Preserve
+## Guardrails And Non-Goals
 
-M12F accepted:
-
-- Gamelog parser events fan out through the Combat Witness runtime observer path.
-- Passive Telemetry observes `navigation.jump` events and does not depend on Clipboard Acquisition state.
-- Threat Intel scans are invoked through Clipboard Acquisition/global shortcut flow, focused renderer keyboard flow, or service/preload calls. M12G should not assume a mouse search-button UX.
-- Passive and Threat live provider gates are separate backend gate instances.
-- Parser jumps were not found to trigger Threat scans.
-- Clipboard/search was not found to be a prerequisite for Passive current-system observation.
-- Human clarified global shortcut immediate capture of existing clipboard content is intended when explicitly invoked.
-- The remaining gap is docs/tests alignment so immediate global shortcut capture and focused/windowed listening are not collapsed into one rule.
-
-M12E accepted:
-
-- Passive-only live API smoke ran once under explicit Human authorization.
-- `AURA_SENSE_LIVE_API=1` was scoped to the command invocation and cleared afterward.
-- Default Passive fixture path observed a `navigation.jump` from `Perimeter` to `Jita`.
-- ESI `system_kills`, ESI `system_jumps`, and zKill Jita system context returned bounded successful request metadata.
-- The standard artifact was written to `.tmp\passive-live-api-smoke\result.json`.
-
-M12D remains accepted:
-
-- smoke-local verbose HTTP request metadata capture for future authorized live smoke artifacts
-- normal runtime diagnostics unchanged
-- Passive refusal artifact aligned with Threat refusal artifact fields
-- deterministic fake-HTTP verification of successful smoke request metadata capture
-
-M12C's first live Threat smoke remains the only authorized Threat live provider execution so far. No additional live calls are authorized by this resting state.
-
-Human discussion to preserve:
-
-- Passive aggregate/context should open from parser-observed system jump.
-- Passive aggregate/context must not depend on clipboard listening or active scan state.
-- Active scan should open from the operator permission action, currently `Ctrl+\`, or equivalent keyboard/service path. Do not require a mouse click.
-- Clipboard Acquisition has a listening window and seal behavior; this should be reviewed as a safety/trust boundary.
-- Both surfaces can feed the same internal observation/event channel, but their activation gates remain separate.
-- Returns must not automatically feed the same fixtures/display assumptions; this is adjacent display/adapter work and should not be decided inside M12F.
-
-## Preserved Guardrails
-
-- Do not set `AURA_SENSE_LIVE_API=1` without a future active packet and explicit Human authorization.
-- Do not run additional live zKill or ESI calls without a future active packet.
-- Do not use `AURA_SENSE_THREAT_LIVE_TARGET` unless a future packet explicitly names target text and resolved kind.
-- Do not run live EVE log ingestion.
+- Do not run live/manual EVE gamelog ingestion.
 - Do not inspect private/operator EVE log folders.
-- Do not run manual shortcut validation.
-- Do not run real SDE refresh/download.
 - Do not capture real clipboard content.
-- Do not execute live/manual I/O smoke.
-- Do not rename source-owned terms.
-- Do not change bridge contracts, IPC, payloads, persistence, schemas, services, or backend behavior.
-- Do not combine live API smoke with operator gamelog smoke, Combat calibration, raw fixture intake, renderer, Lab, adapter, or display work unless a future packet explicitly opens that scope.
+- Do not run manual shortcut validation.
+- Do not set `AURA_SENSE_LIVE_API=1`.
+- Do not run live zKill or ESI calls.
+- Do not run real SDE refresh/download.
 - Do not store raw provider bodies, private EVE gamelog lines, clipboard content, private operator paths, screenshots, renderer output, Lab/adapter output, calibration data, fixture intake, or product claims.
-- Do not promote a bounded live smoke into broad tactical/product claims.
-- Do not decide display/fixture convergence inside this packet.
-- Do not run terminology/protected-term checks unless the implementation changes terminology, adapter mappings, display copy, bridge-facing labels, source-owned meanings, or critical assets beyond the active packet.
+- Do not add Atlas persistence or historical storage behavior.
+- Do not broaden this into Combat calibration, raw repair/healing fixture intake, Lab presentation, adapter work, or live operator smoke.
+- Do not rename source-owned terms.
+- Do not change bridge contracts, IPC payload meanings, persistence schemas, or product doctrine unless required by the I/O authority fix and documented.
+- Do not make Lab or Atlas terminology authoritative for Sense.
 
-## Candidate Next M12 Slices
+## Stop Conditions
 
-Open only by Human/Overseer decision:
+Stop and hand back to Overseer/Human if:
 
-1. Live/manual operator I/O smoke with redacted artifacts and explicit Human authorization.
-2. Manual shortcut feel/OS accelerator validation, only if explicitly authorized.
-3. Combat Witness calibration from accepted real samples.
-4. Raw repair/healing fixture intake from accepted samples.
+- The implementation requires live/manual/private data to verify the boundary.
+- Existing architecture makes it impossible to block local ingest without a broader runtime redesign.
+- I/O authority ownership is ambiguous between runtime, service registry, watcher/file-ingest code, Combat Witness, and Passive Telemetry.
+- A fix would require changing bridge payload meaning, persistence, renderer doctrine, or product behavior outside ADR-0008.
+- Existing deterministic tests contradict the accepted ADR-0008 target.
+- A security/privacy concern is found that is larger than local gamelog ingest authority.
 
-## Work Record
+## Required Verification
 
-Idle after Overseer acceptance.
+Minimum:
 
-Accepted handoff:
-
-```txt
-workspace/SecEngHS48-m12-operator-io-ingestion-assurance-review.md
-workspace/OverseerHS49-m12h-operator-io-ingestion-assurance-acceptance.md
-workspace/DevHS50-m12h-clipboard-service-io-gate-hardening.md
-workspace/OverseerHS51-m12h-clipboard-service-gate-acceptance.md
+```powershell
+npm.cmd run verify:protected-terms
+npm.cmd run verify:all
+git diff --check
+git status --short --branch
 ```
 
-## Handoff Requirements
+If `verify:all` is too broad or fails for unrelated reasons, run the narrow relevant deterministic tests as well and document both the narrow result and the broader failure.
 
-None while idle.
+Do not run live/manual smoke.
+
+## Handoff Record
+
+Dev must create:
+
+```txt
+workspace/DevHS56-m12i-io-authority-reconciliation.md
+```
+
+The handoff must include:
+
+- files changed
+- code path traced
+- gate placement decisions
+- tests added/updated
+- verification commands and results
+- confirmation that no live/manual/private I/O was run
+- confirmation that provider and Clipboard Acquisition gates were preserved
+- remaining risks or parked follow-up
+
+## Resting Context To Preserve
+
+M12 remains the live/manual validation envelope, but live/manual operator smoke is still gated behind a future active packet and explicit Human authorization.
+
+M12I exists to make the pre-live trust boundary true first. Once accepted, future M12 work can return to operator smoke, Combat calibration, raw repair/healing fixture intake, or live findings review.
