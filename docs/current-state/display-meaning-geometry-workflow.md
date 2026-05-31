@@ -45,7 +45,7 @@ They are not:
 The accepted Passive Telemetry prep artifact currently defines the reference index:
 
 ```txt
-workspace/UIUXHS18-meaning-geometry-passive-telemetry-lab-prep.md
+workspace/archive/holding-2026-06-01-display-lab-uiux/UIUXHS18-meaning-geometry-passive-telemetry-lab-prep.md
 ```
 
 ## What Lab May Do
@@ -144,7 +144,7 @@ Rejected as durable workflow:
 - `docs/current-state/display-pipeline-inventory.md`
 - `docs/adr/ADR-0003-target-owned-presentation-adapters.md`
 - `docs/adr/ADR-0004-sense-instrument-effect-presentation-boundary.md`
-- `workspace/UIUXHS18-meaning-geometry-passive-telemetry-lab-prep.md`
+- `workspace/archive/holding-2026-06-01-display-lab-uiux/UIUXHS18-meaning-geometry-passive-telemetry-lab-prep.md`
 - `workspace/display-request-workflow-hardening-contract.md`
 - `docs/roadmap/milestone-15-display-request-response-fitness.md`
 - `docs/roadmap/milestone-16-body-to-adapter-readiness.md`

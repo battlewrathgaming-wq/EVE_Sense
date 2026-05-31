@@ -53,8 +53,8 @@ M15 is complete when:
 - `workspace/display_inventory.md`
 - `workspace/request_display.md`
 - `workspace/display-request-workflow-hardening-contract.md`
-- `workspace/UIUXHS15-clipboard-window-request-display-review.md`
-- `workspace/OverseerHS15-clipboard-window-request-display-review-acceptance.md`
+- `workspace/archive/holding-2026-06-01-display-lab-uiux/UIUXHS15-clipboard-window-request-display-review.md`
+- `workspace/archive/holding-2026-06-01-display-lab-uiux/OverseerHS15-clipboard-window-request-display-review-acceptance.md`
 - Lab advisory response to `sense.clipboard-window`
 - Human/Sense discussion of fitness
 

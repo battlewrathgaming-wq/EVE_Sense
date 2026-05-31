@@ -34,9 +34,9 @@ Lab may later compare Bridge -> Interface display methods through scoped `reques
 This durable record is distilled from:
 
 - `workspace/display_inventory.md`
-- `workspace/DisplayInventoryAuditHS01-ingest-transform-bridge-display.md`
-- `workspace/DisplayInventoryQualitativeReportHS01-ingest-transform-bridge-display.md`
-- `workspace/OverseerHS12-display-inventory-pipeline-audit-review.md`
+- `workspace/archive/holding-2026-06-01-display-lab-uiux/DisplayInventoryAuditHS01-ingest-transform-bridge-display.md`
+- `workspace/archive/holding-2026-06-01-display-lab-uiux/DisplayInventoryQualitativeReportHS01-ingest-transform-bridge-display.md`
+- `workspace/archive/holding-2026-06-01-display-lab-uiux/OverseerHS12-display-inventory-pipeline-audit-review.md`
 - `docs/current-state/current-implementation.md`
 - `docs/schemas/hud-snapshot.md`
 - `docs/contracts/renderer-boundary-contract.md`

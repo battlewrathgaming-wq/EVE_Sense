@@ -9,3 +9,7 @@ Former `docs/gap` task files are archived under `docs/archive/deprecated-gap-wor
 ## Awaiting Authority
 
 - `SenseTerminologyStateBridgeAudit-2026-05-24.md` - advisory terminology/state bridge audit; archived pending human/project authority before use as active direction.
+
+## Holding Archives
+
+- `holding-2026-06-01-display-lab-uiux/` - inactive display, Lab-facing, UI/UX, and advisory transaction notes moved out of the workspace root after M16A landed. These are reference history only unless explicitly reopened.

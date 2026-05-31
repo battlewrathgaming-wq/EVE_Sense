@@ -41,8 +41,8 @@ Terminology/audit review inputs:
 
 - `workspace/archive/README.md`
 - `workspace/archive/SenseTerminologyStateBridgeAudit-2026-05-24.md`
-- `workspace/OverseerHS05-sense-terminology-alignment-review.md`
-- `workspace/SYSADHS01-protected-terms-sniffer-tune.md`
+- `workspace/archive/holding-2026-06-01-display-lab-uiux/OverseerHS05-sense-terminology-alignment-review.md`
+- `workspace/archive/holding-2026-06-01-display-lab-uiux/SYSADHS01-protected-terms-sniffer-tune.md`
 - `F:\Projects\Docs\Aura-Project-Orchestration\terminology\Sense-Terminology-Boundary-Requirements-2026-05-24.md`
 
 Lab request workflow:
@@ -94,8 +94,8 @@ Rows in this file are reasoning-layer inventory. A row becomes a Lab request onl
 | `workspace/display-request-workflow-hardening-contract.md` | Active Sense-local advisory workflow contract | Defines source -> Lab -> source direction and request strength levels. |
 | `workspace/request_display.md` | Active Sense-local pointer | Shows how Sense should frame later Lab requests. |
 | `workspace/archive/SenseTerminologyStateBridgeAudit-2026-05-24.md` | Archived advisory audit awaiting authority | Requirements/history input for why observed, sample, blocked, stale, partial, and latest-scan boundaries matter. Not active work. |
-| `workspace/OverseerHS05-sense-terminology-alignment-review.md` | Advisory alignment input, not Sense authority | Preserve-exact and Lab-translatable recommendations for future review. |
-| `workspace/SYSADHS01-protected-terms-sniffer-tune.md` | Completed tooling history/input | Shows the protected-term checker is warning-only and not a rename queue. |
+| `workspace/archive/holding-2026-06-01-display-lab-uiux/OverseerHS05-sense-terminology-alignment-review.md` | Advisory alignment input, not Sense authority | Preserve-exact and Lab-translatable recommendations for future review. |
+| `workspace/archive/holding-2026-06-01-display-lab-uiux/SYSADHS01-protected-terms-sniffer-tune.md` | Completed tooling history/input | Shows the protected-term checker is warning-only and not a rename queue. |
 | `F:\Projects\Docs\Aura-Project-Orchestration\terminology\Sense-Terminology-Boundary-Requirements-2026-05-24.md` | Project-specific advisory requirements input | Explains Sense terminology risks; not active Dev instruction unless accepted in a packet. |
 | Cross-project synthesis/frequency records referenced by critical terms | Synthesis or diagnostic input | May inform risk awareness, but must not be treated as authority or an active queue. |
 

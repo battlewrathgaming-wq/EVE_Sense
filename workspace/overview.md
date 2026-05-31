@@ -58,12 +58,12 @@ Latest M12H runway acceptance: `workspace/OverseerHS49-m12h-operator-io-ingestio
 Latest M12H Dev handoff: `workspace/DevHS50-m12h-clipboard-service-io-gate-hardening.md`
 Latest M12H acceptance: `workspace/OverseerHS51-m12h-clipboard-service-gate-acceptance.md`
 Latest accepted handshake: `workspace/complete/milestone-14/OverseerHS03-milestone-14-closure.md`
-Latest accepted prototype review: `workspace/OverseerHS02-passive-telemetry-readout-prototype-review.md`
-Latest accepted face advisory: `workspace/OverseerHS03-sense-face-presentation-adoption-review.md`
-Latest accepted face refinement: `workspace/OverseerHS04-sense-face-refinement-review.md`
-Latest Lab M19 adoption review: `workspace/OverseerHS07-sense-m19-instrument-status-band-adoption-review.md`
-Latest Passive band advisory review: `workspace/OverseerHS08-passive-telemetry-instrument-band-advisory-review.md`
-Latest Passive band prototype acceptance: `workspace/OverseerHS10-passive-telemetry-instrument-band-prototype-review.md`
+Latest accepted prototype review: `workspace/archive/holding-2026-06-01-display-lab-uiux/OverseerHS02-passive-telemetry-readout-prototype-review.md`
+Latest accepted face advisory: `workspace/archive/holding-2026-06-01-display-lab-uiux/OverseerHS03-sense-face-presentation-adoption-review.md`
+Latest accepted face refinement: `workspace/archive/holding-2026-06-01-display-lab-uiux/OverseerHS04-sense-face-refinement-review.md`
+Latest Lab M19 adoption review: `workspace/archive/holding-2026-06-01-display-lab-uiux/OverseerHS07-sense-m19-instrument-status-band-adoption-review.md`
+Latest Passive band advisory review: `workspace/archive/holding-2026-06-01-display-lab-uiux/OverseerHS08-passive-telemetry-instrument-band-advisory-review.md`
+Latest Passive band prototype acceptance: `workspace/archive/holding-2026-06-01-display-lab-uiux/OverseerHS10-passive-telemetry-instrument-band-prototype-review.md`
 Latest M17 Dev handoff: `workspace/complete/milestone-17/DevHS21-frame-window-smoke-hardening.md`
 Latest M17 acceptance: `workspace/complete/milestone-17/OverseerHS22-m17-frame-window-smoke-hardening-acceptance.md`
 Latest scope review: `workspace/complete/milestone-18/EngTestHS23-next-scope-review.md`
