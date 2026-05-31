@@ -71,6 +71,27 @@ Until that arrives, treat this file as Sense-local authority for current meaning
 | `Runtime ready` | runtime ready | Can sound like tactical readiness. | Keep in diagnostics/setup context. |
 | `Seed` / `Core Seed` | inherited/internal readiness | Can become accidental Core doctrine. | Keep out of product/interface terminology unless promoted. |
 
+## Passive Adapter Provisional Terms
+
+Status: local blueprint for future Passive adapter work; not universal Aura doctrine.
+
+Source artifacts:
+
+- `workspace/EngSpecHS60-passive-telemetry-adapter-envelope.md`
+- `workspace/TermAuditHS61-passive-adapter-wording-collision-review.md`
+
+| Term / Pattern | Provisional Meaning | Decision |
+| --- | --- | --- |
+| `adapterPreview` | Sense-owned provisional adapter output/copy bundle derived from preserved Passive source slots. | Preferred replacement for `displaySafe`; still adapter-side and provisional, not bridge truth or Lab authority. |
+| `displaySafe` | Older candidate name for adapter output intended to be display-ready. | Avoid for future Passive adapter work because it sounds final, approved, or presentation-owned. |
+| `basis + freshness + warnings + gaps` | Preferred Passive trust/limit model. | Use instead of a `certainty` slot for Passive Telemetry. |
+| `certainty` | Confidence/proof-style slot. | Do not add for Passive Telemetry unless a later Human/Overseer decision explicitly accepts it. |
+| `I/O off - ingest blocked` | Preferred future user-facing authority wording for ADR-0008 state. | Candidate wording; preserve the meaning that Sense is not allowed to ingest while I/O is off. |
+| `I/O Isolated` | Compact possible label for authority-off state. | Human/Overseer decision pending; do not make durable copy without review. |
+| `Live Feed` / `Live Feed Isolated` | Candidate wording from discussion. | Avoid for Passive because it can imply continuous feed/background monitoring. |
+| Lab `NO DATA` / `UNAVAILABLE` | Lab display example labels. | Do not map over Sense `blocked`, `no observation`, `unavailable`, or `degraded` without preserving Sense-owned reason. |
+| `state`, `availability`, `coverage` | Useful adapter/display concepts. | Safe only with lane/source qualification; do not turn into shared state enums or Sense bridge contracts. |
+
 ## Open Questions
 
 - Should `Gateway`, `Pulling`, `Cooldown`, and `Live IO blocked` be preserve-exact in Lab presentation?

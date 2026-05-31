@@ -1,91 +1,92 @@
 # Current Workspace Packet
 
 Status: Idle
-Updated: 2026-05-27
+Updated: 2026-05-31
 Owner: Overseer
 
 ## Coordination State
 
-Active milestone: M12 - Live Validation And Tactical Calibration
-Roadmap source: `docs/roadmap/milestone-12-live-validation-and-tactical-calibration.md`
+Active milestone: M16 - Body-To-Adapter Readiness
+Roadmap source: `docs/roadmap/milestone-16-body-to-adapter-readiness.md`
 Current runway: None
 Current executor: None
-Current status: Idle after M12I acceptance
+Current status: Idle after M16A Passive Telemetry adapter envelope acceptance
 Expected output: None
 
-Latest accepted slice: M12I - ADR-0008 I/O Authority Reconciliation
-Latest Dev handoff: `workspace/DevHS56-m12i-io-authority-reconciliation.md`
-Latest Overseer acceptance: `workspace/OverseerHS57-m12i-io-authority-reconciliation-acceptance.md`
+Latest accepted slice: M16A - Passive Telemetry adapter envelope proof
+Latest accepted spec: `workspace/EngSpecHS60-passive-telemetry-adapter-envelope.md`
+Latest terminology audit: `workspace/TermAuditHS61-passive-adapter-wording-collision-review.md`
+Latest Overseer acceptance: `workspace/OverseerHS62-passive-adapter-envelope-acceptance.md`
 
 Source records:
 
-- `docs/adr/ADR-0008-io-off-means-no-ingest.md`
-- `docs/current-state/current-implementation.md`
-- `workspace/SecEngHS52-io-authority-reconciliation-audit.md`
-- `workspace/EngTraceHS53-gamelog-event-spine-trace.md`
-- `workspace/SecEngHS54-ingest-source-defensive-posture-audit.md`
-- `workspace/EngMapHS55-io-authority-state-and-gate-placement.md`
+- `workspace/EngAuditHS58-backend-to-adapter-readiness-conformance.md`
+- `workspace/OverseerHS59-backend-to-adapter-readiness-audit-acceptance.md`
+- `workspace/EngSpecHS60-passive-telemetry-adapter-envelope.md`
+- `workspace/TermAuditHS61-passive-adapter-wording-collision-review.md`
+- `workspace/OverseerHS62-passive-adapter-envelope-acceptance.md`
+- `workspace/critical/critical-terms.md`
 
 ## Resting State
 
-M12 remains the active/gated envelope for live/manual validation and tactical calibration, but no executable work is open right now.
+M16A is accepted.
 
-M12I accepted:
+Passive Telemetry is ready for a future tiny Sense-owned adapter implementation packet if the Human/Overseer chooses to open one later.
 
-- Local gamelog/file ingest now aligns with ADR-0008 for the current runtime path: I/O off means Sense is not allowed to ingest.
-- `combat.witness.start` / `combatWitnessRuntime.start` refuse local gamelog ingest while runtime I/O authority is off.
-- Main-process Combat Witness ingest starts with I/O authority off by default.
-- Turning runtime I/O authority off stops the active Combat Witness watcher and reports a blocked watcher state while preserving configured-path support state.
-- Local gamelog ingest is guarded at watcher start, fs-watch callback, polling, `handleFile`, and immediately before `readRange`.
-- Runtime event admission rejects parser/local events while ingest authority is off, preventing Combat Witness mutation and Passive observer notification from new parser events.
-- Passive/Threat provider gates and M12H Clipboard Acquisition service-command gates remain preserved.
-- Top-level I/O wording now treats I/O off as ingest blocked, not only network/clipboard blocked.
-- Deterministic verification covers no-start/no-read/no-mutation behavior while I/O is off.
-- No live/manual/private I/O was run.
+The future implementation packet should remain:
 
-Core rule:
+- Passive-only
+- provisional
+- fixture/offline verified
+- Sense-owned
+- stopped before renderer face adoption
+- stopped before Lab starter-kit adoption
 
-```txt
-I/O authority is enforced at ingest boundaries.
-Internal computation remains pure over admitted events and existing state.
-```
+Current accepted adapter-shaping decisions:
+
+- Prefer `adapterPreview` over `displaySafe`.
+- Do not add a `certainty` slot for Passive Telemetry.
+- Use `basis + freshness + warnings + gaps` as the Passive trust/limit model.
+- Preserve `blocked`, `no observation`, `unavailable`, `degraded`, `stale`, `partial`, and `capped` as distinct states or warnings.
+- Preserve ADR-0008: I/O off means Sense is not allowed to ingest.
+- Treat `I/O off - ingest blocked` as the preferred future authority wording candidate.
+- Keep `I/O Isolated` as a possible compact label, pending Human/Overseer decision.
+- Avoid `Live Feed` / `Live Feed Isolated` for Passive because it can imply continuous feed/background monitoring.
+
+Lab acknowledgement has been accepted as downstream boundary confirmation only:
+
+- Lab starter-kit shapes are examples, not Sense bridge/runtime contracts.
+- Lab states and labels such as `state`, `availability`, `NO DATA`, and `UNAVAILABLE` are display examples, not Sense enums.
+- Lab will not recommend mapping Lab `NO DATA` over Sense `blocked`, `no observation`, or `unavailable`.
+- No Sense implementation instruction is implied.
 
 ## Runway Shape
 
-At idle, M12 can move next toward live/manual operator smoke, manual shortcut feel validation, Combat calibration, raw repair/healing fixture intake, or live findings review only by Human/Overseer decision.
+At idle, M16 can move next only by Human/Overseer decision.
 
-Any future live/manual EVE folder use, real clipboard capture, provider calls, manual shortcut validation, display/adapter convergence, or product decision about Passive/Active gate behavior requires a future active packet.
+Candidate next moves:
 
-## Context To Preserve
+1. Park ready until presentation-head timing.
+2. Open a tiny Dev packet for a Passive-only provisional adapter mapper with fixture/offline tests.
+3. Do a final Human/Overseer wording call on `I/O off - ingest blocked` versus `I/O Isolated`.
 
-M12H accepted:
+No Dev work is open right now.
 
-- `threat.clipboard.arm` and `threat.clipboard.capture` check Threat live I/O status before Clipboard Acquisition can read clipboard content.
-- Blocked service-command paths return the existing I/O-off Clipboard Acquisition snapshot shape and do not call injected clipboard reads or Threat scans.
-- The global `Control+\` I/O-off path reuses the same I/O-off snapshot shape.
-- I/O-on behavior remains preserved: global shortcut immediate capture, focused/windowed baseline/listen behavior, seal/cooldown, and fingerprint-only duplicate suppression remain intact.
-- Future operator I/O smoke has a redaction-safe artifact shape documented in `docs/testing/live-operator-gamelog-smoke-playbook.md`.
+## Preserved M12 Resting State
 
-M12F/M12G preserved behavior:
+M12 remains the live/manual validation and tactical calibration envelope, but no live/manual M12 work is open.
 
-- Passive Telemetry observes `navigation.jump` events from the parser event spine and does not depend on Clipboard Acquisition state.
-- Threat Intel scans are invoked through Clipboard Acquisition/global shortcut flow, focused renderer keyboard flow, or service/preload calls.
-- Passive and Threat live provider gates are separate backend gate instances.
-- Parser jumps were not found to trigger Threat scans.
-- Clipboard/search was not found to be a prerequisite for Passive current-system observation.
-- Global shortcut immediate capture of existing clipboard content is intended when explicitly invoked and I/O authority is on.
+Preserve:
 
-M12E/M12C live API evidence:
-
-- Passive-only live API smoke ran once under explicit Human authorization and wrote `.tmp\passive-live-api-smoke\result.json`.
-- The first live Threat smoke remains the only authorized Threat live provider execution so far.
-- No additional live provider calls are authorized by this resting state.
+- `workspace/DevHS56-m12i-io-authority-reconciliation.md`
+- `workspace/OverseerHS57-m12i-io-authority-reconciliation-acceptance.md`
+- ADR-0008: I/O off means Sense is not allowed to ingest
+- no live provider calls, real clipboard capture, private EVE log inspection, manual shortcut validation, or live operator smoke without future explicit Human authorization
 
 ## Preserved Guardrails
 
 - Do not set `AURA_SENSE_LIVE_API=1` without a future active packet and explicit Human authorization.
 - Do not run additional live zKill or ESI calls without a future active packet.
-- Do not use `AURA_SENSE_THREAT_LIVE_TARGET` unless a future packet explicitly names target text and resolved kind.
 - Do not run live EVE log ingestion.
 - Do not inspect private/operator EVE log folders.
 - Do not run manual shortcut validation.
@@ -94,28 +95,21 @@ M12E/M12C live API evidence:
 - Do not execute live/manual I/O smoke.
 - Do not rename source-owned terms.
 - Do not change bridge contracts, IPC payload meanings, persistence schemas, services, or backend behavior without an active packet.
-- Do not combine live API smoke with operator gamelog smoke, Combat calibration, raw fixture intake, renderer, Lab, adapter, or display work unless a future packet explicitly opens that scope.
-- Do not store raw provider bodies, private EVE gamelog lines, clipboard content, private operator paths, screenshots, renderer output, Lab/adapter output, calibration data, fixture intake, or product claims.
-- Do not promote a bounded live smoke into broad tactical/product claims.
+- Do not broaden Passive adapter readiness into Combat Witness, Threat Intel, Clipboard Acquisition, display design, Lab adoption, or universal Aura adapter doctrine.
+- Do not treat Lab starter-kit examples as Sense contracts.
+- Do not adopt a renderer face from M16A acceptance.
 
-## Candidate Next M12 Slices
+## Candidate Next M16 Slice
 
 Open only by Human/Overseer decision:
 
-1. Live/manual operator I/O smoke with redacted artifacts and explicit Human authorization.
-2. Manual shortcut feel/OS accelerator validation, only if explicitly authorized.
-3. Combat Witness calibration from accepted real samples.
-4. Raw repair/healing fixture intake from accepted samples.
-5. Live findings audit and current-state update after future live/manual evidence exists.
+Tiny Dev packet for a Passive-only provisional adapter mapper that:
 
-## Work Record
-
-Accepted handoff:
-
-```txt
-workspace/DevHS56-m12i-io-authority-reconciliation.md
-workspace/OverseerHS57-m12i-io-authority-reconciliation-acceptance.md
-```
+- maps current `passive.telemetry.snapshot` into a Sense-owned envelope
+- uses `adapterPreview`, not `displaySafe`
+- preserves basis, freshness, warnings, gaps, diagnostics, and authority state
+- keeps all verification fixture/offline
+- does not change bridge contracts, renderer face, Lab files, or live/manual behavior
 
 ## Handoff Requirements
 

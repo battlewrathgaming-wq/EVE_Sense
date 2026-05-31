@@ -1,7 +1,7 @@
 ﻿# AURA-Sense Workspace Overview
 
-Status: Idle - M12I ADR-0008 I/O authority reconciliation accepted
-Last reviewed: 2026-05-27
+Status: Idle - M16A Passive Telemetry adapter envelope accepted
+Last reviewed: 2026-05-31
 
 ## Vision Statement
 
@@ -26,16 +26,16 @@ It should present compact, uncertainty-aware tactical state while staying transi
 | 13 | `docs/roadmap/milestone-13-aggressive-testing-and-bug-hunting.md` | Complete | Deterministic aggressive hardening accepted; live/manual validation remains gated for later operator-validation work. |
 | 14 | `docs/roadmap/milestone-14-back-page-threat-intel-ux.md` | Complete | Back-page Threat Intel UX accepted; live/manual shortcut feel remains gated for optional later operator-validation work. |
 | 15 | `docs/roadmap/milestone-15-display-request-response-fitness.md` | Parked | Lab-facing presentation response work is parked while Lab stabilizes its side. |
-| 16 | `docs/roadmap/milestone-16-body-to-adapter-readiness.md` | Closed/Parked | Closed as a feature/request direction, not executed implementation. |
+| 16 | `docs/roadmap/milestone-16-body-to-adapter-readiness.md` | Idle after accepted bounded slice | M16A accepted Passive Telemetry as ready for future tiny adapter Dev; no adapter implementation or face adoption is open. |
 | 17 | `docs/roadmap/milestone-17-render-frame-performance-assurance.md` | Complete | Frame/window smoke hardening accepted; product-window bounds persistence and visual smoke restoration guard are verified. |
 | 18 | `docs/roadmap/milestone-18-provider-fault-injection-hardening.md` | Complete | Fixture-only provider fault-injection verification accepted for Passive Telemetry and Threat Intel. |
 | 19 | `docs/roadmap/milestone-19-gamelog-ingest-containment-and-fanout-assurance.md` | Complete | Gamelog ingest containment hardening accepted; explicit `EVE/logs/Gamelogs` structure policy and active-folder read guards are verified. |
 
 ## Active Milestone
 
-Milestone: M12 - Live Validation And Tactical Calibration
+Milestone: M16 - Body-To-Adapter Readiness
 Current packet: `workspace/current.md`
-Current sequence: Idle after M12I acceptance
+Current sequence: Idle after M16A Passive Telemetry adapter envelope acceptance
 Current executor: None
 Expected artifact: None
 Latest M12 gate trace: `workspace/OverseerHS33-m12-live-validation-gate-trace.md`
@@ -81,6 +81,11 @@ Latest ingest posture audit: `workspace/SecEngHS54-ingest-source-defensive-postu
 Latest I/O gate placement map: `workspace/EngMapHS55-io-authority-state-and-gate-placement.md`
 Latest M12I Dev handoff: `workspace/DevHS56-m12i-io-authority-reconciliation.md`
 Latest M12I acceptance: `workspace/OverseerHS57-m12i-io-authority-reconciliation-acceptance.md`
+Latest adapter readiness audit: `workspace/EngAuditHS58-backend-to-adapter-readiness-conformance.md`
+Latest adapter readiness acceptance: `workspace/OverseerHS59-backend-to-adapter-readiness-audit-acceptance.md`
+Latest Passive adapter envelope spec: `workspace/EngSpecHS60-passive-telemetry-adapter-envelope.md`
+Latest Passive adapter terminology audit: `workspace/TermAuditHS61-passive-adapter-wording-collision-review.md`
+Latest Passive adapter acceptance: `workspace/OverseerHS62-passive-adapter-envelope-acceptance.md`
 Active runway: None
 
 ## Authority Notes
@@ -146,6 +151,7 @@ AURA-Sense therefore owns its lane semantics and internal-to-Bridge mapping. Lab
 
 ## Open Questions
 
+- Whether to open the future tiny Passive adapter Dev packet now, park until presentation-head timing, or first settle `I/O off - ingest blocked` versus `I/O Isolated`.
 - After M12I, whether the next live/manual validation item should be authorized live API execution, live operator gamelog smoke, Combat Witness calibration, or raw repair/healing fixture intake.
 - Whether Atlas/Lab first-pass terminology output requires Sense-local terminology updates.
 - Whether the accepted Sense Face Refinement Pass should remain a bounded post-Milestone-14 prototype or become the first slice of a new Sense-local milestone.
