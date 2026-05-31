@@ -1,8 +1,8 @@
 # M16 - Body-To-Adapter Readiness
 
-Status: Closed as parked feature/request direction
+Status: Active bounded adapter-readiness lane
 
-Closure note: 2026-05-25 - Human direction parked Lab-facing presentation work while Lab fixes workshop/export concerns. Sense keeps the target-owned adapter ADR and body-to-adapter idea as future context, but this is not the next active milestone.
+Reopened note: 2026-06-01 - Human direction reopened a bounded Sense-owned adapter-readiness lane after M16A accepted Passive Telemetry as ready for a future tiny adapter implementation packet. Lab-facing presentation adoption remains parked. This milestone now covers only body-to-adapter readiness work owned by Sense.
 
 ## Outcome
 
@@ -39,6 +39,7 @@ The point is not to build the face. The point is to know that the body is truthf
 - Review Combat Witness only after lower-risk lanes prove the shape, because combat display carries higher overclaim and tactical-certainty risk.
 - Classify current bridge-facing fields as Sense domain facts, display hints, diagnostics, or adapter-needed slots.
 - Add or refine deterministic verification that proves bridge output shape and state transitions without live provider smoke or manual shortcut validation.
+- Implement a tiny Passive-only provisional adapter mapper after the Passive envelope is accepted, stopping before renderer face adoption or Lab integration.
 
 ## Acceptance Criteria
 
@@ -52,6 +53,7 @@ M16 is complete when:
 - Atlas terminology is not treated as a live Sense conflict unless a future UDP/TCP integration is explicitly opened
 - verification expectations are named and avoid live/manual work unless separately authorized
 - no renderer face adoption, UI redesign, contract rewrite, or Dev implementation is implied without a later `workspace/current.md` packet
+- any implementation slice remains tiny, lane-specific, fixture/offline verified, and reversible
 
 ## Non-Goals
 
@@ -109,19 +111,26 @@ For implementation or verification runways, the active `workspace/current.md` pa
 
 No live provider smoke, manual shortcut validation, or real SDE refresh/download is implied by this candidate milestone.
 
-## Closure
+## Current State
 
-M16 is closed as a parked feature/request direction, not as executed implementation.
+M16A is accepted:
 
-Keep:
+- `workspace/EngAuditHS58-backend-to-adapter-readiness-conformance.md`
+- `workspace/OverseerHS59-backend-to-adapter-readiness-audit-acceptance.md`
+- `workspace/EngSpecHS60-passive-telemetry-adapter-envelope.md`
+- `workspace/TermAuditHS61-passive-adapter-wording-collision-review.md`
+- `workspace/OverseerHS62-passive-adapter-envelope-acceptance.md`
 
-- target-owned adapter boundary
-- Sense body-before-face principle
-- Clipboard Acquisition and Passive Telemetry as future possible trace slices
+Accepted M16A outcome:
 
-Do not keep active:
+- Passive Telemetry is ready for a future tiny Sense-owned adapter implementation packet.
+- Future adapter work should use `adapterPreview`, not `displaySafe`.
+- Passive should use `basis + freshness + warnings + gaps`, not a `certainty` slot.
+- Adapter work must remain Sense-owned and stop before renderer face adoption, Lab starter-kit adoption, live/manual I/O, or universal adapter doctrine.
+
+Do not keep active without `workspace/current.md`:
 
 - Lab face adoption
-- body-to-adapter trace runway
-- adapter implementation
+- broad body-to-adapter trace runway
+- adapter implementation beyond the named active packet
 - additional display requests derived from M16
