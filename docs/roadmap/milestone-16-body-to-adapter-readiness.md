@@ -151,6 +151,19 @@ Accepted M16C outcome:
 - Lab example labels and fields remain presentation examples only, not Sense state enums, bridge/runtime contracts, or adoption approval.
 - No renderer face, Lab starter-kit adoption, UI redesign, or Dev implementation is open without a future `workspace/current.md` packet.
 
+M16D is accepted:
+
+- `workspace/DevHS67-passive-static-head-trial.md`
+- `workspace/OverseerHS68-passive-static-head-trial-acceptance.md`
+
+Accepted M16D outcome:
+
+- A Sense-local Passive static head trial mapper exists at `src/passive/passiveStaticHeadTrial.js`.
+- It maps accepted `passive.telemetry.adapter` output into `passive.static-head-trial.input`.
+- It proves the Sense-side seam for future packaged presentation-head inspection.
+- It does not import Lab files, copy Lab files, connect runtime, connect renderer, adopt a Lab face, or create product UI.
+- The verifier is included in `verify:all` and covers fresh, stale, partial, capped, blocked/I/O-off, degraded, and no-observation/unavailable cases.
+
 Do not keep active without `workspace/current.md`:
 
 - Lab face adoption

@@ -1,6 +1,6 @@
 ﻿# AURA-Sense Workspace Overview
 
-Status: Active - M16D Passive Static Head Trial open
+Status: Idle - M16D Passive Static Head Trial accepted
 Last reviewed: 2026-06-01
 
 ## Vision Statement
@@ -26,7 +26,7 @@ It should present compact, uncertainty-aware tactical state while staying transi
 | 13 | `docs/roadmap/milestone-13-aggressive-testing-and-bug-hunting.md` | Complete | Deterministic aggressive hardening accepted; live/manual validation remains gated for later operator-validation work. |
 | 14 | `docs/roadmap/milestone-14-back-page-threat-intel-ux.md` | Complete | Back-page Threat Intel UX accepted; live/manual shortcut feel remains gated for optional later operator-validation work. |
 | 15 | `docs/roadmap/milestone-15-display-request-response-fitness.md` | Parked | Lab-facing presentation response work is parked while Lab stabilizes its side. |
-| 16 | `docs/roadmap/milestone-16-body-to-adapter-readiness.md` | Active | M16D is open for a tiny Passive-only static head trial using fixture adapter output. No renderer face, Lab starter-kit adoption, live/runtime connection, or broad adapter doctrine is open. |
+| 16 | `docs/roadmap/milestone-16-body-to-adapter-readiness.md` | Idle after accepted static head trial seam | M16D accepted a Sense-local Passive static head trial mapper. No renderer face, Lab starter-kit adoption, live/runtime connection, or broad adapter doctrine is open. |
 | 17 | `docs/roadmap/milestone-17-render-frame-performance-assurance.md` | Complete | Frame/window smoke hardening accepted; product-window bounds persistence and visual smoke restoration guard are verified. |
 | 18 | `docs/roadmap/milestone-18-provider-fault-injection-hardening.md` | Complete | Fixture-only provider fault-injection verification accepted for Passive Telemetry and Threat Intel. |
 | 19 | `docs/roadmap/milestone-19-gamelog-ingest-containment-and-fanout-assurance.md` | Complete | Gamelog ingest containment hardening accepted; explicit `EVE/logs/Gamelogs` structure policy and active-folder read guards are verified. |
@@ -35,9 +35,9 @@ It should present compact, uncertainty-aware tactical state while staying transi
 
 Milestone: M16 - Body-To-Adapter Readiness
 Current packet: `workspace/current.md`
-Current sequence: M16D - Passive Static Head Trial
-Current executor: Dev
-Expected artifact: `workspace/DevHS67-passive-static-head-trial.md`
+Current sequence: Idle after M16D Passive Static Head Trial acceptance
+Current executor: None
+Expected artifact: None
 Latest M12 gate trace: `workspace/OverseerHS33-m12-live-validation-gate-trace.md`
 Latest M12 prep Dev handoff: `workspace/DevHS34-m12-live-validation-harness-prep.md`
 Latest M12 prep acceptance: `workspace/OverseerHS35-m12-live-validation-harness-prep-acceptance.md`
@@ -90,7 +90,9 @@ Latest Passive adapter Dev handoff: `workspace/DevHS63-passive-adapter-landing-p
 Latest Passive adapter implementation acceptance: `workspace/OverseerHS64-passive-adapter-landing-pad-acceptance.md`
 Latest Lab static starter relay review: `workspace/RelayReviewHS65-lab-static-starter-head.md`
 Latest Lab static starter relay acceptance: `workspace/OverseerHS66-lab-static-starter-head-relay-review-acceptance.md`
-Active runway: `workspace/current.md`
+Latest Passive static head trial Dev handoff: `workspace/DevHS67-passive-static-head-trial.md`
+Latest Passive static head trial acceptance: `workspace/OverseerHS68-passive-static-head-trial-acceptance.md`
+Active runway: None
 
 ## Authority Notes
 
