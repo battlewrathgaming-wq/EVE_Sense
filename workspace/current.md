@@ -40,6 +40,8 @@ This is a demo/readiness trial, not product adoption.
 
 The intent is to prove the Sense-side adapter contract and local trial seam, not to make Dev improvise a Lab package. Dev may prepare the Sense-owned mapper, fixtures, and verification. If the work needs Lab head files that are not already packaged for clean local import, stop and request a Lab-prepared static handoff package.
 
+A lightly scaffolded React pane is acceptable if Lab provides it as a clean, small, local, fixture-fed presentation head. It must remain an instrument pane / head trial, not renderer adoption, shell replacement, routing/navigation work, app-wide state management, or build-system expansion.
+
 Target flow:
 
 ```txt
@@ -60,6 +62,7 @@ STOP
    - If a Lab starter reference is needed, copy only the minimal static reference material into a clearly named Sense-local trial area and preserve provenance/boundary notes.
    - Do not use symlinks, external path imports, or cross-project runtime file reads.
    - If the needed Lab files are not clearly packaged for local static use, stop and report the exact missing package shape instead of preparing or adapting Lab files inside Sense.
+   - If the package is React-based, keep it as a small local pane/head trial. Do not wire it into the app renderer or introduce new frontend architecture beyond the package's existing clean local run path.
 4. Keep the trial Passive-only and fixture/offline-only.
 5. Preserve Sense-owned state meaning through reason-first mapping. Do not collapse Sense `No observation`, `I/O off - ingest blocked`, `Degraded`, or unavailable cases into Lab `NO DATA` / `UNAVAILABLE` without explicit Sense qualification.
 6. Add deterministic verification for the trial.
@@ -85,6 +88,7 @@ M16D is complete when:
 - no runtime, bridge, preload, IPC, live provider, clipboard, private path, renderer, external Lab path, or cross-project file dependency is introduced
 - any copied Lab reference material is minimal, static, Sense-local, provenance-labeled, and treated as example presentation material only
 - if Lab files are needed, they were either already packaged for local static import or the packet stopped with a precise Lab package request
+- any React material remains a small packaged pane/head trial and does not become app renderer adoption, navigation, routing, or broad frontend architecture
 - verification proves the static trial and preserves existing Passive adapter behavior
 - the Dev handoff clearly states whether the trial is ready for Overseer/UI review, needs redirect, or should be parked
 
@@ -96,6 +100,7 @@ M16D is complete when:
 - Do not connect the trial to runtime, bridge, preload, IPC, services, renderer, or the live app shell.
 - Do not require `F:\Projects\AURA- Lab` or any other cross-project path at verification/demo time.
 - Do not use symlinks or external path imports to reach Lab files.
+- Do not turn a React starter pane into full renderer adoption, app shell replacement, routing/navigation, app-wide state management, or broad frontend architecture.
 - Do not broaden into Combat Witness, Threat Intel, or Clipboard Acquisition.
 - Do not rename Sense contracts, IPC channels, payload fields, services, schemas, CSS/test selectors, or user-facing terms.
 - Do not run live provider smoke.
@@ -129,6 +134,7 @@ Stop and report before proceeding if:
 - the trial appears to require runtime, bridge, preload, IPC, renderer, live provider, clipboard, private path, or Lab file dependency
 - the trial requires Lab files that are not already packaged as a clean static handoff for Sense-local use
 - Dev would need to decide which Lab files to package, trim, rename, or prepare
+- a React pane requires new product integration, app-shell wiring, routing/navigation, app-wide state management, or build-system decisions not already cleanly packaged
 - the Lab starter head cannot be represented without importing Lab state labels as Sense state truth
 - Passive adapter fixture cases need semantic changes
 - the work wants to broaden into product UI, adoption, Combat Witness, Threat Intel, Clipboard Acquisition, or universal adapter design
