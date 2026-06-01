@@ -128,6 +128,29 @@ Accepted M16A outcome:
 - Passive should use `basis + freshness + warnings + gaps`, not a `certainty` slot.
 - Adapter work must remain Sense-owned and stop before renderer face adoption, Lab starter-kit adoption, live/manual I/O, or universal adapter doctrine.
 
+M16B is accepted:
+
+- `workspace/DevHS63-passive-adapter-landing-pad.md`
+- `workspace/OverseerHS64-passive-adapter-landing-pad-acceptance.md`
+
+Accepted M16B outcome:
+
+- A tiny Sense-owned Passive adapter landing pad exists at `src/passive/passiveTelemetryAdapter.js`.
+- It maps `passive.telemetry.snapshot` to `passive.telemetry.adapter` with `adapterPreview`.
+- It is Passive-only, isolated, fixture/offline verified, and stops before renderer, bridge, preload, runtime, Lab, or presentation-head integration.
+
+M16C advisory relay review is accepted:
+
+- `workspace/RelayReviewHS65-lab-static-starter-head.md`
+- `workspace/OverseerHS66-lab-static-starter-head-relay-review-acceptance.md`
+
+Accepted M16C outcome:
+
+- Lab's static starter head is usable with cautions as a display-only offer for a future Sense-owned Passive static trial.
+- Any trial should use static fixture output from `passive.telemetry.adapter`.
+- Lab example labels and fields remain presentation examples only, not Sense state enums, bridge/runtime contracts, or adoption approval.
+- No renderer face, Lab starter-kit adoption, UI redesign, or Dev implementation is open without a future `workspace/current.md` packet.
+
 Do not keep active without `workspace/current.md`:
 
 - Lab face adoption

@@ -10,12 +10,14 @@ Active milestone: M16 - Body-To-Adapter Readiness
 Roadmap source: `docs/roadmap/milestone-16-body-to-adapter-readiness.md`
 Current runway: None
 Current executor: None
-Current status: Idle after M16B Passive Adapter Landing Pad acceptance
+Current status: Idle after M16C Lab static starter head relay review acceptance
 Expected output: None
 
 Latest accepted slice: M16B - Passive Adapter Landing Pad
 Latest Dev handoff: `workspace/DevHS63-passive-adapter-landing-pad.md`
 Latest Overseer acceptance: `workspace/OverseerHS64-passive-adapter-landing-pad-acceptance.md`
+Latest relay review: `workspace/RelayReviewHS65-lab-static-starter-head.md`
+Latest relay acceptance: `workspace/OverseerHS66-lab-static-starter-head-relay-review-acceptance.md`
 
 Source records:
 
@@ -26,11 +28,15 @@ Source records:
 - `workspace/OverseerHS62-passive-adapter-envelope-acceptance.md`
 - `workspace/DevHS63-passive-adapter-landing-pad.md`
 - `workspace/OverseerHS64-passive-adapter-landing-pad-acceptance.md`
+- `workspace/RelayReviewHS65-lab-static-starter-head.md`
+- `workspace/OverseerHS66-lab-static-starter-head-relay-review-acceptance.md`
 - `workspace/critical/critical-terms.md`
 
 ## Resting State
 
 M16B is accepted.
+
+M16C advisory relay review is accepted.
 
 A tiny Sense-owned Passive adapter landing pad now exists:
 
@@ -50,6 +56,9 @@ Current accepted posture:
 - The mapper does not add `certainty`.
 - The mapper preserves `basis + freshness + warnings + gaps`, diagnostics, and authority state.
 - Fixture/offline verification covers fresh, stale, partial, capped, blocked/I/O-off, degraded, and no-observation/unavailable cases.
+- Lab's static starter head is acceptable as a display-only offer for a future Passive-only static trial, with cautions.
+- Lab example labels and fields remain presentation examples only. They are not Sense contracts, state enums, runtime behavior, or adoption approval.
+- Any future trial should use static fixture output from `passive.telemetry.adapter`, then stop before renderer/runtime/Lab integration.
 
 ## Runway Shape
 
@@ -58,8 +67,8 @@ At idle, M16 can move next only by Human/Overseer decision.
 Candidate next moves:
 
 1. Park the mapper until a presentation head is ready.
-2. Ask Lab/UIUX for a bounded presentation-head connection review using the mapper as Sense-owned input.
-3. Open a later tiny Dev packet to connect a future head to the mapper after Human/Overseer accepts that scope.
+2. Open a tiny Passive-only static presentation-head trial using fixture adapter output, if the Human wants motion.
+3. Ask UI/UX or Lab for additional visual-density feedback before any Dev trial, if the Human wants more advisory shaping.
 
 No Dev work is open right now.
 
@@ -67,6 +76,8 @@ No Dev work is open right now.
 
 - Do not implement a renderer face without a future active packet.
 - Do not integrate Lab starter-kit files without a future active packet.
+- Do not treat Lab `CURRENT`, `AGED`, `PARTIAL`, `UNAVAILABLE`, `FALLBACK`, `NO DATA`, `availability`, or `coverage` as Sense bridge/runtime contracts.
+- Do not map Sense `No observation`, `I/O off - ingest blocked`, `Degraded`, or unavailable states directly to Lab absence labels without Sense-owned reason-first translation.
 - Do not modify Lab files.
 - Do not create a universal Aura adapter.
 - Do not broaden into Combat Witness, Threat Intel, or Clipboard Acquisition.
