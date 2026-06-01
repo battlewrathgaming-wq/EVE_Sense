@@ -1,6 +1,6 @@
 # Current Workspace Packet
 
-Status: Idle
+Status: Active
 Updated: 2026-06-01
 Owner: Overseer
 
@@ -8,28 +8,22 @@ Owner: Overseer
 
 Active milestone: M16 - Body-To-Adapter Readiness
 Roadmap source: `docs/roadmap/milestone-16-body-to-adapter-readiness.md`
-Current runway: None
-Current executor: None
-Current status: Idle after M16D Passive Static Head Trial acceptance
-Expected output: None
+Current runway: M16E - Passive Local Glass Trial
+Current executor: Dev
+Current status: Open
+Expected output: `workspace/DevHS69-passive-local-glass-trial.md`
 
 Latest accepted slice: M16D - Passive Static Head Trial
 Latest Dev handoff: `workspace/DevHS67-passive-static-head-trial.md`
 Latest Overseer acceptance: `workspace/OverseerHS68-passive-static-head-trial-acceptance.md`
 
-Previous accepted slice: M16B - Passive Adapter Landing Pad
-Previous Dev handoff: `workspace/DevHS63-passive-adapter-landing-pad.md`
-Previous Overseer acceptance: `workspace/OverseerHS64-passive-adapter-landing-pad-acceptance.md`
-Latest relay review: `workspace/RelayReviewHS65-lab-static-starter-head.md`
-Latest relay acceptance: `workspace/OverseerHS66-lab-static-starter-head-relay-review-acceptance.md`
+Lab package source:
+
+- `F:\Projects\AURA- Lab\portable-presentation-starter\packages\sense-trial-glass\`
+- Lab package commit: `824e35d Accept Sense trial glass package`
 
 Source records:
 
-- `workspace/EngAuditHS58-backend-to-adapter-readiness-conformance.md`
-- `workspace/OverseerHS59-backend-to-adapter-readiness-audit-acceptance.md`
-- `workspace/EngSpecHS60-passive-telemetry-adapter-envelope.md`
-- `workspace/TermAuditHS61-passive-adapter-wording-collision-review.md`
-- `workspace/OverseerHS62-passive-adapter-envelope-acceptance.md`
 - `workspace/DevHS63-passive-adapter-landing-pad.md`
 - `workspace/OverseerHS64-passive-adapter-landing-pad-acceptance.md`
 - `workspace/RelayReviewHS65-lab-static-starter-head.md`
@@ -38,78 +32,115 @@ Source records:
 - `workspace/OverseerHS68-passive-static-head-trial-acceptance.md`
 - `workspace/critical/critical-terms.md`
 
-## Resting State
+## Intent
 
-M16B, M16C, and M16D are accepted.
+Run the first local Sense glass trial using Lab's prepared static bundle.
 
-Accepted M16D flow:
+This packet is no longer asking Dev to decide Lab packaging. Lab has provided a clean local static bundle. Dev should copy or stage that bundle into Sense, feed it with Sense-owned `passive.static-head-trial.input` data, and verify the result remains local, static, Passive-only, and reversible.
+
+This is a visual/demo trial, not product adoption.
+
+Target flow:
 
 ```txt
-Passive fixture snapshot
+Lab sense-trial-glass package
+-> copied into a clearly named Sense-local trial area
+-> Passive fixture snapshot
 -> mapPassiveTelemetryAdapter(snapshot)
 -> mapPassiveStaticHeadTrial(adapter)
--> passive.static-head-trial.input
+-> local glass demo input
+-> local static inspection page
 STOP
 ```
 
-Current accepted posture:
+## Runway
 
-- Passive Telemetry has a provisional mapper for future presentation-head readiness.
-- `src/passive/passiveTelemetryAdapter.js` maps `passive.telemetry.snapshot` to `passive.telemetry.adapter` with `adapterPreview`.
-- `src/passive/passiveStaticHeadTrial.js` maps accepted Passive adapter output into `passive.static-head-trial.input`.
-- Both mappers are Passive-only and fixture/offline verified.
-- Neither mapper is connected to runtime, bridge, preload, renderer, Lab, or a presentation head.
-- `adapterPreview` remains preserved.
-- `displaySafe` and `certainty` remain absent.
-- Fixture/offline verification covers fresh, stale, partial, capped, blocked/I/O-off, degraded, and no-observation/unavailable cases.
-- Lab's static starter head remains acceptable as a display-only offer for a future Passive-only visual trial, with cautions.
-- Lab example labels and fields remain presentation examples only. They are not Sense contracts, state enums, runtime behavior, or adoption approval.
+1. Read the source records and Lab package `README.md` / `MANIFEST.md`.
+2. Copy only the Lab package files needed for local inspection into a clearly named Sense-local trial area.
+   - Suggested location: `trials/passive-local-glass/`
+   - Preserve package provenance and boundary notes.
+   - Do not use symlinks, external path imports, or runtime reads from `F:\Projects\AURA- Lab`.
+3. Add the smallest Sense-owned fixture/data generation needed for the local glass to inspect Sense trial output.
+   - Start from fixture/static Passive snapshots.
+   - Use `mapPassiveTelemetryAdapter`.
+   - Use `mapPassiveStaticHeadTrial`.
+   - Do not use live runtime, bridge, preload, IPC, renderer, providers, clipboard, or private/operator paths.
+4. Keep Lab example data as example-only. Prefer a Sense-generated trial input file for Sense inspection.
+5. Add deterministic verification that proves:
+   - the local glass trial does not reference `F:\Projects\AURA- Lab`
+   - the Sense trial input is generated from the accepted Passive mapper chain
+   - Lab example labels do not become Sense state truth
+   - no runtime/renderer/preload/IPC/live/private dependency is introduced
+6. If practical and local, provide an inspection path for the Human to open.
+7. Create `workspace/DevHS69-passive-local-glass-trial.md` with:
+   - files changed
+   - copied Lab package files and provenance
+   - Sense-generated input shape
+   - local inspection instructions
+   - verification commands and results
+   - any visual notes or blockers
 
-## Runway Shape
+## Acceptance Criteria
 
-At idle, M16 can move next only by Human/Overseer decision.
+M16E is complete when:
 
-Candidate next moves:
+- the Lab package is copied or staged inside Sense without symlinks or cross-project runtime reads
+- the local trial can be inspected from Sense without requiring `F:\Projects\AURA- Lab`
+- the trial uses Sense-generated Passive static head input, not Lab example data, for the Sense view
+- Sense mapper/source/state meaning remains owned by Sense
+- Lab package files remain presentation glass only and do not become Sense contracts
+- no renderer face, app shell, routing/navigation, app-wide state management, bridge, preload, IPC, live provider, clipboard, private path, or manual EVE gamelog dependency is introduced
+- verification covers the local glass/package boundary
+- the Dev handoff states whether the glass is ready for Overseer/UI review, needs a Lab package adjustment, or should be parked
 
-1. Ask Lab for a clean packaged static/React pane head for a future local visual demo.
-2. Ask UI/UX to review the `passive.static-head-trial.input` shape before visual packaging.
-3. Park M16 until Lab package timing is right.
+## Guardrails
 
-No Dev work is open right now.
-
-## Preserved Guardrails
-
-- Do not adopt a Lab face without a future active packet.
-- Do not implement a renderer face without a future active packet.
-- Do not integrate Lab starter-kit files without a future active packet.
+- Do not adopt the Lab face as product UI.
+- Do not modify Aura Lab.
+- Do not create a universal Aura adapter.
+- Do not wire the glass into the active app renderer or runtime shell.
 - Do not require `F:\Projects\AURA- Lab` or any other cross-project path at verification/demo time.
 - Do not use symlinks or external path imports to reach Lab files.
-- Do not turn a React starter pane into full renderer adoption, app shell replacement, routing/navigation, app-wide state management, or broad frontend architecture.
-- Do not treat Lab `CURRENT`, `AGED`, `PARTIAL`, `UNAVAILABLE`, `FALLBACK`, `NO DATA`, `availability`, or `coverage` as Sense bridge/runtime contracts.
-- Do not map Sense `No observation`, `I/O off - ingest blocked`, `Degraded`, or unavailable states directly to Lab absence labels without Sense-owned reason-first translation.
-- Do not modify Lab files.
-- Do not create a universal Aura adapter.
+- Do not turn the package into full renderer adoption, app shell replacement, routing/navigation, app-wide state management, or broad frontend architecture.
 - Do not broaden into Combat Witness, Threat Intel, or Clipboard Acquisition.
 - Do not rename Sense contracts, IPC channels, payload fields, services, schemas, CSS/test selectors, or user-facing terms.
-- Do not change Passive Telemetry runtime/provider behavior without a future active packet.
-- Do not run live provider smoke without explicit Human authorization.
+- Do not run live provider smoke.
 - Do not run live/manual EVE gamelog ingestion.
 - Do not inspect private/operator EVE log folders.
 - Do not run manual shortcut validation.
 - Do not capture clipboard content.
 - Do not run real SDE refresh/download.
 
-## Preserved M12 Resting State
+## Required Verification
 
-M12 remains the live/manual validation and tactical calibration envelope, but no live/manual M12 work is open.
+Run at minimum:
 
-Preserve:
+```powershell
+npm.cmd run verify:passive-static-head
+npm.cmd run verify:passive-adapter
+npm.cmd run verify:passive-telemetry
+npm.cmd run verify:protected-terms
+git diff --check
+git status --short --branch
+npm.cmd run verify:all
+```
 
-- `workspace/DevHS56-m12i-io-authority-reconciliation.md`
-- `workspace/OverseerHS57-m12i-io-authority-reconciliation-acceptance.md`
-- ADR-0008: I/O off means Sense is not allowed to ingest
-- no live provider calls, real clipboard capture, private EVE log inspection, manual shortcut validation, or live operator smoke without future explicit Human authorization
+If a new package-boundary verification script is added, include it in the handoff and consider wiring it into `verify:all`.
+
+Do not run live/manual checks unless the Human explicitly authorizes them in a later message.
+
+## Stop Conditions
+
+Stop and report before proceeding if:
+
+- the Lab package requires missing files, package manager install, network, React build setup, Electron, preload, IPC, service registry, SmokeFlash, Pane Board, Wayfinder, or target project runtime wiring
+- Dev would need to decide Lab packaging, trim Lab source, or repair Lab package internals
+- the local glass cannot consume Sense-generated trial input without adopting Lab state labels as Sense state truth
+- the work wants to broaden into product UI adoption, active renderer integration, Combat Witness, Threat Intel, Clipboard Acquisition, or universal adapter design
+- required verification fails and the failure is not a narrow, obvious fix inside this packet
 
 ## Handoff Requirements
 
-None while idle.
+Dev must create `workspace/DevHS69-passive-local-glass-trial.md`.
+
+The handoff must include local inspection instructions and any package-fit feedback that should return to Lab.
