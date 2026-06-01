@@ -53,6 +53,10 @@ STOP
 1. Read the source records listed above before editing.
 2. Inspect the existing Passive adapter verifier and fixture cases.
 3. Add the smallest Sense-local static trial needed to map existing `passive.telemetry.adapter` output into a presentation-head-shaped static input or demo surface.
+   - The trial must run from inside this repository.
+   - Do not make verification or demo execution depend on `F:\Projects\AURA- Lab` paths.
+   - If a Lab starter reference is needed, copy only the minimal static reference material into a clearly named Sense-local trial area and preserve provenance/boundary notes.
+   - Do not use symlinks, external path imports, or cross-project runtime file reads.
 4. Keep the trial Passive-only and fixture/offline-only.
 5. Preserve Sense-owned state meaning through reason-first mapping. Do not collapse Sense `No observation`, `I/O off - ingest blocked`, `Degraded`, or unavailable cases into Lab `NO DATA` / `UNAVAILABLE` without explicit Sense qualification.
 6. Add deterministic verification for the trial.
@@ -75,7 +79,8 @@ M16D is complete when:
 - all existing Passive adapter fixture states remain covered: fresh, stale, partial, capped, blocked/I/O-off, degraded, and no-observation/unavailable
 - Lab example labels remain examples only and are not introduced as Sense state enums
 - `adapterPreview` remains present; `displaySafe` and `certainty` remain absent
-- no runtime, bridge, preload, IPC, live provider, clipboard, private path, renderer, or Lab file dependency is introduced
+- no runtime, bridge, preload, IPC, live provider, clipboard, private path, renderer, external Lab path, or cross-project file dependency is introduced
+- any copied Lab reference material is minimal, static, Sense-local, provenance-labeled, and treated as example presentation material only
 - verification proves the static trial and preserves existing Passive adapter behavior
 - the Dev handoff clearly states whether the trial is ready for Overseer/UI review, needs redirect, or should be parked
 
@@ -85,6 +90,8 @@ M16D is complete when:
 - Do not modify Aura Lab.
 - Do not create a universal Aura adapter.
 - Do not connect the trial to runtime, bridge, preload, IPC, services, renderer, or the live app shell.
+- Do not require `F:\Projects\AURA- Lab` or any other cross-project path at verification/demo time.
+- Do not use symlinks or external path imports to reach Lab files.
 - Do not broaden into Combat Witness, Threat Intel, or Clipboard Acquisition.
 - Do not rename Sense contracts, IPC channels, payload fields, services, schemas, CSS/test selectors, or user-facing terms.
 - Do not run live provider smoke.
