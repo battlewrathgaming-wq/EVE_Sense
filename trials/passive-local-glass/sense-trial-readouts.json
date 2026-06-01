@@ -1,0 +1,605 @@
+{
+  "meta": {
+    "generatedBy": "scripts/generate-passive-local-glass-fixtures.js",
+    "boundary": "Sense-generated Passive fixture input for local static glass inspection only.",
+    "sourceChain": [
+      "passive.telemetry.snapshot fixture",
+      "mapPassiveTelemetryAdapter",
+      "mapPassiveStaticHeadTrial",
+      "glass readout input"
+    ]
+  },
+  "readouts": [
+    {
+      "id": "passive-fresh",
+      "label": "Passive Telemetry",
+      "state": {
+        "id": "fresh",
+        "label": "Fresh context",
+        "marker": "SENSE"
+      },
+      "primaryValue": "Jita",
+      "ageLabel": "0s old",
+      "basis": "zKill + ESI + Static lookup",
+      "availability": {
+        "status": "fresh",
+        "reason": "Passive system context refreshed"
+      },
+      "coverage": {
+        "summary": "Sense trial fields are available in detail; coverage is not Sense state truth.",
+        "knownFields": [
+          "readout",
+          "availability",
+          "warnings",
+          "gaps",
+          "detail",
+          "sourceAdapter"
+        ]
+      },
+      "displayPolicy": {
+        "compactMeta": true,
+        "coverageInDetailOnly": true
+      },
+      "gaps": [],
+      "warnings": [],
+      "sourceOwned": {
+        "owner": "AURA-Sense Passive Telemetry",
+        "layer": "Sense-local static trial input",
+        "terms": [
+          "Fresh context",
+          "Jita",
+          "Passive system context refreshed"
+        ],
+        "visibleLabel": "Fresh context",
+        "qualification": "Fresh context is a Sense-owned Passive Telemetry state label for this fixture."
+      },
+      "detail": {
+        "summary": "Generated from passive.telemetry.adapter; source status fresh.",
+        "rows": [
+          {
+            "label": "Source kind",
+            "value": "passive.telemetry.adapter"
+          },
+          {
+            "label": "Snapshot kind",
+            "value": "passive.telemetry.snapshot"
+          },
+          {
+            "label": "Adapter preview",
+            "value": "{\"primaryLabel\":\"Jita\",\"stateLabel\":\"Fresh context\",\"basisLine\":\"zKill + ESI + Static lookup\",\"ageLine\":\"0s old\",\"sampleLine\":\"zKill 4 + ESI 8 / 55\",\"authorityLine\":\"Passive Telemetry live IO is enabled\",\"warningLine\":null}"
+          },
+          {
+            "label": "Authority",
+            "value": "{\"state\":\"live-enabled\",\"enabled\":true,\"message\":\"Passive Telemetry live IO is enabled\",\"code\":null}"
+          },
+          {
+            "label": "Freshness",
+            "value": "{\"status\":\"fresh\",\"snapshotObservedAt\":\"2026-06-01T12:00:00.000Z\",\"sourceAgeMs\":0,\"freshnessMs\":60000,\"providerFetchedAt\":[\"2026-06-01T12:00:00.000Z\",\"2026-06-01T12:00:00.000Z\"]}"
+          },
+          {
+            "label": "Warnings",
+            "value": "None"
+          },
+          {
+            "label": "Gaps",
+            "value": "None"
+          },
+          {
+            "label": "zKill basis",
+            "value": "{\"scope\":{\"kind\":\"system-context\",\"pastSeconds\":3600},\"fetchedAt\":\"2026-06-01T12:00:00.000Z\",\"counts\":{\"sampleCount\":4},\"partial\":false,\"capped\":false}"
+          },
+          {
+            "label": "ESI basis",
+            "value": "{\"scope\":{\"kind\":\"aggregate-system-activity\"},\"fetchedAt\":\"2026-06-01T12:00:00.000Z\",\"counts\":{\"shipKills\":8,\"podKills\":1,\"npcKills\":22,\"jumps\":55},\"partial\":false,\"capped\":false}"
+          }
+        ]
+      }
+    },
+    {
+      "id": "passive-stale",
+      "label": "Passive Telemetry",
+      "state": {
+        "id": "stale",
+        "label": "Stale context",
+        "marker": "SENSE"
+      },
+      "primaryValue": "Jita",
+      "ageLabel": "360s old",
+      "basis": "zKill + ESI + Static lookup",
+      "availability": {
+        "status": "stale",
+        "reason": "Passive context is stale"
+      },
+      "coverage": {
+        "summary": "Sense trial fields are available in detail; coverage is not Sense state truth.",
+        "knownFields": [
+          "readout",
+          "availability",
+          "warnings",
+          "gaps",
+          "detail",
+          "sourceAdapter"
+        ]
+      },
+      "displayPolicy": {
+        "compactMeta": true,
+        "coverageInDetailOnly": true
+      },
+      "gaps": [],
+      "warnings": [
+        "PASSIVE_CONTEXT_STALE: Stale context"
+      ],
+      "sourceOwned": {
+        "owner": "AURA-Sense Passive Telemetry",
+        "layer": "Sense-local static trial input",
+        "terms": [
+          "Stale context",
+          "Jita",
+          "Passive context is stale"
+        ],
+        "visibleLabel": "Stale context",
+        "qualification": "Stale context is a Sense-owned Passive Telemetry state label for this fixture."
+      },
+      "detail": {
+        "summary": "Generated from passive.telemetry.adapter; source status stale.",
+        "rows": [
+          {
+            "label": "Source kind",
+            "value": "passive.telemetry.adapter"
+          },
+          {
+            "label": "Snapshot kind",
+            "value": "passive.telemetry.snapshot"
+          },
+          {
+            "label": "Adapter preview",
+            "value": "{\"primaryLabel\":\"Jita\",\"stateLabel\":\"Stale context\",\"basisLine\":\"zKill + ESI + Static lookup\",\"ageLine\":\"360s old\",\"sampleLine\":\"zKill 4 + ESI 8 / 55\",\"authorityLine\":\"Passive Telemetry live IO is enabled\",\"warningLine\":\"Stale context\"}"
+          },
+          {
+            "label": "Authority",
+            "value": "{\"state\":\"live-enabled\",\"enabled\":true,\"message\":\"Passive Telemetry live IO is enabled\",\"code\":null}"
+          },
+          {
+            "label": "Freshness",
+            "value": "{\"status\":\"stale\",\"snapshotObservedAt\":\"2026-06-01T12:00:00.000Z\",\"sourceAgeMs\":360000,\"freshnessMs\":60000,\"providerFetchedAt\":[\"2026-06-01T12:00:00.000Z\",\"2026-06-01T12:00:00.000Z\"]}"
+          },
+          {
+            "label": "Warnings",
+            "value": "Stale context"
+          },
+          {
+            "label": "Gaps",
+            "value": "None"
+          },
+          {
+            "label": "zKill basis",
+            "value": "{\"scope\":{\"kind\":\"system-context\",\"pastSeconds\":3600},\"fetchedAt\":\"2026-06-01T12:00:00.000Z\",\"counts\":{\"sampleCount\":4},\"partial\":false,\"capped\":false}"
+          },
+          {
+            "label": "ESI basis",
+            "value": "{\"scope\":{\"kind\":\"aggregate-system-activity\"},\"fetchedAt\":\"2026-06-01T12:00:00.000Z\",\"counts\":{\"shipKills\":8,\"podKills\":1,\"npcKills\":22,\"jumps\":55},\"partial\":false,\"capped\":false}"
+          }
+        ]
+      }
+    },
+    {
+      "id": "passive-partial",
+      "label": "Passive Telemetry",
+      "state": {
+        "id": "partial",
+        "label": "Partial sample",
+        "marker": "SENSE"
+      },
+      "primaryValue": "Jita",
+      "ageLabel": "0s old",
+      "basis": "zKill + ESI + Static lookup",
+      "availability": {
+        "status": "partial",
+        "reason": "Partial provider sample"
+      },
+      "coverage": {
+        "summary": "Sense trial fields are available in detail; coverage is not Sense state truth.",
+        "knownFields": [
+          "readout",
+          "availability",
+          "warnings",
+          "gaps",
+          "detail",
+          "sourceAdapter"
+        ]
+      },
+      "displayPolicy": {
+        "compactMeta": true,
+        "coverageInDetailOnly": true
+      },
+      "gaps": [],
+      "warnings": [
+        "PASSIVE_PROVIDER_PARTIAL: Partial sample"
+      ],
+      "sourceOwned": {
+        "owner": "AURA-Sense Passive Telemetry",
+        "layer": "Sense-local static trial input",
+        "terms": [
+          "Partial sample",
+          "Jita",
+          "Partial provider sample"
+        ],
+        "visibleLabel": "Partial sample",
+        "qualification": "Partial sample is a Sense-owned Passive Telemetry state label for this fixture."
+      },
+      "detail": {
+        "summary": "Generated from passive.telemetry.adapter; source status partial.",
+        "rows": [
+          {
+            "label": "Source kind",
+            "value": "passive.telemetry.adapter"
+          },
+          {
+            "label": "Snapshot kind",
+            "value": "passive.telemetry.snapshot"
+          },
+          {
+            "label": "Adapter preview",
+            "value": "{\"primaryLabel\":\"Jita\",\"stateLabel\":\"Partial sample\",\"basisLine\":\"zKill + ESI + Static lookup\",\"ageLine\":\"0s old\",\"sampleLine\":\"zKill 4 + ESI 8 / 55\",\"authorityLine\":\"Passive Telemetry live IO is enabled\",\"warningLine\":\"Partial sample\"}"
+          },
+          {
+            "label": "Authority",
+            "value": "{\"state\":\"live-enabled\",\"enabled\":true,\"message\":\"Passive Telemetry live IO is enabled\",\"code\":null}"
+          },
+          {
+            "label": "Freshness",
+            "value": "{\"status\":\"fresh\",\"snapshotObservedAt\":\"2026-06-01T12:00:00.000Z\",\"sourceAgeMs\":0,\"freshnessMs\":60000,\"providerFetchedAt\":[\"2026-06-01T12:00:00.000Z\",\"2026-06-01T12:00:00.000Z\"]}"
+          },
+          {
+            "label": "Warnings",
+            "value": "Partial sample"
+          },
+          {
+            "label": "Gaps",
+            "value": "None"
+          },
+          {
+            "label": "zKill basis",
+            "value": "{\"scope\":{\"kind\":\"system-context\",\"pastSeconds\":3600},\"fetchedAt\":\"2026-06-01T12:00:00.000Z\",\"counts\":{\"sampleCount\":4},\"partial\":true,\"capped\":false}"
+          },
+          {
+            "label": "ESI basis",
+            "value": "{\"scope\":{\"kind\":\"aggregate-system-activity\"},\"fetchedAt\":\"2026-06-01T12:00:00.000Z\",\"counts\":{\"shipKills\":8,\"podKills\":1,\"npcKills\":22,\"jumps\":55},\"partial\":false,\"capped\":false}"
+          }
+        ]
+      }
+    },
+    {
+      "id": "passive-capped",
+      "label": "Passive Telemetry",
+      "state": {
+        "id": "capped",
+        "label": "Capped sample",
+        "marker": "SENSE"
+      },
+      "primaryValue": "Jita",
+      "ageLabel": "0s old",
+      "basis": "zKill + ESI + Static lookup",
+      "availability": {
+        "status": "fresh",
+        "reason": "Capped zKill sample"
+      },
+      "coverage": {
+        "summary": "Sense trial fields are available in detail; coverage is not Sense state truth.",
+        "knownFields": [
+          "readout",
+          "availability",
+          "warnings",
+          "gaps",
+          "detail",
+          "sourceAdapter"
+        ]
+      },
+      "displayPolicy": {
+        "compactMeta": true,
+        "coverageInDetailOnly": true
+      },
+      "gaps": [],
+      "warnings": [
+        "PASSIVE_ZKILL_SAMPLE_CAPPED: Capped sample"
+      ],
+      "sourceOwned": {
+        "owner": "AURA-Sense Passive Telemetry",
+        "layer": "Sense-local static trial input",
+        "terms": [
+          "Capped sample",
+          "Jita",
+          "Capped zKill sample"
+        ],
+        "visibleLabel": "Capped sample",
+        "qualification": "Capped sample is a Sense-owned Passive Telemetry state label for this fixture."
+      },
+      "detail": {
+        "summary": "Generated from passive.telemetry.adapter; source status fresh.",
+        "rows": [
+          {
+            "label": "Source kind",
+            "value": "passive.telemetry.adapter"
+          },
+          {
+            "label": "Snapshot kind",
+            "value": "passive.telemetry.snapshot"
+          },
+          {
+            "label": "Adapter preview",
+            "value": "{\"primaryLabel\":\"Jita\",\"stateLabel\":\"Capped sample\",\"basisLine\":\"zKill + ESI + Static lookup\",\"ageLine\":\"0s old\",\"sampleLine\":\"zKill 4 + ESI 8 / 55\",\"authorityLine\":\"Passive Telemetry live IO is enabled\",\"warningLine\":\"Capped sample\"}"
+          },
+          {
+            "label": "Authority",
+            "value": "{\"state\":\"live-enabled\",\"enabled\":true,\"message\":\"Passive Telemetry live IO is enabled\",\"code\":null}"
+          },
+          {
+            "label": "Freshness",
+            "value": "{\"status\":\"fresh\",\"snapshotObservedAt\":\"2026-06-01T12:00:00.000Z\",\"sourceAgeMs\":0,\"freshnessMs\":60000,\"providerFetchedAt\":[\"2026-06-01T12:00:00.000Z\",\"2026-06-01T12:00:00.000Z\"]}"
+          },
+          {
+            "label": "Warnings",
+            "value": "Capped sample"
+          },
+          {
+            "label": "Gaps",
+            "value": "None"
+          },
+          {
+            "label": "zKill basis",
+            "value": "{\"scope\":{\"kind\":\"system-context\",\"pastSeconds\":3600},\"fetchedAt\":\"2026-06-01T12:00:00.000Z\",\"counts\":{\"sampleCount\":4},\"partial\":false,\"capped\":true}"
+          },
+          {
+            "label": "ESI basis",
+            "value": "{\"scope\":{\"kind\":\"aggregate-system-activity\"},\"fetchedAt\":\"2026-06-01T12:00:00.000Z\",\"counts\":{\"shipKills\":8,\"podKills\":1,\"npcKills\":22,\"jumps\":55},\"partial\":false,\"capped\":false}"
+          }
+        ]
+      }
+    },
+    {
+      "id": "passive-blocked",
+      "label": "Passive Telemetry",
+      "state": {
+        "id": "blocked",
+        "label": "I/O off - ingest blocked",
+        "marker": "SENSE"
+      },
+      "primaryValue": "Jita",
+      "ageLabel": "0s old",
+      "basis": "Authority blocked",
+      "availability": {
+        "status": "authority-blocked",
+        "reason": "I/O off - ingest blocked"
+      },
+      "coverage": {
+        "summary": "Sense trial fields are available in detail; coverage is not Sense state truth.",
+        "knownFields": [
+          "readout",
+          "availability",
+          "warnings",
+          "gaps",
+          "detail",
+          "sourceAdapter"
+        ]
+      },
+      "displayPolicy": {
+        "compactMeta": true,
+        "coverageInDetailOnly": true
+      },
+      "gaps": [
+        "authority-blocked: Passive Telemetry live IO is disabled"
+      ],
+      "warnings": [
+        "PASSIVE_AUTHORITY_BLOCKED: I/O off - ingest blocked"
+      ],
+      "sourceOwned": {
+        "owner": "AURA-Sense Passive Telemetry",
+        "layer": "Sense-local static trial input",
+        "terms": [
+          "I/O off - ingest blocked",
+          "Jita",
+          "I/O off - ingest blocked"
+        ],
+        "visibleLabel": "I/O off - ingest blocked",
+        "qualification": "I/O off - ingest blocked is a Sense-owned Passive Telemetry state label for this fixture."
+      },
+      "detail": {
+        "summary": "Generated from passive.telemetry.adapter; source status blocked.",
+        "rows": [
+          {
+            "label": "Source kind",
+            "value": "passive.telemetry.adapter"
+          },
+          {
+            "label": "Snapshot kind",
+            "value": "passive.telemetry.snapshot"
+          },
+          {
+            "label": "Adapter preview",
+            "value": "{\"primaryLabel\":\"Jita\",\"stateLabel\":\"I/O off - ingest blocked\",\"basisLine\":\"Authority blocked\",\"ageLine\":\"0s old\",\"sampleLine\":\"No provider sample yet\",\"authorityLine\":\"I/O off - ingest blocked\",\"warningLine\":\"I/O off - ingest blocked\"}"
+          },
+          {
+            "label": "Authority",
+            "value": "{\"state\":\"blocked\",\"enabled\":false,\"message\":\"Passive Telemetry live IO is disabled\",\"code\":\"PASSIVE_LIVE_IO_BLOCKED\"}"
+          },
+          {
+            "label": "Freshness",
+            "value": "{\"status\":\"blocked\",\"snapshotObservedAt\":\"2026-06-01T12:00:00.000Z\",\"sourceAgeMs\":null,\"freshnessMs\":60000,\"providerFetchedAt\":[]}"
+          },
+          {
+            "label": "Warnings",
+            "value": "I/O off - ingest blocked"
+          },
+          {
+            "label": "Gaps",
+            "value": "Passive Telemetry live IO is disabled"
+          }
+        ]
+      }
+    },
+    {
+      "id": "passive-degraded",
+      "label": "Passive Telemetry",
+      "state": {
+        "id": "degraded",
+        "label": "Degraded",
+        "marker": "SENSE"
+      },
+      "primaryValue": "Unknown",
+      "ageLabel": "0s old",
+      "basis": "No provider sample yet",
+      "availability": {
+        "status": "degraded",
+        "reason": "Current system observed; system ID unresolved for zKill context"
+      },
+      "coverage": {
+        "summary": "Sense trial fields are available in detail; coverage is not Sense state truth.",
+        "knownFields": [
+          "readout",
+          "availability",
+          "warnings",
+          "gaps",
+          "detail",
+          "sourceAdapter"
+        ]
+      },
+      "displayPolicy": {
+        "compactMeta": true,
+        "coverageInDetailOnly": true
+      },
+      "gaps": [
+        "resolver-unresolved: Current system observed; system ID unresolved for zKill context",
+        "degraded: Current system observed; system ID unresolved for zKill context"
+      ],
+      "warnings": [
+        "SYSTEM_NOT_FOUND: Degraded"
+      ],
+      "sourceOwned": {
+        "owner": "AURA-Sense Passive Telemetry",
+        "layer": "Sense-local static trial input",
+        "terms": [
+          "Degraded",
+          "Unknown",
+          "Current system observed; system ID unresolved for zKill context"
+        ],
+        "visibleLabel": "Degraded",
+        "qualification": "Degraded is a Sense-owned Passive Telemetry state label for this fixture."
+      },
+      "detail": {
+        "summary": "Generated from passive.telemetry.adapter; source status degraded.",
+        "rows": [
+          {
+            "label": "Source kind",
+            "value": "passive.telemetry.adapter"
+          },
+          {
+            "label": "Snapshot kind",
+            "value": "passive.telemetry.snapshot"
+          },
+          {
+            "label": "Adapter preview",
+            "value": "{\"primaryLabel\":\"Unknown\",\"stateLabel\":\"Degraded\",\"basisLine\":\"No provider sample yet\",\"ageLine\":\"0s old\",\"sampleLine\":\"No provider sample yet\",\"authorityLine\":\"Passive Telemetry live IO is enabled\",\"warningLine\":\"Degraded\"}"
+          },
+          {
+            "label": "Authority",
+            "value": "{\"state\":\"live-enabled\",\"enabled\":true,\"message\":\"Passive Telemetry live IO is enabled\",\"code\":null}"
+          },
+          {
+            "label": "Freshness",
+            "value": "{\"status\":\"degraded\",\"snapshotObservedAt\":\"2026-06-01T12:00:00.000Z\",\"sourceAgeMs\":null,\"freshnessMs\":60000,\"providerFetchedAt\":[]}"
+          },
+          {
+            "label": "Warnings",
+            "value": "Degraded"
+          },
+          {
+            "label": "Gaps",
+            "value": "Current system observed; system ID unresolved for zKill context; Current system observed; system ID unresolved for zKill context"
+          }
+        ]
+      }
+    },
+    {
+      "id": "passive-no-observation",
+      "label": "Passive Telemetry",
+      "state": {
+        "id": "unavailable",
+        "label": "No observation",
+        "marker": "SENSE"
+      },
+      "primaryValue": "",
+      "absenceLabel": "No observation",
+      "ageLabel": "0s old",
+      "basis": "No admitted current-system observation",
+      "availability": {
+        "status": "no-observation",
+        "reason": "No admitted current-system observation"
+      },
+      "coverage": {
+        "summary": "Sense trial fields are available in detail; coverage is not Sense state truth.",
+        "knownFields": [
+          "readout",
+          "availability",
+          "warnings",
+          "gaps",
+          "detail",
+          "sourceAdapter"
+        ]
+      },
+      "displayPolicy": {
+        "compactMeta": true,
+        "coverageInDetailOnly": true
+      },
+      "gaps": [
+        "no-observation: No admitted current-system observation"
+      ],
+      "warnings": [
+        "PASSIVE_NO_OBSERVATION: No observation"
+      ],
+      "sourceOwned": {
+        "owner": "AURA-Sense Passive Telemetry",
+        "layer": "Sense-local static trial input",
+        "terms": [
+          "No observation",
+          "No observation",
+          "No admitted current-system observation"
+        ],
+        "visibleLabel": "No observation",
+        "qualification": "No observation is a Sense-owned Passive Telemetry state label for this fixture."
+      },
+      "detail": {
+        "summary": "Generated from passive.telemetry.adapter; source status unavailable.",
+        "rows": [
+          {
+            "label": "Source kind",
+            "value": "passive.telemetry.adapter"
+          },
+          {
+            "label": "Snapshot kind",
+            "value": "passive.telemetry.snapshot"
+          },
+          {
+            "label": "Adapter preview",
+            "value": "{\"primaryLabel\":\"No observation\",\"stateLabel\":\"No observation\",\"basisLine\":\"No admitted current-system observation\",\"ageLine\":\"0s old\",\"sampleLine\":\"No provider sample yet\",\"authorityLine\":\"Passive Telemetry live IO is disabled\",\"warningLine\":\"No observation\"}"
+          },
+          {
+            "label": "Authority",
+            "value": "{\"state\":\"blocked\",\"enabled\":false,\"message\":\"Passive Telemetry live IO is disabled\",\"code\":null}"
+          },
+          {
+            "label": "Freshness",
+            "value": "{\"status\":\"unavailable\",\"snapshotObservedAt\":\"2026-06-01T12:00:00.000Z\",\"sourceAgeMs\":null,\"freshnessMs\":60000,\"providerFetchedAt\":[]}"
+          },
+          {
+            "label": "Warnings",
+            "value": "No observation"
+          },
+          {
+            "label": "Gaps",
+            "value": "No admitted current-system observation"
+          }
+        ]
+      }
+    }
+  ]
+}

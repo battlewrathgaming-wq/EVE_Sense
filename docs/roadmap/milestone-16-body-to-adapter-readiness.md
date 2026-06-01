@@ -164,6 +164,20 @@ Accepted M16D outcome:
 - It does not import Lab files, copy Lab files, connect runtime, connect renderer, adopt a Lab face, or create product UI.
 - The verifier is included in `verify:all` and covers fresh, stale, partial, capped, blocked/I/O-off, degraded, and no-observation/unavailable cases.
 
+M16E is accepted:
+
+- `workspace/DevHS69-passive-local-glass-trial.md`
+- `workspace/OverseerHS70-passive-local-glass-trial-acceptance.md`
+
+Accepted M16E outcome:
+
+- Lab's `sense-trial-glass` package is staged locally under `trials/passive-local-glass/`.
+- The local glass uses Sense-generated `sense-trial-readouts.json`, not Lab example JSON.
+- The Lab selector page is not staged as the Sense view.
+- The local inspection page is available at `trials/passive-local-glass/inspect-head.html`.
+- The package remains a static local glass trial only; no product UI adoption, runtime connection, renderer wiring, or Lab authority transfer is implied.
+- `verify:passive-local-glass` is included in `verify:all`.
+
 Do not keep active without `workspace/current.md`:
 
 - Lab face adoption
