@@ -38,6 +38,8 @@ Create a tiny offline proof that Sense's accepted Passive adapter output can be 
 
 This is a demo/readiness trial, not product adoption.
 
+The intent is to prove the Sense-side adapter contract and local trial seam, not to make Dev improvise a Lab package. Dev may prepare the Sense-owned mapper, fixtures, and verification. If the work needs Lab head files that are not already packaged for clean local import, stop and request a Lab-prepared static handoff package.
+
 Target flow:
 
 ```txt
@@ -57,6 +59,7 @@ STOP
    - Do not make verification or demo execution depend on `F:\Projects\AURA- Lab` paths.
    - If a Lab starter reference is needed, copy only the minimal static reference material into a clearly named Sense-local trial area and preserve provenance/boundary notes.
    - Do not use symlinks, external path imports, or cross-project runtime file reads.
+   - If the needed Lab files are not clearly packaged for local static use, stop and report the exact missing package shape instead of preparing or adapting Lab files inside Sense.
 4. Keep the trial Passive-only and fixture/offline-only.
 5. Preserve Sense-owned state meaning through reason-first mapping. Do not collapse Sense `No observation`, `I/O off - ingest blocked`, `Degraded`, or unavailable cases into Lab `NO DATA` / `UNAVAILABLE` without explicit Sense qualification.
 6. Add deterministic verification for the trial.
@@ -81,6 +84,7 @@ M16D is complete when:
 - `adapterPreview` remains present; `displaySafe` and `certainty` remain absent
 - no runtime, bridge, preload, IPC, live provider, clipboard, private path, renderer, external Lab path, or cross-project file dependency is introduced
 - any copied Lab reference material is minimal, static, Sense-local, provenance-labeled, and treated as example presentation material only
+- if Lab files are needed, they were either already packaged for local static import or the packet stopped with a precise Lab package request
 - verification proves the static trial and preserves existing Passive adapter behavior
 - the Dev handoff clearly states whether the trial is ready for Overseer/UI review, needs redirect, or should be parked
 
@@ -123,6 +127,8 @@ Do not run live/manual checks unless the Human explicitly authorizes them in a l
 Stop and report before proceeding if:
 
 - the trial appears to require runtime, bridge, preload, IPC, renderer, live provider, clipboard, private path, or Lab file dependency
+- the trial requires Lab files that are not already packaged as a clean static handoff for Sense-local use
+- Dev would need to decide which Lab files to package, trim, rename, or prepare
 - the Lab starter head cannot be represented without importing Lab state labels as Sense state truth
 - Passive adapter fixture cases need semantic changes
 - the work wants to broaden into product UI, adoption, Combat Witness, Threat Intel, Clipboard Acquisition, or universal adapter design
